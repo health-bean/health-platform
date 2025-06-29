@@ -1,0 +1,16 @@
+version: 1
+applications:
+  - appRoot: frontend/web-app
+    frontend:
+      phases:
+        preBuild:
+          commands:
+            - cd ../shared && npm ci
+            - cd ../web-app && npm ci
+        build:
+          commands:
+            - npm run build
+      artifacts:
+        baseDirectory: dist
+        files:
+          - '**/*'
