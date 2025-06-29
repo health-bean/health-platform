@@ -317,29 +317,49 @@ function App() {
   // Load timeline entries
   useEffect(() => {
     const loadTimelineEntries = async () => {
-      try {
-        const response = await fetch(`${API_BASE_URL}/api/v1/timeline/entries`);
-        const data = await response.json();
-        setDailyEntries(data.entries || []);
-      } catch (error) {
-        console.error('Failed to load timeline entries:', error);
-      } finally {
-        setLoadingEntries(false);
-      }
-    };
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/v1/timeline/entries?date=${selectedDate}`);
+    const data = await response.json();
+    setDailyEntries(data.entries || []);
+  } catch (error) {
+    console.error('Failed to load timeline entries:', error);
+  } finally {
+    setLoadingEntries(false);
+  }
+};
 
     loadTimelineEntries();
   }, [selectedDate]);
 
-  // Show setup if not completed OR manually triggered
-  useEffect(() => {
-    if (isReady && preferences) {
-      // Auto-show setup for new users
-      if (!preferences.setup_complete) {
-        setShowSetup(true);
-      }
+ // Show setup if not completed OR manually triggered
+useEffect(() => {
+  if (isReady && preferences) {
+    // Auto-show setup for new users
+    if (!preferences.setup_complete) {
+      setShowSetup(true);
     }
-  }, [preferences, isReady]);
+  }
+}, [preferences, isReady]);
+
+// Load timeline entries when date changes
+useEffect(() => {
+  const loadTimelineEntries = async () => {
+    try {
+      setLoadingEntries(true);
+      const response = await fetch(`${API_BASE_URL}/api/v1/timeline/entries?date=${selectedDate}`);
+      const data = await response.json();
+      setDailyEntries(data.entries || []);
+    } catch (error) {
+      console.error('Failed to load timeline entries:', error);
+    } finally {
+      setLoadingEntries(false);
+    }
+  };
+
+  if (selectedDate) {
+    loadTimelineEntries();
+  }
+}, [selectedDate]); // Reload when selectedDate changes
 
   // Show loading while preferences are loading
   if (preferencesLoading || !isReady) {
@@ -412,7 +432,7 @@ function App() {
       });
 
       if (response.ok) {
-        const timelineResponse = await fetch(`${API_BASE_URL}/api/v1/timeline/entries`);
+        const timelineResponse = await fetch(`${API_BASE_URL}/api/v1/timeline/entries?date=${selectedDate}`);
         const timelineData = await timelineResponse.json();
         setDailyEntries(timelineData.entries || []);
       }
