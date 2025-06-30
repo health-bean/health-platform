@@ -4,7 +4,7 @@
       {
         "name": "FILO_ANALYSIS_REPORT.json",
         "type": "file",
-        "size": 41641
+        "size": 47978
       },
       {
         "name": "FILO_API_ANALYSIS.json",
@@ -59,6 +59,11 @@
                 "type": "directory",
                 "children": [
                   {
+                    "name": ".env",
+                    "type": "file",
+                    "size": 287
+                  },
+                  {
                     "name": "database",
                     "type": "directory",
                     "children": null
@@ -86,12 +91,12 @@
                   {
                     "name": "package-lock.json",
                     "type": "file",
-                    "size": 5654
+                    "size": 11729
                   },
                   {
                     "name": "package.json",
                     "type": "file",
-                    "size": 129
+                    "size": 185
                   },
                   {
                     "name": "utils",
@@ -99,11 +104,6 @@
                     "children": null
                   }
                 ]
-              },
-              {
-                "name": "auth",
-                "type": "directory",
-                "children": []
               },
               {
                 "name": "content",
@@ -770,9 +770,9 @@
       }
     ],
     "stats": {
-      "totalFiles": 512,
-      "directories": 274,
-      "lastModified": "2025-06-29T17:43:33.123Z"
+      "totalFiles": 529,
+      "directories": 279,
+      "lastModified": "2025-06-29T19:20:58.834Z"
     }
   },
   "frontend": {
@@ -1010,6 +1010,11 @@
     "endpoints": [
       {
         "method": "GET",
+        "path": "geTimestamp === 'undefined'",
+        "file": "backend/functions/api/node_modules/jsonwebtoken/verify.js"
+      },
+      {
+        "method": "GET",
         "path": "getPeerCertificate !== 'function'",
         "file": "backend/functions/api/node_modules/pg/lib/crypto/sasl.js"
       },
@@ -1157,6 +1162,21 @@
         "method": "PUT",
         "path": "put, 'binary'",
         "file": "backend/functions/api/node_modules/postgres-bytea/index.js"
+      },
+      {
+        "method": "PATCH",
+        "path": "patch': case 'prerelease'",
+        "file": "backend/functions/api/node_modules/semver/bin/semver.js"
+      },
+      {
+        "method": "PATCH",
+        "path": "patch, prerelease, or release.  Default level is 'patch'",
+        "file": "backend/functions/api/node_modules/semver/bin/semver.js"
+      },
+      {
+        "method": "PATCH",
+        "path": "patch = match[4] || '0'",
+        "file": "backend/functions/api/node_modules/semver/functions/coerce.js"
       },
       {
         "method": "PUT",
@@ -1376,6 +1396,8 @@
     "backend": {
       "backend/functions/api": {
         "dependencies": {
+          "bcryptjs": "^3.0.2",
+          "jsonwebtoken": "^9.0.2",
           "pg": "^8.11.3"
         },
         "devDependencies": {},

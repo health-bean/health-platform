@@ -5,7 +5,7 @@
   "description": "Protocol Management & Healing Platform",
   "scripts": {
     "analyze": "node analyze-codebase.js",
-    "analyze-api": "node analyze-apis.js", 
+    "analyze-api": "node analyze-apis.js",
     "generate-docs": "node generate-docs.js",
     "docs:dev": "cd docs && npm start",
     "docs:build": "cd docs && npm run build",
@@ -14,11 +14,14 @@
   },
   "workspaces": [
     "frontend/web-app",
-    "frontend/shared", 
+    "frontend/shared",
     "docs"
   ],
-  "devDependencies": {},
   "engines": {
     "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "pg": "^8.16.3",
+    "uuid": "^11.1.0"
   }
 }
