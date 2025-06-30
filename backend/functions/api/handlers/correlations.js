@@ -1,15 +1,5 @@
-const { Pool } = require('pg');
+const { pool } = require('../database/connection');
 const { successResponse, errorResponse } = require('../utils/responses');
-
-// Database connection
-const pool = new Pool({
-  host: process.env.DB_HOST,
-  port: process.env.DB_PORT,
-  database: process.env.DB_NAME,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  ssl: { rejectUnauthorized: false }
-});
 
 /**
  * Main correlation insights handler
@@ -61,23 +51,29 @@ async function handleGetCorrelationInsights(queryParams, event) {
  * Get timeline data for correlation analysis
  */
 async function getTimelineData(userId, timeframeDays) {
-  const query = `
-    SELECT 
-      entry_date,
-      entry_time,
-      entry_type,
-      content,
-      severity,
-      protocol_compliant,
-      (entry_date + entry_time) as full_timestamp
-    FROM timeline_entries 
-    WHERE user_id = $1 
-      AND entry_date >= CURRENT_DATE - INTERVAL '${timeframeDays} days'
-    ORDER BY entry_date, entry_time
-  `;
+  const client = await pool.connect();
+  
+  try {
+    const query = `
+      SELECT 
+        entry_date,
+        entry_time,
+        entry_type,
+        content,
+        severity,
+        protocol_compliant,
+        (entry_date + entry_time) as full_timestamp
+      FROM timeline_entries 
+      WHERE user_id = $1 
+        AND entry_date >= CURRENT_DATE - INTERVAL '${timeframeDays} days'
+      ORDER BY entry_date, entry_time
+    `;
 
-  const result = await pool.query(query, [userId]);
-  return result.rows;
+    const result = await client.query(query, [userId]);
+    return result.rows;
+  } finally {
+    client.release();
+  }
 }
 
 /**
@@ -438,24 +434,30 @@ async function detectProtocolEffectiveness(timelineData, confidenceThreshold) {
  * Get food properties for correlation analysis
  */
 async function getFoodProperties() {
-  const query = `
-    SELECT name, nightshade, histamine, oxalate, lectin
-    FROM food_properties
-  `;
+  const client = await pool.connect();
   
-  const result = await pool.query(query);
-  const properties = {};
-  
-  for (const row of result.rows) {
-    properties[row.name.toLowerCase()] = {
-      nightshade: row.nightshade,
-      histamine: row.histamine,
-      oxalate: row.oxalate,
-      lectin: row.lectin
-    };
+  try {
+    const query = `
+      SELECT name, nightshade, histamine, oxalate, lectin
+      FROM food_properties
+    `;
+    
+    const result = await client.query(query);
+    const properties = {};
+    
+    for (const row of result.rows) {
+      properties[row.name.toLowerCase()] = {
+        nightshade: row.nightshade,
+        histamine: row.histamine,
+        oxalate: row.oxalate,
+        lectin: row.lectin
+      };
+    }
+    
+    return properties;
+  } finally {
+    client.release();
   }
-  
-  return properties;
 }
 
 /**
