@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Plus, Clock, Calendar, CheckCircle2, X, Loader2, Search, TrendingUp, ChevronDown } from 'lucide-react';
 
 // Import shared auth context
-import { AuthProvider.jsx, useAuth } from '../../shared/contexts/AuthProvider.jsx';
+import { AuthProvider, useAuth } from '../../shared/contexts/AuthProvider.jsx';
 
 // Import web-specific auth page
 import AuthPage from './components/Auth';
