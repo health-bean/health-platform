@@ -1,6 +1,6 @@
 const { handleGetCorrelationInsights } = require('./handlers/correlations');
 const { handleCors } = require('./middleware/cors');
-const { handleAuth } = require('./handlers/auth');
+const { handleLogin, handleRegister, handleLogout, handleVerify } = require('./handlers/auth');
 const { handleGetUser, handleUpdateUser, handleGetUserProtocols, handleGetUserPreferences, handleUpdateUserPreferences } = require('./handlers/users');
 const { handleGetJournalEntries, handleCreateJournalEntry, handleGetJournalEntry, handleUpdateJournalEntry } = require('./handlers/journal');
 const { handleGetTimelineEntries, handleCreateTimelineEntry } = require('./handlers/timeline');
@@ -29,9 +29,14 @@ exports.handler = async (event) => {
         
         let response;
         
-        if (path === '/api/v1/auth' && method === 'POST') {
-            response = await handleAuth(body);
-        }
+        if (path === "/api/v1/auth/login" && method === "POST") {
+            response = await handleLogin(body);
+        } else if (path === "/api/v1/auth/register" && method === "POST") {
+            response = await handleRegister(body);
+        } else if (path === "/api/v1/auth/logout" && method === "POST") {
+            response = await handleLogout(body);
+        } else if (path === "/api/v1/auth/verify" && method === "GET") {
+            response = await handleVerify(null, event);        }
         else if (path === '/api/v1/users' && method === 'GET') {
             response = await handleGetUser(event);
         }
@@ -109,7 +114,7 @@ const handleNotFound = (path, method) => {
         path: path,
         method: method,
         availableEndpoints: [
-            'POST /api/v1/auth',
+            'POST /api/v1/auth/login", "POST /api/v1/auth/register", "POST /api/v1/auth/logout", "GET /api/v1/auth/verify',
             'GET /api/v1/users',
             'POST /api/v1/users',
             'GET /api/v1/user/protocols',
