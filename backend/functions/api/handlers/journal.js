@@ -1,4 +1,3 @@
-cat > handlers/journal.js << 'EOF'
 const { pool } = require('../database/connection');
 const { successResponse, errorResponse } = require('../utils/responses');
 const { handleDatabaseError } = require('../utils/errors');
@@ -168,4 +167,3 @@ module.exports = {
     handleGetJournalEntry,
     handleUpdateJournalEntry
 };
-EOF
