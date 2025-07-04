@@ -3,37 +3,76 @@
   "info": {
     "title": "FILO Health Platform API",
     "version": "1.0.0",
-    "description": "Protocol Management & Healing Platform API",
-    "contact": {
-      "name": "FILO Health Platform"
-    }
+    "description": "Production-ready API with proxy integration for AI-powered health intelligence platform"
   },
   "servers": [
     {
       "url": "https://suhoxvn8ik.execute-api.us-east-1.amazonaws.com/dev",
-      "description": "Production server"
+      "description": "Production API Gateway with proxy integration"
     }
   ],
   "paths": {
     "/api/v1/protocols": {
       "get": {
         "summary": "Get available health protocols",
-        "description": "Get available health protocols. Response time: 1464ms",
         "responses": {
           "200": {
             "description": "Success",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "protocols": {
-                      "type": "array"
-                    },
-                    "total": {
-                      "type": "number"
-                    }
-                  }
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/correlations/insights": {
+      "get": {
+        "summary": "Get filtered correlation insights",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/foods/by-protocol": {
+      "get": {
+        "summary": "Get Low Histamine protocol foods",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/foods/search": {
+      "get": {
+        "summary": "Search foods with protocol context",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
                 }
               }
             }
@@ -43,39 +82,187 @@
     },
     "/api/v1/timeline/entries": {
       "get": {
-        "summary": "Get timeline entries with date filter",
-        "description": "Get timeline entries with date filter. Response time: 52ms",
+        "summary": "Get user timeline entries",
         "responses": {
           "200": {
             "description": "Success",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "entries": {
-                      "type": "array"
-                    },
-                    "total": {
-                      "type": "number"
-                    }
-                  }
+                  "type": "object"
                 }
               }
             }
           }
-        },
-        "parameters": [
-          {
-            "name": "date",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "example": "2025-06-29"
+        }
+      },
+      "post": {
+        "summary": "Create timeline entry",
+        "responses": {
+          "500": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
           }
-        ]
+        }
+      }
+    },
+    "/api/v1/users": {
+      "get": {
+        "summary": "Get user data",
+        "responses": {
+          "404": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/user/protocols": {
+      "get": {
+        "summary": "Get user active protocols",
+        "responses": {
+          "404": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/user/preferences": {
+      "get": {
+        "summary": "Get user preferences",
+        "responses": {
+          "404": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/journal/entries": {
+      "get": {
+        "summary": "Get journal entries with date filter",
+        "responses": {
+          "404": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/symptoms/search": {
+      "get": {
+        "summary": "Search symptoms",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/supplements/search": {
+      "get": {
+        "summary": "Search supplements",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/medications/search": {
+      "get": {
+        "summary": "Search medications",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/exposure-types": {
+      "get": {
+        "summary": "Get exposure types",
+        "responses": {
+          "404": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/detox-types": {
+      "get": {
+        "summary": "Get detox types",
+        "responses": {
+          "404": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
       }
     }
   }

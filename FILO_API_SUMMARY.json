@@ -1,22 +1,12 @@
 {
-  "timestamp": "2025-07-04T23:09:24.224Z",
+  "timestamp": "2025-07-04T23:13:37.162Z",
   "baseURL": "https://suhoxvn8ik.execute-api.us-east-1.amazonaws.com/dev",
   "summary": {
-    "working": 3,
-    "broken": 6,
-    "total": 9
+    "working": 13,
+    "broken": 8,
+    "total": 21
   },
-  "workingEndpoints": [
-    "/api/v1/protocols",
-    "/api/v1/timeline/entries",
-    "/api/v1/timeline/entries?date=2025-06-29"
-  ],
-  "brokenEndpoints": [
-    "/api/v1/foods",
-    "/api/v1/users",
-    "/api/v1/journal",
-    "/api/v1/user-preferences",
-    "/api/v1/exposure-types",
-    "/api/v1/detox-types"
-  ]
+  "status": "healthy",
+  "workingEndpoints": 13,
+  "totalEndpoints": 21
 }
