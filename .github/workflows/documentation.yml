@@ -25,11 +25,10 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: '18'
-        cache: 'npm'
         
     - name: 🔧 Install Root Dependencies
       run: |
-        if [ -f package.json ]; then npm ci; fi
+        echo "Skipping root dependencies - using component-level package management"
         
     - name: 🔧 Install Shared Component Dependencies
       working-directory: ./frontend/shared
@@ -137,7 +136,6 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: '18'
-        cache: 'npm'
         
     - name: 📥 Download Documentation Build
       uses: actions/download-artifact@v4
