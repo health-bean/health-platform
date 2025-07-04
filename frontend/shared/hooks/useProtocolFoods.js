@@ -28,9 +28,20 @@ export const useProtocolFoods = (protocolId) => {
       
       const data = await response.json();
       
-      setFoodsByCategory(data.foods_by_category || {});
-      setComplianceStats(data.compliance_stats || {});
-      setTotalFoods(data.total_foods || 0);
+      // Map API response to expected format
+      const mappedFoodsByCategory = {};
+      if (data.foodsByCategory) {
+        Object.entries(data.foodsByCategory).forEach(([category, foods]) => {
+          mappedFoodsByCategory[category] = foods.map(food => ({
+            ...food,
+            compliance_status: food.protocol_status // Map protocol_status to compliance_status
+          }));
+        });
+      }
+      
+      setFoodsByCategory(mappedFoodsByCategory);
+      setComplianceStats(data.stats || {});
+      setTotalFoods(data.stats?.total || 0);
     } catch (err) {
       console.error('Error fetching protocol foods:', err);
       setError(err.message);
@@ -71,7 +82,14 @@ export const useFoodSearch = () => {
       }
       
       const data = await response.json();
-      setFoods(data.foods || []);
+      
+      // Map search results to expected format
+      const mappedFoods = data.foods?.map(food => ({
+        ...food,
+        compliance_status: food.protocol_status // Map protocol_status to compliance_status
+      })) || [];
+      
+      setFoods(mappedFoods);
     } catch (err) {
       console.error('Error searching foods:', err);
       setError(err.message);
