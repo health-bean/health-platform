@@ -4,124 +4,202 @@ const https = require('https');
 const fs = require('fs');
 const path = require('path');
 
-class FILOAPIAnalyzer {
+class ComprehensiveAPIAnalyzer {
   constructor() {
     this.baseURL = 'https://suhoxvn8ik.execute-api.us-east-1.amazonaws.com/dev';
+    this.lambdaPath = './backend/functions/api/';
     this.results = {
+      infrastructure: {
+        apiGateway: "AWS API Gateway with proxy integration",
+        lambdaFunction: "health-platform-dev",
+        authMiddleware: "Development mode with demo user fallback",
+        corsEnabled: true,
+        environment: "Development",
+        deploymentDate: new Date().toISOString(),
+        baseURL: this.baseURL
+      },
       endpoints: [],
+      discoveredRoutes: [],
       status: 'unknown',
       timestamp: new Date().toISOString(),
       summary: {
+        discovered: 0,
         working: 0,
         broken: 0,
-        total: 0,
-        authRequired: 0,
-        authFailed: 0
+        total: 0
       }
     };
   }
 
   async analyzeAPIs() {
-    console.log('🌐 Testing FILO Health Platform APIs...');
-    console.log(`Base URL: ${this.baseURL}\n`);
+    console.log('🔍 FILO Health Platform - Complete API Analysis');
+    console.log('=================================================');
+    console.log(`Base URL: ${this.baseURL}`);
+    console.log(`Lambda: ${this.results.infrastructure.lambdaFunction}`);
+    console.log(`Environment: ${this.results.infrastructure.environment}\n`);
     
-    // Production endpoints with authentication requirements
-    const productionEndpoints = [
-      // Core protocol endpoints (public)
-      { path: '/api/v1/protocols', method: 'GET', description: 'Get available health protocols', requiresAuth: false },
-      
-      // AI correlation endpoints (public with userId param)
-      { path: '/api/v1/correlations/insights?userId=8e8a568a-c2f8-43a8-abf2-4e54408dbdc0', method: 'GET', description: 'Get AI correlation insights', requiresAuth: false },
-      { path: '/api/v1/correlations/insights?userId=8e8a568a-c2f8-43a8-abf2-4e54408dbdc0&confidence_threshold=0.7', method: 'GET', description: 'Get filtered correlation insights', requiresAuth: false },
-      
-      // Protocol foods endpoints (public)
-      { path: '/api/v1/foods/by-protocol?protocol_id=1495844a-19de-404c-a288-7660eda0cbe1', method: 'GET', description: 'Get AIP Core protocol foods', requiresAuth: false },
-      { path: '/api/v1/foods/by-protocol?protocol_id=51ca7a24-4691-4629-8ee5-c20876e68c29', method: 'GET', description: 'Get Low Histamine protocol foods', requiresAuth: false },
-      { path: '/api/v1/foods/search?search=chicken', method: 'GET', description: 'Search foods - chicken', requiresAuth: false },
-      { path: '/api/v1/foods/search?search=broccoli&protocol_id=1495844a-19de-404c-a288-7660eda0cbe1', method: 'GET', description: 'Search foods with protocol context', requiresAuth: false },
-      
-      // Timeline endpoints (public with userId param)
-      { path: '/api/v1/timeline/entries', method: 'GET', description: 'Get timeline entries', requiresAuth: false },
-      { path: '/api/v1/timeline/entries?date=2025-07-04', method: 'GET', description: 'Get timeline entries with date filter', requiresAuth: false },
-      { path: '/api/v1/timeline/entries?userId=8e8a568a-c2f8-43a8-abf2-4e54408dbdc0', method: 'GET', description: 'Get user timeline entries', requiresAuth: false },
-      
-      // User management endpoints (should work in dev mode - returns demo user)
-      { path: '/api/v1/users', method: 'GET', description: 'Get user data (dev mode: returns demo user)', requiresAuth: false },
-      { path: '/api/v1/user/protocols', method: 'GET', description: 'Get user active protocols (dev mode)', requiresAuth: false },
-      { path: '/api/v1/user/preferences', method: 'GET', description: 'Get user preferences (dev mode)', requiresAuth: false },
-      
-      // Journal endpoints (should work in dev mode)
-      { path: '/api/v1/journal/entries', method: 'GET', description: 'Get journal entries (dev mode)', requiresAuth: false },
-      { path: '/api/v1/journal/entries?date=2025-07-04', method: 'GET', description: 'Get journal entries with date filter (dev mode)', requiresAuth: false },
-      
-      // Search endpoints (public)
-      { path: '/api/v1/symptoms/search?search=headache', method: 'GET', description: 'Search symptoms', requiresAuth: false },
-      { path: '/api/v1/supplements/search?search=vitamin', method: 'GET', description: 'Search supplements', requiresAuth: false },
-      { path: '/api/v1/medications/search?search=ibuprofen', method: 'GET', description: 'Search medications', requiresAuth: false },
-      
-      // Exposure and detox endpoints (exposure-types missing per 404 error)
-      // { path: '/api/v1/exposure-types', method: 'GET', description: 'Get exposure types', requiresAuth: false },
-      { path: '/api/v1/detox-types', method: 'GET', description: 'Get detox types', requiresAuth: false },
-      
-      // Authentication endpoint (test login) - NOT IMPLEMENTED YET
-      // { path: '/api/v1/auth', method: 'POST', description: 'User authentication', requiresAuth: false,
-      //   body: {
-      //     email: 'patient@example.com',
-      //     password: 'demo123456'
-      //   }
-      // },
-      
-      // Test POST endpoint (timeline creation) - test with auth header
-      { path: '/api/v1/timeline/entries', method: 'POST', description: 'Create timeline entry (test auth)', requiresAuth: true,
+    // Step 1: Auto-discover endpoints from code
+    console.log('📡 Auto-discovering endpoints from Lambda code...');
+    const discoveredEndpoints = await this.discoverEndpoints();
+    
+    // Step 2: Use known production endpoints (more reliable)
+    const productionEndpoints = this.getProductionEndpoints();
+    
+    // Step 3: Combine and test all endpoints
+    const allEndpoints = [...productionEndpoints, ...discoveredEndpoints];
+    const uniqueEndpoints = this.deduplicateEndpoints(allEndpoints);
+    
+    console.log(`🎯 Testing ${uniqueEndpoints.length} endpoints...\n`);
+    
+    for (const endpoint of uniqueEndpoints) {
+      await this.testEndpoint(endpoint);
+      await this.sleep(200);
+    }
+
+    this.generateComprehensiveReport();
+    this.saveAllResults();
+  }
+
+  getProductionEndpoints() {
+    return [
+      // Core API endpoints with proper dev mode configuration
+      { path: '/api/v1/protocols', method: 'GET', description: 'Get available health protocols', category: 'Core', requiresAuth: false },
+      { path: '/api/v1/correlations/insights?userId=8e8a568a-c2f8-43a8-abf2-4e54408dbdc0', method: 'GET', description: 'AI correlation insights', category: 'AI', requiresAuth: false },
+      { path: '/api/v1/correlations/insights?userId=8e8a568a-c2f8-43a8-abf2-4e54408dbdc0&confidence_threshold=0.7', method: 'GET', description: 'Filtered AI correlations', category: 'AI', requiresAuth: false },
+      { path: '/api/v1/foods/by-protocol?protocol_id=1495844a-19de-404c-a288-7660eda0cbe1', method: 'GET', description: 'AIP protocol foods', category: 'Foods', requiresAuth: false },
+      { path: '/api/v1/foods/by-protocol?protocol_id=51ca7a24-4691-4629-8ee5-c20876e68c29', method: 'GET', description: 'Low Histamine foods', category: 'Foods', requiresAuth: false },
+      { path: '/api/v1/foods/search?search=chicken', method: 'GET', description: 'Food search', category: 'Foods', requiresAuth: false },
+      { path: '/api/v1/foods/search?search=broccoli&protocol_id=1495844a-19de-404c-a288-7660eda0cbe1', method: 'GET', description: 'Protocol food search', category: 'Foods', requiresAuth: false },
+      { path: '/api/v1/timeline/entries', method: 'GET', description: 'Timeline entries', category: 'Timeline', requiresAuth: false },
+      { path: '/api/v1/timeline/entries?date=2025-07-04', method: 'GET', description: 'Timeline by date', category: 'Timeline', requiresAuth: false },
+      { path: '/api/v1/timeline/entries?userId=8e8a568a-c2f8-43a8-abf2-4e54408dbdc0', method: 'GET', description: 'User timeline', category: 'Timeline', requiresAuth: false },
+      { path: '/api/v1/users', method: 'GET', description: 'User profile (dev mode)', category: 'Users', requiresAuth: false },
+      { path: '/api/v1/user/protocols', method: 'GET', description: 'User protocols (dev mode)', category: 'Users', requiresAuth: false },
+      { path: '/api/v1/user/preferences', method: 'GET', description: 'User preferences (dev mode)', category: 'Users', requiresAuth: false },
+      { path: '/api/v1/journal/entries', method: 'GET', description: 'Journal entries (dev mode)', category: 'Journal', requiresAuth: false },
+      { path: '/api/v1/journal/entries?date=2025-07-04', method: 'GET', description: 'Journal by date (dev mode)', category: 'Journal', requiresAuth: false },
+      { path: '/api/v1/symptoms/search?search=headache', method: 'GET', description: 'Symptom search', category: 'Search', requiresAuth: false },
+      { path: '/api/v1/supplements/search?search=vitamin', method: 'GET', description: 'Supplement search', category: 'Search', requiresAuth: false },
+      { path: '/api/v1/medications/search?search=ibuprofen', method: 'GET', description: 'Medication search', category: 'Search', requiresAuth: false },
+      { path: '/api/v1/detox-types', method: 'GET', description: 'Detox types', category: 'Search', requiresAuth: false },
+      { path: '/api/v1/timeline/entries', method: 'POST', description: 'Create timeline entry (dev mode)', category: 'Timeline', requiresAuth: false,
         body: {
           userId: '8e8a568a-c2f8-43a8-abf2-4e54408dbdc0',
           entryDate: '2025-07-04',
           entryType: 'food',
-          content: 'API test entry',
+          content: 'API analyzer test entry',
           selectedFoods: ['test food']
         }
       }
     ];
-
-    console.log(`Testing ${productionEndpoints.length} production endpoints...\n`);
-    
-    for (const endpoint of productionEndpoints) {
-      // Test without auth - your dev mode should return demo user automatically
-      await this.testEndpoint(endpoint, false);
-      await this.sleep(300); // Rate limiting between requests
-    }
-
-    this.generateReport();
-    this.saveResults();
   }
 
-  async testEndpoint(endpoint, withAuth = false) {
+  async discoverEndpoints() {
+    try {
+      const lambdaFiles = this.findLambdaFiles();
+      const endpoints = [];
+      
+      for (const file of lambdaFiles) {
+        const routes = this.parseRoutes(file);
+        endpoints.push(...routes);
+      }
+      
+      this.results.discoveredRoutes = endpoints;
+      this.results.summary.discovered = endpoints.length;
+      
+      return endpoints;
+    } catch (error) {
+      console.log('⚠️  Auto-discovery failed, using production endpoints');
+      return [];
+    }
+  }
+
+  findLambdaFiles() {
+    const files = [];
+    const searchPaths = [this.lambdaPath, './backend/', './src/'];
+    
+    for (const searchPath of searchPaths) {
+      if (fs.existsSync(searchPath)) {
+        const foundFiles = this.scanDirectory(searchPath);
+        if (foundFiles.length > 0) {
+          files.push(...foundFiles);
+          break;
+        }
+      }
+    }
+    
+    return files;
+  }
+
+  scanDirectory(dir) {
+    const files = [];
+    try {
+      const entries = fs.readdirSync(dir, { withFileTypes: true });
+      for (const entry of entries) {
+        const fullPath = path.join(dir, entry.name);
+        if (entry.isDirectory() && !entry.name.startsWith('.') && entry.name !== 'node_modules') {
+          files.push(...this.scanDirectory(fullPath));
+        } else if (entry.isFile() && (entry.name.endsWith('.js') || entry.name.endsWith('.ts'))) {
+          files.push(fullPath);
+        }
+      }
+    } catch (error) {
+      // Directory doesn't exist or no permission
+    }
+    return files;
+  }
+
+  parseRoutes(filePath) {
+    const routes = [];
+    try {
+      const content = fs.readFileSync(filePath, 'utf8');
+      const apiPathRegex = /\/api\/v\d+\/[a-zA-Z0-9\-\/\?\=\&\_]+/g;
+      const matches = content.match(apiPathRegex);
+      
+      if (matches) {
+        matches.forEach(match => {
+          routes.push({
+            path: match,
+            method: 'GET',
+            description: `Auto-discovered: ${match}`,
+            category: 'Discovered',
+            requiresAuth: match.includes('/user/') || match.includes('/journal/'),
+            source: path.basename(filePath)
+          });
+        });
+      }
+    } catch (error) {
+      // File read error
+    }
+    return routes;
+  }
+
+  deduplicateEndpoints(endpoints) {
+    const seen = new Set();
+    return endpoints.filter(endpoint => {
+      const key = `${endpoint.method}:${endpoint.path}`;
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+  }
+
+  async testEndpoint(endpoint) {
     return new Promise((resolve) => {
       const url = `${this.baseURL}${endpoint.path}`;
       const startTime = Date.now();
       
-      const authSuffix = withAuth ? ' (with auth)' : '';
-      const retryPrefix = endpoint.retryWithAuth ? '    🔄 ' : '🔄 ';
-      console.log(`${retryPrefix}Testing: ${endpoint.method} ${endpoint.path}${authSuffix}`);
+      console.log(`🔄 Testing: ${endpoint.method} ${endpoint.path}`);
       
       const options = {
         method: endpoint.method,
         headers: {
           'Content-Type': 'application/json',
-          'User-Agent': 'FILO-API-Analyzer/1.0'
+          'User-Agent': 'FILO-Complete-Analyzer/1.0'
         }
       };
 
-      // Add authentication header for POST requests or auth-required endpoints
-      if (withAuth || endpoint.requiresAuth) {
-        // Try the development mode approach - no auth header to get demo user
-        // But for POST requests that are failing, try with a dummy header
-        if (endpoint.method === 'POST') {
-          options.headers['Authorization'] = 'Bearer dev-mode-token';
-        }
-      }
-
-      // Add body for POST requests
+      // Dev mode: no auth headers to trigger demo user fallback
       let postData = null;
       if (endpoint.method === 'POST' && endpoint.body) {
         postData = JSON.stringify(endpoint.body);
@@ -139,77 +217,47 @@ class FILOAPIAnalyzer {
         res.on('end', () => {
           try {
             const parsedBody = JSON.parse(body);
-            const dataType = Array.isArray(parsedBody) ? 'array' : typeof parsedBody;
             const working = res.statusCode >= 200 && res.statusCode < 300;
             
-            // Create sample data structure
-            const sampleData = this.createSampleData(parsedBody);
-            
             const endpointResult = {
-              path: endpoint.path,
-              method: endpoint.method,
-              description: endpoint.description + (withAuth ? ' (with auth)' : ''),
+              ...endpoint,
               url: url,
               status: res.statusCode,
               responseTime: responseTime,
-              dataType: dataType,
+              dataType: Array.isArray(parsedBody) ? 'array' : typeof parsedBody,
               dataSize: Buffer.byteLength(body),
-              sampleData: sampleData,
-              headers: {
-                'content-type': res.headers['content-type'],
-                'content-length': res.headers['content-length']
-              },
+              sampleData: this.createSampleData(parsedBody),
               working: working,
-              requiresAuth: endpoint.requiresAuth,
-              testedWithAuth: withAuth,
-              rawResponse: working ? null : body.substring(0, 500) // Limit error response size
+              error: working ? null : body.substring(0, 200)
             };
             
             this.results.endpoints.push(endpointResult);
             
             if (working) {
               this.results.summary.working++;
-              const dataInfo = parsedBody && typeof parsedBody === 'object' ? 
-                `${dataType} with ${Object.keys(parsedBody).length} properties` : 
-                `${dataType}`;
-              console.log(`  ✅ ${res.statusCode} (${responseTime}ms) - ${dataInfo}`);
+              console.log(`  ✅ ${res.statusCode} (${responseTime}ms)`);
             } else {
               this.results.summary.broken++;
-              if (res.statusCode === 401 && endpoint.requiresAuth) {
-                this.results.summary.authFailed++;
-              }
-              console.log(`  ❌ ${res.statusCode} (${responseTime}ms) - Error`);
+              console.log(`  ❌ ${res.statusCode} (${responseTime}ms)`);
             }
             
           } catch (error) {
-            // Handle non-JSON responses
-            const working = res.statusCode >= 200 && res.statusCode < 300;
             this.results.endpoints.push({
-              path: endpoint.path,
-              method: endpoint.method,
-              description: endpoint.description + (withAuth ? ' (with auth)' : ''),
+              ...endpoint,
               url: url,
               status: res.statusCode,
-              responseTime: responseTime,
+              responseTime: Date.now() - startTime,
               dataType: 'text',
-              dataSize: Buffer.byteLength(body),
-              sampleData: { raw: body.substring(0, 200) },
-              headers: {
-                'content-type': res.headers['content-type'],
-                'content-length': res.headers['content-length']
-              },
-              working: working,
-              requiresAuth: endpoint.requiresAuth,
-              testedWithAuth: withAuth,
-              rawResponse: body.substring(0, 500)
+              working: res.statusCode >= 200 && res.statusCode < 300,
+              error: body.substring(0, 200)
             });
             
-            if (working) {
+            if (res.statusCode >= 200 && res.statusCode < 300) {
               this.results.summary.working++;
               console.log(`  ✅ ${res.statusCode} (${responseTime}ms) - Text response`);
             } else {
               this.results.summary.broken++;
-              console.log(`  ❌ ${res.statusCode} (${responseTime}ms) - Parse error: ${error.message}`);
+              console.log(`  ❌ ${res.statusCode} (${responseTime}ms) - Parse error`);
             }
           }
           
@@ -219,31 +267,21 @@ class FILOAPIAnalyzer {
       });
       
       req.on('error', (error) => {
-        const responseTime = Date.now() - startTime;
         this.results.endpoints.push({
-          path: endpoint.path,
-          method: endpoint.method,
-          description: endpoint.description + (withAuth ? ' (with auth)' : ''),
+          ...endpoint,
           url: url,
           status: 0,
-          responseTime: responseTime,
-          dataType: 'error',
-          dataSize: 0,
-          sampleData: { error: error.message },
-          headers: {},
+          responseTime: Date.now() - startTime,
           working: false,
-          requiresAuth: endpoint.requiresAuth,
-          testedWithAuth: withAuth,
-          rawResponse: error.message
+          error: error.message
         });
         
         this.results.summary.broken++;
         this.results.summary.total++;
-        console.log(`  ❌ Network Error (${responseTime}ms) - ${error.message}`);
+        console.log(`  ❌ Network Error - ${error.message}`);
         resolve();
       });
       
-      // Send POST data if present
       if (postData) {
         req.write(postData);
       }
@@ -253,35 +291,22 @@ class FILOAPIAnalyzer {
   }
 
   createSampleData(data) {
-    if (!data || typeof data !== 'object') {
-      return { raw: data };
-    }
+    if (!data || typeof data !== 'object') return { raw: data };
     
-    const type = Array.isArray(data) ? 'array' : 'object';
-    const keys = Array.isArray(data) ? [] : Object.keys(data);
-    
-    // Create structure description
     const structure = {};
     if (Array.isArray(data)) {
       structure.length = data.length;
-      if (data.length > 0) {
-        structure.sample = data[0];
-      }
+      structure.sample = data[0] || null;
     } else {
       Object.keys(data).forEach(key => {
         const value = data[key];
-        if (Array.isArray(value)) {
-          structure[key] = `array[${value.length}]`;
-        } else {
-          structure[key] = typeof value;
-        }
+        structure[key] = Array.isArray(value) ? `array[${value.length}]` : typeof value;
       });
     }
     
     return {
-      type: type,
-      keys: keys,
-      sample: Array.isArray(data) ? (data.length > 0 ? data[0] : null) : data,
+      type: Array.isArray(data) ? 'array' : 'object',
+      keys: Array.isArray(data) ? [] : Object.keys(data),
       structure: structure
     };
   }
@@ -290,171 +315,116 @@ class FILOAPIAnalyzer {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
-  generateReport() {
+  generateComprehensiveReport() {
     const successRate = this.results.summary.total > 0 
       ? Math.round((this.results.summary.working / this.results.summary.total) * 100)
       : 0;
     
-    console.log('\n📊 FILO API Analysis Report');
-    console.log('============================\n');
+    console.log('\n📊 FILO Health Platform - Complete Analysis Report');
+    console.log('==================================================\n');
     
-    console.log('🎯 SUMMARY:');
+    // Infrastructure Summary
+    console.log('🏗️  INFRASTRUCTURE:');
+    console.log(`   API Gateway: ${this.results.infrastructure.apiGateway}`);
+    console.log(`   Lambda Function: ${this.results.infrastructure.lambdaFunction}`);
+    console.log(`   Auth Middleware: ${this.results.infrastructure.authMiddleware}`);
+    console.log(`   CORS Enabled: ${this.results.infrastructure.corsEnabled}`);
+    console.log(`   Environment: ${this.results.infrastructure.environment}\n`);
+    
+    // API Summary
+    console.log('🎯 API SUMMARY:');
     console.log(`✅ Working: ${this.results.summary.working}/${this.results.summary.total}`);
     console.log(`❌ Broken: ${this.results.summary.broken}/${this.results.summary.total}`);
     console.log(`📊 Success Rate: ${successRate}%`);
-    console.log(`🔐 Auth Required: ${this.results.summary.authRequired}`);
-    console.log(`🚫 Auth Failed: ${this.results.summary.authFailed}\n`);
+    console.log(`🔍 Auto-discovered: ${this.results.summary.discovered} additional endpoints\n`);
     
-    const workingEndpoints = this.results.endpoints.filter(e => e.working);
-    const brokenEndpoints = this.results.endpoints.filter(e => !e.working);
-    const authEndpoints = this.results.endpoints.filter(e => e.requiresAuth);
-    
-    if (workingEndpoints.length > 0) {
-      console.log('🟢 WORKING ENDPOINTS:');
-      workingEndpoints.forEach(endpoint => {
-        console.log(`  ${endpoint.method} ${endpoint.path}`);
-        console.log(`    Status: ${endpoint.status} | Response Time: ${endpoint.responseTime}ms`);
-        console.log(`    Data: ${endpoint.dataType} with keys: ${endpoint.sampleData.keys ? endpoint.sampleData.keys.join(', ') : 'N/A'}`);
-        console.log('');
-      });
-    }
-    
-    if (brokenEndpoints.length > 0) {
-      console.log('🔴 BROKEN/ERROR ENDPOINTS:');
-      brokenEndpoints.forEach(endpoint => {
-        console.log(`  ${endpoint.method} ${endpoint.path}`);
-        console.log(`    Status: ${endpoint.status} | Issue: ${this.getErrorDescription(endpoint.status)}`);
-        if (endpoint.status === 401 && endpoint.requiresAuth) {
-          console.log(`    Note: This endpoint requires authentication`);
-        }
-        console.log('');
-      });
-    }
-
-    if (authEndpoints.length > 0) {
-      console.log('🔐 AUTHENTICATION ANALYSIS:');
-      authEndpoints.forEach(endpoint => {
-        const authStatus = endpoint.working ? '✅ Working' : '❌ Failed';
-        console.log(`  ${endpoint.method} ${endpoint.path} - ${authStatus}`);
-        if (endpoint.testedWithAuth) {
-          console.log(`    Tested with auth: ${endpoint.status}`);
-        }
-      });
-      console.log('');
-    }
-    
-    // Performance metrics
-    const responseTimes = this.results.endpoints.map(e => e.responseTime);
-    const avgResponseTime = responseTimes.reduce((a, b) => a + b, 0) / responseTimes.length;
-    const minResponseTime = Math.min(...responseTimes);
-    const maxResponseTime = Math.max(...responseTimes);
-    
-    console.log('⚡ PERFORMANCE METRICS:');
-    console.log(`  Average Response Time: ${Math.round(avgResponseTime)}ms`);
-    console.log(`  Fastest Response: ${minResponseTime}ms`);
-    console.log(`  Slowest Response: ${maxResponseTime}ms\n`);
-    
-    // Data insights
-    console.log('📋 API DATA INSIGHTS:');
-    workingEndpoints.forEach(endpoint => {
-      if (endpoint.sampleData.structure) {
-        console.log(`  ${endpoint.path}:`);
-        Object.keys(endpoint.sampleData.structure).forEach(key => {
-          console.log(`    - ${key}: ${endpoint.sampleData.structure[key]}`);
-        });
-        console.log('');
-      }
+    // Category breakdown
+    const categories = {};
+    this.results.endpoints.forEach(endpoint => {
+      const cat = endpoint.category || 'Other';
+      if (!categories[cat]) categories[cat] = { working: 0, total: 0 };
+      categories[cat].total++;
+      if (endpoint.working) categories[cat].working++;
     });
     
-    // Troubleshooting recommendations
-    console.log('🔧 TROUBLESHOOTING RECOMMENDATIONS:');
-    const errors401 = brokenEndpoints.filter(e => e.status === 401);
-    const errors404 = brokenEndpoints.filter(e => e.status === 404);
-    const errors500 = brokenEndpoints.filter(e => e.status === 500);
+    console.log('📈 BY CATEGORY:');
+    Object.keys(categories).forEach(cat => {
+      const stats = categories[cat];
+      const rate = Math.round((stats.working / stats.total) * 100);
+      console.log(`   ${cat}: ${stats.working}/${stats.total} (${rate}%)`);
+    });
     
-    if (errors401.length > 0) {
-      console.log('  📋 401 Unauthorized Errors:');
-      console.log('    - These endpoints may not be using your dev mode auth middleware');
-      console.log('    - Check if getCurrentUser() is being called for these routes');
-      console.log('    - Your dev mode should return demo user when no auth header is present');
-      errors401.forEach(e => {
-        console.log(`    - Check route: ${e.path}`);
-      });
+    // Performance metrics
+    const workingEndpoints = this.results.endpoints.filter(e => e.working);
+    if (workingEndpoints.length > 0) {
+      const responseTimes = workingEndpoints.map(e => e.responseTime);
+      const avgTime = Math.round(responseTimes.reduce((a, b) => a + b, 0) / responseTimes.length);
+      const minTime = Math.min(...responseTimes);
+      const maxTime = Math.max(...responseTimes);
+      
+      console.log('\n⚡ PERFORMANCE:');
+      console.log(`   Average Response: ${avgTime}ms`);
+      console.log(`   Fastest: ${minTime}ms`);
+      console.log(`   Slowest: ${maxTime}ms`);
     }
     
-    if (errors404.length > 0) {
-      console.log('  📋 404 Not Found Errors:');
-      errors404.forEach(e => {
-        console.log(`    - Missing endpoint: ${e.path}`);
-      });
-      console.log('    - These endpoints need to be implemented in your Lambda function');
-    }
+    this.results.status = successRate >= 95 ? 'excellent' : successRate >= 80 ? 'good' : 'needs-attention';
     
-    if (errors500.length > 0) {
-      console.log('  📋 500 Server Errors:');
-      console.log('    - Check Lambda CloudWatch logs: aws logs tail /aws/lambda/health-platform-dev');
-      console.log('    - Verify POST request body format and required fields');
-      console.log('    - Check database connections and queries');
-    }
-    
-    this.results.status = successRate > 50 ? 'healthy' : 'degraded';
+    console.log(`\n🎯 OVERALL STATUS: ${this.results.status.toUpperCase()}`);
   }
 
-  getErrorDescription(statusCode) {
-    const descriptions = {
-      0: 'Network Error',
-      400: 'Bad Request',
-      401: 'Unauthorized',
-      403: 'Forbidden', 
-      404: 'Not Found',
-      500: 'Internal Server Error',
-      502: 'Bad Gateway',
-      503: 'Service Unavailable'
-    };
-    return descriptions[statusCode] || 'HTTP Error';
-  }
-
-  saveResults() {
-    // Save detailed analysis
-    fs.writeFileSync('FILO_API_ANALYSIS.json', JSON.stringify(this.results, null, 2));
-    console.log('\n💾 Detailed API report saved to: FILO_API_ANALYSIS.json');
+  saveAllResults() {
+    // Complete analysis
+    fs.writeFileSync('API_ANALYSIS_COMPLETE.json', JSON.stringify(this.results, null, 2));
     
-    // Save Swagger-like documentation
-    const swagger = this.generateSwagger();
-    fs.writeFileSync('FILO_API_SWAGGER.json', JSON.stringify(swagger, null, 2));
-    console.log('📋 API documentation saved to: FILO_API_SWAGGER.json');
+    // OpenAPI/Swagger spec
+    const openapi = this.generateOpenAPI();
+    fs.writeFileSync('API_OPENAPI_SPEC.json', JSON.stringify(openapi, null, 2));
     
-    // Save summary
+    // GitHub Actions friendly summary
     const summary = {
       timestamp: this.results.timestamp,
-      baseURL: this.baseURL,
+      infrastructure: this.results.infrastructure,
       summary: this.results.summary,
       status: this.results.status,
-      workingEndpoints: this.results.endpoints.filter(e => e.working).length,
-      totalEndpoints: this.results.summary.total,
-      authEndpoints: this.results.endpoints.filter(e => e.requiresAuth).length,
-      troubleshooting: {
-        errors401: this.results.endpoints.filter(e => e.status === 401).length,
-        errors404: this.results.endpoints.filter(e => e.status === 404).length,
-        errors500: this.results.endpoints.filter(e => e.status === 500).length
-      }
+      successRate: Math.round((this.results.summary.working / this.results.summary.total) * 100),
+      categories: this.getCategoryStats()
     };
-    fs.writeFileSync('FILO_API_SUMMARY.json', JSON.stringify(summary, null, 2));
-    console.log('📊 API summary saved to: FILO_API_SUMMARY.json');
+    fs.writeFileSync('API_SUMMARY.json', JSON.stringify(summary, null, 2));
+    
+    console.log('\n💾 SAVED FILES:');
+    console.log('   📋 API_ANALYSIS_COMPLETE.json - Full analysis');
+    console.log('   📋 API_OPENAPI_SPEC.json - OpenAPI specification');
+    console.log('   📋 API_SUMMARY.json - Summary for automation');
   }
 
-  generateSwagger() {
-    const swagger = {
+  getCategoryStats() {
+    const categories = {};
+    this.results.endpoints.forEach(endpoint => {
+      const cat = endpoint.category || 'Other';
+      if (!categories[cat]) categories[cat] = { working: 0, total: 0 };
+      categories[cat].total++;
+      if (endpoint.working) categories[cat].working++;
+    });
+    return categories;
+  }
+
+  generateOpenAPI() {
+    const openapi = {
       openapi: '3.0.0',
       info: {
         title: 'FILO Health Platform API',
         version: '1.0.0',
-        description: 'Production-ready API with proxy integration for AI-powered health intelligence platform'
+        description: 'AI-powered health intelligence platform with proxy integration',
+        contact: {
+          name: 'FILO Health Platform',
+          url: 'https://deebyrne26.github.io/health-platform/'
+        }
       },
       servers: [
         {
           url: this.baseURL,
-          description: 'Production API Gateway with proxy integration'
+          description: 'Production API Gateway (AWS Lambda Proxy)'
         }
       ],
       paths: {},
@@ -462,45 +432,40 @@ class FILOAPIAnalyzer {
         securitySchemes: {
           BearerAuth: {
             type: 'http',
-            scheme: 'bearer'
+            scheme: 'bearer',
+            description: 'JWT token (dev mode: optional - falls back to demo user)'
           }
         }
       }
     };
     
     this.results.endpoints.forEach(endpoint => {
-      const path = endpoint.path.split('?')[0]; // Remove query parameters for swagger
-      if (!swagger.paths[path]) {
-        swagger.paths[path] = {};
-      }
+      const path = endpoint.path.split('?')[0];
+      if (!openapi.paths[path]) openapi.paths[path] = {};
       
-      const operation = {
+      openapi.paths[path][endpoint.method.toLowerCase()] = {
         summary: endpoint.description,
+        tags: [endpoint.category || 'General'],
         responses: {
           [endpoint.status]: {
             description: endpoint.working ? 'Success' : 'Error',
             content: {
               'application/json': {
                 schema: {
-                  type: endpoint.sampleData.type || 'object'
+                  type: endpoint.dataType || 'object'
                 }
               }
             }
           }
-        }
+        },
+        security: endpoint.requiresAuth ? [{ BearerAuth: [] }] : []
       };
-
-      if (endpoint.requiresAuth) {
-        operation.security = [{ BearerAuth: [] }];
-      }
-      
-      swagger.paths[path][endpoint.method.toLowerCase()] = operation;
     });
     
-    return swagger;
+    return openapi;
   }
 }
 
-// Run the analysis
-const analyzer = new FILOAPIAnalyzer();
+// Run the complete analysis
+const analyzer = new ComprehensiveAPIAnalyzer();
 analyzer.analyzeAPIs().catch(console.error);

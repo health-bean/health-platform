@@ -172,8 +172,8 @@
       "get": {
         "summary": "Get journal entries with date filter (dev mode)",
         "responses": {
-          "500": {
-            "description": "Error",
+          "200": {
+            "description": "Success",
             "content": {
               "application/json": {
                 "schema": {
