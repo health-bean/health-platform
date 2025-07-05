@@ -1,11 +1,6 @@
 // frontend/shared/contexts/AuthProvider.js
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
-// Add these lines right after the imports, before the AuthContext creation
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
-console.log('🔍 AuthProvider API_BASE_URL:', API_BASE_URL);
-console.log('🔍 Environment:', import.meta.env);
-
 const AuthContext = createContext({});
 
 export const useAuth = () => {
@@ -16,7 +11,10 @@ export const useAuth = () => {
   return context;
 };
 
-export const AuthProvider = ({ children }) => {
+export const AuthProvider = ({ children, apiBaseUrl }) => {
+  // Use prop value with fallback - this receives the env var from web-app
+  const API_BASE_URL = apiBaseUrl || 'https://suhoxvn8ik.execute-api.us-east-1.amazonaws.com/dev';
+  
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -56,7 +54,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     checkAuth();
-  }, []);
+  }, [API_BASE_URL]);
 
   const login = async (email, password) => {
     setError(null);

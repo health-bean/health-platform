@@ -1,46 +1,53 @@
-// utils/responses.js - Fixed CORS headers + combined functionality
-const corsHeaders = {
-    // 🔧 FIX: Changed from '*' to specific origin
-    'Access-Control-Allow-Origin': 'http://localhost:5173',
-    'Access-Control-Allow-Headers': 'Content-Type,Authorization,X-Amz-Date,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent,X-Requested-With',
-    'Access-Control-Allow-Methods': 'GET,POST,PUT,DELETE,OPTIONS',
-    // 🔧 FIX: Changed from 'false' to 'true' for auth
-    'Access-Control-Allow-Credentials': 'true',
-    'Content-Type': 'application/json'
+// backend/functions/api/utils/responses.js
+const CORS_HEADERS = {
+  'Access-Control-Allow-Origin': 'http://localhost:5173',
+  'Access-Control-Allow-Headers': 'Content-Type,Authorization',
+  'Access-Control-Allow-Methods': 'GET,POST,PUT,DELETE,OPTIONS',
+  'Access-Control-Allow-Credentials': 'true'
 };
 
-// 🔧 ADD: Handle OPTIONS requests (from your middleware/cors.js)
-const handleCors = (event) => {
-    if (event.httpMethod === 'OPTIONS') {
-        return {
-            statusCode: 200,
-            headers: corsHeaders,
-            body: JSON.stringify({ message: 'CORS preflight successful' })
-        };
-    }
-    return null;
-};
-
-// Your existing functions (keeping the same)
-const createResponse = (statusCode, data, headers = {}) => ({
-    statusCode,
-    headers: { ...corsHeaders, ...headers },
-    body: JSON.stringify(data)
+const success = (data, statusCode = 200) => ({
+  statusCode,
+  headers: CORS_HEADERS,
+  body: JSON.stringify(data)
 });
 
-const successResponse = (data, statusCode = 200) => 
-    createResponse(statusCode, data);
+const error = (message, statusCode = 500) => ({
+  statusCode,
+  headers: CORS_HEADERS,
+  body: JSON.stringify({ error: message })
+});
 
-const errorResponse = (message, statusCode = 500, details = null) => 
-    createResponse(statusCode, {
-        error: message,
-        ...(details && { details })
-    });
+const unauthorized = (message = 'Unauthorized') => ({
+  statusCode: 401,
+  headers: CORS_HEADERS,
+  body: JSON.stringify({ error: message })
+});
+
+const notFound = (message = 'Not Found') => ({
+  statusCode: 404,
+  headers: CORS_HEADERS,
+  body: JSON.stringify({ error: message })
+});
+
+const badRequest = (message = 'Bad Request') => ({
+  statusCode: 400,
+  headers: CORS_HEADERS,
+  body: JSON.stringify({ error: message })
+});
+
+// Handle OPTIONS requests for preflight
+const options = () => ({
+  statusCode: 200,
+  headers: CORS_HEADERS,
+  body: ''
+});
 
 module.exports = {
-    corsHeaders,
-    handleCors,    // 🔧 ADD: Export the handleCors function
-    createResponse,
-    successResponse,
-    errorResponse
+  success,
+  error,
+  unauthorized,
+  notFound,
+  badRequest,
+  options
 };
