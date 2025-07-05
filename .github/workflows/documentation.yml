@@ -44,7 +44,7 @@ jobs:
         echo "- **Documentation Files:** ${DOC_COUNT}" >> $GITHUB_STEP_SUMMARY
         
         # Check for key files
-        if [ -f "docs/docs/intro.md" ]; then
+        if [ -f "docs/docs/index.md" ]; then
           echo "- **✅ Platform Overview:** Generated" >> $GITHUB_STEP_SUMMARY
         fi
         
@@ -85,12 +85,12 @@ jobs:
             echo "✅ Home page generated"
           fi
           
-          if [ -f "build/intro/index.html" ]; then
-            echo "✅ Platform overview page generated"
-          fi
-          
           if [ -f "build/api/overview/index.html" ]; then
             echo "✅ API documentation page generated"
+          fi
+          
+          if [ -f "build/quick-start/index.html" ]; then
+            echo "✅ Quick start page generated"
           fi
           
         else
