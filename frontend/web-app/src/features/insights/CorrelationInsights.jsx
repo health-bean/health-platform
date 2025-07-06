@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useCorrelations } from '../../../shared/hooks/useCorrelations';
+import { useCorrelations } from '../../../../shared/hooks/useCorrelations';
 import { AlertTriangle, TrendingUp, Clock, Target, Zap, Activity } from 'lucide-react';
 
 const DEMO_USER_ID = '8e8a568a-c2f8-43a8-abf2-4e54408dbdc0'; // Sarah's ID for demo

@@ -1,324 +1,29 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, Clock, Calendar, CheckCircle2, X, Loader2, AlertCircle, Info, Search, TrendingUp, Settings, ChevronDown } from 'lucide-react';
+import { Plus, Clock, Calendar, CheckCircle2, X, Loader2, Search, TrendingUp, ChevronDown } from 'lucide-react';
+
+// Import shared components and hooks
+import { Button, Alert, Card, Input, Textarea, Select } from '../../shared/components/ui';
+import useProtocols from '../../shared/hooks/useProtocols';
+import useUserPreferences from '../../shared/hooks/useUserPreferences';
+import useExposureTypes from '../../shared/hooks/useExposureTypes';
+import useDetoxTypes from '../../shared/hooks/useDetoxTypes';
+import useReflectionData from '../../shared/hooks/useReflectionData';
+
+// Import app-specific hooks and features
+import SetupWizard from './features/setup/SetupWizard';
+
+// Import feature components for correlation insights and protocol foods
+import CorrelationInsights from './components/CorrelationInsights';
+import ProtocolFoods from './components/ProtocolFoods';
 
 // =================
-// API CONFIGURATION & SMART MOCKING
+// API CONFIGURATION
 // =================
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
-const MOCK_MODE = false; // Toggle for development - set to true to use all mock data
-
-// Mock data for missing APIs
-const MOCK_USER_PREFERENCES = {
-  protocols: ['1495844a-19de-404c-a288-7660eda0cbe1', 'eb9d6546-39bf-46ec-a594-f6e98d24b7ff'], // AIP + AIP Reintro
-  quick_supplements: [
-    { id: 'vit_d_1', name: 'Vitamin D 5000 IU', category: 'vitamin' },
-    { id: 'omega_1', name: 'Omega-3 Fish Oil', category: 'essential_fatty_acid' },
-    { id: 'prob_1', name: 'Probiotic Blend', category: 'probiotic' }
-  ],
-  quick_medications: [
-    { id: 'thyroid_1', name: 'Thyroid Medication', category: 'hormone' }
-  ],
-  quick_foods: [
-    { id: 'chicken_1', name: 'Chicken breast', category: 'protein' },
-    { id: 'broccoli_1', name: 'Broccoli', category: 'vegetable' },
-    { id: 'avocado_1', name: 'Avocado', category: 'fat' }
-  ],
-  quick_symptoms: [
-    { id: 'joint_1', name: 'Joint Pain', category: 'pain' },
-    { id: 'fog_1', name: 'Brain Fog', category: 'cognitive' },
-    { id: 'fatigue_1', name: 'Fatigue', category: 'energy' }
-  ],
-  quick_detox: [
-    { id: 'sauna_1', name: 'Sauna', category: 'heat' },
-    { id: 'coffee_enema_1', name: 'Coffee Enema', category: 'internal' },
-    { id: 'epsom_bath_1', name: 'Epsom Bath', category: 'bath' }
-  ],
-  setup_complete: false
-};
-
-const MOCK_EXPOSURE_TYPES = [
-  { id: 'mold_1', name: 'Mold Exposure', category: 'Environmental' },
-  { id: 'clean_1', name: 'Cleaning Products', category: 'Chemical' },
-  { id: 'frag_1', name: 'Fragrances/Perfumes', category: 'Chemical' },
-  { id: 'emf_1', name: 'WiFi/Electronics', category: 'Electromagnetic' },
-  { id: 'stress_1', name: 'Work Stress', category: 'Psychological' },
-  { id: 'air_1', name: 'Air Pollution', category: 'Environmental' }
-];
-
-const MOCK_DETOX_TYPES = [
-  { id: 'sauna_1', name: 'Sauna', category: 'Heat' },
-  { id: 'infrared_1', name: 'Infrared Sauna', category: 'Heat' },
-  { id: 'coffee_enema_1', name: 'Coffee Enema', category: 'Internal' },
-  { id: 'epsom_bath_1', name: 'Epsom Bath', category: 'Bath' },
-  { id: 'detox_bath_1', name: 'Detox Bath', category: 'Bath' },
-  { id: 'dry_brushing_1', name: 'Dry Brushing', category: 'Manual' },
-  { id: 'lymphatic_1', name: 'Lymphatic Massage', category: 'Manual' },
-  { id: 'cold_plunge_1', name: 'Cold Plunge', category: 'Cold' }
-];
 
 // =================
-// API ABSTRACTION LAYER
-// =================
-
-const useProtocols = () => {
-  const [protocols, setProtocols] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const fetchProtocols = async () => {
-      try {
-        const response = await fetch(`${API_BASE_URL}/api/v1/protocols`);
-        if (!response.ok) throw new Error(`HTTP ${response.status}`);
-        const data = await response.json();
-        setProtocols(data.protocols || []);
-      } catch (error) {
-        console.error('Failed to load protocols:', error);
-        setError(error.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProtocols();
-  }, []);
-
-  return { protocols, loading, error };
-};
-
-const useUserPreferences = () => {
-  const [preferences, setPreferences] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  // Load preferences on app start
-  useEffect(() => {
-    const loadPreferences = () => {
-      try {
-        // Try to load from localStorage first
-        const saved = localStorage.getItem('user_preferences');
-        if (saved) {
-          const parsed = JSON.parse(saved);
-          setPreferences(parsed);
-        } else {
-          // Set default preferences for new users
-          setPreferences({
-            protocols: [],
-            quick_supplements: [],
-            quick_medications: [],
-            quick_foods: [],
-            quick_symptoms: [],
-            quick_detox: [],
-            setup_complete: false
-          });
-        }
-      } catch (error) {
-        console.error('Failed to load preferences:', error);
-        setError('Failed to load preferences');
-        // Fallback to default
-        setPreferences({
-          protocols: [],
-          quick_supplements: [],
-          quick_medications: [],
-          quick_foods: [],
-          quick_symptoms: [],
-          quick_detox: [],
-          setup_complete: false
-        });
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadPreferences();
-  }, []);
-
-  const updatePreferences = async (newPreferences) => {
-    if (!preferences) return;
-    
-    const updatedPreferences = { ...preferences, ...newPreferences };
-    
-    try {
-      // Save to localStorage immediately (optimistic update)
-      localStorage.setItem('user_preferences', JSON.stringify(updatedPreferences));
-      setPreferences(updatedPreferences);
-      
-      // TODO: Also save to your API when ready
-      // const response = await fetch(`${API_BASE_URL}/api/v1/user/preferences`, {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify(updatedPreferences)
-      // });
-      
-    } catch (error) {
-      console.error('Failed to update preferences:', error);
-      setError('Failed to save preferences');
-      // Revert optimistic update on error
-      const saved = localStorage.getItem('user_preferences');
-      if (saved) {
-        setPreferences(JSON.parse(saved));
-      }
-    }
-  };
-
-  return { 
-    preferences, 
-    updatePreferences, 
-    loading,
-    error,
-    isReady: preferences !== null 
-  };
-};
-
-const useExposureTypes = () => {
-  const [exposureTypes, setExposureTypes] = useState(MOCK_EXPOSURE_TYPES);
-  const [loading, setLoading] = useState(false);
-
-  // Future: Replace with real API
-  // const fetchExposureTypes = async () => {
-  //   const response = await fetch(`${API_BASE_URL}/api/v1/exposure-types`);
-  //   const data = await response.json();
-  //   setExposureTypes(data.exposure_types);
-  // };
-
-  return { exposureTypes, loading };
-};
-
-const useDetoxTypes = () => {
-  const [detoxTypes, setDetoxTypes] = useState(MOCK_DETOX_TYPES);
-  const [loading, setLoading] = useState(false);
-
-  // Future: Replace with real API
-  // const fetchDetoxTypes = async () => {
-  //   const response = await fetch(`${API_BASE_URL}/api/v1/detox-types`);
-  //   const data = await response.json();
-  //   setDetoxTypes(data.detox_types);
-  // };
-
-  return { detoxTypes, loading };
-};
-
-// =================
-// DESIGN SYSTEM COMPONENTS
-// =================
-
-const Button = ({ 
-  variant = 'primary', 
-  size = 'md', 
-  disabled = false, 
-  loading = false, 
-  icon: Icon, 
-  children, 
-  className = '',
-  ...props 
-}) => {
-  const variants = {
-    primary: 'bg-blue-600 hover:bg-blue-700 text-white border-blue-600',
-    secondary: 'bg-white hover:bg-gray-50 text-gray-700 border-gray-300',
-    success: 'bg-green-600 hover:bg-green-700 text-white border-green-600',
-    danger: 'bg-red-600 hover:bg-red-700 text-white border-red-600',
-    warning: 'bg-orange-600 hover:bg-orange-700 text-white border-orange-600',
-    ghost: 'bg-transparent hover:bg-gray-100 text-gray-700 border-transparent'
-  };
-
-  const sizes = {
-    sm: 'px-3 py-1.5 text-sm',
-    md: 'px-4 py-2',
-    lg: 'px-6 py-3 text-lg'
-  };
-
-  return (
-    <button
-      className={`inline-flex items-center justify-center space-x-2 font-medium rounded-lg border transition-colors focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${variants[variant]} ${sizes[size]} ${disabled || loading ? 'opacity-50 cursor-not-allowed' : ''} ${className}`}
-      disabled={disabled || loading}
-      {...props}
-    >
-      {loading ? (
-        <Loader2 size={16} className="animate-spin" />
-      ) : Icon ? (
-        <Icon size={16} />
-      ) : null}
-      <span>{children}</span>
-    </button>
-  );
-};
-
-const Alert = ({ 
-  variant = 'info', 
-  title, 
-  children, 
-  dismissible = false, 
-  onDismiss,
-  className = ''
-}) => {
-  const variants = {
-    info: { bg: 'bg-blue-50', border: 'border-blue-200', text: 'text-blue-800', icon: Info },
-    success: { bg: 'bg-green-50', border: 'border-green-200', text: 'text-green-800', icon: CheckCircle2 },
-    warning: { bg: 'bg-orange-50', border: 'border-orange-200', text: 'text-orange-800', icon: AlertCircle },
-    danger: { bg: 'bg-red-50', border: 'border-red-200', text: 'text-red-800', icon: AlertCircle }
-  };
-
-  const config = variants[variant];
-  const Icon = config.icon;
-
-  return (
-    <div className={`${config.bg} ${config.border} border rounded-lg p-4 ${className}`}>
-      <div className="flex items-start space-x-3">
-        <Icon size={20} className={config.text} />
-        <div className="flex-1">
-          {title && (
-            <h4 className={`text-sm font-medium ${config.text} mb-1`}>{title}</h4>
-          )}
-          <div className={`text-sm ${config.text}`}>{children}</div>
-        </div>
-        {dismissible && (
-          <button onClick={onDismiss} className={`${config.text} hover:opacity-75`}>
-            <X size={16} />
-          </button>
-        )}
-      </div>
-    </div>
-  );
-};
-
-const Card = ({ 
-  title, 
-  subtitle, 
-  icon: Icon, 
-  variant = 'default',
-  children, 
-  className = '' 
-}) => {
-  const variants = {
-    default: 'bg-white border-gray-200',
-    primary: 'bg-blue-50 border-blue-200',
-    success: 'bg-green-50 border-green-200',
-    warning: 'bg-orange-50 border-orange-200',
-    purple: 'bg-purple-50 border-purple-200',
-    indigo: 'bg-indigo-50 border-indigo-200',
-    pink: 'bg-pink-50 border-pink-200',
-    teal: 'bg-teal-50 border-teal-200'
-  };
-
-  return (
-    <div className={`${variants[variant]} border rounded-lg p-4 ${className}`}>
-      {(title || subtitle || Icon) && (
-        <div className="flex items-center space-x-3 mb-3">
-          {Icon && <Icon size={20} className="text-gray-600" />}
-          <div>
-            {title && <h3 className="font-medium text-gray-900">{title}</h3>}
-            {subtitle && <p className="text-sm text-gray-500">{subtitle}</p>}
-          </div>
-        </div>
-      )}
-      {children}
-    </div>
-  );
-};
-
-// =================
-// MULTI-SELECT PROTOCOL DROPDOWN (FIXED)
+// MULTI-SELECT PROTOCOL DROPDOWN - UPDATED WITH NO PROTOCOL OPTION
 // =================
 
 const MultiSelectProtocolDropdown = ({ protocols, selectedProtocols, onSelectionChange }) => {
@@ -326,7 +31,12 @@ const MultiSelectProtocolDropdown = ({ protocols, selectedProtocols, onSelection
   const [isUpdating, setIsUpdating] = useState(false);
 
   const getDisplayText = () => {
-    if (selectedProtocols.length === 0) return 'Select Protocols...';
+    if (!selectedProtocols || selectedProtocols.length === 0) return 'Select Protocols...';
+    
+    // Handle "No Protocol" selection
+    if (selectedProtocols.includes('no_protocol')) {
+      return 'No Protocol';
+    }
     
     if (selectedProtocols.length === 1) {
       const protocol = protocols.find(p => p.id === selectedProtocols[0]);
@@ -336,7 +46,6 @@ const MultiSelectProtocolDropdown = ({ protocols, selectedProtocols, onSelection
     if (selectedProtocols.length === 2) {
       const names = selectedProtocols.map(id => {
         const protocol = protocols.find(p => p.id === id);
-        // Get first word of protocol name for space
         return protocol?.name?.split(' ')[0] || 'Protocol';
       });
       return names.join(' + ');
@@ -346,14 +55,29 @@ const MultiSelectProtocolDropdown = ({ protocols, selectedProtocols, onSelection
   };
 
   const toggleProtocol = async (protocolId) => {
-    if (isUpdating) return; // Prevent double-clicks
+    if (isUpdating) return;
     
     setIsUpdating(true);
     
     try {
-      const newSelection = selectedProtocols.includes(protocolId)
-        ? selectedProtocols.filter(id => id !== protocolId)
-        : [...selectedProtocols, protocolId];
+      let newSelection;
+      
+      // Special handling for "No Protocol" option
+      if (protocolId === 'no_protocol') {
+        if (selectedProtocols.includes('no_protocol')) {
+          // Deselecting "No Protocol" - remove it
+          newSelection = selectedProtocols.filter(id => id !== 'no_protocol');
+        } else {
+          // Selecting "No Protocol" - clear all others and select this
+          newSelection = ['no_protocol'];
+        }
+      } else {
+        // Regular protocol selection
+        const filteredProtocols = selectedProtocols.filter(id => id !== 'no_protocol');
+        newSelection = filteredProtocols.includes(protocolId)
+          ? filteredProtocols.filter(id => id !== protocolId)
+          : [...filteredProtocols, protocolId];
+      }
       
       await onSelectionChange(newSelection);
     } catch (error) {
@@ -363,7 +87,6 @@ const MultiSelectProtocolDropdown = ({ protocols, selectedProtocols, onSelection
     }
   };
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (!event.target.closest('.protocol-dropdown')) {
@@ -379,6 +102,8 @@ const MultiSelectProtocolDropdown = ({ protocols, selectedProtocols, onSelection
       document.removeEventListener('click', handleClickOutside);
     };
   }, [isOpen]);
+
+  const isNoProtocolSelected = selectedProtocols && selectedProtocols.includes('no_protocol');
 
   return (
     <div className="relative protocol-dropdown">
@@ -399,16 +124,37 @@ const MultiSelectProtocolDropdown = ({ protocols, selectedProtocols, onSelection
 
       {isOpen && (
         <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-300 rounded-lg shadow-lg z-50 max-h-60 overflow-y-auto">
+          
+          {/* No Protocol Option - First */}
+          <label className="flex items-center space-x-3 p-3 hover:bg-purple-50 cursor-pointer border-b border-gray-100">
+            <input
+              type="checkbox"
+              checked={isNoProtocolSelected}
+              onChange={() => toggleProtocol('no_protocol')}
+              disabled={isUpdating}
+              className="rounded text-purple-600 focus:ring-purple-500"
+            />
+            <div className="flex-1">
+              <div className="font-medium text-sm text-gray-900">🔍 No Protocol</div>
+              <div className="text-xs text-gray-600">Track freely to discover your own patterns</div>
+            </div>
+          </label>
+
+          {/* Regular Protocols */}
           {protocols.map((protocol) => (
             <label
               key={protocol.id}
-              className="flex items-center space-x-3 p-3 hover:bg-blue-50 cursor-pointer border-b border-gray-100 last:border-b-0"
+              className={`flex items-center space-x-3 p-3 cursor-pointer border-b border-gray-100 last:border-b-0 ${
+                isNoProtocolSelected 
+                  ? 'opacity-50 cursor-not-allowed hover:bg-gray-50' 
+                  : 'hover:bg-blue-50'
+              }`}
             >
               <input
                 type="checkbox"
-                checked={selectedProtocols.includes(protocol.id)}
+                checked={selectedProtocols && selectedProtocols.includes(protocol.id)}
                 onChange={() => toggleProtocol(protocol.id)}
-                disabled={isUpdating}
+                disabled={isUpdating || isNoProtocolSelected}
                 className="rounded text-blue-600 focus:ring-blue-500"
               />
               <div className="flex-1">
@@ -418,7 +164,6 @@ const MultiSelectProtocolDropdown = ({ protocols, selectedProtocols, onSelection
             </label>
           ))}
           
-          {/* Close button */}
           <div className="p-2 border-t border-gray-200 bg-gray-50">
             <button
               onClick={() => setIsOpen(false)}
@@ -434,442 +179,7 @@ const MultiSelectProtocolDropdown = ({ protocols, selectedProtocols, onSelection
 };
 
 // =================
-// SETUP WIZARD COMPONENTS
-// =================
-
-const SetupWizard = ({ onComplete }) => {
-  const [currentStep, setCurrentStep] = useState(0);
-  const [setupData, setSetupData] = useState({
-    setupType: null, // 'quick' or 'full'
-    protocols: [],
-    symptoms: [],
-    supplements: [],
-    medications: [],
-    foods: [],
-    detox: []
-  });
-
-  const { protocols } = useProtocols();
-  const { updatePreferences } = useUserPreferences();
-
-  const steps = [
-    { title: 'Welcome', component: WelcomeStep },
-    { title: 'Protocols', component: ProtocolsStep },
-    { title: 'Symptoms', component: SymptomsStep },
-    { title: 'Supplements', component: SupplementsStep },
-    { title: 'Medications', component: MedicationsStep },
-    { title: 'Common Foods', component: FoodsStep },
-    { title: 'Detox Activities', component: DetoxStep }
-  ];
-
-  const maxSteps = setupData.setupType === 'quick' ? 2 : steps.length;
-
-  const handleNext = () => {
-    if (currentStep < maxSteps - 1) {
-      setCurrentStep(currentStep + 1);
-    } else {
-      completeSetup();
-    }
-  };
-
-  const completeSetup = async () => {
-    console.log('Completing setup with data:', setupData);
-    
-    try {
-      await updatePreferences({
-        protocols: setupData.protocols,
-        quick_symptoms: setupData.symptoms,
-        quick_supplements: setupData.supplements,
-        quick_medications: setupData.medications,
-        quick_foods: setupData.foods,
-        quick_detox: setupData.detox,
-        setup_complete: true
-      });
-      
-      console.log('Setup completed successfully');
-      
-      // Small delay to ensure preferences are saved
-      setTimeout(() => {
-        onComplete();
-      }, 500);
-      
-    } catch (error) {
-      console.error('Failed to complete setup:', error);
-      // Still allow completion even if save fails
-      onComplete();
-    }
-  };
-
-  const updateSetupData = (updates) => {
-    setSetupData({ ...setupData, ...updates });
-  };
-
-  const CurrentStepComponent = steps[currentStep].component;
-
-  return (
-    <div className="max-w-md mx-auto bg-white min-h-screen p-4">
-      <div className="mb-6">
-        <div className="flex items-center justify-between mb-2">
-          <h2 className="text-xl font-bold text-gray-900">Setup</h2>
-          <span className="text-sm text-gray-500">
-            Step {currentStep + 1} of {maxSteps}
-          </span>
-        </div>
-        <div className="w-full bg-gray-200 rounded-full h-2">
-          <div 
-            className="bg-blue-600 h-2 rounded-full transition-all duration-300"
-            style={{ width: `${((currentStep + 1) / maxSteps) * 100}%` }}
-          />
-        </div>
-      </div>
-
-      <CurrentStepComponent
-        setupData={setupData}
-        updateSetupData={updateSetupData}
-        protocols={protocols}
-        onNext={handleNext}
-        onBack={() => setCurrentStep(Math.max(0, currentStep - 1))}
-        isFirst={currentStep === 0}
-        isLast={currentStep === maxSteps - 1}
-      />
-    </div>
-  );
-};
-
-const WelcomeStep = ({ updateSetupData, onNext }) => (
-  <div className="space-y-6">
-    <div className="text-center">
-      <h3 className="text-2xl font-bold text-gray-900 mb-2">Welcome to FILO!</h3>
-      <p className="text-gray-600">Let's set up your health journey. How would you like to begin?</p>
-    </div>
-
-    <div className="space-y-4">
-      <button
-        onClick={() => {
-          updateSetupData({ setupType: 'quick' });
-          onNext();
-        }}
-        className="w-full p-4 text-left border-2 border-gray-200 rounded-lg hover:border-blue-500 transition-colors"
-      >
-        <div className="font-semibold text-gray-900">🚀 Quick Start (2 min)</div>
-        <div className="text-sm text-gray-600">Jump right in and explore</div>
-      </button>
-
-      <button
-        onClick={() => {
-          updateSetupData({ setupType: 'full' });
-          onNext();
-        }}
-        className="w-full p-4 text-left border-2 border-blue-500 bg-blue-50 rounded-lg"
-      >
-        <div className="font-semibold text-gray-900">📋 Full Setup (5 min)</div>
-        <div className="text-sm text-gray-600">Get the complete personalized experience</div>
-      </button>
-    </div>
-  </div>
-);
-
-const ProtocolsStep = ({ setupData, updateSetupData, protocols, onNext, onBack, isLast }) => (
-  <div className="space-y-6">
-    <div>
-      <h3 className="text-lg font-semibold text-gray-900 mb-2">Select Your Protocols</h3>
-      <p className="text-sm text-gray-600">Choose the healing protocols you're following. You can select multiple.</p>
-    </div>
-
-    <div className="space-y-3">
-      {protocols.map((protocol) => (
-        <label
-          key={protocol.id}
-          className={`flex items-start space-x-3 p-3 border rounded-lg cursor-pointer transition-colors ${
-            setupData.protocols.includes(protocol.id) ? 'border-blue-500 bg-blue-50' : 'border-gray-200 hover:border-gray-300'
-          }`}
-        >
-          <input
-            type="checkbox"
-            checked={setupData.protocols.includes(protocol.id)}
-            onChange={(e) => {
-              const newProtocols = e.target.checked
-                ? [...setupData.protocols, protocol.id]
-                : setupData.protocols.filter(id => id !== protocol.id);
-              updateSetupData({ protocols: newProtocols });
-            }}
-            className="mt-1 rounded text-blue-600 focus:ring-blue-500"
-          />
-          <div>
-            <div className="font-medium">{protocol.name}</div>
-            <div className="text-sm text-gray-600">{protocol.description}</div>
-          </div>
-        </label>
-      ))}
-    </div>
-
-    <div className="flex space-x-3">
-      <Button variant="secondary" onClick={onBack} className="flex-1">
-        Back
-      </Button>
-      <Button 
-        onClick={onNext} 
-        disabled={setupData.protocols.length === 0}
-        className="flex-1"
-      >
-        {isLast ? 'Complete Setup' : 'Next'}
-      </Button>
-    </div>
-  </div>
-);
-
-const SymptomsStep = ({ setupData, updateSetupData, onNext, onBack, isLast }) => {
-  const commonSymptoms = [
-    { id: 'joint_pain', name: 'Joint Pain', category: 'Pain' },
-    { id: 'brain_fog', name: 'Brain Fog', category: 'Cognitive' },
-    { id: 'fatigue', name: 'Fatigue', category: 'Energy' },
-    { id: 'digestive', name: 'Digestive Issues', category: 'Gut' },
-    { id: 'skin', name: 'Skin Issues', category: 'Skin' },
-    { id: 'sleep', name: 'Sleep Problems', category: 'Sleep' }
-  ];
-
-  return (
-    <div className="space-y-6">
-      <div>
-        <h3 className="text-lg font-semibold text-gray-900 mb-2">Symptoms You're Tracking</h3>
-        <p className="text-sm text-gray-600">Select symptoms you want to track for quick entry later.</p>
-      </div>
-
-      <div className="grid grid-cols-2 gap-3">
-        {commonSymptoms.map((symptom) => (
-          <label
-            key={symptom.id}
-            className={`flex items-center space-x-2 p-3 border rounded-lg cursor-pointer text-sm ${
-              setupData.symptoms.some(s => s.id === symptom.id) ? 'border-blue-500 bg-blue-50' : 'border-gray-200'
-            }`}
-          >
-            <input
-              type="checkbox"
-              checked={setupData.symptoms.some(s => s.id === symptom.id)}
-              onChange={(e) => {
-                const newSymptoms = e.target.checked
-                  ? [...setupData.symptoms, symptom]
-                  : setupData.symptoms.filter(s => s.id !== symptom.id);
-                updateSetupData({ symptoms: newSymptoms });
-              }}
-              className="rounded text-blue-600 focus:ring-blue-500"
-            />
-            <span>{symptom.name}</span>
-          </label>
-        ))}
-      </div>
-
-      <div className="flex space-x-3">
-        <Button variant="secondary" onClick={onBack} className="flex-1">
-          Back
-        </Button>
-        <Button onClick={onNext} className="flex-1">
-          {isLast ? 'Complete Setup' : 'Next'}
-        </Button>
-      </div>
-    </div>
-  );
-};
-
-const SupplementsStep = ({ setupData, updateSetupData, onNext, onBack, isLast }) => {
-  const commonSupplements = [
-    { id: 'vit_d', name: 'Vitamin D', category: 'Vitamin' },
-    { id: 'omega_3', name: 'Omega-3 Fish Oil', category: 'Essential Fatty Acid' },
-    { id: 'probiotic', name: 'Probiotic', category: 'Probiotic' },
-    { id: 'magnesium', name: 'Magnesium', category: 'Mineral' },
-    { id: 'zinc', name: 'Zinc', category: 'Mineral' },
-    { id: 'b_complex', name: 'B-Complex', category: 'Vitamin' }
-  ];
-
-  return (
-    <div className="space-y-6">
-      <div>
-        <h3 className="text-lg font-semibold text-gray-900 mb-2">Daily Supplements</h3>
-        <p className="text-sm text-gray-600">Select supplements you take regularly for quick tracking.</p>
-      </div>
-
-      <div className="space-y-2">
-        {commonSupplements.map((supplement) => (
-          <label
-            key={supplement.id}
-            className={`flex items-center space-x-3 p-3 border rounded-lg cursor-pointer ${
-              setupData.supplements.some(s => s.id === supplement.id) ? 'border-blue-500 bg-blue-50' : 'border-gray-200'
-            }`}
-          >
-            <input
-              type="checkbox"
-              checked={setupData.supplements.some(s => s.id === supplement.id)}
-              onChange={(e) => {
-                const newSupplements = e.target.checked
-                  ? [...setupData.supplements, supplement]
-                  : setupData.supplements.filter(s => s.id !== supplement.id);
-                updateSetupData({ supplements: newSupplements });
-              }}
-              className="rounded text-blue-600 focus:ring-blue-500"
-            />
-            <span className="font-medium">{supplement.name}</span>
-            <span className="text-sm text-gray-500">{supplement.category}</span>
-          </label>
-        ))}
-      </div>
-
-      <div className="flex space-x-3">
-        <Button variant="secondary" onClick={onBack} className="flex-1">
-          Back
-        </Button>
-        <Button onClick={onNext} className="flex-1">
-          {isLast ? 'Complete Setup' : 'Next'}
-        </Button>
-      </div>
-    </div>
-  );
-};
-
-const MedicationsStep = ({ setupData, updateSetupData, onNext, onBack, isLast }) => (
-  <div className="space-y-6">
-    <div>
-      <h3 className="text-lg font-semibold text-gray-900 mb-2">Medications</h3>
-      <p className="text-sm text-gray-600">Add any medications you take regularly (optional).</p>
-    </div>
-
-    <div className="space-y-3">
-      <input
-        type="text"
-        placeholder="e.g., Thyroid medication, Blood pressure medication"
-        className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-      />
-      <Button variant="ghost" size="sm" icon={Plus}>
-        Add Medication
-      </Button>
-    </div>
-
-    <div className="flex space-x-3">
-      <Button variant="secondary" onClick={onBack} className="flex-1">
-        Back
-      </Button>
-      <Button onClick={onNext} className="flex-1">
-        {isLast ? 'Complete Setup' : 'Next'}
-      </Button>
-    </div>
-  </div>
-);
-
-const FoodsStep = ({ setupData, updateSetupData, onNext, onBack, isLast }) => {
-  const commonFoods = [
-    { id: 'chicken', name: 'Chicken breast', category: 'Protein' },
-    { id: 'beef', name: 'Ground beef', category: 'Protein' },
-    { id: 'salmon', name: 'Salmon', category: 'Protein' },
-    { id: 'broccoli', name: 'Broccoli', category: 'Vegetable' },
-    { id: 'avocado', name: 'Avocado', category: 'Fat' },
-    { id: 'bone_broth', name: 'Bone broth', category: 'Beverage' }
-  ];
-
-  return (
-    <div className="space-y-6">
-      <div>
-        <h3 className="text-lg font-semibold text-gray-900 mb-2">Common Foods</h3>
-        <p className="text-sm text-gray-600">Select foods you eat regularly for quick tracking.</p>
-      </div>
-
-      <div className="grid grid-cols-2 gap-3">
-        {commonFoods.map((food) => (
-          <label
-            key={food.id}
-            className={`flex items-center space-x-2 p-3 border rounded-lg cursor-pointer text-sm ${
-              setupData.foods.some(f => f.id === food.id) ? 'border-blue-500 bg-blue-50' : 'border-gray-200'
-            }`}
-          >
-            <input
-              type="checkbox"
-              checked={setupData.foods.some(f => f.id === food.id)}
-              onChange={(e) => {
-                const newFoods = e.target.checked
-                  ? [...setupData.foods, food]
-                  : setupData.foods.filter(f => f.id !== food.id);
-                updateSetupData({ foods: newFoods });
-              }}
-              className="rounded text-blue-600 focus:ring-blue-500"
-            />
-            <div>
-              <div className="font-medium">{food.name}</div>
-              <div className="text-xs text-gray-500">{food.category}</div>
-            </div>
-          </label>
-        ))}
-      </div>
-
-      <div className="flex space-x-3">
-        <Button variant="secondary" onClick={onBack} className="flex-1">
-          Back
-        </Button>
-        <Button onClick={onNext} className="flex-1">
-          {isLast ? 'Complete Setup' : 'Next'}
-        </Button>
-      </div>
-    </div>
-  );
-};
-
-const DetoxStep = ({ setupData, updateSetupData, onNext, onBack, isLast }) => {
-  const commonDetoxActivities = [
-    { id: 'sauna', name: 'Sauna', category: 'Heat' },
-    { id: 'infrared', name: 'Infrared Sauna', category: 'Heat' },
-    { id: 'coffee_enema', name: 'Coffee Enema', category: 'Internal' },
-    { id: 'epsom_bath', name: 'Epsom Bath', category: 'Bath' },
-    { id: 'detox_bath', name: 'Detox Bath', category: 'Bath' },
-    { id: 'dry_brushing', name: 'Dry Brushing', category: 'Manual' },
-    { id: 'cold_plunge', name: 'Cold Plunge', category: 'Cold' },
-    { id: 'lymphatic', name: 'Lymphatic Massage', category: 'Manual' }
-  ];
-
-  return (
-    <div className="space-y-6">
-      <div>
-        <h3 className="text-lg font-semibold text-gray-900 mb-2">Detox Activities</h3>
-        <p className="text-sm text-gray-600">Select detox activities you do regularly for quick tracking.</p>
-      </div>
-
-      <div className="grid grid-cols-2 gap-3">
-        {commonDetoxActivities.map((detox) => (
-          <label
-            key={detox.id}
-            className={`flex items-center space-x-2 p-3 border rounded-lg cursor-pointer text-sm ${
-              setupData.detox.some(d => d.id === detox.id) ? 'border-purple-500 bg-purple-50' : 'border-gray-200'
-            }`}
-          >
-            <input
-              type="checkbox"
-              checked={setupData.detox.some(d => d.id === detox.id)}
-              onChange={(e) => {
-                const newDetox = e.target.checked
-                  ? [...setupData.detox, detox]
-                  : setupData.detox.filter(d => d.id !== detox.id);
-                updateSetupData({ detox: newDetox });
-              }}
-              className="rounded text-purple-600 focus:ring-purple-500"
-            />
-            <div>
-              <div className="font-medium">{detox.name}</div>
-              <div className="text-xs text-gray-500">{detox.category}</div>
-            </div>
-          </label>
-        ))}
-      </div>
-
-      <div className="flex space-x-3">
-        <Button variant="secondary" onClick={onBack} className="flex-1">
-          Back
-        </Button>
-        <Button onClick={onNext} className="flex-1">
-          Complete Setup
-        </Button>
-      </div>
-    </div>
-  );
-};
-
-// =================
-// SMART FOOD SELECTOR (API-DRIVEN)
+// SMART FOOD SELECTOR
 // =================
 
 const SmartFoodSelector = ({ selectedItems, onToggleItem, selectedProtocols = [] }) => {
@@ -886,11 +196,9 @@ const SmartFoodSelector = ({ selectedItems, onToggleItem, selectedProtocols = []
 
       setLoading(true);
       try {
-        // For multi-protocol, we'll use the first protocol for now
-        // Future enhancement: API should handle multiple protocol IDs
         const protocolId = selectedProtocols[0];
         let url = `${API_BASE_URL}/api/v1/foods/search?search=${encodeURIComponent(searchTerm)}`;
-        if (protocolId) {
+        if (protocolId && protocolId !== 'no_protocol') {
           url += `&protocol_id=${protocolId}`;
         }
 
@@ -912,12 +220,11 @@ const SmartFoodSelector = ({ selectedItems, onToggleItem, selectedProtocols = []
     <div className="space-y-4">
       <div className="relative">
         <Search size={16} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-        <input
-          type="text"
+        <Input
           placeholder="Search foods..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          className="pl-10"
         />
       </div>
 
@@ -983,11 +290,13 @@ const SmartFoodSelector = ({ selectedItems, onToggleItem, selectedProtocols = []
 };
 
 // =================
-// QUICK CHECKS COMPONENT (FIXED)
+// QUICK CHECKS COMPONENT
 // =================
 
 const QuickChecks = ({ type, preferences, onQuickSelect }) => {
   const getQuickItems = () => {
+    if (!preferences) return [];
+    
     switch(type) {
       case 'supplement': return preferences.quick_supplements || [];
       case 'medication': return preferences.quick_medications || [];
@@ -1025,110 +334,6 @@ const QuickChecks = ({ type, preferences, onQuickSelect }) => {
 };
 
 // =================
-// REFLECTION DATA HOOK (UPDATED - DETOX REMOVED)
-// =================
-
-const useReflectionData = (selectedDate) => {
-  const [reflectionData, setReflectionData] = useState({
-    bedtime: '',
-    wake_time: '',
-    sleep_quality: '',
-    overnight_symptoms: '',
-    energy_level: 5,
-    mood_level: 5,
-    physical_comfort: 5,
-    overall_notes: '',
-    activity_level: '',
-    meditation_practice: false,
-    meditation_duration: 0,
-    mindfulness_activities: '',
-    cycle_day: '',
-    ovulation: false,
-    additional_reflections: ''
-  });
-
-  const [loading, setLoading] = useState(false);
-  const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
-
-  // Load reflection data for selected date
-  useEffect(() => {
-    const loadReflectionData = () => {
-      // Try to load from localStorage (temporary solution)
-      const saved = localStorage.getItem(`reflection_${selectedDate}`);
-      if (saved) {
-        try {
-          const parsed = JSON.parse(saved);
-          setReflectionData(parsed);
-        } catch (error) {
-          console.error('Failed to parse saved reflection data:', error);
-        }
-      } else {
-        // Reset to defaults for new date
-        setReflectionData({
-          bedtime: '',
-          wake_time: '',
-          sleep_quality: '',
-          overnight_symptoms: '',
-          energy_level: 5,
-          mood_level: 5,
-          physical_comfort: 5,
-          overall_notes: '',
-          activity_level: '',
-          meditation_practice: false,
-          meditation_duration: 0,
-          mindfulness_activities: '',
-          cycle_day: '',
-          ovulation: false,
-          additional_reflections: ''
-        });
-      }
-      setHasUnsavedChanges(false);
-    };
-
-    loadReflectionData();
-  }, [selectedDate]);
-
-  const updateReflectionData = (updates) => {
-    setReflectionData(prev => ({ ...prev, ...updates }));
-    setHasUnsavedChanges(true);
-  };
-
-  const saveReflectionData = async () => {
-    setLoading(true);
-    try {
-      // Save to localStorage for now
-      localStorage.setItem(`reflection_${selectedDate}`, JSON.stringify(reflectionData));
-      
-      // TODO: Send to API when ready
-      // const response = await fetch(`${API_BASE_URL}/api/v1/journal/entries`, {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify({
-      //     date: selectedDate,
-      //     ...reflectionData
-      //   })
-      // });
-      
-      setHasUnsavedChanges(false);
-      return true;
-    } catch (error) {
-      console.error('Failed to save reflection data:', error);
-      return false;
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  return {
-    reflectionData,
-    updateReflectionData,
-    saveReflectionData,
-    loading,
-    hasUnsavedChanges
-  };
-};
-
-// =================
 // MAIN APP COMPONENT
 // =================
 
@@ -1140,7 +345,7 @@ function App() {
   
   // Hooks
   const { protocols, loading: protocolsLoading, error: protocolsError } = useProtocols();
-  const { preferences, updatePreferences, loading: preferencesLoading, error: preferencesError, isReady } = useUserPreferences();
+  const { preferences, updatePreferences, refreshPreferences, loading: preferencesLoading, error: preferencesError, isReady } = useUserPreferences();
   const { exposureTypes } = useExposureTypes();
   const { detoxTypes } = useDetoxTypes();
   const { reflectionData, updateReflectionData, saveReflectionData, loading: reflectionLoading, hasUnsavedChanges } = useReflectionData(selectedDate);
@@ -1162,7 +367,7 @@ function App() {
   useEffect(() => {
     const loadTimelineEntries = async () => {
       try {
-        const response = await fetch(`${API_BASE_URL}/api/v1/timeline/entries`);
+        const response = await fetch(`${API_BASE_URL}/api/v1/timeline/entries?date=${selectedDate}`);
         const data = await response.json();
         setDailyEntries(data.entries || []);
       } catch (error) {
@@ -1175,15 +380,38 @@ function App() {
     loadTimelineEntries();
   }, [selectedDate]);
 
-  // Show setup if not completed
+  // Show setup if not completed OR manually triggered
   useEffect(() => {
-    if (isReady && preferences && !preferences.setup_complete) {
-      setShowSetup(true);
+    if (isReady && preferences) {
+      // Auto-show setup for new users
+      if (!preferences.setup_complete) {
+        setShowSetup(true);
+      }
     }
   }, [preferences, isReady]);
 
+  // Load timeline entries when date changes
+  useEffect(() => {
+    const loadTimelineEntries = async () => {
+      try {
+        setLoadingEntries(true);
+        const response = await fetch(`${API_BASE_URL}/api/v1/timeline/entries?date=${selectedDate}`);
+        const data = await response.json();
+        setDailyEntries(data.entries || []);
+      } catch (error) {
+        console.error('Failed to load timeline entries:', error);
+      } finally {
+        setLoadingEntries(false);
+      }
+    };
+
+    if (selectedDate) {
+      loadTimelineEntries();
+    }
+  }, [selectedDate]); // Reload when selectedDate changes
+
   // Show loading while preferences are loading
-  if (preferencesLoading || !isReady) {
+  if (preferencesLoading || !isReady || !preferences) {
     return (
       <div className="max-w-md mx-auto bg-white min-h-screen flex items-center justify-center">
         <div className="text-center">
@@ -1212,20 +440,38 @@ function App() {
     );
   }
 
+  // Create safe preferences with defaults
+  const safePreferences = {
+    protocols: [],
+    quick_supplements: [],
+    quick_medications: [],
+    quick_foods: [],
+    quick_symptoms: [],
+    quick_detox: [],
+    setup_complete: false,
+    ...preferences // Override with actual preferences if they exist
+  };
+
   const selectedProtocolObjects = protocols.filter(p => 
-    preferences.protocols.includes(p.id)
+    safePreferences.protocols && safePreferences.protocols.includes(p.id)
   );
 
   const getProtocolDisplayText = () => {
-    if (preferences.protocols.length === 0) return 'No protocols selected';
-    if (preferences.protocols.length === 1) {
+    if (!safePreferences.protocols || safePreferences.protocols.length === 0) return 'No protocols selected';
+    
+    // Handle "No Protocol" selection
+    if (safePreferences.protocols.includes('no_protocol')) {
+      return 'No Protocol';
+    }
+    
+    if (safePreferences.protocols.length === 1) {
       return selectedProtocolObjects[0]?.name || 'Protocol';
     }
-    if (preferences.protocols.length === 2) {
+    if (safePreferences.protocols.length === 2) {
       const names = selectedProtocolObjects.map(p => p.name.split(' ')[0]);
       return names.join(' + ');
     }
-    return `${preferences.protocols.length} Active Protocols`;
+    return `${safePreferences.protocols.length} Active Protocols`;
   };
 
   const addEntry = async () => {
@@ -1253,8 +499,7 @@ function App() {
       });
 
       if (response.ok) {
-        // Reload entries
-        const timelineResponse = await fetch(`${API_BASE_URL}/api/v1/timeline/entries`);
+        const timelineResponse = await fetch(`${API_BASE_URL}/api/v1/timeline/entries?date=${selectedDate}`);
         const timelineData = await timelineResponse.json();
         setDailyEntries(timelineData.entries || []);
       }
@@ -1307,14 +552,23 @@ function App() {
     detox: 'bg-purple-50 border-purple-200'
   }[type] || 'bg-gray-50 border-gray-200');
 
-  // Check for critical insights
   const hasCriticalInsights = () => {
     return dailyEntries.some(entry => entry.protocol_compliant === false);
   };
 
   if (showSetup) {
-    return <SetupWizard onComplete={() => setShowSetup(false)} />;
-  }
+  return <SetupWizard onComplete={async () => {
+    // Wait for setup to complete
+    await new Promise(resolve => setTimeout(resolve, 200));
+    
+    // Refresh preferences from database
+    await refreshPreferences();
+    
+    // Hide setup wizard
+    setShowSetup(false);
+    setActiveView('timeline');
+  }} />;
+}
 
   return (
     <div className="max-w-md mx-auto bg-white min-h-screen">
@@ -1325,11 +579,11 @@ function App() {
           <Calendar size={24} />
         </div>
         
-        <input
+        <Input
           type="date"
           value={selectedDate}
           onChange={(e) => setSelectedDate(e.target.value)}
-          className="mt-2 w-full p-2 rounded-lg text-gray-900 focus:ring-2 focus:ring-blue-300"
+          className="mt-2 text-gray-900 focus:ring-2 focus:ring-blue-300"
         />
         
         {/* Multi-Protocol Selection */}
@@ -1338,7 +592,7 @@ function App() {
             <label className="block text-sm font-medium text-white mb-1">Active Protocols</label>
             <MultiSelectProtocolDropdown
               protocols={protocols}
-              selectedProtocols={preferences.protocols}
+              selectedProtocols={safePreferences.protocols}
               onSelectionChange={(newSelection) => 
                 updatePreferences({ protocols: newSelection })
               }
@@ -1361,16 +615,18 @@ function App() {
 
       {/* Navigation */}
       <div className="bg-gray-50 p-4 border-b">
-        <div className="flex space-x-4">
+        <div className="flex space-x-3">
           <Button
             variant={activeView === 'timeline' ? 'primary' : 'secondary'}
             onClick={() => setActiveView('timeline')}
+            size="sm"
           >
             Track
           </Button>
           <Button
             variant={activeView === 'reflect' ? 'success' : 'secondary'}
             onClick={() => setActiveView('reflect')}
+            size="sm"
           >
             Reflect
             {hasUnsavedChanges && (
@@ -1379,8 +635,9 @@ function App() {
           </Button>
           <div className="relative">
             <Button
-              variant={activeView === 'insights' ? 'warning' : 'secondary'}
+              variant={activeView === 'insights' ? 'primary' : 'secondary'}
               onClick={() => setActiveView('insights')}
+              size="sm"
             >
               Insights
             </Button>
@@ -1391,14 +648,26 @@ function App() {
             )}
           </div>
           <Button
-            variant={activeView === 'protocol' ? 'secondary' : 'secondary'}
+            variant={activeView === 'protocol' ? 'primary' : 'secondary'}
             onClick={() => setActiveView('protocol')}
+            size="sm"
           >
             Foods
           </Button>
+          
+          {/* Setup Access Button */}
+          <Button
+            variant="ghost"
+            onClick={() => setShowSetup(true)}
+            size="sm"
+            className="ml-auto"
+            title="Setup & Preferences"
+          >
+            ⚙️
+          </Button>
         </div>
         
-        {preferences.protocols.length > 0 && (
+        {safePreferences.protocols.length > 0 && (
           <div className="mt-2 text-xs text-gray-600">
             Following: <span className="font-medium text-blue-600">{getProtocolDisplayText()}</span>
           </div>
@@ -1424,19 +693,17 @@ function App() {
                 <div className="flex space-x-3">
                   <div className="flex-1">
                     <label className="block text-sm font-medium text-gray-700 mb-1">Time</label>
-                    <input
+                    <Input
                       type="time"
                       value={newEntry.time}
                       onChange={(e) => setNewEntry({...newEntry, time: e.target.value})}
-                      className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     />
                   </div>
                   <div className="flex-1">
                     <label className="block text-sm font-medium text-gray-700 mb-1">Type</label>
-                    <select
+                    <Select
                       value={newEntry.type}
                       onChange={(e) => setNewEntry({...newEntry, type: e.target.value})}
-                      className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     >
                       <option value="food">Food</option>
                       <option value="symptom">Symptom</option>
@@ -1444,7 +711,7 @@ function App() {
                       <option value="medication">Medication</option>
                       <option value="exposure">Exposure</option>
                       <option value="detox">Detox</option>
-                    </select>
+                    </Select>
                   </div>
                 </div>
 
@@ -1453,13 +720,13 @@ function App() {
                     <div className="space-y-3">
                       <QuickChecks 
                         type="food" 
-                        preferences={preferences} 
+                        preferences={safePreferences} 
                         onQuickSelect={handleQuickSelect}
                       />
                       <SmartFoodSelector
                         selectedItems={newEntry.selectedFoods}
                         onToggleItem={toggleSelectedFood}
-                        selectedProtocols={preferences.protocols}
+                        selectedProtocols={safePreferences.protocols}
                       />
                     </div>
                   )}
@@ -1468,12 +735,12 @@ function App() {
                     <div className="space-y-3">
                       <QuickChecks 
                         type="exposure" 
-                        preferences={preferences} 
+                        preferences={safePreferences} 
                         onQuickSelect={handleQuickSelect}
                       />
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">Exposure Type</label>
-                        <select className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        <Select>
                           <option value="">Select exposure type...</option>
                           {Object.entries(
                             exposureTypes.reduce((acc, exposure) => {
@@ -1490,16 +757,14 @@ function App() {
                               ))}
                             </optgroup>
                           ))}
-                        </select>
+                        </Select>
                       </div>
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">Details</label>
-                        <input
-                          type="text"
+                        <Input
                           placeholder="Describe the exposure..."
                           value={newEntry.customText}
                           onChange={(e) => setNewEntry({...newEntry, customText: e.target.value})}
-                          className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                         />
                       </div>
                     </div>
@@ -1509,12 +774,12 @@ function App() {
                     <div className="space-y-3">
                       <QuickChecks 
                         type="detox" 
-                        preferences={preferences} 
+                        preferences={safePreferences} 
                         onQuickSelect={handleQuickSelect}
                       />
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">Detox Activity</label>
-                        <select className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                        <Select focusColor="purple">
                           <option value="">Select detox activity...</option>
                           {Object.entries(
                             detoxTypes.reduce((acc, detox) => {
@@ -1531,24 +796,23 @@ function App() {
                               ))}
                             </optgroup>
                           ))}
-                        </select>
+                        </Select>
                       </div>
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">Duration (minutes)</label>
-                        <input
+                        <Input
                           type="number"
                           placeholder="e.g., 20"
-                          className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                          focusColor="purple"
                         />
                       </div>
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">Notes</label>
-                        <input
-                          type="text"
+                        <Input
                           placeholder="Additional details..."
                           value={newEntry.customText}
                           onChange={(e) => setNewEntry({...newEntry, customText: e.target.value})}
-                          className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                          focusColor="purple"
                         />
                       </div>
                     </div>
@@ -1558,17 +822,15 @@ function App() {
                     <div className="space-y-3">
                       <QuickChecks 
                         type={newEntry.type} 
-                        preferences={preferences} 
+                        preferences={safePreferences} 
                         onQuickSelect={handleQuickSelect}
                       />
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">Details</label>
-                        <input
-                          type="text"
+                        <Input
                           placeholder={`Enter ${newEntry.type} details...`}
                           value={newEntry.customText}
                           onChange={(e) => setNewEntry({...newEntry, customText: e.target.value})}
-                          className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                         />
                       </div>
                       {newEntry.type === 'symptom' && (
@@ -1606,7 +868,7 @@ function App() {
               <h3 className="font-semibold text-gray-800 flex items-center space-x-2">
                 <Clock size={18} />
                 <span>Today's Timeline</span>
-                {preferences.protocols.length > 0 && (
+                {safePreferences.protocols.length > 0 && (
                   <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">
                     {getProtocolDisplayText()}
                   </span>
@@ -1662,7 +924,7 @@ function App() {
         )}
 
         {activeView === 'reflect' && (
-          <div className="space-y-6">
+          <div className="space-y-6 pb-8">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center space-x-2">
                 <CheckCircle2 size={20} className="text-green-600" />
@@ -1681,20 +943,18 @@ function App() {
                 <div className="grid grid-cols-2 gap-3">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Bedtime</label>
-                    <input
+                    <Input
                       type="time"
                       value={reflectionData.bedtime}
                       onChange={(e) => updateReflectionData({ bedtime: e.target.value })}
-                      className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Wake Time</label>
-                    <input
+                    <Input
                       type="time"
                       value={reflectionData.wake_time}
                       onChange={(e) => updateReflectionData({ wake_time: e.target.value })}
-                      className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     />
                   </div>
                 </div>
@@ -1718,11 +978,10 @@ function App() {
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Overnight Symptoms</label>
-                  <textarea
+                  <Textarea
                     placeholder="Any pain, discomfort, or symptoms during sleep..."
                     value={reflectionData.overnight_symptoms}
                     onChange={(e) => updateReflectionData({ overnight_symptoms: e.target.value })}
-                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     rows={2}
                   />
                 </div>
@@ -1791,12 +1050,12 @@ function App() {
                 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Overall Notes</label>
-                  <textarea
+                  <Textarea
                     placeholder="How are you feeling overall today? Any patterns or insights?"
                     value={reflectionData.overall_notes}
                     onChange={(e) => updateReflectionData({ overall_notes: e.target.value })}
-                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
                     rows={2}
+                    focusColor="orange"
                   />
                 </div>
               </div>
@@ -1850,12 +1109,12 @@ function App() {
                 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Mindfulness Activities</label>
-                  <input
-                    type="text"
+                  <Input
                     placeholder="e.g., breathing exercises, grounding, nature connection..."
                     value={reflectionData.mindfulness_activities}
                     onChange={(e) => updateReflectionData({ mindfulness_activities: e.target.value })}
-                    className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-sm"
+                    focusColor="indigo"
+                    className="text-sm"
                   />
                 </div>
               </div>
@@ -1900,12 +1159,12 @@ function App() {
             <Card title="Additional Reflections" variant="teal">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Anything else noteworthy about today?</label>
-                <textarea
+                <Textarea
                   placeholder="Patterns, insights, connections, or anything else you want to remember..."
                   value={reflectionData.additional_reflections}
                   onChange={(e) => updateReflectionData({ additional_reflections: e.target.value })}
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
                   rows={3}
+                  focusColor="teal"
                 />
               </div>
             </Card>
@@ -1931,105 +1190,25 @@ function App() {
           </div>
         )}
 
+        {/* AI Correlation Insights */}
         {activeView === 'insights' && (
-          <div className="space-y-6">
-            <Card title="Health Dashboard" icon={TrendingUp} variant="primary">
-              <div className="grid grid-cols-2 gap-4">
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-green-600">
-                    {preferences.protocols.length > 0 ? '100%' : '--'}
-                  </div>
-                  <div className="text-sm text-gray-600">Protocol Setup</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-blue-600">{dailyEntries.length}</div>
-                  <div className="text-sm text-gray-600">Entries Today</div>
-                </div>
-              </div>
-            </Card>
-
-            {hasCriticalInsights() && (
-              <Card title="Critical Insights" variant="warning">
-                <Alert variant="danger" title="Protocol Compliance Alert">
-                  Some entries today were not compliant with your selected protocols. Review your timeline for details.
-                </Alert>
-              </Card>
-            )}
-
-            <Card title="Platform Status" variant="success">
-              <Alert variant="info" title="System Ready">
-                Your app is running with sophisticated multi-protocol support, working quick checks system, detox tracking, and functional reflection data persistence. Ready for AI insights when backend is enhanced.
-              </Alert>
-            </Card>
-
-            <Card title="AI Insights Preview" variant="primary">
-              <div className="space-y-3 text-sm text-gray-600">
-                <p><strong>Future insights will include:</strong></p>
-                <ul className="list-disc list-inside space-y-1">
-                  <li>Food-symptom correlation analysis</li>
-                  <li>Sleep quality impact on daily energy</li>
-                  <li>Protocol compliance effectiveness</li>
-                  <li>Environmental exposure patterns</li>
-                  <li>Detox activity benefits tracking</li>
-                  <li>Mood and energy trend analysis</li>
-                </ul>
-                <p className="text-xs text-gray-500 mt-3">
-                  <em>AI analysis will activate once sufficient data is collected (typically 2-4 weeks of consistent tracking).</em>
-                </p>
-              </div>
-            </Card>
-          </div>
+          <CorrelationInsights />
         )}
 
+        {/* Protocol Foods Browser */}
         {activeView === 'protocol' && (
-          <div className="space-y-6">
-            <Card title="Protocol Foods Browser" icon={Search} variant="primary">
-              {preferences.protocols.length === 0 ? (
-                <div className="text-center py-8">
-                  <p className="text-gray-500">Select protocols in your header to browse compliant foods.</p>
-                </div>
-              ) : (
-                <div className="space-y-4">
-                  <p className="text-sm text-gray-600">
-                    Browse foods for: <span className="font-medium">{getProtocolDisplayText()}</span>
-                  </p>
-                  
-                  <div className="grid gap-4">
-                    <Card variant="success" title="✅ Safe for All Protocols">
-                      <div className="text-sm text-gray-600">
-                        Foods that comply with all your selected protocols will appear here when the protocol foods API is connected.
-                        <br />
-                        <em className="text-xs">API endpoint needed: /api/v1/protocol-foods/[protocol-id]</em>
-                      </div>
-                    </Card>
-                    
-                    <Card variant="warning" title="⚠️ Mixed Guidance">
-                      <div className="text-sm text-gray-600">
-                        Foods with conflicting guidance between your protocols will appear here.
-                      </div>
-                    </Card>
-                    
-                    <Card variant="danger" title="❌ Avoid">
-                      <div className="text-sm text-gray-600">
-                        Foods to avoid on your current protocols will appear here.
-                      </div>
-                    </Card>
-                  </div>
-                </div>
-              )}
-            </Card>
-          </div>
+          <ProtocolFoods protocolId={safePreferences.protocols[0]} />
         )}
       </div>
 
-      {/* Setup Prompt for Users */}
-      {preferences && !preferences.setup_complete && (
+      {/* Optional: Welcome message for new users who haven't started setup */}
+      {safePreferences && !safePreferences.setup_complete && !showSetup && (
         <div className="fixed bottom-4 left-4 right-4 max-w-md mx-auto">
           <Alert variant="info" dismissible onDismiss={() => {}}>
             <div className="flex items-center justify-between">
-              <span>Complete your setup for a personalized experience</span>
+              <span>Welcome! Tap the ⚙️ icon to set up your health journey</span>
               <Button size="sm" onClick={() => setShowSetup(true)}>
-                Setup
+                Start
               </Button>
             </div>
           </Alert>
