@@ -1,14 +1,16 @@
+// Fixed journal.js - Using proper CORS responses
 const { getCurrentUser } = require('../middleware/auth');
+const { successResponse, errorResponse } = require('../utils/responses');  // 🔧 ADDED: Import CORS responses
 
 const handleGetJournalEntries = async (queryParams, event, user = null) => {
     try {
         const currentUser = user || await getCurrentUser(event);
         if (!currentUser) {
-            return { statusCode: 401, body: JSON.stringify({ error: 'Unauthorized' }) };
+            return errorResponse('Unauthorized', 401);  // 🔧 FIXED: Use errorResponse with CORS
         }
-        return { statusCode: 200, body: JSON.stringify({ entries: [], total: 0 }) };
+        return successResponse({ entries: [], total: 0 });  // 🔧 FIXED: Use successResponse with CORS
     } catch (error) {
-        return { statusCode: 500, body: JSON.stringify({ error: 'Internal server error' }) };
+        return errorResponse('Internal server error', 500);  // 🔧 FIXED: Use errorResponse with CORS
     }
 };
 
@@ -16,11 +18,11 @@ const handleCreateJournalEntry = async (body, event, user = null) => {
     try {
         const currentUser = user || await getCurrentUser(event);
         if (!currentUser) {
-            return { statusCode: 401, body: JSON.stringify({ error: 'Unauthorized' }) };
+            return errorResponse('Unauthorized', 401);  // 🔧 FIXED: Use errorResponse with CORS
         }
-        return { statusCode: 200, body: JSON.stringify({ message: 'Journal entry created' }) };
+        return successResponse({ message: 'Journal entry created' });  // 🔧 FIXED: Use successResponse with CORS
     } catch (error) {
-        return { statusCode: 500, body: JSON.stringify({ error: 'Internal server error' }) };
+        return errorResponse('Internal server error', 500);  // 🔧 FIXED: Use errorResponse with CORS
     }
 };
 
@@ -28,11 +30,11 @@ const handleGetJournalEntry = async (queryParams, event, user = null) => {
     try {
         const currentUser = user || await getCurrentUser(event);
         if (!currentUser) {
-            return { statusCode: 401, body: JSON.stringify({ error: 'Unauthorized' }) };
+            return errorResponse('Unauthorized', 401);  // 🔧 FIXED: Use errorResponse with CORS
         }
-        return { statusCode: 200, body: JSON.stringify({ entry: {} }) };
+        return successResponse({ entry: {} });  // 🔧 FIXED: Use successResponse with CORS
     } catch (error) {
-        return { statusCode: 500, body: JSON.stringify({ error: 'Internal server error' }) };
+        return errorResponse('Internal server error', 500);  // 🔧 FIXED: Use errorResponse with CORS
     }
 };
 
@@ -40,11 +42,11 @@ const handleUpdateJournalEntry = async (body, event, user = null) => {
     try {
         const currentUser = user || await getCurrentUser(event);
         if (!currentUser) {
-            return { statusCode: 401, body: JSON.stringify({ error: 'Unauthorized' }) };
+            return errorResponse('Unauthorized', 401);  // 🔧 FIXED: Use errorResponse with CORS
         }
-        return { statusCode: 200, body: JSON.stringify({ message: 'Journal entry updated' }) };
+        return successResponse({ message: 'Journal entry updated' });  // 🔧 FIXED: Use successResponse with CORS
     } catch (error) {
-        return { statusCode: 500, body: JSON.stringify({ error: 'Internal server error' }) };
+        return errorResponse('Internal server error', 500);  // 🔧 FIXED: Use errorResponse with CORS
     }
 };
 

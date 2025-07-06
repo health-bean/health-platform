@@ -1,43 +1,45 @@
+// Fixed users.js - Using proper CORS responses
 const { getCurrentUser } = require("../middleware/auth");
+const { successResponse, errorResponse } = require("../utils/responses");  // 🔧 ADDED: Import CORS responses
 
 const handleGetUser = async (queryParams, event, user = null) => {
     const currentUser = user || await getCurrentUser(event);
     if (!currentUser) {
-        return { statusCode: 401, body: JSON.stringify({ error: "Unauthorized" }) };
+        return errorResponse("Unauthorized", 401);  // 🔧 FIXED: Use errorResponse with CORS
     }
-    return { statusCode: 200, body: JSON.stringify({ user: currentUser }) };
+    return successResponse({ user: currentUser });  // 🔧 FIXED: Use successResponse with CORS
 };
 
 const handleUpdateUser = async (body, event, user = null) => {
     const currentUser = user || await getCurrentUser(event);
     if (!currentUser) {
-        return { statusCode: 401, body: JSON.stringify({ error: "Unauthorized" }) };
+        return errorResponse("Unauthorized", 401);  // 🔧 FIXED: Use errorResponse with CORS
     }
-    return { statusCode: 200, body: JSON.stringify({ message: "Update not implemented" }) };
+    return successResponse({ message: "Update not implemented" });  // 🔧 FIXED: Use successResponse with CORS
 };
 
 const handleGetUserProtocols = async (queryParams, event, user = null) => {
     const currentUser = user || await getCurrentUser(event);
     if (!currentUser) {
-        return { statusCode: 401, body: JSON.stringify({ error: "Unauthorized" }) };
+        return errorResponse("Unauthorized", 401);  // 🔧 FIXED: Use errorResponse with CORS
     }
-    return { statusCode: 200, body: JSON.stringify({ protocols: [] }) };
+    return successResponse({ protocols: [] });  // 🔧 FIXED: Use successResponse with CORS
 };
 
 const handleGetUserPreferences = async (queryParams, event, user = null) => {
     const currentUser = user || await getCurrentUser(event);
     if (!currentUser) {
-        return { statusCode: 401, body: JSON.stringify({ error: "Unauthorized" }) };
+        return errorResponse("Unauthorized", 401);  // 🔧 FIXED: Use errorResponse with CORS
     }
-    return { statusCode: 200, body: JSON.stringify({ preferences: {} }) };
+    return successResponse({ preferences: {} });  // 🔧 FIXED: Use successResponse with CORS
 };
 
 const handleUpdateUserPreferences = async (body, event, user = null) => {
     const currentUser = user || await getCurrentUser(event);
     if (!currentUser) {
-        return { statusCode: 401, body: JSON.stringify({ error: "Unauthorized" }) };
+        return errorResponse("Unauthorized", 401);  // 🔧 FIXED: Use errorResponse with CORS
     }
-    return { statusCode: 200, body: JSON.stringify({ message: "Preferences updated" }) };
+    return successResponse({ message: "Preferences updated" });  // 🔧 FIXED: Use successResponse with CORS
 };
 
 module.exports = {
