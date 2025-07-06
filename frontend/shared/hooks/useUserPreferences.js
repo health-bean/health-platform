@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -7,8 +7,8 @@ const useUserPreferences = (userId) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // Load preferences from API
-  const fetchPreferences = async () => {
+  // 🔧 FIX: Memoize fetchPreferences to prevent infinite re-renders
+  const fetchPreferences = useCallback(async () => {
     if (!userId) return;
     
     setLoading(true);
@@ -56,13 +56,15 @@ const useUserPreferences = (userId) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [userId]); // 🔧 FIX: Only depends on userId
 
+  // 🔧 FIX: Use memoized fetchPreferences in useEffect
   useEffect(() => {
     fetchPreferences();
-  }, [userId]);
+  }, [fetchPreferences]);
 
-  const updatePreferences = async (newPreferences) => {
+  // 🔧 FIX: Memoize updatePreferences to prevent unnecessary re-renders
+  const updatePreferences = useCallback(async (newPreferences) => {
     if (!preferences || !userId) return false;
     
     const updatedPreferences = { ...preferences, ...newPreferences };
@@ -96,7 +98,7 @@ const useUserPreferences = (userId) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [preferences, userId]); // 🔧 FIX: Stable dependencies
 
   return { 
     preferences, 
