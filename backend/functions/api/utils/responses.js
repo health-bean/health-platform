@@ -1,9 +1,9 @@
 // backend/functions/api/utils/responses.js
 const CORS_HEADERS = {
-  'Access-Control-Allow-Origin': 'http://localhost:5173',
+  'Access-Control-Allow-Origin': '*',  // 🔧 FIXED: Changed from 'http://localhost:5173' to '*'
   'Access-Control-Allow-Headers': 'Content-Type,Authorization',
   'Access-Control-Allow-Methods': 'GET,POST,PUT,DELETE,OPTIONS',
-  'Access-Control-Allow-Credentials': 'true'
+  'Access-Control-Allow-Credentials': 'false'  // 🔧 FIXED: Must be 'false' when using '*'
 };
 
 const success = (data, statusCode = 200) => ({
@@ -63,24 +63,10 @@ const corsHeaders = CORS_HEADERS;
 // 🔧 FIX: Export errorResponse (alias for error function)
 const errorResponse = error;
 
-module.exports = {
-  // Original exports (keep all existing functionality)
-  success,
-  error,
-  unauthorized,
-  notFound,
-  badRequest,
-  options,
-  CORS_HEADERS,
-  
-  // 🔧 FIX: Add missing exports for index.js compatibility
-  handleCors,
-  corsHeaders,
-  errorResponse
-};
 // 🔧 FIX: Add missing successResponse alias
 const successResponse = success;
 
+// 🔧 FIXED: Single module.exports (removed duplicate)
 module.exports = {
   // Original exports (keep all existing functionality)
   success,
@@ -95,5 +81,5 @@ module.exports = {
   handleCors,
   corsHeaders,
   errorResponse,
-  successResponse  // ← ADD THIS LINE
+  successResponse
 };
