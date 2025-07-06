@@ -14,7 +14,7 @@
 - **Utility Functions:** 2
 - **API Endpoints:** 5/14 working
 - **Database Tables:** 0 (estimated)
-- **Environment Variables:** 1 local, 3 lambda
+- **Environment Variables:** 6 local, 3 lambda
 
 ## 🌐 API Documentation
 
@@ -26,7 +26,7 @@
 #### GET /api/v1/protocols
 **Status:** ✅ Working (200)  
 **Description:** Get health protocols  
-**Response Time:** 773ms
+**Response Time:** 832ms
 
 
 
@@ -141,7 +141,7 @@ curl "https://suhoxvn8ik.execute-api.us-east-1.amazonaws.com/dev/api/v1/protocol
 #### GET /api/v1/foods/search
 **Status:** ✅ Working (200)  
 **Description:** Search food database  
-**Response Time:** 85ms
+**Response Time:** 80ms
 
 **Parameters:**
 - `search`: chicken
@@ -179,7 +179,7 @@ curl "https://suhoxvn8ik.execute-api.us-east-1.amazonaws.com/dev/api/v1/foods/se
 #### GET /api/v1/foods/by-protocol
 **Status:** ✅ Working (200)  
 **Description:** Get protocol foods  
-**Response Time:** 74ms
+**Response Time:** 119ms
 
 **Parameters:**
 - `protocol_id`: 1495844a-19de-404c-a288-7660eda0cbe1
@@ -4081,7 +4081,7 @@ curl "https://suhoxvn8ik.execute-api.us-east-1.amazonaws.com/dev/api/v1/foods/by
 #### GET /api/v1/timeline/entries
 **Status:** ✅ Working (200)  
 **Description:** Get timeline entries  
-**Response Time:** 42ms
+**Response Time:** 60ms
 
 **Parameters:**
 - `date`: 2025-07-04
@@ -4106,7 +4106,7 @@ curl "https://suhoxvn8ik.execute-api.us-east-1.amazonaws.com/dev/api/v1/timeline
 #### GET /api/v1/correlations/insights
 **Status:** ✅ Working (200)  
 **Description:** Get AI insights  
-**Response Time:** 6033ms
+**Response Time:** 6079ms
 
 **Parameters:**
 - `userId`: 8e8a568a-c2f8-43a8-abf2-4e54408dbdc0
@@ -4126,10 +4126,10 @@ curl "https://suhoxvn8ik.execute-api.us-east-1.amazonaws.com/dev/api/v1/correlat
       "effect": "swelling",
       "timeWindow": 72,
       "timeWindowDescription": "within 72 hours",
-      "confidence": 0.68,
-      "frequency": "32/47 times",
+      "confidence": 0.65,
+      "frequency": "32/49 times",
       "occurrences": 32,
-      "totalOpportunities": 47,
+      "totalOpportunities": 49,
       "description": "nightshade foods appear to trigger swelling within 72 hours",
       "recommendation": "Monitor nightshade foods consumption and swelling symptoms"
     },
@@ -4139,10 +4139,10 @@ curl "https://suhoxvn8ik.execute-api.us-east-1.amazonaws.com/dev/api/v1/correlat
       "effect": "joint pain",
       "timeWindow": 72,
       "timeWindowDescription": "within 72 hours",
-      "confidence": 0.74,
-      "frequency": "35/47 times",
+      "confidence": 0.71,
+      "frequency": "35/49 times",
       "occurrences": 35,
-      "totalOpportunities": 47,
+      "totalOpportunities": 49,
       "description": "nightshade foods appear to trigger joint pain within 72 hours",
       "recommendation": "Consider avoiding nightshade foods for 2-4 weeks to test sensitivity"
     },
@@ -5474,45 +5474,6 @@ curl "https://suhoxvn8ik.execute-api.us-east-1.amazonaws.com/dev/api/v1/correlat
     },
     {
       "type": "food-symptom",
-      "trigger": "bell peppers",
-      "effect": "joint pain",
-      "timeWindow": 48,
-      "timeWindowDescription": "within 48 hours",
-      "confidence": 0.67,
-      "frequency": "4/6 times",
-      "occurrences": 4,
-      "totalOpportunities": 6,
-      "description": "bell peppers appears to trigger joint pain within 48 hours",
-      "recommendation": "Monitor bell peppers consumption and joint pain symptoms"
-    },
-    {
-      "type": "food-symptom",
-      "trigger": "bell peppers",
-      "effect": "swelling",
-      "timeWindow": 72,
-      "timeWindowDescription": "within 72 hours",
-      "confidence": 0.67,
-      "frequency": "4/6 times",
-      "occurrences": 4,
-      "totalOpportunities": 6,
-      "description": "bell peppers appears to trigger swelling within 72 hours",
-      "recommendation": "Monitor bell peppers consumption and swelling symptoms"
-    },
-    {
-      "type": "food-symptom",
-      "trigger": "bell peppers",
-      "effect": "joint pain",
-      "timeWindow": 72,
-      "timeWindowDescription": "within 72 hours",
-      "confidence": 0.67,
-      "frequency": "4/6 times",
-      "occurrences": 4,
-      "totalOpportunities": 6,
-      "description": "bell peppers appears to trigger joint pain within 72 hours",
-      "recommendation": "Monitor bell peppers consumption and joint pain symptoms"
-    },
-    {
-      "type": "food-symptom",
       "trigger": "brussels sprouts",
       "effect": "swelling",
       "timeWindow": 72,
@@ -5656,8 +5617,8 @@ curl "https://suhoxvn8ik.execute-api.us-east-1.amazonaws.com/dev/api/v1/correlat
     }
   ],
   "summary": {
-    "totalCorrelations": 118,
-    "triggers": 118,
+    "totalCorrelations": 115,
+    "triggers": 115,
     "improvements": 0,
     "protocolEffects": 0
   },
@@ -5711,31 +5672,31 @@ curl "https://suhoxvn8ik.execute-api.us-east-1.amazonaws.com/dev/api/v1/correlat
 ### Custom Hooks (7)
 - **useCorrelations** - API Integration
   - Path: `frontend/shared/hooks/useCorrelations.js`
-  - Size: 1.9KB
+  - Size: 1.7KB
   - Dependencies: useState, useEffect, useCorrelations
 - **useDetoxTypes** - API Integration
   - Path: `frontend/shared/hooks/useDetoxTypes.js`
-  - Size: 0.5KB
-  - Dependencies: useState, useDetoxTypes
+  - Size: 0.8KB
+  - Dependencies: useState, useEffect, useDetoxTypes
 - **useExposureTypes** - API Integration
   - Path: `frontend/shared/hooks/useExposureTypes.js`
   - Size: 0.6KB
   - Dependencies: useState, useExposureTypes
 - **useProtocolFoods** - API Integration
   - Path: `frontend/shared/hooks/useProtocolFoods.js`
-  - Size: 2.2KB
+  - Size: 1.8KB
   - Dependencies: useState, useEffect, useProtocolFoods, useFoodSearch
 - **useProtocols** - API Integration
   - Path: `frontend/shared/hooks/useProtocols.js`
-  - Size: 0.8KB
+  - Size: 0.7KB
   - Dependencies: useState, useEffect, useProtocols
 - **useReflectionData** - API Integration
   - Path: `frontend/shared/hooks/useReflectionData.js`
-  - Size: 2.8KB
+  - Size: 2.6KB
   - Dependencies: useState, useEffect, useReflectionData
 - **useUserPreferences** - API Integration
   - Path: `frontend/shared/hooks/useUserPreferences.js`
-  - Size: 2.5KB
+  - Size: 2.4KB
   - Dependencies: useState, useEffect, useUserPreferences
 
 ### Utility Functions (2)
@@ -5743,10 +5704,10 @@ curl "https://suhoxvn8ik.execute-api.us-east-1.amazonaws.com/dev/api/v1/correlat
   - Path: `backend/functions/api/utils/errors.js`
   - Functions: handleDatabaseError
   - Size: 0.7KB
-- **responses** - General Utilities
+- **responses** - CORS Handling
   - Path: `backend/functions/api/utils/responses.js`
-  - Functions: corsHeaders, createResponse, successResponse, errorResponse
-  - Size: 0.9KB
+  - Functions: corsHeaders, createResponse, successResponse, errorResponse, const
+  - Size: 1.2KB
 
 ## 🗄️ Database Structure
 
@@ -5761,8 +5722,13 @@ curl "https://suhoxvn8ik.execute-api.us-east-1.amazonaws.com/dev/api/v1/correlat
 
 ## 🔐 Environment Configuration
 
-### Local Environment (1)
+### Local Environment (6)
+- **VITE_APP_ENV** ✅ (frontend/web-app/.env.development)
 - **VITE_API_URL** ✅ (frontend/web-app/.env.development)
+- **VITE_AUTH_ENABLED** ✅ (frontend/web-app/.env.development)
+- **VITE_APP_ENV** ✅ (frontend/web-app/.env.production)
+- **VITE_API_URL** ✅ (frontend/web-app/.env.production)
+- **VITE_AUTH_ENABLED** ✅ (frontend/web-app/.env.production)
 
 ### Lambda Environment (3)
 - **NODE_ENV** (estimated)
@@ -5805,7 +5771,7 @@ curl "https://suhoxvn8ik.execute-api.us-east-1.amazonaws.com/dev/api/v1/correlat
 ### frontend/web-app/package.json
 - **Name:** web-app
 - **Version:** 0.0.0
-- **Scripts:** dev, build, lint, preview
+- **Scripts:** dev, dev:local, build, build:dev, lint, preview
 - **Dependencies:** 5
 - **Dev Dependencies:** 12
 

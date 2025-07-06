@@ -2,7 +2,7 @@
   "platform": {
     "name": "FILO Health Platform",
     "version": "1.0.0",
-    "lastUpdated": "2025-07-06T15:37:11.623Z",
+    "lastUpdated": "2025-07-06T16:35:21.282Z",
     "architecture": "Full-Stack React + AWS Lambda",
     "status": "Active Development"
   },
@@ -23,7 +23,7 @@
       "relationships": 4
     },
     "environment": {
-      "local": 1,
+      "local": 6,
       "lambda": 3,
       "required": 0
     }
@@ -32,7 +32,7 @@
     "platform": {
       "name": "FILO Health Platform",
       "version": "1.0.0",
-      "lastUpdated": "2025-07-06T15:37:11.623Z",
+      "lastUpdated": "2025-07-06T16:35:21.282Z",
       "architecture": "Full-Stack React + AWS Lambda",
       "status": "Active Development"
     },
@@ -45,7 +45,7 @@
           "description": "Get health protocols",
           "status": 200,
           "working": true,
-          "responseTime": 773,
+          "responseTime": 832,
           "responseSchema": {
             "type": "object",
             "properties": {
@@ -163,7 +163,7 @@
           "description": "Get exposure types",
           "status": 404,
           "working": false,
-          "responseTime": 59,
+          "responseTime": 77,
           "responseSchema": {
             "type": "object",
             "properties": {
@@ -226,7 +226,7 @@
           "description": "Get detox types",
           "status": 404,
           "working": false,
-          "responseTime": 58,
+          "responseTime": 151,
           "responseSchema": {
             "type": "object",
             "properties": {
@@ -295,7 +295,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 85,
+          "responseTime": 80,
           "responseSchema": {
             "type": "object",
             "properties": {
@@ -349,7 +349,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 74,
+          "responseTime": 119,
           "responseSchema": {
             "type": "object",
             "properties": {
@@ -4486,7 +4486,7 @@
           ],
           "status": 404,
           "working": false,
-          "responseTime": 43,
+          "responseTime": 54,
           "responseSchema": {
             "type": "object",
             "properties": {
@@ -4549,7 +4549,7 @@
           "description": "Update user preferences",
           "status": 404,
           "working": false,
-          "responseTime": 58,
+          "responseTime": 68,
           "responseSchema": {
             "type": "object",
             "properties": {
@@ -4618,7 +4618,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 42,
+          "responseTime": 60,
           "responseSchema": {
             "type": "object",
             "properties": {
@@ -4645,7 +4645,7 @@
           "description": "Create timeline entry",
           "status": 500,
           "working": false,
-          "responseTime": 141,
+          "responseTime": 69,
           "responseSchema": {
             "type": "object",
             "properties": {
@@ -4675,7 +4675,7 @@
           ],
           "status": 404,
           "working": false,
-          "responseTime": 37,
+          "responseTime": 47,
           "responseSchema": {
             "type": "object",
             "properties": {
@@ -4738,7 +4738,7 @@
           "description": "Save daily reflection",
           "status": 404,
           "working": false,
-          "responseTime": 46,
+          "responseTime": 127,
           "responseSchema": {
             "type": "object",
             "properties": {
@@ -4807,7 +4807,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 6033,
+          "responseTime": 6079,
           "responseSchema": {
             "type": "object",
             "properties": {
@@ -4850,10 +4850,10 @@
                 "effect": "swelling",
                 "timeWindow": 72,
                 "timeWindowDescription": "within 72 hours",
-                "confidence": 0.68,
-                "frequency": "32/47 times",
+                "confidence": 0.65,
+                "frequency": "32/49 times",
                 "occurrences": 32,
-                "totalOpportunities": 47,
+                "totalOpportunities": 49,
                 "description": "nightshade foods appear to trigger swelling within 72 hours",
                 "recommendation": "Monitor nightshade foods consumption and swelling symptoms"
               },
@@ -4863,10 +4863,10 @@
                 "effect": "joint pain",
                 "timeWindow": 72,
                 "timeWindowDescription": "within 72 hours",
-                "confidence": 0.74,
-                "frequency": "35/47 times",
+                "confidence": 0.71,
+                "frequency": "35/49 times",
                 "occurrences": 35,
-                "totalOpportunities": 47,
+                "totalOpportunities": 49,
                 "description": "nightshade foods appear to trigger joint pain within 72 hours",
                 "recommendation": "Consider avoiding nightshade foods for 2-4 weeks to test sensitivity"
               },
@@ -6198,45 +6198,6 @@
               },
               {
                 "type": "food-symptom",
-                "trigger": "bell peppers",
-                "effect": "joint pain",
-                "timeWindow": 48,
-                "timeWindowDescription": "within 48 hours",
-                "confidence": 0.67,
-                "frequency": "4/6 times",
-                "occurrences": 4,
-                "totalOpportunities": 6,
-                "description": "bell peppers appears to trigger joint pain within 48 hours",
-                "recommendation": "Monitor bell peppers consumption and joint pain symptoms"
-              },
-              {
-                "type": "food-symptom",
-                "trigger": "bell peppers",
-                "effect": "swelling",
-                "timeWindow": 72,
-                "timeWindowDescription": "within 72 hours",
-                "confidence": 0.67,
-                "frequency": "4/6 times",
-                "occurrences": 4,
-                "totalOpportunities": 6,
-                "description": "bell peppers appears to trigger swelling within 72 hours",
-                "recommendation": "Monitor bell peppers consumption and swelling symptoms"
-              },
-              {
-                "type": "food-symptom",
-                "trigger": "bell peppers",
-                "effect": "joint pain",
-                "timeWindow": 72,
-                "timeWindowDescription": "within 72 hours",
-                "confidence": 0.67,
-                "frequency": "4/6 times",
-                "occurrences": 4,
-                "totalOpportunities": 6,
-                "description": "bell peppers appears to trigger joint pain within 72 hours",
-                "recommendation": "Monitor bell peppers consumption and joint pain symptoms"
-              },
-              {
-                "type": "food-symptom",
                 "trigger": "brussels sprouts",
                 "effect": "swelling",
                 "timeWindow": 72,
@@ -6380,8 +6341,8 @@
               }
             ],
             "summary": {
-              "totalCorrelations": 118,
-              "triggers": 118,
+              "totalCorrelations": 115,
+              "triggers": 115,
               "improvements": 0,
               "protocolEffects": 0
             },
@@ -6396,7 +6357,7 @@
           "description": "Analyze correlations",
           "status": 404,
           "working": false,
-          "responseTime": 71,
+          "responseTime": 44,
           "responseSchema": {
             "type": "object",
             "properties": {
@@ -6459,7 +6420,7 @@
           "description": "Health check",
           "status": 404,
           "working": false,
-          "responseTime": 46,
+          "responseTime": 45,
           "responseSchema": {
             "type": "object",
             "properties": {
@@ -6697,20 +6658,21 @@
             "const"
           ],
           "purpose": "API Integration",
-          "size": "1.9KB"
+          "size": "1.7KB"
         },
         {
           "name": "useDetoxTypes",
           "path": "frontend/shared/hooks/useDetoxTypes.js",
           "dependencies": [
             "useState",
+            "useEffect",
             "useDetoxTypes"
           ],
           "exports": [
             "useDetoxTypes"
           ],
           "purpose": "API Integration",
-          "size": "0.5KB"
+          "size": "0.8KB"
         },
         {
           "name": "useExposureTypes",
@@ -6739,7 +6701,7 @@
             "const"
           ],
           "purpose": "API Integration",
-          "size": "2.2KB"
+          "size": "1.8KB"
         },
         {
           "name": "useProtocols",
@@ -6753,7 +6715,7 @@
             "useProtocols"
           ],
           "purpose": "API Integration",
-          "size": "0.8KB"
+          "size": "0.7KB"
         },
         {
           "name": "useReflectionData",
@@ -6767,7 +6729,7 @@
             "useReflectionData"
           ],
           "purpose": "API Integration",
-          "size": "2.8KB"
+          "size": "2.6KB"
         },
         {
           "name": "useUserPreferences",
@@ -6781,7 +6743,7 @@
             "useUserPreferences"
           ],
           "purpose": "API Integration",
-          "size": "2.5KB"
+          "size": "2.4KB"
         }
       ],
       "utilities": [
@@ -6802,11 +6764,12 @@
             "corsHeaders",
             "createResponse",
             "successResponse",
-            "errorResponse"
+            "errorResponse",
+            "const"
           ],
           "exports": [],
-          "purpose": "General Utilities",
-          "size": "0.9KB"
+          "purpose": "CORS Handling",
+          "size": "1.2KB"
         }
       ]
     },
@@ -6853,9 +6816,34 @@
       ],
       "local": [
         {
+          "key": "VITE_APP_ENV",
+          "hasValue": true,
+          "file": "frontend/web-app/.env.development"
+        },
+        {
           "key": "VITE_API_URL",
           "hasValue": true,
           "file": "frontend/web-app/.env.development"
+        },
+        {
+          "key": "VITE_AUTH_ENABLED",
+          "hasValue": true,
+          "file": "frontend/web-app/.env.development"
+        },
+        {
+          "key": "VITE_APP_ENV",
+          "hasValue": true,
+          "file": "frontend/web-app/.env.production"
+        },
+        {
+          "key": "VITE_API_URL",
+          "hasValue": true,
+          "file": "frontend/web-app/.env.production"
+        },
+        {
+          "key": "VITE_AUTH_ENABLED",
+          "hasValue": true,
+          "file": "frontend/web-app/.env.production"
         }
       ],
       "required": []
@@ -6922,7 +6910,9 @@
         "version": "0.0.0",
         "scripts": [
           "dev",
+          "dev:local",
           "build",
+          "build:dev",
           "lint",
           "preview"
         ],
