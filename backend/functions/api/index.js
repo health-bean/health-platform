@@ -1,7 +1,8 @@
-// backend/functions/api/index.js
+// backend/functions/api/index.js (UPDATED)
 const { handleGetCorrelationInsights } = require('./handlers/correlations');
 const { handleCors } = require('./utils/responses');
-const { handleAuth } = require('./handlers/auth');
+// Import specific auth handlers instead of generic handleAuth
+const { handleLogin, handleLogout, handleVerify, handleRefresh, handleRegister } = require('./handlers/auth');
 const { handleGetUser, handleUpdateUser, handleGetUserProtocols, handleGetUserPreferences, handleUpdateUserPreferences } = require('./handlers/users');
 const { handleGetJournalEntries, handleCreateJournalEntry, handleGetJournalEntry, handleUpdateJournalEntry } = require('./handlers/journal');
 const { handleGetTimelineEntries, handleCreateTimelineEntry } = require('./handlers/timeline');
@@ -30,9 +31,27 @@ exports.handler = async (event) => {
         
         let response;
         
-        if (path === '/api/v1/auth' && method === 'POST') {
-            response = await handleAuth(body);
+        // Auth routes - specific endpoints
+        if (path === '/api/v1/auth/login' && method === 'POST') {
+            response = await handleLogin(body, event);
         }
+        else if (path === '/api/v1/auth/logout' && method === 'POST') {
+            response = await handleLogout(body, event);
+        }
+        else if (path === '/api/v1/auth/verify' && method === 'GET') {
+            response = await handleVerify(queryParams, event);
+        }
+        else if (path === '/api/v1/auth/refresh' && method === 'POST') {
+            response = await handleRefresh(body, event);
+        }
+        else if (path === '/api/v1/auth/register' && method === 'POST') {
+            response = await handleRegister(body, event);
+        }
+        // Keep the generic auth route for backward compatibility
+        else if (path === '/api/v1/auth' && method === 'POST') {
+            response = await handleLogin(body, event); // Default to login
+        }
+        // User routes
         else if (path === '/api/v1/users' && method === 'GET') {
             response = await handleGetUser(event);
         }
@@ -48,12 +67,15 @@ exports.handler = async (event) => {
         else if (path === '/api/v1/user/preferences' && method === 'POST') {
             response = await handleUpdateUserPreferences(body, event);
         }
+        // Insights routes
         else if (path === '/api/v1/correlations/insights' && method === 'GET') {
             response = await handleGetCorrelationInsights(queryParams, event);
         }
+        // Protocol routes
         else if (path === '/api/v1/protocols' && method === 'GET') {
             response = await handleGetProtocols(queryParams, event);
         }
+        // Food routes
         else if (path === '/api/v1/foods/search' && method === 'GET') {
             response = await handleSearchFoods(queryParams, event);
         }
@@ -61,6 +83,7 @@ exports.handler = async (event) => {
             console.log("Protocol foods route hit!");
             response = await handleGetProtocolFoods(queryParams, event);
         }
+        // Search routes
         else if (path === '/api/v1/symptoms/search' && method === 'GET') {
             response = await handleSearchSymptoms(queryParams, event);
         }
@@ -73,6 +96,7 @@ exports.handler = async (event) => {
         else if (path === '/api/v1/detox-types/search' && method === 'GET') {
             response = await handleSearchDetoxTypes(queryParams, event);
         }
+        // Journal routes
         else if (path === '/api/v1/journal/entries' && method === 'GET') {
             response = await handleGetJournalEntries(queryParams, event);
         }
@@ -87,6 +111,7 @@ exports.handler = async (event) => {
             const date = path.split('/').pop();
             response = await handleUpdateJournalEntry(date, body, event);
         }
+        // Timeline routes
         else if (path === '/api/v1/timeline/entries' && method === 'GET') {
             response = await handleGetTimelineEntries(queryParams, event);
         }
@@ -110,12 +135,20 @@ const handleNotFound = (path, method) => {
         path: path,
         method: method,
         availableEndpoints: [
-            'POST /api/v1/auth',
+            // Auth endpoints
+            'POST /api/v1/auth/login',
+            'POST /api/v1/auth/logout', 
+            'GET /api/v1/auth/verify',
+            'POST /api/v1/auth/refresh',
+            'POST /api/v1/auth/register',
+            'POST /api/v1/auth', // Legacy
+            // User endpoints
             'GET /api/v1/users',
             'POST /api/v1/users',
             'GET /api/v1/user/protocols',
             'GET /api/v1/user/preferences',
             'POST /api/v1/user/preferences',
+            // Other endpoints
             'GET /api/v1/correlations/insights',
             'GET /api/v1/protocols',
             'GET /api/v1/foods/search',

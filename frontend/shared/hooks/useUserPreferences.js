@@ -1,25 +1,40 @@
+// File: frontend/shared/hooks/useUserPreferences.js (UPDATED)
+
 import { useState, useEffect } from 'react';
 import { apiClient } from '../services/api.js';
+import useAuth from './useAuth.js';
 
 const useUserPreferences = () => {
   const [preferences, setPreferences] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [saving, setSaving] = useState(false);
+  
+  // Get auth context
+  const { user, token, isAuthenticated, getAuthHeaders } = useAuth();
 
-  // Load preferences from database on app start
+  // Load preferences from database when user is authenticated
   useEffect(() => {
+    if (!isAuthenticated || !user) {
+      setLoading(false);
+      setPreferences(null);
+      return;
+    }
+
     const loadPreferences = async () => {
       try {
         setLoading(true);
-        console.log('Loading preferences from database...');
+        setError(null);
+        console.log('Loading preferences for user:', user.id);
         
-        // Try to load from API first
-        const response = await apiClient.get('/api/v1/user/preferences');
+        // Make API call with auth headers
+        const response = await apiClient.get('/api/v1/user/preferences', {
+          headers: getAuthHeaders()
+        });
         
-        if (response) {
-          console.log('Loaded preferences from database:', response);
-          setPreferences(response);
+        if (response?.preferences) {
+          console.log('Loaded preferences from database:', response.preferences);
+          setPreferences(response.preferences);
         } else {
           // Set default preferences for new users
           const defaultPreferences = {
@@ -37,49 +52,31 @@ const useUserPreferences = () => {
         console.error('Failed to load preferences from API:', error);
         setError('Failed to load preferences');
         
-        // Fallback to localStorage if API fails
-        try {
-          const saved = localStorage.getItem('user_preferences');
-          if (saved) {
-            console.log('Falling back to localStorage preferences');
-            const parsed = JSON.parse(saved);
-            setPreferences(parsed);
-          } else {
-            // Final fallback to defaults
-            const defaultPreferences = {
-              protocols: [],
-              quick_supplements: [],
-              quick_medications: [],
-              quick_foods: [],
-              quick_symptoms: [],
-              quick_detox: [],
-              setup_complete: false
-            };
-            setPreferences(defaultPreferences);
-          }
-        } catch (localError) {
-          console.error('localStorage fallback failed:', localError);
-          // Final fallback to defaults
-          const defaultPreferences = {
-            protocols: [],
-            quick_supplements: [],
-            quick_medications: [],
-            quick_foods: [],
-            quick_symptoms: [],
-            quick_detox: [],
-            setup_complete: false
-          };
-          setPreferences(defaultPreferences);
-        }
+        // Fallback to default preferences
+        const defaultPreferences = {
+          protocols: [],
+          quick_supplements: [],
+          quick_medications: [],
+          quick_foods: [],
+          quick_symptoms: [],
+          quick_detox: [],
+          setup_complete: false
+        };
+        setPreferences(defaultPreferences);
       } finally {
         setLoading(false);
       }
     };
 
     loadPreferences();
-  }, []);
+  }, [isAuthenticated, user, token, getAuthHeaders]);
 
   const updatePreferences = async (newPreferences) => {
+    if (!isAuthenticated || !user) {
+      console.error('Cannot update preferences - user not authenticated');
+      return Promise.reject(new Error('User not authenticated'));
+    }
+
     if (!preferences) {
       console.error('Cannot update preferences - not loaded yet');
       return Promise.reject(new Error('Preferences not loaded'));
@@ -91,6 +88,7 @@ const useUserPreferences = () => {
       ...newPreferences 
     };
     
+    console.log('Updating preferences for user:', user.id);
     console.log('Preserving existing preferences:', preferences);
     console.log('Merging with new preferences:', newPreferences);
     console.log('Final preferences to save:', updatedPreferences);
@@ -98,18 +96,19 @@ const useUserPreferences = () => {
     try {
       setSaving(true);
       setError(null);
-      console.log('Updating preferences:', updatedPreferences);
       
-      // Save to database first
-      const response = await apiClient.post('/api/v1/user/preferences', updatedPreferences);
+      // Save to database with auth headers
+      const response = await apiClient.post('/api/v1/user/preferences', updatedPreferences, {
+        headers: getAuthHeaders()
+      });
       
       if (response) {
         console.log('Preferences saved to database successfully');
         // Update local state with server response
         setPreferences(response.preferences || updatedPreferences);
         
-        // Also save to localStorage as backup
-        localStorage.setItem('user_preferences', JSON.stringify(updatedPreferences));
+        // In production, also save to localStorage as backup
+        // localStorage.setItem('user_preferences', JSON.stringify(updatedPreferences));
         
         return updatedPreferences;
       } else {
@@ -124,6 +123,33 @@ const useUserPreferences = () => {
       throw error;
     } finally {
       setSaving(false);
+    }
+  };
+
+  const refreshPreferences = async () => {
+    if (!isAuthenticated || !user) {
+      console.log('Cannot refresh preferences - user not authenticated');
+      return;
+    }
+
+    try {
+      setLoading(true);
+      setError(null);
+      console.log('Refreshing preferences for user:', user.id);
+      
+      const response = await apiClient.get('/api/v1/user/preferences', {
+        headers: getAuthHeaders()
+      });
+      
+      if (response?.preferences) {
+        console.log('Refreshed preferences:', response.preferences);
+        setPreferences(response.preferences);
+      }
+    } catch (error) {
+      console.error('Failed to refresh preferences:', error);
+      setError('Failed to refresh preferences');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -142,36 +168,20 @@ const useUserPreferences = () => {
     return preferences[key] !== undefined ? preferences[key] : defaultValue;
   };
 
-  // Add this new function before the return statement
-const refreshPreferences = async () => {
-  try {
-    setLoading(true);
-    console.log('Refreshing preferences from database...');
-    
-    const response = await apiClient.get('/api/v1/user/preferences');
-    
-    if (response) {
-      console.log('Refreshed preferences:', response);
-      setPreferences(response);
-    }
-  } catch (error) {
-    console.error('Failed to refresh preferences:', error);
-  } finally {
-    setLoading(false);
-  }
-};
-
-return { 
-  preferences, 
-  updatePreferences, 
-  refreshPreferences, // Add this line
-  loading,
-  saving,
-  error,
-  isReady: preferences !== null,
-  hasPreference,
-  getPreference
-};
+  return { 
+    preferences, 
+    updatePreferences, 
+    refreshPreferences,
+    loading,
+    saving,
+    error,
+    isReady: isAuthenticated && preferences !== null,
+    hasPreference,
+    getPreference,
+    // Additional auth-aware properties
+    user,
+    isAuthenticated
+  };
 };
 
 export default useUserPreferences;

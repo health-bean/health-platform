@@ -1,5 +1,13 @@
+// File: frontend/web-app/src/App.jsx (UPDATED WITH AUTH)
+
 import React, { useEffect } from 'react';
 import { Loader2 } from 'lucide-react';
+
+// Import auth components
+import { AuthProvider } from '../../shared/components/AuthProvider';
+import useAuth from '../../shared/hooks/useAuth';
+import LoginPage from './components/pages/LoginPage';
+import PreferencesPage from './components/pages/PreferencesPage';
 
 // Import shared components and hooks
 import { Button, Alert } from '../../shared/components/ui';
@@ -28,7 +36,10 @@ import SetupWizard from './features/setup/SetupWizard';
 // Import utils
 import { getProtocolDisplayText } from '../../shared/utils/entryHelpers';
 
-function App() {
+// Main App Component (Inside AuthProvider)
+const MainApp = () => {
+  const { isAuthenticated, user, loading: authLoading } = useAuth();
+  
   // App state
   const { 
     selectedDate, 
@@ -42,7 +53,10 @@ function App() {
     handleSetupComplete
   } = useAppState();
 
-  // Data hooks
+  // Add preferences view state
+  const [showPreferences, setShowPreferences] = React.useState(false);
+
+  // Data hooks (only run when authenticated)
   const { protocols, loading: protocolsLoading, error: protocolsError } = useProtocols();
   const { preferences, updatePreferences, refreshPreferences, loading: preferencesLoading, error: preferencesError, isReady } = useUserPreferences();
   const { exposureTypes } = useExposureTypes();
@@ -53,14 +67,40 @@ function App() {
   const { entries, loading: entriesLoading, addEntry, hasCriticalInsights } = useTimelineEntries(selectedDate);
   const { formData, updateFormData, toggleSelectedFood, handleQuickSelect, resetForm, buildEntryData } = useEntryForm();
 
-  // Show setup if not completed OR manually triggered
+  // Show setup if authenticated and not completed OR manually triggered
   useEffect(() => {
-    if (isReady && preferences) {
+    if (isAuthenticated && isReady && preferences) {
       if (!preferences.setup_complete) {
         handleSetupToggle();
       }
     }
-  }, [preferences, isReady]);
+  }, [isAuthenticated, preferences, isReady]);
+
+  // Handle auth loading
+  if (authLoading) {
+    return (
+      <div className="max-w-md mx-auto bg-white min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <Loader2 size={32} className="animate-spin mx-auto mb-4 text-blue-600" />
+          <p className="text-gray-600">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Show login if not authenticated
+  if (!isAuthenticated) {
+    return <LoginPage />;
+  }
+
+  // Show preferences page
+  if (showPreferences) {
+    return (
+      <PreferencesPage 
+        onBack={() => setShowPreferences(false)}
+      />
+    );
+  }
 
   // Create safe preferences with defaults
   const safePreferences = {
@@ -100,7 +140,7 @@ function App() {
   };
 
   // Loading states
-  if (preferencesLoading || !isReady || !preferences) {
+  if (preferencesLoading || !isReady) {
     return (
       <div className="max-w-md mx-auto bg-white min-h-screen flex items-center justify-center">
         <div className="text-center">
@@ -148,6 +188,7 @@ function App() {
         onProtocolChange={(newSelection) => updatePreferences({ protocols: newSelection })}
         protocolsLoading={protocolsLoading}
         protocolsError={protocolsError}
+        onPreferencesClick={() => setShowPreferences(true)}
       />
 
       <Navigation 
@@ -214,6 +255,15 @@ function App() {
         </div>
       )}
     </div>
+  );
+};
+
+// Root App Component with AuthProvider
+function App() {
+  return (
+    <AuthProvider>
+      <MainApp />
+    </AuthProvider>
   );
 }
 

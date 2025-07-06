@@ -120,13 +120,16 @@ const handleRegister = async (body, event) => {
 
 const handleLogin = async (body, event) => {
   const { email, password } = body;
+  console.log('🔍 AUTH: Starting login for email:', email);
 
   if (!email || !password) {
+    console.log('🔍 AUTH: Missing email or password');
     return errorResponse('Email and password required', 400);
   }
 
   try {
     const client = await pool.connect();
+    console.log('🔍 AUTH: Database connected');
 
     // Get user from database
     const getUserQuery = `
@@ -142,25 +145,40 @@ const handleLogin = async (body, event) => {
       WHERE email = $1
     `;
     const result = await client.query(getUserQuery, [email.toLowerCase()]);
+    console.log('🔍 AUTH: Database query result count:', result.rows.length);
 
     if (result.rows.length === 0) {
+      console.log('🔍 AUTH: No user found for email:', email);
       client.release();
       return errorResponse('Invalid credentials', 401);
     }
 
     const user = result.rows[0];
+    console.log('🔍 AUTH: User found:', { id: user.id, email: user.email, is_active: user.is_active });
+    console.log('🔍 AUTH: Password hash exists:', !!user.password_hash);
+    console.log('🔍 AUTH: Password hash preview:', user.password_hash ? user.password_hash.substring(0, 20) + '...' : 'null');
 
     if (!user.is_active) {
+      console.log('🔍 AUTH: User account is inactive');
       client.release();
       return errorResponse('Account is deactivated', 401);
     }
 
     // Verify password
+    console.log('🔍 AUTH: Starting password verification');
+    console.log('🔍 AUTH: Input password:', password);
+    console.log('🔍 AUTH: Stored hash:', user.password_hash);
+    
     const isValidPassword = await verifyPassword(password, user.password_hash);
+    console.log('🔍 AUTH: Password verification result:', isValidPassword);
+    
     if (!isValidPassword) {
+      console.log('🔍 AUTH: Password verification failed');
       client.release();
       return errorResponse('Invalid credentials', 401);
     }
+
+    console.log('🔍 AUTH: Login successful! Generating tokens...');
 
     // Generate tokens
     const { accessToken, refreshToken } = generateTokens(user);
@@ -184,6 +202,7 @@ const handleLogin = async (body, event) => {
 
     client.release();
 
+    console.log('🔍 AUTH: Returning success response');
     return successResponse({
       message: 'Login successful',
       user: {
@@ -198,6 +217,7 @@ const handleLogin = async (body, event) => {
     });
 
   } catch (error) {
+    console.error('🔍 AUTH: Login error:', error);
     const appError = handleDatabaseError(error, 'user login');
     return errorResponse(appError.message, appError.statusCode);
   }
