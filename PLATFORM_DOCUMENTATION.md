@@ -26,7 +26,7 @@
 #### GET /api/v1/protocols
 **Status:** ✅ Working (200)  
 **Description:** Get health protocols  
-**Response Time:** 373ms
+**Response Time:** 721ms
 
 
 
@@ -41,29 +41,20 @@ curl "https://suhoxvn8ik.execute-api.us-east-1.amazonaws.com/dev/api/v1/protocol
   "protocols": [
     {
       "id": "1495844a-19de-404c-a288-7660eda0cbe1",
-      "name": "AIP Core",
-      "description": "Autoimmune Protocol - Elimination Phase. Removes nightshades, grains, legumes, dairy, eggs, nuts, seeds, and certain spices.",
+      "name": "AIP",
+      "description": "Autoimmune Protocol for reducing inflammation and identifying triggers",
       "category": null,
       "phases": null,
       "official": true,
       "version": "1.0"
     },
     {
-      "id": "34236e47-3e54-49fa-99a4-797dbcf66c2d",
-      "name": "AIP Modified",
-      "description": "Modified Autoimmune Protocol with selective reintroductions and personalized modifications.",
-      "category": "aip",
+      "id": "7c728266-7c7e-4389-a9b6-7c5280f2edd2",
+      "name": "Keto",
+      "description": "High-fat, low-carb ketogenic diet for metabolic health and weight management",
+      "category": "metabolic",
       "phases": null,
-      "official": false,
-      "version": "1.0"
-    },
-    {
-      "id": "b0c3b21c-f32c-4ac4-8afa-251d2819c3c0",
-      "name": "Elimination Diet",
-      "description": "Systematic food elimination and reintroduction",
-      "category": "elimination",
-      "phases": null,
-      "official": false,
+      "official": true,
       "version": "1.0"
     },
     {
@@ -130,7 +121,7 @@ curl "https://suhoxvn8ik.execute-api.us-east-1.amazonaws.com/dev/api/v1/protocol
       "version": "1.0"
     }
   ],
-  "total": 10
+  "total": 9
 }
 ```
 
@@ -141,7 +132,7 @@ curl "https://suhoxvn8ik.execute-api.us-east-1.amazonaws.com/dev/api/v1/protocol
 #### GET /api/v1/foods/search
 **Status:** ✅ Working (200)  
 **Description:** Search food database  
-**Response Time:** 236ms
+**Response Time:** 58ms
 
 **Parameters:**
 - `search`: chicken
@@ -179,7 +170,7 @@ curl "https://suhoxvn8ik.execute-api.us-east-1.amazonaws.com/dev/api/v1/foods/se
 #### GET /api/v1/foods/by-protocol
 **Status:** ✅ Working (200)  
 **Description:** Get protocol foods  
-**Response Time:** 263ms
+**Response Time:** 94ms
 
 **Parameters:**
 - `protocol_id`: 1495844a-19de-404c-a288-7660eda0cbe1
@@ -4081,7 +4072,7 @@ curl "https://suhoxvn8ik.execute-api.us-east-1.amazonaws.com/dev/api/v1/foods/by
 #### GET /api/v1/timeline/entries
 **Status:** ✅ Working (200)  
 **Description:** Get timeline entries  
-**Response Time:** 102ms
+**Response Time:** 81ms
 
 **Parameters:**
 - `date`: 2025-07-04
@@ -4106,7 +4097,7 @@ curl "https://suhoxvn8ik.execute-api.us-east-1.amazonaws.com/dev/api/v1/timeline
 #### GET /api/v1/correlations/insights
 **Status:** ✅ Working (200)  
 **Description:** Get AI insights  
-**Response Time:** 5945ms
+**Response Time:** 6233ms
 
 **Parameters:**
 - `userId`: 8e8a568a-c2f8-43a8-abf2-4e54408dbdc0
@@ -4126,10 +4117,10 @@ curl "https://suhoxvn8ik.execute-api.us-east-1.amazonaws.com/dev/api/v1/correlat
       "effect": "swelling",
       "timeWindow": 72,
       "timeWindowDescription": "within 72 hours",
-      "confidence": 0.63,
-      "frequency": "32/51 times",
+      "confidence": 0.62,
+      "frequency": "32/52 times",
       "occurrences": 32,
-      "totalOpportunities": 51,
+      "totalOpportunities": 52,
       "description": "nightshade foods appear to trigger swelling within 72 hours",
       "recommendation": "Monitor nightshade foods consumption and swelling symptoms"
     },
@@ -4139,10 +4130,10 @@ curl "https://suhoxvn8ik.execute-api.us-east-1.amazonaws.com/dev/api/v1/correlat
       "effect": "joint pain",
       "timeWindow": 72,
       "timeWindowDescription": "within 72 hours",
-      "confidence": 0.69,
-      "frequency": "35/51 times",
+      "confidence": 0.67,
+      "frequency": "35/52 times",
       "occurrences": 35,
-      "totalOpportunities": 51,
+      "totalOpportunities": 52,
       "description": "nightshade foods appear to trigger joint pain within 72 hours",
       "recommendation": "Monitor nightshade foods consumption and joint pain symptoms"
     },
@@ -5665,7 +5656,7 @@ curl "https://suhoxvn8ik.execute-api.us-east-1.amazonaws.com/dev/api/v1/correlat
   - Hooks: useState, useCorrelations
   - Last Modified: 2025-07-06
 - **ProtocolFoods** (Functional (Hooks)) - `frontend/web-app/src/components/ProtocolFoods.jsx`
-  - Size: 14.2KB
+  - Size: 15.4KB
   - Hooks: useState, useProtocolFoods, useFoodSearch, useEffect
   - Last Modified: 2025-07-06
 
@@ -5684,7 +5675,7 @@ curl "https://suhoxvn8ik.execute-api.us-east-1.amazonaws.com/dev/api/v1/correlat
   - Dependencies: useState, useExposureTypes
 - **useProtocolFoods** - API Integration
   - Path: `frontend/shared/hooks/useProtocolFoods.js`
-  - Size: 1.8KB
+  - Size: 2.8KB
   - Dependencies: useState, useEffect, useProtocolFoods, useFoodSearch
 - **useProtocols** - API Integration
   - Path: `frontend/shared/hooks/useProtocols.js`

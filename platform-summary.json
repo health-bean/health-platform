@@ -2,7 +2,7 @@
   "platform": {
     "name": "FILO Health Platform",
     "version": "1.0.0",
-    "lastUpdated": "2025-07-06T18:33:07.287Z",
+    "lastUpdated": "2025-07-06T19:10:00.377Z",
     "architecture": "Full-Stack React + AWS Lambda",
     "status": "Active Development"
   },
@@ -32,7 +32,7 @@
     "platform": {
       "name": "FILO Health Platform",
       "version": "1.0.0",
-      "lastUpdated": "2025-07-06T18:33:07.287Z",
+      "lastUpdated": "2025-07-06T19:10:00.377Z",
       "architecture": "Full-Stack React + AWS Lambda",
       "status": "Active Development"
     },
@@ -45,7 +45,7 @@
           "description": "Get health protocols",
           "status": 200,
           "working": true,
-          "responseTime": 373,
+          "responseTime": 721,
           "responseSchema": {
             "type": "object",
             "properties": {
@@ -64,29 +64,20 @@
             "protocols": [
               {
                 "id": "1495844a-19de-404c-a288-7660eda0cbe1",
-                "name": "AIP Core",
-                "description": "Autoimmune Protocol - Elimination Phase. Removes nightshades, grains, legumes, dairy, eggs, nuts, seeds, and certain spices.",
+                "name": "AIP",
+                "description": "Autoimmune Protocol for reducing inflammation and identifying triggers",
                 "category": null,
                 "phases": null,
                 "official": true,
                 "version": "1.0"
               },
               {
-                "id": "34236e47-3e54-49fa-99a4-797dbcf66c2d",
-                "name": "AIP Modified",
-                "description": "Modified Autoimmune Protocol with selective reintroductions and personalized modifications.",
-                "category": "aip",
+                "id": "7c728266-7c7e-4389-a9b6-7c5280f2edd2",
+                "name": "Keto",
+                "description": "High-fat, low-carb ketogenic diet for metabolic health and weight management",
+                "category": "metabolic",
                 "phases": null,
-                "official": false,
-                "version": "1.0"
-              },
-              {
-                "id": "b0c3b21c-f32c-4ac4-8afa-251d2819c3c0",
-                "name": "Elimination Diet",
-                "description": "Systematic food elimination and reintroduction",
-                "category": "elimination",
-                "phases": null,
-                "official": false,
+                "official": true,
                 "version": "1.0"
               },
               {
@@ -153,7 +144,7 @@
                 "version": "1.0"
               }
             ],
-            "total": 10
+            "total": 9
           }
         },
         {
@@ -163,7 +154,7 @@
           "description": "Get exposure types",
           "status": 404,
           "working": false,
-          "responseTime": 240,
+          "responseTime": 44,
           "responseSchema": {
             "type": "object",
             "properties": {
@@ -226,7 +217,7 @@
           "description": "Get detox types",
           "status": 404,
           "working": false,
-          "responseTime": 250,
+          "responseTime": 61,
           "responseSchema": {
             "type": "object",
             "properties": {
@@ -295,7 +286,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 236,
+          "responseTime": 58,
           "responseSchema": {
             "type": "object",
             "properties": {
@@ -349,7 +340,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 263,
+          "responseTime": 94,
           "responseSchema": {
             "type": "object",
             "properties": {
@@ -4486,7 +4477,7 @@
           ],
           "status": 404,
           "working": false,
-          "responseTime": 106,
+          "responseTime": 34,
           "responseSchema": {
             "type": "object",
             "properties": {
@@ -4549,7 +4540,7 @@
           "description": "Update user preferences",
           "status": 404,
           "working": false,
-          "responseTime": 102,
+          "responseTime": 105,
           "responseSchema": {
             "type": "object",
             "properties": {
@@ -4618,7 +4609,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 102,
+          "responseTime": 81,
           "responseSchema": {
             "type": "object",
             "properties": {
@@ -4645,7 +4636,7 @@
           "description": "Create timeline entry",
           "status": 500,
           "working": false,
-          "responseTime": 147,
+          "responseTime": 62,
           "responseSchema": {
             "type": "object",
             "properties": {
@@ -4675,7 +4666,7 @@
           ],
           "status": 404,
           "working": false,
-          "responseTime": 101,
+          "responseTime": 36,
           "responseSchema": {
             "type": "object",
             "properties": {
@@ -4738,7 +4729,7 @@
           "description": "Save daily reflection",
           "status": 404,
           "working": false,
-          "responseTime": 139,
+          "responseTime": 35,
           "responseSchema": {
             "type": "object",
             "properties": {
@@ -4807,7 +4798,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 5945,
+          "responseTime": 6233,
           "responseSchema": {
             "type": "object",
             "properties": {
@@ -4850,10 +4841,10 @@
                 "effect": "swelling",
                 "timeWindow": 72,
                 "timeWindowDescription": "within 72 hours",
-                "confidence": 0.63,
-                "frequency": "32/51 times",
+                "confidence": 0.62,
+                "frequency": "32/52 times",
                 "occurrences": 32,
-                "totalOpportunities": 51,
+                "totalOpportunities": 52,
                 "description": "nightshade foods appear to trigger swelling within 72 hours",
                 "recommendation": "Monitor nightshade foods consumption and swelling symptoms"
               },
@@ -4863,10 +4854,10 @@
                 "effect": "joint pain",
                 "timeWindow": 72,
                 "timeWindowDescription": "within 72 hours",
-                "confidence": 0.69,
-                "frequency": "35/51 times",
+                "confidence": 0.67,
+                "frequency": "35/52 times",
                 "occurrences": 35,
-                "totalOpportunities": 51,
+                "totalOpportunities": 52,
                 "description": "nightshade foods appear to trigger joint pain within 72 hours",
                 "recommendation": "Monitor nightshade foods consumption and joint pain symptoms"
               },
@@ -6357,7 +6348,7 @@
           "description": "Analyze correlations",
           "status": 404,
           "working": false,
-          "responseTime": 242,
+          "responseTime": 38,
           "responseSchema": {
             "type": "object",
             "properties": {
@@ -6420,7 +6411,7 @@
           "description": "Health check",
           "status": 404,
           "working": false,
-          "responseTime": 98,
+          "responseTime": 37,
           "responseSchema": {
             "type": "object",
             "properties": {
@@ -6640,7 +6631,7 @@
             "ProtocolFoods"
           ],
           "props": [],
-          "size": "14.2KB",
+          "size": "15.4KB",
           "lastModified": "2025-07-06"
         }
       ],
@@ -6701,7 +6692,7 @@
             "const"
           ],
           "purpose": "API Integration",
-          "size": "1.8KB"
+          "size": "2.8KB"
         },
         {
           "name": "useProtocols",
