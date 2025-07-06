@@ -17,6 +17,17 @@ const ProtocolFoods = ({ protocolId }) => {
     error 
   } = useProtocolFoods(protocolId);
 
+  // DEBUG LOG - ADD THIS TO SEE WHAT THE COMPONENT RECEIVES
+  console.log('🎯 Component received state:', {
+    protocolId,
+    foodsByCategory,
+    foodsByCategoryKeys: Object.keys(foodsByCategory),
+    complianceStats,
+    totalFoods,
+    loading,
+    error
+  });
+
   const { 
     foods: searchResults, 
     loading: searchLoading, 
@@ -104,13 +115,31 @@ const ProtocolFoods = ({ protocolId }) => {
     );
   }
 
-  if (!protocolId) {
+  if (!protocolId || protocolId === 'no_protocol') {
     return (
       <div className="text-center p-8">
         <div className="text-gray-400 mb-4">
           <Filter className="w-12 h-12 mx-auto" />
         </div>
-        <p className="text-gray-600">Select a protocol to view foods</p>
+        <div className="space-y-3">
+          <h3 className="text-lg font-semibold text-gray-900">Free Tracking Mode</h3>
+          <p className="text-gray-600">
+            You're tracking without protocol restrictions. Use the main food tracking 
+            features to log your meals and discover your personal patterns.
+          </p>
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mt-4">
+            <div className="flex items-start space-x-2">
+              <div className="text-blue-600 text-lg">💡</div>
+              <div className="text-sm text-blue-800">
+                <div className="font-medium">Track Everything</div>
+                <div className="text-blue-700">
+                  Log all foods, symptoms, and activities. Our AI will analyze your data 
+                  to find personalized correlations and suggest potential triggers.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
