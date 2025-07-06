@@ -1,0 +1,146 @@
+{
+  "packageJsonFiles": [
+    {
+      "path": "backend/functions/api/package.json",
+      "absolutePath": "/Users/byrne/Coding/health-platform/backend/functions/api/package.json",
+      "name": "health-platform-test-db"
+    },
+    {
+      "path": "docs/package.json",
+      "absolutePath": "/Users/byrne/Coding/health-platform/docs/package.json",
+      "name": "docs"
+    },
+    {
+      "path": "frontend/shared/package.json",
+      "absolutePath": "/Users/byrne/Coding/health-platform/frontend/shared/package.json",
+      "name": "shared"
+    },
+    {
+      "path": "frontend/web-app/package.json",
+      "absolutePath": "/Users/byrne/Coding/health-platform/frontend/web-app/package.json",
+      "name": "web-app"
+    }
+  ],
+  "envFiles": [
+    {
+      "path": "frontend/web-app/.env",
+      "absolutePath": "/Users/byrne/Coding/health-platform/frontend/web-app/.env",
+      "variables": 1
+    },
+    {
+      "path": "frontend/web-app/.env.local",
+      "absolutePath": "/Users/byrne/Coding/health-platform/frontend/web-app/.env.local",
+      "variables": 1
+    },
+    {
+      "path": "frontend/shared/.env.development",
+      "absolutePath": "/Users/byrne/Coding/health-platform/frontend/shared/.env.development",
+      "variables": 1
+    },
+    {
+      "path": "frontend/web-app/.env.development",
+      "absolutePath": "/Users/byrne/Coding/health-platform/frontend/web-app/.env.development",
+      "variables": 1
+    },
+    {
+      "path": "frontend/web-app/.env.production",
+      "absolutePath": "/Users/byrne/Coding/health-platform/frontend/web-app/.env.production",
+      "variables": 1
+    }
+  ],
+  "componentDirs": [
+    {
+      "path": "archive/old-docusaurus-content/components",
+      "absolutePath": "/Users/byrne/Coding/health-platform/archive/old-docusaurus-content/components",
+      "componentCount": 0
+    },
+    {
+      "path": "docs/build/components",
+      "absolutePath": "/Users/byrne/Coding/health-platform/docs/build/components",
+      "componentCount": 0
+    },
+    {
+      "path": "docs/docs/components",
+      "absolutePath": "/Users/byrne/Coding/health-platform/docs/docs/components",
+      "componentCount": 0
+    },
+    {
+      "path": "docs/src/components",
+      "absolutePath": "/Users/byrne/Coding/health-platform/docs/src/components",
+      "componentCount": 0
+    },
+    {
+      "path": "frontend/practioner-dashboard/components",
+      "absolutePath": "/Users/byrne/Coding/health-platform/frontend/practioner-dashboard/components",
+      "componentCount": 0
+    },
+    {
+      "path": "frontend/shared/components",
+      "absolutePath": "/Users/byrne/Coding/health-platform/frontend/shared/components",
+      "componentCount": 0
+    },
+    {
+      "path": "frontend/web-app/src/components",
+      "absolutePath": "/Users/byrne/Coding/health-platform/frontend/web-app/src/components",
+      "componentCount": 3
+    }
+  ],
+  "hookDirs": [
+    {
+      "path": "frontend/shared/hooks",
+      "absolutePath": "/Users/byrne/Coding/health-platform/frontend/shared/hooks",
+      "hookCount": 7
+    },
+    {
+      "path": "frontend/web-app/src/hooks",
+      "absolutePath": "/Users/byrne/Coding/health-platform/frontend/web-app/src/hooks",
+      "hookCount": 0
+    }
+  ],
+  "utilDirs": [
+    {
+      "path": "backend/functions/api/utils",
+      "absolutePath": "/Users/byrne/Coding/health-platform/backend/functions/api/utils",
+      "utilCount": 2
+    }
+  ],
+  "srcDirs": [
+    {
+      "path": "docs/src",
+      "absolutePath": "/Users/byrne/Coding/health-platform/docs/src",
+      "fileCount": 0
+    },
+    {
+      "path": "frontend/web-app/src",
+      "absolutePath": "/Users/byrne/Coding/health-platform/frontend/web-app/src",
+      "fileCount": 2
+    },
+    {
+      "path": "docs/src/pages",
+      "absolutePath": "/Users/byrne/Coding/health-platform/docs/src/pages",
+      "fileCount": 0
+    },
+    {
+      "path": "frontend/practioner-dashboard/features",
+      "absolutePath": "/Users/byrne/Coding/health-platform/frontend/practioner-dashboard/features",
+      "fileCount": 0
+    }
+  ],
+  "configFiles": [
+    {
+      "path": "frontend/web-app/vite.config.js",
+      "absolutePath": "/Users/byrne/Coding/health-platform/frontend/web-app/vite.config.js",
+      "type": "Vite Build Config"
+    },
+    {
+      "path": "frontend/web-app/tailwind.config.js",
+      "absolutePath": "/Users/byrne/Coding/health-platform/frontend/web-app/tailwind.config.js",
+      "type": "Tailwind CSS Config"
+    },
+    {
+      "path": "amplify.yml",
+      "absolutePath": "/Users/byrne/Coding/health-platform/amplify.yml",
+      "type": "AWS Amplify Config"
+    }
+  ]
+}

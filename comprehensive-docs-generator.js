@@ -50,12 +50,22 @@ class ComprehensiveDocumentationGenerator {
   async generateComprehensiveDocumentation() {
     console.log('🚀 Generating Comprehensive Platform Documentation...\n');
     
+    // Load discovered structure if available
+    let discoveredPaths = null;
+    try {
+      const structureData = fs.readFileSync(path.join(this.rootPath, 'project-structure.json'), 'utf8');
+      discoveredPaths = JSON.parse(structureData);
+      console.log('✅ Using discovered project structure for accurate analysis');
+    } catch (error) {
+      console.log('⚠️ No project-structure.json found, using fallback scanning');
+    }
+    
     // Run all analysis in parallel for speed
     await Promise.all([
       this.analyzeCodebase(),
       this.testAllAPIs(),
       this.analyzeDatabaseStructure(),
-      this.analyzeEnvironmentVariables()
+      this.analyzeEnvironmentVariables(discoveredPaths)
     ]);
     
     this.generateMarkdownDocumentation();
@@ -68,28 +78,45 @@ class ComprehensiveDocumentationGenerator {
   async analyzeCodebase() {
     console.log('📁 Analyzing codebase structure...');
     
-    // Find all React components
-    await this.findAllComponents();
+    // Load discovered structure if it exists
+    let discoveredPaths = null;
+    try {
+      const structureData = fs.readFileSync(path.join(this.rootPath, 'project-structure.json'), 'utf8');
+      discoveredPaths = JSON.parse(structureData);
+      console.log('✅ Using discovered project structure');
+    } catch (error) {
+      console.log('⚠️ No discovered structure found, using fallback scanning');
+    }
     
-    // Find custom hooks
-    await this.findCustomHooks();
+    // Find all React components using discovered paths
+    await this.findAllComponents(discoveredPaths);
     
-    // Find utility functions
-    await this.findUtilities();
+    // Find custom hooks using discovered paths
+    await this.findCustomHooks(discoveredPaths);
     
-    // Analyze package.json files
-    await this.analyzePackageFiles();
+    // Find utility functions using discovered paths
+    await this.findUtilities(discoveredPaths);
+    
+    // Analyze package.json files using discovered paths
+    await this.analyzePackageFiles(discoveredPaths);
   }
 
-  async findAllComponents() {
-    const componentDirs = [
-      path.join(this.rootPath, 'frontend', 'shared', 'components'),
-      path.join(this.rootPath, 'frontend', 'web', 'components'),
-      path.join(this.rootPath, 'frontend', 'web', 'features'),
-      path.join(this.rootPath, 'frontend', 'web', 'pages'),
-      path.join(this.rootPath, 'src', 'components'),
-      path.join(this.rootPath, 'components')
-    ];
+  async findAllComponents(discoveredPaths) {
+    let componentDirs = [];
+    
+    if (discoveredPaths && discoveredPaths.componentDirs) {
+      // Filter out empty directories and archives
+      componentDirs = discoveredPaths.componentDirs
+        .filter(dir => !dir.includes('archive') && !dir.includes('docs/build'))
+        .map(dir => path.join(this.rootPath, dir));
+    } else {
+      // Fallback to scanning
+      componentDirs = [
+        path.join(this.rootPath, 'frontend', 'shared', 'components'),
+        path.join(this.rootPath, 'frontend', 'web-app', 'src', 'components'),
+        path.join(this.rootPath, 'src', 'components')
+      ];
+    }
 
     for (const dir of componentDirs) {
       if (fs.existsSync(dir)) {
@@ -237,14 +264,21 @@ class ComprehensiveDocumentationGenerator {
     }
   }
 
-  async findCustomHooks() {
+  async findCustomHooks(discoveredPaths) {
     console.log('🎣 Finding custom hooks...');
     
-    const hookDirs = [
-      path.join(this.rootPath, 'frontend', 'shared', 'hooks'),
-      path.join(this.rootPath, 'src', 'hooks'),
-      path.join(this.rootPath, 'hooks')
-    ];
+    let hookDirs = [];
+    
+    if (discoveredPaths && discoveredPaths.hookDirs) {
+      hookDirs = discoveredPaths.hookDirs.map(dir => path.join(this.rootPath, dir));
+    } else {
+      // Fallback to scanning
+      hookDirs = [
+        path.join(this.rootPath, 'frontend', 'shared', 'hooks'),
+        path.join(this.rootPath, 'frontend', 'web-app', 'src', 'hooks'),
+        path.join(this.rootPath, 'src', 'hooks')
+      ];
+    }
 
     for (const dir of hookDirs) {
       if (fs.existsSync(dir)) {
@@ -288,15 +322,22 @@ class ComprehensiveDocumentationGenerator {
     return 'Custom Logic';
   }
 
-  async findUtilities() {
+  async findUtilities(discoveredPaths) {
     console.log('🔧 Finding utility functions...');
     
-    const utilDirs = [
-      path.join(this.rootPath, 'frontend', 'shared', 'utils'),
-      path.join(this.rootPath, 'backend', 'functions', 'api', 'utils'),
-      path.join(this.rootPath, 'src', 'utils'),
-      path.join(this.rootPath, 'utils')
-    ];
+    let utilDirs = [];
+    
+    if (discoveredPaths && discoveredPaths.utilDirs) {
+      utilDirs = discoveredPaths.utilDirs.map(dir => path.join(this.rootPath, dir));
+    } else {
+      // Fallback to scanning
+      utilDirs = [
+        path.join(this.rootPath, 'frontend', 'shared', 'utils'),
+        path.join(this.rootPath, 'frontend', 'web-app', 'utils'),
+        path.join(this.rootPath, 'backend', 'functions', 'api', 'utils'),
+        path.join(this.rootPath, 'src', 'utils')
+      ];
+    }
 
     for (const dir of utilDirs) {
       if (fs.existsSync(dir)) {
@@ -620,8 +661,10 @@ class ComprehensiveDocumentationGenerator {
       '.env.local',
       '.env.development',
       '.env.production',
-      'frontend/.env',
-      'backend/.env'
+      'frontend/web-app/.env',
+      'frontend/web-app/.env.local',
+      'frontend/shared/.env',
+      'backend/functions/api/.env'
     ];
 
     const localEnvVars = [];
@@ -651,8 +694,9 @@ class ComprehensiveDocumentationGenerator {
     // Check package.json for environment references
     const packagePaths = [
       'package.json',
-      'frontend/package.json',
-      'backend/package.json'
+      'frontend/web-app/package.json',
+      'frontend/shared/package.json',
+      'backend/functions/api/package.json'
     ];
 
     const requiredEnvVars = [];
@@ -689,8 +733,9 @@ class ComprehensiveDocumentationGenerator {
     
     const packagePaths = [
       'package.json',
-      'frontend/package.json', 
-      'backend/package.json'
+      'frontend/web-app/package.json',
+      'frontend/shared/package.json',
+      'backend/functions/api/package.json'
     ];
 
     for (const pkgPath of packagePaths) {

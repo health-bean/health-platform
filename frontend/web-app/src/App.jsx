@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Plus, Clock, Calendar, CheckCircle2, Loader2, Search, ChevronDown } from 'lucide-react';
 
 // Import shared auth context
@@ -40,15 +40,6 @@ const safeObjectAccess = (obj, key, defaultValue = null) => {
   return obj && obj[key] !== undefined ? obj[key] : defaultValue;
 };
 
-// Memoized helper functions to prevent unnecessary re-renders
-const useSafeArrayAccess = (arr, defaultValue = []) => {
-  return useMemo(() => safeArrayAccess(arr, defaultValue), [arr?.length, defaultValue]);
-};
-
-const useSafeObjectAccess = (obj, key, defaultValue = null) => {
-  return useMemo(() => safeObjectAccess(obj, key, defaultValue), [obj?.[key], key, defaultValue]);
-};
-
 // =================
 // MULTI-SELECT PROTOCOL DROPDOWN
 // =================
@@ -77,7 +68,7 @@ const MultiSelectProtocolDropdown = ({ protocols = [], selectedProtocols = [], o
     }
     
     return `${safeSelectedProtocols.length} Active Protocols`;
-  }, [safeProtocols.length, safeSelectedProtocols.length, safeSelectedProtocols.join(',')]);
+  }, [safeProtocols.length, safeSelectedProtocols.length]);
 
   const toggleProtocol = async (protocolId) => {
     if (isUpdating || !onSelectionChange) return;
@@ -216,7 +207,7 @@ const SmartFoodSelector = ({ selectedItems = [], onToggleItem, selectedProtocols
 
     const timer = setTimeout(loadFoods, 300);
     return () => clearTimeout(timer);
-  }, [searchTerm, safeSelectedProtocols.length, safeSelectedProtocols.join(',')]);
+  }, [searchTerm, safeSelectedProtocols.length]);
 
   const handleToggleItem = useCallback((food) => {
     if (onToggleItem) {
@@ -313,7 +304,7 @@ const QuickChecks = ({ type, preferences = {}, onQuickSelect }) => {
       case 'detox': return safeArrayAccess(preferences.quick_detox);
       default: return [];
     }
-  }, [type, preferences?.quick_supplements?.length, preferences?.quick_medications?.length, preferences?.quick_foods?.length, preferences?.quick_symptoms?.length, preferences?.quick_detox?.length]);
+  }, [type, preferences]);
 
   const quickItems = getQuickItems();
 
@@ -387,7 +378,7 @@ function HealthApp() {
     if (safeProtocols.length > 0 && !selectedProtocolId) {
       setSelectedProtocolId(safeProtocols[0]);
     }
-  }, [preferences?.protocols?.length, selectedProtocolId]);
+  }, [preferences?.protocols, selectedProtocolId]);
 
   // Load timeline entries function
   const loadTimelineEntries = useCallback(async () => {
@@ -432,7 +423,7 @@ function HealthApp() {
     if (isReady && preferences && !preferences.setup_complete) {
       setShowSetup(true);
     }
-  }, [isReady, preferences?.setup_complete]);
+  }, [preferences?.setup_complete, isReady]);
 
   // Show loading while preferences are loading
   if (preferencesLoading || !isReady) {
@@ -465,13 +456,13 @@ function HealthApp() {
     );
   }
 
-  // Safe access to protocols and preferences with memoization
-  const safeProtocols = useMemo(() => safeArrayAccess(protocols), [protocols?.length]);
-  const safePreferencesProtocols = useMemo(() => safeArrayAccess(preferences?.protocols), [preferences?.protocols?.length]);
+  // Safe access to protocols and preferences
+  const safeProtocols = safeArrayAccess(protocols);
+  const safePreferencesProtocols = safeArrayAccess(preferences?.protocols);
   
-  const selectedProtocolObjects = useMemo(() => safeProtocols.filter(p => 
+  const selectedProtocolObjects = safeProtocols.filter(p => 
     safePreferencesProtocols.includes(p.id)
-  ), [safeProtocols.length, safePreferencesProtocols.length]);
+  );
 
   const getProtocolDisplayText = useCallback(() => {
     if (safePreferencesProtocols.length === 0) return 'No protocols selected';
