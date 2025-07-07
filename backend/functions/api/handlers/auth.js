@@ -1,375 +1,402 @@
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcryptjs');
-const { pool } = require('../database/connection');
-const { successResponse, errorResponse } = require('../utils/responses');
-const { handleDatabaseError } = require('../utils/errors');
+// File: frontend/web-app/src/App.jsx (CLEANED UP)
 
-const JWT_SECRET = process.env.JWT_SECRET || 'your-super-secret-key';
-const JWT_REFRESH_SECRET = process.env.JWT_REFRESH_SECRET || 'your-refresh-secret-key';
-const JWT_EXPIRY = process.env.JWT_EXPIRY || '15m';
-const JWT_REFRESH_EXPIRY = process.env.JWT_REFRESH_EXPIRY || '7d';
+import React, { useEffect } from 'react';
+import { Loader2 } from 'lucide-react';
 
-// Utility functions
-const generateTokens = (user) => {
-  const accessToken = jwt.sign(
-    { 
-      sub: user.id, 
-      email: user.email, 
-      userType: user.user_type 
-    },
-    JWT_SECRET,
-    { expiresIn: JWT_EXPIRY }
-  );
+// Import auth components
+import { AuthProvider } from '../../shared/components/AuthProvider';
+import useAuth from '../../shared/hooks/useAuth';
+import LoginPage from './components/pages/LoginPage';
+import PreferencesPage from './components/pages/PreferencesPage';
 
-  const refreshToken = jwt.sign(
-    { 
-      sub: user.id,
-      type: 'refresh'
-    },
-    JWT_REFRESH_SECRET,
-    { expiresIn: JWT_REFRESH_EXPIRY }
-  );
+// Import shared components and hooks
+import { Button, Alert } from '../../shared/components/ui';
+import useProtocols from '../../shared/hooks/useProtocols';
+import useUserPreferences from '../../shared/hooks/useUserPreferences';
+import useExposureTypes from '../../shared/hooks/useExposureTypes';
+import useDetoxTypes from '../../shared/hooks/useDetoxTypes';
+import useReflectionData from '../../shared/hooks/useReflectionData';
 
-  return { accessToken, refreshToken };
-};
+// Import local hooks
+import { useAppState } from './hooks/useAppState';
+import { useTimelineEntries } from './hooks/useTimelineEntries';
+import { useEntryForm } from './hooks/useEntryForm';
 
-const hashPassword = async (password) => {
-  return await bcrypt.hash(password, 12);
-};
+// Import layout components
+import Header from './components/layout/Header';
+import Navigation from './components/layout/Navigation';
 
-const verifyPassword = async (password, hash) => {
-  return await bcrypt.compare(password, hash);
-};
+// Import feature components
+import TimelineView from './features/timeline/TimelineView';
+import ReflectionView from './features/reflection/ReflectionView';
+import CorrelationInsights from './features/insights/CorrelationInsights';
+import ProtocolFoods from './features/protocol/ProtocolFoods';
+import SetupWizard from './features/setup/SetupWizard';
 
-const handleRegister = async (body, event) => {
-  const { email, password, firstName, lastName, userType = 'patient' } = body;
+// Import utils
+import { getProtocolDisplayText } from '../../shared/utils/entryHelpers';
 
-  // Validation
-  if (!email || !password || !firstName || !lastName) {
-    return errorResponse('Missing required fields', 400);
-  }
-
-  if (password.length < 8) {
-    return errorResponse('Password must be at least 8 characters', 400);
-  }
-
-  try {
-    const client = await pool.connect();
-
-    // Check if user already exists
-    const existingUserQuery = `
-      SELECT id FROM users WHERE email = $1
-    `;
-    const existingUser = await client.query(existingUserQuery, [email.toLowerCase()]);
-
-    if (existingUser.rows.length > 0) {
-      client.release();
-      return errorResponse('User already exists', 409);
-    }
-
-    // Hash password and create user
-    const passwordHash = await hashPassword(password);
-    const insertUserQuery = `
-      INSERT INTO users (email, password_hash, first_name, last_name, user_type) 
-      VALUES ($1, $2, $3, $4, $5) 
-      RETURNING id, email, first_name, last_name, user_type, created_at
-    `;
-    
-    const result = await client.query(insertUserQuery, [
-      email.toLowerCase(), 
-      passwordHash, 
-      firstName, 
-      lastName, 
-      userType
-    ]);
-
-    const user = result.rows[0];
-    const { accessToken, refreshToken } = generateTokens(user);
-
-    // Store refresh token
-    const insertSessionQuery = `
-      INSERT INTO user_sessions (user_id, refresh_token, expires_at) 
-      VALUES ($1, $2, $3)
-    `;
-    await client.query(insertSessionQuery, [
-      user.id, 
-      refreshToken, 
-      new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
-    ]);
-
-    client.release();
-
-    return successResponse({
-      message: 'Registration successful',
-      user: {
-        id: user.id,
-        email: user.email,
-        firstName: user.first_name,
-        lastName: user.last_name,
-        userType: user.user_type
-      },
-      token: accessToken,
-      refreshToken
-    }, 201);
-
-  } catch (error) {
-    const appError = handleDatabaseError(error, 'user registration');
-    return errorResponse(appError.message, appError.statusCode);
-  }
-};
-
-const handleLogin = async (body, event) => {
-  const { email, password } = body;
-  console.log('🔍 AUTH: Starting login for email:', email);
-
-  if (!email || !password) {
-    console.log('🔍 AUTH: Missing email or password');
-    return errorResponse('Email and password required', 400);
-  }
-
-  try {
-    const client = await pool.connect();
-    console.log('🔍 AUTH: Database connected');
-
-    // Get user from database
-    const getUserQuery = `
-      SELECT 
-        id, 
-        email, 
-        password_hash, 
-        first_name, 
-        last_name, 
-        user_type, 
-        is_active 
-      FROM users 
-      WHERE email = $1
-    `;
-    const result = await client.query(getUserQuery, [email.toLowerCase()]);
-    console.log('🔍 AUTH: Database query result count:', result.rows.length);
-
-    if (result.rows.length === 0) {
-      console.log('🔍 AUTH: No user found for email:', email);
-      client.release();
-      return errorResponse('Invalid credentials', 401);
-    }
-
-    const user = result.rows[0];
-    console.log('🔍 AUTH: User found:', { id: user.id, email: user.email, is_active: user.is_active });
-    console.log('🔍 AUTH: Password hash exists:', !!user.password_hash);
-    console.log('🔍 AUTH: Password hash preview:', user.password_hash ? user.password_hash.substring(0, 20) + '...' : 'null');
-
-    if (!user.is_active) {
-      console.log('🔍 AUTH: User account is inactive');
-      client.release();
-      return errorResponse('Account is deactivated', 401);
-    }
-
-    // Verify password
-    console.log('🔍 AUTH: Starting password verification');
-    console.log('🔍 AUTH: Input password:', password);
-    console.log('🔍 AUTH: Stored hash:', user.password_hash);
-    
-    const isValidPassword = await verifyPassword(password, user.password_hash);
-    console.log('🔍 AUTH: Password verification result:', isValidPassword);
-    
-    if (!isValidPassword) {
-      console.log('🔍 AUTH: Password verification failed');
-      client.release();
-      return errorResponse('Invalid credentials', 401);
-    }
-
-    console.log('🔍 AUTH: Login successful! Generating tokens...');
-
-    // Generate tokens
-    const { accessToken, refreshToken } = generateTokens(user);
-
-    // Store refresh token
-    const insertSessionQuery = `
-      INSERT INTO user_sessions (user_id, refresh_token, expires_at) 
-      VALUES ($1, $2, $3)
-    `;
-    await client.query(insertSessionQuery, [
-      user.id, 
-      refreshToken, 
-      new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
-    ]);
-
-    // Update last login
-    const updateLoginQuery = `
-      UPDATE users SET last_login = CURRENT_TIMESTAMP WHERE id = $1
-    `;
-    await client.query(updateLoginQuery, [user.id]);
-
-    client.release();
-
-    console.log('🔍 AUTH: Returning success response');
-    return successResponse({
-      message: 'Login successful',
-      user: {
-        id: user.id,
-        email: user.email,
-        firstName: user.first_name,
-        lastName: user.last_name,
-        userType: user.user_type
-      },
-      token: accessToken,
-      refreshToken
-    });
-
-  } catch (error) {
-    console.error('🔍 AUTH: Login error:', error);
-    const appError = handleDatabaseError(error, 'user login');
-    return errorResponse(appError.message, appError.statusCode);
-  }
-};
-
-const handleLogout = async (body, event) => {
-  const authHeader = event.headers?.Authorization || event.headers?.authorization;
+// Main App Component (Inside AuthProvider)
+const MainApp = () => {
+  const { isAuthenticated, loading: authLoading } = useAuth();
   
-  if (!authHeader) {
-    return errorResponse('No authorization header', 401);
-  }
+  // App state
+  const { 
+    selectedDate, 
+    showAddEntry, 
+    activeView, 
+    showSetup,
+    handleViewChange,
+    handleDateChange,
+    handleAddEntryToggle,
+    handleSetupToggle,
+    handleSetupComplete
+  } = useAppState();
 
-  try {
-    const client = await pool.connect();
-    const token = authHeader.replace('Bearer ', '');
-    const decoded = jwt.verify(token, JWT_SECRET);
+  // Add preferences view state
+  const [showPreferences, setShowPreferences] = React.useState(false);
+  // Add setup completion tracking to prevent loops
+  const [setupCompleted, setSetupCompleted] = React.useState(false);
+  // Track current user to reset setup when user changes
+  const [currentUserId, setCurrentUserId] = React.useState(null);
 
-    // Remove all refresh tokens for this user (logout from all devices)
-    const deleteSessionsQuery = `
-      DELETE FROM user_sessions WHERE user_id = $1
-    `;
-    await client.query(deleteSessionsQuery, [decoded.sub]);
+  // Data hooks (only run when authenticated)
+  const { protocols, loading: protocolsLoading, error: protocolsError } = useProtocols();
+  const { preferences, updatePreferences, refreshPreferences, loading: preferencesLoading, error: preferencesError, isReady, user: prefsUser } = useUserPreferences();
+  const { exposureTypes } = useExposureTypes();
+  const { detoxTypes } = useDetoxTypes();
+  const { reflectionData, updateReflectionData, saveReflectionData, loading: reflectionLoading, hasUnsavedChanges } = useReflectionData(selectedDate);
 
-    client.release();
+  // Timeline and entry form
+  const { entries, loading: entriesLoading, addEntry, hasCriticalInsights } = useTimelineEntries(selectedDate);
+  const { formData, updateFormData, toggleSelectedFood, handleQuickSelect, resetForm, buildEntryData } = useEntryForm();
 
-    return successResponse({ 
-      message: 'Logout successful' 
+  // Show setup if authenticated and not completed (prevent duplicate calls)
+  useEffect(() => {
+    console.log('🔧 Setup useEffect triggered:', {
+      isAuthenticated,
+      isReady,
+      preferences: preferences?.setup_complete,
+      showSetup,
+      setupCompleted
     });
-
-  } catch (error) {
-    // Return success even if token verification fails
-    return successResponse({ 
-      message: 'Logout successful' 
-    });
-  }
-};
-
-const handleRefresh = async (body, event) => {
-  const { refreshToken } = body;
-
-  if (!refreshToken) {
-    return errorResponse('Refresh token required', 400);
-  }
-
-  try {
-    const client = await pool.connect();
-
-    // Verify refresh token
-    const decoded = jwt.verify(refreshToken, JWT_REFRESH_SECRET);
-
-    // Check if refresh token exists in database
-    const sessionQuery = `
-      SELECT user_id 
-      FROM user_sessions 
-      WHERE refresh_token = $1 AND expires_at > CURRENT_TIMESTAMP
-    `;
-    const sessionResult = await client.query(sessionQuery, [refreshToken]);
-
-    if (sessionResult.rows.length === 0) {
-      client.release();
-      return errorResponse('Invalid refresh token', 401);
-    }
-
-    // Get user data
-    const userQuery = `
-      SELECT id, email, first_name, last_name, user_type 
-      FROM users 
-      WHERE id = $1 AND is_active = true
-    `;
-    const userResult = await client.query(userQuery, [decoded.sub]);
-
-    if (userResult.rows.length === 0) {
-      client.release();
-      return errorResponse('User not found', 401);
-    }
-
-    const user = userResult.rows[0];
-    const { accessToken, refreshToken: newRefreshToken } = generateTokens(user);
-
-    // Replace old refresh token with new one (token rotation)
-    const updateTokenQuery = `
-      UPDATE user_sessions 
-      SET refresh_token = $1, expires_at = $2 
-      WHERE refresh_token = $3
-    `;
-    await client.query(updateTokenQuery, [
-      newRefreshToken, 
-      new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), 
-      refreshToken
-    ]);
-
-    client.release();
-
-    return successResponse({
-      token: accessToken,
-      refreshToken: newRefreshToken
-    });
-
-  } catch (error) {
-    const appError = handleDatabaseError(error, 'token refresh');
-    return errorResponse('Invalid refresh token', 401);
-  }
-};
-
-const handleVerify = async (queryParams, event) => {
-  const authHeader = event.headers?.Authorization || event.headers?.authorization;
-  
-  if (!authHeader) {
-    return errorResponse('No authorization header', 401);
-  }
-
-  try {
-    const client = await pool.connect();
-    const token = authHeader.replace('Bearer ', '');
-    const decoded = jwt.verify(token, JWT_SECRET);
-
-    // Get user data to ensure user still exists and is active
-    const userQuery = `
-      SELECT id, email, first_name, last_name, user_type 
-      FROM users 
-      WHERE id = $1 AND is_active = true
-    `;
-    const result = await client.query(userQuery, [decoded.sub]);
-
-    client.release();
-
-    if (result.rows.length === 0) {
-      return errorResponse('User not found', 401);
-    }
-
-    const user = result.rows[0];
-
-    return successResponse({
-      valid: true,
-      user: {
-        id: user.id,
-        email: user.email,
-        firstName: user.first_name,
-        lastName: user.last_name,
-        userType: user.user_type
+    
+    // Only trigger setup if we're authenticated, ready, have preferences, setup isn't already showing,
+    // setup hasn't been completed in this session, and setup_complete is explicitly false
+    if (isAuthenticated && isReady && preferences && !showSetup && !setupCompleted) {
+      if (preferences.setup_complete === false) {
+        console.log('🔧 Triggering setup - setup_complete is explicitly false');
+        handleSetupToggle();
+      } else if (preferences.setup_complete === true) {
+        console.log('🔧 Setup already completed - setup_complete is true');
+        setSetupCompleted(true); // Mark as completed if it was already done
+      } else {
+        console.log('🔧 Setup status unknown - setup_complete is:', preferences.setup_complete);
       }
-    });
+    }
+  }, [isAuthenticated, preferences?.setup_complete, isReady, showSetup, handleSetupToggle, setupCompleted]);
 
-  } catch (error) {
-    return errorResponse('Invalid token', 401);
+  // Handle auth loading
+  if (authLoading) {
+    return (
+      <div className="max-w-md mx-auto bg-white min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <Loader2 size={32} className="animate-spin mx-auto mb-4 text-blue-600" />
+          <p className="text-gray-600">Loading...</p>
+        </div>
+      </div>
+    );
   }
+
+  // Show login if not authenticated
+  if (!isAuthenticated) {
+    return <LoginPage />;
+  }
+
+  // Show preferences page
+  if (showPreferences) {
+    return (
+      <PreferencesPage 
+        onBack={() => setShowPreferences(false)}
+      />
+    );
+  }
+
+  // Create safe preferences with defaults
+  const safePreferences = {
+    protocols: [],
+    quick_supplements: [],
+    quick_medications: [],
+    quick_foods: [],
+    quick_symptoms: [],
+    quick_detox: [],
+    setup_complete: false,
+    ...preferences
+  };
+
+  // Debug: Log protocol information
+  console.log('🔧 MAIN APP: Protocol Debug:', {
+    rawPreferences: preferences,
+    safePreferences: safePreferences,
+    protocolsFromPrefs: preferences?.protocols,
+    protocolsFromSafe: safePreferences.protocols,
+    setupCompleted: setupCompleted,
+    showSetup: showSetup
+  });
+
+  // Entry form handlers
+  const handleSubmitEntry = async () => {
+    const allItems = [...formData.selectedFoods];
+    if (formData.customText.trim()) {
+      allItems.push(formData.customText.trim());
+    }
+    
+    if (allItems.length === 0) return;
+    
+    const entryData = buildEntryData(selectedDate);
+    
+    try {
+      await addEntry(entryData);
+      resetForm();
+      handleAddEntryToggle();
+    } catch (error) {
+      console.error('Failed to add entry:', error);
+    }
+  };
+
+  const handleCancelEntry = () => {
+    resetForm();
+    handleAddEntryToggle();
+  };
+
+  // Setup completion handler that ensures preferences are refreshed
+  const handleSetupCompleteWithRefresh = async () => {
+    try {
+      console.log('🔧 App: Setup completion handler called');
+      
+      // Mark setup as completed in this session
+      setSetupCompleted(true);
+      
+      // Force close the setup wizard immediately to prevent loops
+      console.log('🔧 App: Closing setup wizard...');
+      handleSetupToggle(); // This closes the setup
+      
+      // Then refresh preferences in the background
+      console.log('🔧 App: Refreshing preferences after setup...');
+      await refreshPreferences();
+      
+      console.log('🔧 App: Setup completion flow finished');
+    } catch (error) {
+      console.error('🔧 App: Setup completion error:', error);
+    }
+  };
+
+  // Loading states
+  if (preferencesLoading || !isReady) {
+    return (
+      <div className="max-w-md mx-auto bg-white min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <Loader2 size={32} className="animate-spin mx-auto mb-4 text-blue-600" />
+          <p className="text-gray-600">Loading your health journey...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Error states
+  if (preferencesError && !preferences) {
+    return (
+      <div className="max-w-md mx-auto bg-white min-h-screen p-4">
+        <Alert variant="danger" title="Connection Error">
+          <p className="mb-2">Unable to load your preferences.</p>
+          <p className="text-sm text-gray-600 mb-3">{preferencesError}</p>
+          <Button 
+            variant="primary" 
+            onClick={() => window.location.reload()}
+          >
+            Retry
+          </Button>
+        </Alert>
+      </div>
+    );
+  }
+
+  // Setup wizard
+  if (showSetup) {
+    return (
+      <div>
+        <SetupWizard 
+          onComplete={handleSetupCompleteWithRefresh} 
+        />
+        {/* Enhanced debug info */}
+        <div className="fixed bottom-4 left-4 text-xs text-gray-500 bg-white p-2 rounded shadow max-w-xs">
+          <div>User: {prefsUser?.email || 'None'}</div>
+          <div>Setup Complete: {preferences?.setup_complete ? 'Yes' : 'No'}</div>
+          <div>Session Complete: {setupCompleted ? 'Yes' : 'No'}</div>
+          <div>Protocols: {JSON.stringify(preferences?.protocols || [])}</div>
+          <div>Is Ready: {isReady ? 'Yes' : 'No'}</div>
+          <div className="flex gap-1 mt-2 flex-wrap">
+            <button 
+              onClick={refreshPreferences}
+              className="text-blue-500 underline text-xs"
+            >
+              Refresh
+            </button>
+            <button 
+              onClick={() => {
+                console.log('🔧 MANUAL: Current user:', prefsUser);
+                console.log('🔧 MANUAL: Current full preferences:', preferences);
+                console.log('🔧 MANUAL: Current protocols:', preferences?.protocols);
+              }}
+              className="text-green-500 underline text-xs"
+            >
+              Log Prefs
+            </button>
+            <button 
+              onClick={() => {
+                setSetupCompleted(false);
+                setCurrentUserId(null);
+                console.log('🔧 MANUAL: Reset setup completion for current user');
+              }}
+              className="text-orange-500 underline text-xs"
+            >
+              Reset Setup
+            </button>
+            <button 
+              onClick={() => {
+                setSetupCompleted(true);
+                handleSetupToggle();
+              }}
+              className="text-red-500 underline text-xs"
+            >
+              Force Close
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="max-w-md mx-auto bg-white min-h-screen">
+      <Header 
+        selectedDate={selectedDate}
+        onDateChange={handleDateChange}
+        protocols={protocols}
+        selectedProtocols={safePreferences.protocols}
+        onProtocolChange={(newSelection) => updatePreferences({ protocols: newSelection })}
+        protocolsLoading={protocolsLoading}
+        protocolsError={protocolsError}
+        onPreferencesClick={() => setShowPreferences(true)}
+      />
+
+      <Navigation 
+        activeView={activeView}
+        onViewChange={handleViewChange}
+        hasUnsavedChanges={hasUnsavedChanges}
+        hasCriticalInsights={hasCriticalInsights()}
+        onSetupClick={handleSetupToggle}
+        getProtocolDisplayText={() => getProtocolDisplayText(safePreferences.protocols, protocols)}
+        selectedProtocols={safePreferences.protocols}
+      />
+
+      <div className="p-4">
+        {activeView === 'timeline' && (
+          <TimelineView 
+            entries={entries}
+            loading={entriesLoading}
+            showAddEntry={showAddEntry}
+            onToggleAddEntry={handleAddEntryToggle}
+            formData={formData}
+            updateFormData={updateFormData}
+            toggleSelectedFood={toggleSelectedFood}
+            handleQuickSelect={handleQuickSelect}
+            onSubmitEntry={handleSubmitEntry}
+            onCancelEntry={handleCancelEntry}
+            preferences={safePreferences}
+            protocols={protocols}
+            exposureTypes={exposureTypes}
+            detoxTypes={detoxTypes}
+          />
+        )}
+
+        {activeView === 'reflect' && (
+          <ReflectionView 
+            reflectionData={reflectionData}
+            updateReflectionData={updateReflectionData}
+            saveReflectionData={saveReflectionData}
+            hasUnsavedChanges={hasUnsavedChanges}
+            loading={reflectionLoading}
+            selectedDate={selectedDate}
+          />
+        )}
+
+        {activeView === 'insights' && (
+          <CorrelationInsights />
+        )}
+
+        {activeView === 'protocol' && (
+          <ProtocolFoods protocolId={safePreferences.protocols[0]} />
+        )}
+      </div>
+
+      {/* Welcome message for new users */}
+      {safePreferences && !safePreferences.setup_complete && !showSetup && !setupCompleted && (
+        <div className="fixed bottom-4 left-4 right-4 max-w-md mx-auto">
+          <Alert variant="info" dismissible onDismiss={() => {}}>
+            <div className="flex items-center justify-between">
+              <span>Welcome! Tap the ⚙️ icon to set up your health journey</span>
+              <Button size="sm" onClick={handleSetupToggle}>
+                Start
+              </Button>
+            </div>
+          </Alert>
+        </div>
+      )}
+
+      {/* Debug panel for main app */}
+      {!showSetup && setupCompleted && (
+        <div className="fixed bottom-4 right-4 text-xs text-gray-500 bg-yellow-50 p-2 rounded shadow max-w-xs border">
+          <div className="font-bold text-yellow-800">Main App Debug</div>
+          <div>User: {prefsUser?.email || 'None'}</div>
+          <div>Protocols: {JSON.stringify(safePreferences.protocols)}</div>
+          <div>Setup Complete: {safePreferences.setup_complete ? 'Yes' : 'No'}</div>
+          <div className="flex gap-1 mt-2">
+            <button 
+              onClick={() => {
+                console.log('🔧 MAIN: Current user:', prefsUser);
+                console.log('🔧 MAIN: Full preferences:', preferences);
+                console.log('🔧 MAIN: Safe preferences:', safePreferences);
+                console.log('🔧 MAIN: Available protocols:', protocols);
+              }}
+              className="text-blue-500 underline text-xs"
+            >
+              Log State
+            </button>
+            <button 
+              onClick={() => {
+                setSetupCompleted(false);
+                setCurrentUserId(null);
+                console.log('🔧 MAIN: Forcing setup reset');
+              }}
+              className="text-orange-500 underline text-xs"
+            >
+              Reset Setup
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
 };
 
-module.exports = {
-  handleRegister,
-  handleLogin,
-  handleLogout,
-  handleRefresh,
-  handleVerify
-};
+// Root App Component with AuthProvider
+function App() {
+  return (
+    <AuthProvider>
+      <MainApp />
+    </AuthProvider>
+  );
+}
+
+export default App;
