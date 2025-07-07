@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generated": "2025-07-07T03:20:31.558Z",
+    "generated": "2025-07-07T03:30:40.097Z",
     "version": "1.0.0",
     "generator": "AutomatedProfessionalDocsGenerator"
   },
@@ -15,9 +15,9 @@
     "totalHooks": 12,
     "totalFiles": 68,
     "workingAPIs": 0,
-    "totalAPIs": 30,
-    "totalTables": 19,
-    "totalCommits": 20,
+    "totalAPIs": 28,
+    "totalTables": 21,
+    "totalCommits": 21,
     "contributors": 1
   },
   "discoveredInfo": {
@@ -43,9 +43,11 @@
     "database": {
       "type": "Unknown",
       "tables": [
+        "users",
+        "user_sessions",
+        "last",
         "protocols",
         "protocol_food_rules",
-        "users",
         "journal_entries",
         "timeline_entries",
         "user_protocols",
@@ -114,80 +116,6 @@
       "baseUrl": "https://suhoxvn8ik.execute-api.us-east-1.amazonaws.com/dev",
       "endpoints": [
         {
-          "path": "/api/v1/foods/by-protocol",
-          "method": "GET",
-          "category": "Protocols",
-          "description": "Get by-protocol",
-          "source": "backend/functions/api/handlers/auth.js",
-          "params": [
-            {
-              "name": "protocol_id",
-              "value": "1495844a-19de-404c-a288-7660eda0cbe1"
-            }
-          ],
-          "status": 502,
-          "working": false,
-          "responseTime": 643,
-          "responseData": {
-            "message": "Internal server error"
-          },
-          "responseSize": 36
-        },
-        {
-          "path": "/api/v1/reflections",
-          "method": "POST",
-          "category": "Reflections",
-          "description": "Create reflections",
-          "source": "backend/functions/api/handlers/auth.js",
-          "params": [
-            {
-              "name": "userId",
-              "value": "8e8a568a-c2f8-43a8-abf2-4e54408dbdc0"
-            },
-            {
-              "name": "date",
-              "value": "2024-07-06"
-            }
-          ],
-          "status": 502,
-          "working": false,
-          "responseTime": 219,
-          "responseData": {
-            "message": "Internal server error"
-          },
-          "responseSize": 36
-        },
-        {
-          "path": "/api/v1/exposure-types",
-          "method": "GET",
-          "category": "Lookup Data",
-          "description": "Get exposure-types",
-          "source": "backend/functions/api/handlers/auth.js",
-          "params": [],
-          "status": 502,
-          "working": false,
-          "responseTime": 224,
-          "responseData": {
-            "message": "Internal server error"
-          },
-          "responseSize": 36
-        },
-        {
-          "path": "/api/v1/detox-types",
-          "method": "GET",
-          "category": "Lookup Data",
-          "description": "Get detox-types",
-          "source": "backend/functions/api/handlers/auth.js",
-          "params": [],
-          "status": 502,
-          "working": false,
-          "responseTime": 225,
-          "responseData": {
-            "message": "Internal server error"
-          },
-          "responseSize": 36
-        },
-        {
           "path": "/api/v1/correlations/insights",
           "method": "GET",
           "category": "AI",
@@ -201,7 +129,7 @@
           ],
           "status": 502,
           "working": false,
-          "responseTime": 220,
+          "responseTime": 599,
           "responseData": {
             "message": "Internal server error"
           },
@@ -228,6 +156,21 @@
           "responseSize": 36
         },
         {
+          "path": "/api/v1/detox-types",
+          "method": "GET",
+          "category": "Lookup Data",
+          "description": "Get detox-types",
+          "source": "backend/functions/api/handlers/detox.js",
+          "params": [],
+          "status": 502,
+          "working": false,
+          "responseTime": 227,
+          "responseData": {
+            "message": "Internal server error"
+          },
+          "responseSize": 36
+        },
+        {
           "path": "/api/v1/foods/search",
           "method": "GET",
           "category": "Foods",
@@ -241,7 +184,7 @@
           ],
           "status": 502,
           "working": false,
-          "responseTime": 224,
+          "responseTime": 214,
           "responseData": {
             "message": "Internal server error"
           },
@@ -261,7 +204,7 @@
           ],
           "status": 502,
           "working": false,
-          "responseTime": 248,
+          "responseTime": 233,
           "responseData": {
             "message": "Internal server error"
           },
@@ -281,7 +224,7 @@
           ],
           "status": 502,
           "working": false,
-          "responseTime": 214,
+          "responseTime": 247,
           "responseData": {
             "message": "Internal server error"
           },
@@ -301,7 +244,7 @@
           ],
           "status": 502,
           "working": false,
-          "responseTime": 230,
+          "responseTime": 184,
           "responseData": {
             "message": "Internal server error"
           },
@@ -321,7 +264,7 @@
           ],
           "status": 502,
           "working": false,
-          "responseTime": 221,
+          "responseTime": 188,
           "responseData": {
             "message": "Internal server error"
           },
@@ -341,7 +284,7 @@
           ],
           "status": 502,
           "working": false,
-          "responseTime": 240,
+          "responseTime": 207,
           "responseData": {
             "message": "Internal server error"
           },
@@ -356,7 +299,7 @@
           "params": [],
           "status": 502,
           "working": false,
-          "responseTime": 225,
+          "responseTime": 190,
           "responseData": {
             "message": "Internal server error"
           },
@@ -371,7 +314,7 @@
           "params": [],
           "status": 502,
           "working": false,
-          "responseTime": 211,
+          "responseTime": 197,
           "responseData": {
             "message": "Internal server error"
           },
@@ -386,7 +329,7 @@
           "params": [],
           "status": 502,
           "working": false,
-          "responseTime": 206,
+          "responseTime": 184,
           "responseData": {
             "message": "Internal server error"
           },
@@ -401,7 +344,7 @@
           "params": [],
           "status": 502,
           "working": false,
-          "responseTime": 222,
+          "responseTime": 197,
           "responseData": {
             "message": "Internal server error"
           },
@@ -416,7 +359,7 @@
           "params": [],
           "status": 502,
           "working": false,
-          "responseTime": 208,
+          "responseTime": 180,
           "responseData": {
             "message": "Internal server error"
           },
@@ -431,7 +374,7 @@
           "params": [],
           "status": 502,
           "working": false,
-          "responseTime": 231,
+          "responseTime": 224,
           "responseData": {
             "message": "Internal server error"
           },
@@ -446,7 +389,7 @@
           "params": [],
           "status": 502,
           "working": false,
-          "responseTime": 211,
+          "responseTime": 185,
           "responseData": {
             "message": "Internal server error"
           },
@@ -466,7 +409,7 @@
           ],
           "status": 502,
           "working": false,
-          "responseTime": 224,
+          "responseTime": 193,
           "responseData": {
             "message": "Internal server error"
           },
@@ -486,7 +429,27 @@
           ],
           "status": 502,
           "working": false,
-          "responseTime": 206,
+          "responseTime": 233,
+          "responseData": {
+            "message": "Internal server error"
+          },
+          "responseSize": 36
+        },
+        {
+          "path": "/api/v1/foods/by-protocol",
+          "method": "GET",
+          "category": "Protocols",
+          "description": "Get by-protocol",
+          "source": "backend/functions/api/index.js",
+          "params": [
+            {
+              "name": "protocol_id",
+              "value": "1495844a-19de-404c-a288-7660eda0cbe1"
+            }
+          ],
+          "status": 502,
+          "working": false,
+          "responseTime": 191,
           "responseData": {
             "message": "Internal server error"
           },
@@ -506,7 +469,7 @@
           ],
           "status": 502,
           "working": false,
-          "responseTime": 212,
+          "responseTime": 181,
           "responseData": {
             "message": "Internal server error"
           },
@@ -526,7 +489,7 @@
           ],
           "status": 502,
           "working": false,
-          "responseTime": 238,
+          "responseTime": 194,
           "responseData": {
             "message": "Internal server error"
           },
@@ -546,7 +509,7 @@
           ],
           "status": 502,
           "working": false,
-          "responseTime": 224,
+          "responseTime": 189,
           "responseData": {
             "message": "Internal server error"
           },
@@ -566,7 +529,7 @@
           ],
           "status": 502,
           "working": false,
-          "responseTime": 215,
+          "responseTime": 194,
           "responseData": {
             "message": "Internal server error"
           },
@@ -581,7 +544,7 @@
           "params": [],
           "status": 502,
           "working": false,
-          "responseTime": 222,
+          "responseTime": 181,
           "responseData": {
             "message": "Internal server error"
           },
@@ -596,7 +559,7 @@
           "params": [],
           "status": 502,
           "working": false,
-          "responseTime": 212,
+          "responseTime": 194,
           "responseData": {
             "message": "Internal server error"
           },
@@ -611,7 +574,7 @@
           "params": [],
           "status": 502,
           "working": false,
-          "responseTime": 211,
+          "responseTime": 188,
           "responseData": {
             "message": "Internal server error"
           },
@@ -626,7 +589,7 @@
           "params": [],
           "status": 502,
           "working": false,
-          "responseTime": 215,
+          "responseTime": 198,
           "responseData": {
             "message": "Internal server error"
           },
@@ -641,7 +604,7 @@
           "params": [],
           "status": 502,
           "working": false,
-          "responseTime": 208,
+          "responseTime": 198,
           "responseData": {
             "message": "Internal server error"
           },
@@ -649,27 +612,23 @@
         }
       ],
       "workingCount": 0,
-      "totalCount": 30,
+      "totalCount": 28,
       "categories": {
-        "Protocols": {
+        "AI": {
           "working": 0,
-          "total": 3
-        },
-        "Reflections": {
-          "working": 0,
-          "total": 1
+          "total": 2
         },
         "Lookup Data": {
-          "working": 0,
-          "total": 3
-        },
-        "AI": {
           "working": 0,
           "total": 2
         },
         "Foods": {
           "working": 0,
           "total": 1
+        },
+        "Protocols": {
+          "working": 0,
+          "total": 3
         },
         "Timeline": {
           "working": 0,
@@ -1101,7 +1060,7 @@
             }
           ],
           "utilities": [],
-          "size": "94.52 KB"
+          "size": "90.93 KB"
         },
         "backend/functions": {
           "totalFiles": 20,
@@ -1119,7 +1078,7 @@
             }
           ],
           "utilities": [],
-          "size": "94.52 KB"
+          "size": "90.93 KB"
         },
         "backend": {
           "totalFiles": 20,
@@ -1137,7 +1096,7 @@
             }
           ],
           "utilities": [],
-          "size": "94.52 KB"
+          "size": "90.93 KB"
         }
       },
       "shared": {},
@@ -1221,18 +1180,18 @@
       "repository": "https://github.com/deebyrne26/health-platform",
       "branch": "main",
       "lastCommit": {
-        "hash": "350e3c2",
-        "message": "auth",
+        "hash": "47c21e1",
+        "message": "auth revert",
         "author": "deebyrne26",
-        "date": "Sun Jul 6 23:19:56 2025 -0400"
+        "date": "Sun Jul 6 23:30:09 2025 -0400"
       },
       "contributors": [
         {
           "name": "deebyrne26",
-          "commits": 20
+          "commits": 21
         }
       ],
-      "totalCommits": 20
+      "totalCommits": 21
     }
   }
 }
