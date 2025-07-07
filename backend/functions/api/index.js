@@ -1,20 +1,19 @@
-// backend/functions/api/index.js (UPDATED)
-const { handleGetCorrelationInsights } = require('./handlers/correlations');
-const { handleCors } = require('./utils/responses');
+// backend/functions/api/index.js (UPDATED WITH ES6 IMPORTS)
+import { handleGetCorrelationInsights } from './handlers/correlations.js';
+import { handleCors, successResponse, errorResponse } from './utils/responses.js';
 // Import specific auth handlers instead of generic handleAuth
-const { handleLogin, handleLogout, handleVerify, handleRefresh, handleRegister } = require('./handlers/auth');
-const { handleGetUser, handleUpdateUser, handleGetUserProtocols, handleGetUserPreferences, handleUpdateUserPreferences } = require('./handlers/users');
-const { handleGetJournalEntries, handleCreateJournalEntry, handleGetJournalEntry, handleUpdateJournalEntry } = require('./handlers/journal');
-const { handleGetTimelineEntries, handleCreateTimelineEntry } = require('./handlers/timeline');
-const { handleGetProtocols } = require('./handlers/protocols');
-const { handleSearchFoods, handleGetProtocolFoods } = require('./handlers/foods');
-const { handleSearchSymptoms } = require('./handlers/symptoms');
-const { handleSearchSupplements } = require('./handlers/supplements');
-const { handleSearchMedications } = require('./handlers/medications');
-const { handleSearchDetoxTypes } = require('./handlers/detox');
-const { successResponse, errorResponse } = require('./utils/responses');
+import { handleLogin, handleLogout, handleVerify, handleRefresh, handleRegister } from './handlers/auth.js';
+import { handleGetUser, handleUpdateUser, handleGetUserProtocols, handleGetUserPreferences, handleUpdateUserPreferences } from './handlers/users.js';
+import { handleGetJournalEntries, handleCreateJournalEntry, handleGetJournalEntry, handleUpdateJournalEntry } from './handlers/journal.js';
+import { handleGetTimelineEntries, handleCreateTimelineEntry } from './handlers/timeline.js';
+import { handleGetProtocols } from './handlers/protocols.js';
+import { handleSearchFoods, handleGetProtocolFoods } from './handlers/foods.js';
+import { handleSearchSymptoms } from './handlers/symptoms.js';
+import { handleSearchSupplements } from './handlers/supplements.js';
+import { handleSearchMedications } from './handlers/medications.js';
+import { handleSearchDetoxTypes } from './handlers/detox.js';
 
-exports.handler = async (event) => {
+export const handler = async (event) => {
     console.log('Event:', JSON.stringify(event, null, 2));
     
     const corsResponse = handleCors(event);
