@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generated": "2025-07-07T18:16:21.122Z",
+    "generated": "2025-07-07T18:26:24.517Z",
     "version": "1.0.0",
     "generator": "AutomatedProfessionalDocsGenerator"
   },
@@ -17,7 +17,7 @@
     "workingAPIs": 12,
     "totalAPIs": 27,
     "totalTables": 22,
-    "totalCommits": 29,
+    "totalCommits": 30,
     "contributors": 1
   },
   "discoveredInfo": {
@@ -130,7 +130,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 4502,
+          "responseTime": 4718,
           "responseData": {
             "insights": [
               {
@@ -486,54 +486,6 @@
               },
               {
                 "type": "supplement-improvement",
-                "trigger": "magnesium glycinate 400mg",
-                "effect": "reduced swelling",
-                "timeWindow": 672,
-                "timeWindowDescription": "after 4 weeks",
-                "confidence": 1,
-                "frequency": "100% reduction in frequency",
-                "severityChange": "100% reduction in severity",
-                "description": "For you, magnesium glycinate 400mg appears to significantly reduce swelling (100% improvement after 4 weeks)",
-                "recommendation": "Continue magnesium glycinate 400mg - your data shows positive effects on swelling"
-              },
-              {
-                "type": "supplement-improvement",
-                "trigger": "magnesium glycinate 400mg",
-                "effect": "reduced joint pain",
-                "timeWindow": 672,
-                "timeWindowDescription": "after 4 weeks",
-                "confidence": 1,
-                "frequency": "100% reduction in frequency",
-                "severityChange": "100% reduction in severity",
-                "description": "For you, magnesium glycinate 400mg appears to significantly reduce joint pain (100% improvement after 4 weeks)",
-                "recommendation": "Continue magnesium glycinate 400mg - your data shows positive effects on joint pain"
-              },
-              {
-                "type": "supplement-improvement",
-                "trigger": "magnesium glycinate 400mg",
-                "effect": "reduced digestive issues",
-                "timeWindow": 672,
-                "timeWindowDescription": "after 4 weeks",
-                "confidence": 1,
-                "frequency": "100% reduction in frequency",
-                "severityChange": "100% reduction in severity",
-                "description": "For you, magnesium glycinate 400mg appears to significantly reduce digestive issues (100% improvement after 4 weeks)",
-                "recommendation": "Continue magnesium glycinate 400mg - your data shows positive effects on digestive issues"
-              },
-              {
-                "type": "supplement-improvement",
-                "trigger": "magnesium glycinate 400mg",
-                "effect": "reduced headache",
-                "timeWindow": 672,
-                "timeWindowDescription": "after 4 weeks",
-                "confidence": 1,
-                "frequency": "100% reduction in frequency",
-                "severityChange": "100% reduction in severity",
-                "description": "For you, magnesium glycinate 400mg appears to significantly reduce headache (100% improvement after 4 weeks)",
-                "recommendation": "Continue magnesium glycinate 400mg - your data shows positive effects on headache"
-              },
-              {
-                "type": "supplement-improvement",
                 "trigger": "vitamin d3 5000 iu",
                 "effect": "reduced swelling",
                 "timeWindow": 672,
@@ -582,6 +534,54 @@
               },
               {
                 "type": "supplement-improvement",
+                "trigger": "magnesium glycinate 400mg",
+                "effect": "reduced swelling",
+                "timeWindow": 672,
+                "timeWindowDescription": "after 4 weeks",
+                "confidence": 1,
+                "frequency": "100% reduction in frequency",
+                "severityChange": "100% reduction in severity",
+                "description": "For you, magnesium glycinate 400mg appears to significantly reduce swelling (100% improvement after 4 weeks)",
+                "recommendation": "Continue magnesium glycinate 400mg - your data shows positive effects on swelling"
+              },
+              {
+                "type": "supplement-improvement",
+                "trigger": "magnesium glycinate 400mg",
+                "effect": "reduced joint pain",
+                "timeWindow": 672,
+                "timeWindowDescription": "after 4 weeks",
+                "confidence": 1,
+                "frequency": "100% reduction in frequency",
+                "severityChange": "100% reduction in severity",
+                "description": "For you, magnesium glycinate 400mg appears to significantly reduce joint pain (100% improvement after 4 weeks)",
+                "recommendation": "Continue magnesium glycinate 400mg - your data shows positive effects on joint pain"
+              },
+              {
+                "type": "supplement-improvement",
+                "trigger": "magnesium glycinate 400mg",
+                "effect": "reduced digestive issues",
+                "timeWindow": 672,
+                "timeWindowDescription": "after 4 weeks",
+                "confidence": 1,
+                "frequency": "100% reduction in frequency",
+                "severityChange": "100% reduction in severity",
+                "description": "For you, magnesium glycinate 400mg appears to significantly reduce digestive issues (100% improvement after 4 weeks)",
+                "recommendation": "Continue magnesium glycinate 400mg - your data shows positive effects on digestive issues"
+              },
+              {
+                "type": "supplement-improvement",
+                "trigger": "magnesium glycinate 400mg",
+                "effect": "reduced headache",
+                "timeWindow": 672,
+                "timeWindowDescription": "after 4 weeks",
+                "confidence": 1,
+                "frequency": "100% reduction in frequency",
+                "severityChange": "100% reduction in severity",
+                "description": "For you, magnesium glycinate 400mg appears to significantly reduce headache (100% improvement after 4 weeks)",
+                "recommendation": "Continue magnesium glycinate 400mg - your data shows positive effects on headache"
+              },
+              {
+                "type": "supplement-improvement",
                 "trigger": "melatonin 3mg",
                 "effect": "reduced swelling",
                 "timeWindow": 672,
@@ -627,27 +627,14 @@
                 "severityChange": "100% reduction in severity",
                 "description": "For you, melatonin 3mg appears to significantly reduce headache (100% improvement after 4 weeks)",
                 "recommendation": "Continue melatonin 3mg - your data shows positive effects on headache"
-              },
-              {
-                "type": "exercise-energy",
-                "trigger": "weight training",
-                "effect": "decreased energy",
-                "timeWindow": 4,
-                "timeWindowDescription": "within 4 hours",
-                "confidence": 0.4920634920634921,
-                "energyChange": -1.5,
-                "baselineEnergy": 6.5,
-                "sessionsAnalyzed": 7,
-                "description": "Your data shows weight training tends to reduce energy levels (-1.5 points below baseline)",
-                "recommendation": "Consider adjusting weight training intensity or timing to reduce fatigue"
               }
             ],
             "summary": {
-              "totalCorrelations": 40,
+              "totalCorrelations": 39,
               "triggers": 27,
               "improvements": 12,
               "medicationEffects": 0,
-              "exerciseImpacts": 1,
+              "exerciseImpacts": 0,
               "sleepFactors": 0,
               "stressAmplifiers": 0
             },
@@ -655,7 +642,7 @@
             "confidence_threshold": 0.6,
             "user_id": "8e8a568a-c2f8-43a8-abf2-4e54408dbdc0"
           },
-          "responseSize": 16734
+          "responseSize": 16302
         },
         {
           "path": "/api/v1/detox-types",
@@ -666,7 +653,7 @@
           "params": [],
           "status": 404,
           "working": false,
-          "responseTime": 59,
+          "responseTime": 97,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -717,7 +704,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 122,
+          "responseTime": 170,
           "responseData": {
             "foods": [
               {
@@ -765,7 +752,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 103,
+          "responseTime": 147,
           "responseData": {
             "protocols": [
               {
@@ -939,7 +926,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 119,
+          "responseTime": 94,
           "responseData": {
             "entries": [],
             "total": 0
@@ -960,7 +947,7 @@
           ],
           "status": 500,
           "working": false,
-          "responseTime": 82,
+          "responseTime": 115,
           "responseData": {
             "error": "Failed to complete create timeline entry"
           },
@@ -980,7 +967,7 @@
           ],
           "status": 404,
           "working": false,
-          "responseTime": 87,
+          "responseTime": 122,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -1031,7 +1018,7 @@
           ],
           "status": 404,
           "working": false,
-          "responseTime": 100,
+          "responseTime": 115,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -1077,7 +1064,7 @@
           "params": [],
           "status": 400,
           "working": false,
-          "responseTime": 89,
+          "responseTime": 91,
           "responseData": {
             "error": "Email and password required"
           },
@@ -1092,7 +1079,7 @@
           "params": [],
           "status": 404,
           "working": false,
-          "responseTime": 83,
+          "responseTime": 107,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -1138,7 +1125,7 @@
           "params": [],
           "status": 401,
           "working": false,
-          "responseTime": 84,
+          "responseTime": 61,
           "responseData": {
             "error": "No authorization header"
           },
@@ -1153,7 +1140,7 @@
           "params": [],
           "status": 404,
           "working": false,
-          "responseTime": 79,
+          "responseTime": 116,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -1199,7 +1186,7 @@
           "params": [],
           "status": 400,
           "working": false,
-          "responseTime": 83,
+          "responseTime": 65,
           "responseData": {
             "error": "Missing required fields"
           },
@@ -1214,7 +1201,7 @@
           "params": [],
           "status": 400,
           "working": false,
-          "responseTime": 48,
+          "responseTime": 115,
           "responseData": {
             "error": "Email and password required"
           },
@@ -1229,7 +1216,7 @@
           "params": [],
           "status": 200,
           "working": true,
-          "responseTime": 55,
+          "responseTime": 113,
           "responseData": {
             "user": {
               "id": "8e8a568a-c2f8-43a8-abf2-4e54408dbdc0",
@@ -1255,7 +1242,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 80,
+          "responseTime": 146,
           "responseData": {
             "protocols": [],
             "total": 0
@@ -1276,10 +1263,10 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 55,
+          "responseTime": 61,
           "responseData": {
             "protocols": [
-              "1495844a-19de-404c-a288-7660eda0cbe1"
+              "7c728266-7c7e-4389-a9b6-7c5280f2edd2"
             ],
             "quick_detox": [],
             "quick_foods": [],
@@ -1304,7 +1291,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 78,
+          "responseTime": 122,
           "responseData": {
             "foods": [
               {
@@ -5211,7 +5198,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 55,
+          "responseTime": 116,
           "responseData": {
             "symptoms": [],
             "total": 0,
@@ -5233,7 +5220,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 48,
+          "responseTime": 114,
           "responseData": {
             "supplements": [],
             "total": 0,
@@ -5255,7 +5242,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 60,
+          "responseTime": 88,
           "responseData": {
             "medications": [],
             "total": 0,
@@ -5277,7 +5264,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 46,
+          "responseTime": 63,
           "responseData": {
             "detox_types": [],
             "total": 0,
@@ -5294,7 +5281,7 @@
           "params": [],
           "status": 500,
           "working": false,
-          "responseTime": 55,
+          "responseTime": 106,
           "responseData": {
             "error": "Internal server error: handleGetJournalEntries is not a function"
           },
@@ -5309,7 +5296,7 @@
           "params": [],
           "status": 500,
           "working": false,
-          "responseTime": 125,
+          "responseTime": 105,
           "responseData": {
             "error": "Internal server error: handleGetJournalEntry is not a function"
           },
@@ -5324,7 +5311,7 @@
           "params": [],
           "status": 404,
           "working": false,
-          "responseTime": 58,
+          "responseTime": 75,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -5370,7 +5357,7 @@
           "params": [],
           "status": 404,
           "working": false,
-          "responseTime": 48,
+          "responseTime": 60,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -5416,7 +5403,7 @@
           "params": [],
           "status": 404,
           "working": false,
-          "responseTime": 53,
+          "responseTime": 62,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -5674,7 +5661,7 @@
             {
               "name": "ProtocolFoods",
               "path": "frontend/web-app/src/features/protocol/ProtocolFoods.jsx",
-              "size": 15798,
+              "size": 17420,
               "hooks": [
                 "useState",
                 "useProtocolFoods",
@@ -5782,7 +5769,7 @@
             }
           ],
           "utilities": [],
-          "size": "320.17 KB"
+          "size": "321.76 KB"
         },
         "frontend/shared": {
           "totalFiles": 24,
@@ -6020,18 +6007,18 @@
       "repository": "https://github.com/deebyrne26/health-platform",
       "branch": "main",
       "lastCommit": {
-        "hash": "c59c558",
-        "message": "Better Insight design changes",
+        "hash": "760f62e",
+        "message": "Smart protocol foods",
         "author": "deebyrne26",
-        "date": "Mon Jul 7 14:15:47 2025 -0400"
+        "date": "Mon Jul 7 14:25:22 2025 -0400"
       },
       "contributors": [
         {
           "name": "deebyrne26",
-          "commits": 29
+          "commits": 30
         }
       ],
-      "totalCommits": 29
+      "totalCommits": 30
     }
   }
 }
