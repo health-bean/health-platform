@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generated": "2025-07-07T14:30:23.743Z",
+    "generated": "2025-07-07T14:54:47.494Z",
     "version": "1.0.0",
     "generator": "AutomatedProfessionalDocsGenerator"
   },
@@ -129,7 +129,7 @@
           ],
           "status": 500,
           "working": false,
-          "responseTime": 6277,
+          "responseTime": 6276,
           "responseData": {
             "error": "Failed to analyze correlations"
           },
@@ -149,7 +149,7 @@
           ],
           "status": 502,
           "working": false,
-          "responseTime": 55,
+          "responseTime": 57,
           "responseData": {
             "message": "Internal server error"
           },
@@ -164,7 +164,7 @@
           "params": [],
           "status": 502,
           "working": false,
-          "responseTime": 99,
+          "responseTime": 64,
           "responseData": {
             "message": "Internal server error"
           },
@@ -184,7 +184,7 @@
           ],
           "status": 500,
           "working": false,
-          "responseTime": 83,
+          "responseTime": 88,
           "responseData": {
             "error": "Failed to complete search foods"
           },
@@ -204,7 +204,7 @@
           ],
           "status": 500,
           "working": false,
-          "responseTime": 74,
+          "responseTime": 55,
           "responseData": {
             "error": "Failed to complete fetch protocols"
           },
@@ -224,7 +224,7 @@
           ],
           "status": 500,
           "working": false,
-          "responseTime": 55,
+          "responseTime": 60,
           "responseData": {
             "error": "Failed to complete fetch timeline entries"
           },
@@ -244,7 +244,7 @@
           ],
           "status": 500,
           "working": false,
-          "responseTime": 137,
+          "responseTime": 63,
           "responseData": {
             "error": "Failed to complete create timeline entry"
           },
@@ -264,7 +264,7 @@
           ],
           "status": 502,
           "working": false,
-          "responseTime": 94,
+          "responseTime": 57,
           "responseData": {
             "message": "Internal server error"
           },
@@ -284,7 +284,7 @@
           ],
           "status": 502,
           "working": false,
-          "responseTime": 54,
+          "responseTime": 114,
           "responseData": {
             "message": "Internal server error"
           },
@@ -299,7 +299,7 @@
           "params": [],
           "status": 500,
           "working": false,
-          "responseTime": 62,
+          "responseTime": 45,
           "responseData": {
             "error": "Email and password required"
           },
@@ -314,7 +314,7 @@
           "params": [],
           "status": 502,
           "working": false,
-          "responseTime": 48,
+          "responseTime": 60,
           "responseData": {
             "message": "Internal server error"
           },
@@ -329,7 +329,7 @@
           "params": [],
           "status": 500,
           "working": false,
-          "responseTime": 76,
+          "responseTime": 77,
           "responseData": {
             "error": "No authorization header"
           },
@@ -344,7 +344,7 @@
           "params": [],
           "status": 502,
           "working": false,
-          "responseTime": 54,
+          "responseTime": 46,
           "responseData": {
             "message": "Internal server error"
           },
@@ -359,7 +359,7 @@
           "params": [],
           "status": 500,
           "working": false,
-          "responseTime": 57,
+          "responseTime": 94,
           "responseData": {
             "error": "Missing required fields"
           },
@@ -374,7 +374,7 @@
           "params": [],
           "status": 500,
           "working": false,
-          "responseTime": 48,
+          "responseTime": 50,
           "responseData": {
             "error": "Email and password required"
           },
@@ -389,7 +389,7 @@
           "params": [],
           "status": 500,
           "working": false,
-          "responseTime": 43,
+          "responseTime": 53,
           "responseData": {
             "error": "Failed to complete fetch user"
           },
@@ -409,7 +409,7 @@
           ],
           "status": 500,
           "working": false,
-          "responseTime": 116,
+          "responseTime": 97,
           "responseData": {
             "error": "Failed to complete fetch user protocols"
           },
@@ -429,7 +429,7 @@
           ],
           "status": 500,
           "working": false,
-          "responseTime": 53,
+          "responseTime": 84,
           "responseData": {
             "error": "Failed to complete fetch user preferences"
           },
@@ -449,7 +449,7 @@
           ],
           "status": 500,
           "working": false,
-          "responseTime": 68,
+          "responseTime": 54,
           "responseData": {
             "error": "Failed to complete fetch protocol foods"
           },
@@ -469,7 +469,7 @@
           ],
           "status": 500,
           "working": false,
-          "responseTime": 49,
+          "responseTime": 127,
           "responseData": {
             "error": "Failed to complete search symptoms"
           },
@@ -489,7 +489,7 @@
           ],
           "status": 500,
           "working": false,
-          "responseTime": 119,
+          "responseTime": 59,
           "responseData": {
             "error": "Failed to complete search supplements"
           },
@@ -509,7 +509,7 @@
           ],
           "status": 500,
           "working": false,
-          "responseTime": 69,
+          "responseTime": 62,
           "responseData": {
             "error": "Failed to complete search medications"
           },
@@ -529,7 +529,7 @@
           ],
           "status": 500,
           "working": false,
-          "responseTime": 49,
+          "responseTime": 58,
           "responseData": {
             "error": "Failed to complete search detox types"
           },
@@ -544,7 +544,7 @@
           "params": [],
           "status": 500,
           "working": false,
-          "responseTime": 54,
+          "responseTime": 135,
           "responseData": {
             "error": "Internal server error: handleGetJournalEntries is not a function"
           },
@@ -559,7 +559,7 @@
           "params": [],
           "status": 500,
           "working": false,
-          "responseTime": 91,
+          "responseTime": 61,
           "responseData": {
             "error": "Internal server error: handleGetJournalEntry is not a function"
           },
@@ -574,7 +574,7 @@
           "params": [],
           "status": 502,
           "working": false,
-          "responseTime": 55,
+          "responseTime": 51,
           "responseData": {
             "message": "Internal server error"
           },
@@ -589,7 +589,7 @@
           "params": [],
           "status": 502,
           "working": false,
-          "responseTime": 43,
+          "responseTime": 67,
           "responseData": {
             "message": "Internal server error"
           },
@@ -604,7 +604,7 @@
           "params": [],
           "status": 502,
           "working": false,
-          "responseTime": 51,
+          "responseTime": 52,
           "responseData": {
             "message": "Internal server error"
           },
