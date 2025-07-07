@@ -1,21 +1,18 @@
 import React, { useState } from 'react';
 import { useCorrelations } from '../../../../shared/hooks/useCorrelations';
-import { AlertTriangle, TrendingUp, Clock, Target, Zap, Activity, Pill, Moon, Dumbbell, Brain, Heart, CheckCircle, AlertCircle } from 'lucide-react';
+import { AlertTriangle, TrendingUp, Clock, Target, Activity, Pill, Moon, Dumbbell, Brain, Heart } from 'lucide-react';
 
-const DEMO_USER_ID = '8e8a568a-c2f8-43a8-abf2-4e54408dbdc0'; // Sarah's ID for demo
+const DEMO_USER_ID = '8e8a568a-c2f8-43a8-abf2-4e54408dbdc0';
 
 const CorrelationInsights = () => {
   const [timeframeFilter, setTimeframeFilter] = useState(180);
-  const [activeChip, setActiveChip] = useState('all');
+  const [activeTab, setActiveTab] = useState('critical');
   const [showMore, setShowMore] = useState(false);
   
   const { 
     correlations,  
-    sortedCorrelations,
-    summary, 
     loading, 
-    error,
-    correlationStats
+    error
   } = useCorrelations(DEMO_USER_ID, 0.3, timeframeFilter);
 
   // Helper function to determine if correlation is positive
@@ -110,99 +107,30 @@ const CorrelationInsights = () => {
     }
   };
 
-  // Get appropriate icon based on correlation type
-  const getCorrelationIcon = (correlation) => {
-    const isPositive = isPositiveCorrelation(correlation);
-    
-    switch (correlation.type) {
-      case 'medication-effect':
-        return <Pill className="w-5 h-5 text-red-500" />;
-      case 'sleep-quality':
-        return <Moon className={`w-5 h-5 ${isPositive ? 'text-green-500' : 'text-blue-500'}`} />;
-      case 'exercise-energy':
-        return <Dumbbell className={`w-5 h-5 ${isPositive ? 'text-green-500' : 'text-orange-500'}`} />;
-      case 'stress-symptom':
-        return <Brain className="w-5 h-5 text-red-500" />;
-      case 'supplement-improvement':
-        return <Heart className="w-5 h-5 text-green-500" />;
-      case 'food-symptom':
-      default:
-        return <AlertTriangle className="w-5 h-5 text-red-500" />;
-    }
-  };
-
-  // Get correlation type display name
-  const getCorrelationTypeLabel = (type) => {
-    switch (type) {
-      case 'medication-effect':
-        return 'Medication Effect';
-      case 'sleep-quality':
-        return 'Sleep Factor';
-      case 'exercise-energy':
-        return 'Exercise Impact';
-      case 'stress-symptom':
-        return 'Stress Factor';
-      case 'supplement-improvement':
-        return 'Supplement Benefit';
-      case 'food-symptom':
-      default:
-        return 'Food Response';
-    }
-  };
-
-  // Get correlation type color
-  const getCorrelationTypeColor = (type, isPositive = null) => {
-    if (isPositive === true) {
-      return 'bg-green-100 text-green-800';
-    } else if (isPositive === false) {
-      return 'bg-red-100 text-red-800';
-    }
-    
-    switch (type) {
-      case 'medication-effect':
-      case 'stress-symptom':
-      case 'food-symptom':
-        return 'bg-red-100 text-red-800';
-      case 'supplement-improvement':
-        return 'bg-green-100 text-green-800';
-      case 'sleep-quality':
-      case 'exercise-energy':
-      default:
-        return 'bg-blue-100 text-blue-800';
-    }
-  };
-
-  // Filter correlations based on chip selection
+  // Safe correlations array
+  const safeCorrelations = correlations || [];
+  
+  // Calculate counts
+  const criticalCount = safeCorrelations.filter(c => c.confidence >= 0.7 && !isPositiveCorrelation(c)).length;
+  
+  // Filter correlations based on tab selection
   const getFilteredCorrelations = () => {
-    const baseCorrelations = correlations.filter(c => c.confidence >= 0.5);
+    const baseCorrelations = safeCorrelations.filter(c => c.confidence >= 0.5);
     
-    switch (activeChip) {
-      case 'strong':
-        return baseCorrelations.filter(c => c.confidence >= 0.9);
-      case 'moderate':
-        return baseCorrelations.filter(c => c.confidence >= 0.7 && c.confidence < 0.9);
-      case 'emerging':
-        return baseCorrelations.filter(c => c.confidence >= 0.5 && c.confidence < 0.7);
+    switch (activeTab) {
+      case 'critical':
+        return baseCorrelations.filter(c => c.confidence >= 0.7 && !isPositiveCorrelation(c));
       case 'positive':
         return baseCorrelations.filter(c => isPositiveCorrelation(c));
       case 'all':
       default:
-        return baseCorrelations;
+        return baseCorrelations.filter(c => !isPositiveCorrelation(c));
     }
   };
 
   const filteredCorrelations = getFilteredCorrelations();
-  const sortedFilteredCorrelations = [...filteredCorrelations].sort((a, b) => b.confidence - a.confidence);
-  const displayedCorrelations = showMore ? sortedFilteredCorrelations : sortedFilteredCorrelations.slice(0, 5);
-  
-  // Category counts for chips
-  const baseCorrelations = correlations.filter(c => c.confidence >= 0.5);
-  const categoryStats = {
-    strong: baseCorrelations.filter(c => c.confidence >= 0.9).length,
-    moderate: baseCorrelations.filter(c => c.confidence >= 0.7 && c.confidence < 0.9).length,
-    emerging: baseCorrelations.filter(c => c.confidence >= 0.5 && c.confidence < 0.7).length,
-    positive: baseCorrelations.filter(c => isPositiveCorrelation(c)).length
-  };
+  const sortedCorrelations = [...filteredCorrelations].sort((a, b) => b.confidence - a.confidence);
+  const displayedCorrelations = showMore ? sortedCorrelations : sortedCorrelations.slice(0, 5);
 
   if (loading) {
     return (
@@ -240,7 +168,7 @@ const CorrelationInsights = () => {
               <span>Health Insights</span>
             </h2>
             <p className="text-gray-600 mt-1">
-              {criticalInsightsCount} critical insights are available that you should review
+              {criticalCount} critical insights are available that you should review
             </p>
           </div>
           <div className="text-right flex-shrink-0 ml-4">
@@ -350,15 +278,15 @@ const CorrelationInsights = () => {
             ))}
             
             {/* Show More/Less Button */}
-            {sortedFilteredCorrelations.length > 5 && (
+            {sortedCorrelations.length > 5 && (
               <div className="text-center pt-4">
                 <button
                   onClick={() => setShowMore(!showMore)}
                   className="px-4 py-2 text-sm font-medium text-blue-600 hover:text-blue-800 border border-blue-200 rounded-lg hover:bg-blue-50 transition-colors"
                 >
                   {showMore ? 
-                    `Show Less (showing all ${sortedFilteredCorrelations.length})` : 
-                    `Show More (${sortedFilteredCorrelations.length - 5} more patterns)`
+                    `Show Less (showing all ${sortedCorrelations.length})` : 
+                    `Show More (${sortedCorrelations.length - 5} more patterns)`
                   }
                 </button>
               </div>
@@ -374,7 +302,7 @@ const CorrelationInsights = () => {
             <AlertTriangle className="w-8 h-8 text-red-600" />
             <div>
               <div className="text-2xl font-bold text-red-600">
-                {correlations.filter(c => c.confidence >= 0.5 && c.type === 'food-symptom').length}
+                {safeCorrelations.filter(c => c.confidence >= 0.5 && c.type === 'food-symptom').length}
               </div>
               <div className="text-sm text-red-700">Food Triggers</div>
             </div>
@@ -386,7 +314,7 @@ const CorrelationInsights = () => {
             <Pill className="w-8 h-8 text-orange-600" />
             <div>
               <div className="text-2xl font-bold text-orange-600">
-                {correlations.filter(c => c.confidence >= 0.5 && c.type === 'medication-effect').length}
+                {safeCorrelations.filter(c => c.confidence >= 0.5 && c.type === 'medication-effect').length}
               </div>
               <div className="text-sm text-orange-700">Medication Effects</div>
             </div>
@@ -398,7 +326,7 @@ const CorrelationInsights = () => {
             <Brain className="w-8 h-8 text-purple-600" />
             <div>
               <div className="text-2xl font-bold text-purple-600">
-                {correlations.filter(c => c.confidence >= 0.5 && c.type === 'stress-symptom').length}
+                {safeCorrelations.filter(c => c.confidence >= 0.5 && c.type === 'stress-symptom').length}
               </div>
               <div className="text-sm text-purple-700">Stress Factors</div>
             </div>
@@ -410,7 +338,7 @@ const CorrelationInsights = () => {
             <Heart className="w-8 h-8 text-green-600" />
             <div>
               <div className="text-2xl font-bold text-green-600">
-                {correlations.filter(c => c.confidence >= 0.5 && isPositiveCorrelation(c)).length}
+                {safeCorrelations.filter(c => c.confidence >= 0.5 && isPositiveCorrelation(c)).length}
               </div>
               <div className="text-sm text-green-700">Positive Patterns</div>
             </div>
