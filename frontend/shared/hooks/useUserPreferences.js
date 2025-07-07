@@ -1,4 +1,4 @@
-// File: frontend/shared/hooks/useUserPreferences.js (UPDATED)
+// File: frontend/shared/hooks/useUserPreferences.js (WITH DEBUG)
 
 import { useState, useEffect } from 'react';
 import { apiClient } from '../services/api.js';
@@ -25,16 +25,28 @@ const useUserPreferences = () => {
       try {
         setLoading(true);
         setError(null);
-        console.log('Loading preferences for user:', user.id);
+        console.log('🔧 PREFS: Loading preferences for user:', user.id);
         
         // Make API call with auth headers
         const response = await apiClient.get('/api/v1/user/preferences', {
           headers: getAuthHeaders()
         });
         
-        if (response?.preferences) {
-          console.log('Loaded preferences from database:', response.preferences);
-          setPreferences(response.preferences);
+        console.log('🔧 PREFS: Initial load API response:', response);
+        console.log('🔧 PREFS: Initial response type:', typeof response);
+        console.log('🔧 PREFS: Initial response keys:', Object.keys(response || {}));
+        console.log('🔧 PREFS: Initial response.preferences exists?', !!response?.preferences);
+        
+        // Handle both response formats:
+        // - GET returns preferences directly: { protocols: [...], setup_complete: true }
+        // - POST returns wrapped: { preferences: { protocols: [...], setup_complete: true } }
+        const preferencesData = response?.preferences || response;
+        
+        if (preferencesData && typeof preferencesData === 'object' && ('protocols' in preferencesData || 'setup_complete' in preferencesData)) {
+          console.log('🔧 PREFS: Loaded preferences from database:', preferencesData);
+          console.log('🔧 PREFS: protocols in loaded preferences:', preferencesData.protocols);
+          console.log('🔧 PREFS: setup_complete in loaded preferences:', preferencesData.setup_complete);
+          setPreferences(preferencesData);
         } else {
           // Set default preferences for new users
           const defaultPreferences = {
@@ -46,10 +58,11 @@ const useUserPreferences = () => {
             quick_detox: [],
             setup_complete: false
           };
+          console.log('🔧 PREFS: No preferences found, setting defaults:', defaultPreferences);
           setPreferences(defaultPreferences);
         }
       } catch (error) {
-        console.error('Failed to load preferences from API:', error);
+        console.error('🔧 PREFS: Failed to load preferences from API:', error);
         setError('Failed to load preferences');
         
         // Fallback to default preferences
@@ -62,6 +75,7 @@ const useUserPreferences = () => {
           quick_detox: [],
           setup_complete: false
         };
+        console.log('🔧 PREFS: Using fallback default preferences:', defaultPreferences);
         setPreferences(defaultPreferences);
       } finally {
         setLoading(false);
@@ -72,13 +86,18 @@ const useUserPreferences = () => {
   }, [isAuthenticated, user, token, getAuthHeaders]);
 
   const updatePreferences = async (newPreferences) => {
+    console.log('🔧 PREFS: Starting updatePreferences');
+    console.log('🔧 PREFS: Input newPreferences:', newPreferences);
+    console.log('🔧 PREFS: protocols in newPreferences:', newPreferences.protocols);
+    console.log('🔧 PREFS: setup_complete in newPreferences:', newPreferences.setup_complete);
+
     if (!isAuthenticated || !user) {
-      console.error('Cannot update preferences - user not authenticated');
+      console.error('🔧 PREFS: Cannot update preferences - user not authenticated');
       return Promise.reject(new Error('User not authenticated'));
     }
 
     if (!preferences) {
-      console.error('Cannot update preferences - not loaded yet');
+      console.error('🔧 PREFS: Cannot update preferences - not loaded yet');
       return Promise.reject(new Error('Preferences not loaded'));
     }
     
@@ -88,35 +107,48 @@ const useUserPreferences = () => {
       ...newPreferences 
     };
     
-    console.log('Updating preferences for user:', user.id);
-    console.log('Preserving existing preferences:', preferences);
-    console.log('Merging with new preferences:', newPreferences);
-    console.log('Final preferences to save:', updatedPreferences);
+    console.log('🔧 PREFS: Updating preferences for user:', user.id);
+    console.log('🔧 PREFS: Current preferences before update:', preferences);
+    console.log('🔧 PREFS: Merging with new preferences:', newPreferences);
+    console.log('🔧 PREFS: Final preferences to save:', updatedPreferences);
+    console.log('🔧 PREFS: protocols in final preferences:', updatedPreferences.protocols);
+    console.log('🔧 PREFS: setup_complete in final preferences:', updatedPreferences.setup_complete);
     
     try {
       setSaving(true);
       setError(null);
       
       // Save to database with auth headers
+      console.log('🔧 PREFS: Making API call to save preferences...');
       const response = await apiClient.post('/api/v1/user/preferences', updatedPreferences, {
         headers: getAuthHeaders()
       });
       
+      console.log('🔧 PREFS: Save API full response:', response);
+      console.log('🔧 PREFS: Save response type:', typeof response);
+      console.log('🔧 PREFS: Save response keys:', Object.keys(response || {}));
+      
       if (response) {
-        console.log('Preferences saved to database successfully');
+        console.log('🔧 PREFS: API call successful, response:', response);
+        console.log('🔧 PREFS: protocols in API response:', response.preferences?.protocols);
+        console.log('🔧 PREFS: setup_complete in API response:', response.preferences?.setup_complete);
+        
         // Update local state with server response
-        setPreferences(response.preferences || updatedPreferences);
+        const finalPrefs = response.preferences || updatedPreferences;
+        console.log('🔧 PREFS: Setting local state to:', finalPrefs);
+        setPreferences(finalPrefs);
         
         // In production, also save to localStorage as backup
         // localStorage.setItem('user_preferences', JSON.stringify(updatedPreferences));
         
-        return updatedPreferences;
+        return finalPrefs;
       } else {
+        console.error('🔧 PREFS: Invalid response from server');
         throw new Error('Invalid response from server');
       }
       
     } catch (error) {
-      console.error('Failed to update preferences:', error);
+      console.error('🔧 PREFS: Update failed:', error);
       setError('Failed to save preferences');
       
       // Don't update local state if API call failed
@@ -127,26 +159,47 @@ const useUserPreferences = () => {
   };
 
   const refreshPreferences = async () => {
+    console.log('🔧 PREFS: Starting refreshPreferences');
+    console.log('🔧 PREFS: Current user:', user);
+
     if (!isAuthenticated || !user) {
-      console.log('Cannot refresh preferences - user not authenticated');
+      console.log('🔧 PREFS: Cannot refresh preferences - user not authenticated');
       return;
     }
 
     try {
       setLoading(true);
       setError(null);
-      console.log('Refreshing preferences for user:', user.id);
+      console.log('🔧 PREFS: Refreshing preferences for user:', user.id);
       
       const response = await apiClient.get('/api/v1/user/preferences', {
         headers: getAuthHeaders()
       });
       
-      if (response?.preferences) {
-        console.log('Refreshed preferences:', response.preferences);
-        setPreferences(response.preferences);
+      console.log('🔧 PREFS: Full API response:', response);
+      console.log('🔧 PREFS: Response.preferences exists?', !!response?.preferences);
+      console.log('🔧 PREFS: Response.preferences value:', response?.preferences);
+      
+      // Handle both response formats:
+      // - GET returns preferences directly: { protocols: [...], setup_complete: true }
+      // - POST returns wrapped: { preferences: { protocols: [...], setup_complete: true } }
+      const preferencesData = response?.preferences || response;
+      
+      if (preferencesData && typeof preferencesData === 'object' && ('protocols' in preferencesData || 'setup_complete' in preferencesData)) {
+        console.log('🔧 PREFS: Refresh API call successful');
+        console.log('🔧 PREFS: Fresh preferences from API:', preferencesData);
+        console.log('🔧 PREFS: protocols in fresh preferences:', preferencesData.protocols);
+        console.log('🔧 PREFS: setup_complete in fresh preferences:', preferencesData.setup_complete);
+        setPreferences(preferencesData);
+      } else {
+        console.log('🔧 PREFS: No valid preferences in refresh response');
+        console.log('🔧 PREFS: Response keys:', Object.keys(response || {}));
+        console.log('🔧 PREFS: Response type:', typeof response);
+        console.log('🔧 PREFS: PreferencesData:', preferencesData);
       }
     } catch (error) {
-      console.error('Failed to refresh preferences:', error);
+      console.error('🔧 PREFS: Refresh failed:', error);
+      console.error('🔧 PREFS: Error details:', error.message, error.status);
       setError('Failed to refresh preferences');
     } finally {
       setLoading(false);

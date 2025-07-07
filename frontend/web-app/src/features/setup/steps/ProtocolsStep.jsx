@@ -2,6 +2,14 @@ import React from 'react';
 import { Button } from '../../../../../shared/components/ui';
 
 const ProtocolsStep = ({ setupData, updateSetupData, protocols, onNext, onBack, isLast, disabled }) => {
+  // Debug logging at the top
+  console.log('🔧 PROTOCOLS: ProtocolsStep rendered with:', {
+    setupDataProtocols: setupData.protocols,
+    availableProtocolsCount: protocols?.length,
+    isLast: isLast,
+    disabled: disabled
+  });
+
   // Process protocols: filter, rename, and add Keto
   const processedProtocols = protocols
     .filter(protocol => {
@@ -31,14 +39,21 @@ const ProtocolsStep = ({ setupData, updateSetupData, protocols, onNext, onBack, 
   const availableProtocols = [...processedProtocols, ketoProtocol]
     .sort((a, b) => a.name.localeCompare(b.name));
 
+  console.log('🔧 PROTOCOLS: Available protocols:', availableProtocols.map(p => ({ id: p.id, name: p.name })));
+
   const handleProtocolChange = (protocolId, isChecked) => {
+    console.log('🔧 PROTOCOLS: Protocol change:', { protocolId, isChecked });
+    console.log('🔧 PROTOCOLS: Current setupData.protocols:', setupData.protocols);
+    
     // Special handling for "no protocol" option
     if (protocolId === 'no_protocol') {
       if (isChecked) {
         // If selecting "no protocol", clear all other protocols
+        console.log('🔧 PROTOCOLS: Selecting no protocol, clearing all');
         updateSetupData({ protocols: ['no_protocol'] });
       } else {
         // If deselecting "no protocol", just remove it
+        console.log('🔧 PROTOCOLS: Deselecting no protocol');
         updateSetupData({ protocols: [] });
       }
       return;
@@ -50,6 +65,7 @@ const ProtocolsStep = ({ setupData, updateSetupData, protocols, onNext, onBack, 
       ? [...currentProtocols, protocolId]
       : currentProtocols.filter(id => id !== protocolId);
     
+    console.log('🔧 PROTOCOLS: New protocols array:', newProtocols);
     updateSetupData({ protocols: newProtocols });
   };
 

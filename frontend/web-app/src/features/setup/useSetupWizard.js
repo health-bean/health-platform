@@ -40,7 +40,13 @@ const useSetupWizard = (protocols, updatePreferences, onComplete) => {
   };
 
   const completeSetup = async () => {
-    console.log('Completing setup with data:', setupData);
+    // Prevent multiple completion attempts
+    if (completing) {
+      console.log('🔧 WIZARD: Setup already completing, ignoring...');
+      return;
+    }
+
+    console.log('🔧 WIZARD: Completing setup with data:', setupData);
     
     try {
       setCompleting(true);
@@ -57,18 +63,24 @@ const useSetupWizard = (protocols, updatePreferences, onComplete) => {
         setup_complete: true
       };
       
-      console.log('Saving preferences to database:', preferencesUpdate);
+      console.log('🔧 WIZARD: Saving preferences to database:', preferencesUpdate);
+      console.log('🔧 WIZARD: setup_complete value:', preferencesUpdate.setup_complete);
       
       // Wait for the database save to complete
       await updatePreferences(preferencesUpdate);
       
-      console.log('Setup completed successfully - preferences saved to database');
+      console.log('🔧 WIZARD: Setup completed successfully - preferences saved to database');
+      
+      // Add a small delay to ensure database update is processed
+      await new Promise(resolve => setTimeout(resolve, 100));
+      
+      console.log('🔧 WIZARD: Calling onComplete...');
       
       // Only call onComplete after successful save
       onComplete();
       
     } catch (error) {
-      console.error('Failed to complete setup:', error);
+      console.error('🔧 WIZARD: Failed to complete setup:', error);
       setError('Failed to save your preferences. Please try again.');
       
       // Don't call onComplete if save failed
