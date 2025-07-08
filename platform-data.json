@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generated": "2025-07-07T21:27:14.115Z",
+    "generated": "2025-07-08T16:58:48.311Z",
     "version": "1.0.0",
     "generator": "AutomatedProfessionalDocsGenerator"
   },
@@ -17,7 +17,7 @@
     "workingAPIs": 12,
     "totalAPIs": 27,
     "totalTables": 22,
-    "totalCommits": 42,
+    "totalCommits": 43,
     "contributors": 1
   },
   "discoveredInfo": {
@@ -130,48 +130,9 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 4682,
+          "responseTime": 4992,
           "responseData": {
             "insights": [
-              {
-                "type": "food-symptom",
-                "trigger": "tuna",
-                "effect": "swelling",
-                "timeWindow": 48,
-                "timeWindowDescription": "within 48 hours",
-                "confidence": 0.67,
-                "frequency": "32/48 times",
-                "occurrences": 32,
-                "totalOpportunities": 48,
-                "description": "Your data suggests tuna may trigger swelling (67% of instances)",
-                "recommendation": "Consider eliminating tuna for 2-4 weeks to test your sensitivity"
-              },
-              {
-                "type": "food-symptom",
-                "trigger": "tuna",
-                "effect": "joint pain",
-                "timeWindow": 48,
-                "timeWindowDescription": "within 48 hours",
-                "confidence": 0.71,
-                "frequency": "34/48 times",
-                "occurrences": 34,
-                "totalOpportunities": 48,
-                "description": "For you, tuna frequently appears to trigger joint pain (71% of the time)",
-                "recommendation": "Consider eliminating tuna for 2-4 weeks to test your sensitivity"
-              },
-              {
-                "type": "food-symptom",
-                "trigger": "pineapple",
-                "effect": "joint pain",
-                "timeWindow": 48,
-                "timeWindowDescription": "within 48 hours",
-                "confidence": 0.61,
-                "frequency": "27/44 times",
-                "occurrences": 27,
-                "totalOpportunities": 44,
-                "description": "Your data suggests pineapple may trigger joint pain (61% of instances)",
-                "recommendation": "Consider eliminating pineapple for 2-4 weeks to test your sensitivity"
-              },
               {
                 "type": "food-symptom",
                 "trigger": "cucumber",
@@ -395,6 +356,32 @@
               },
               {
                 "type": "food-symptom",
+                "trigger": "tuna",
+                "effect": "swelling",
+                "timeWindow": 48,
+                "timeWindowDescription": "within 48 hours",
+                "confidence": 0.66,
+                "frequency": "31/47 times",
+                "occurrences": 31,
+                "totalOpportunities": 47,
+                "description": "Your data suggests tuna may trigger swelling (66% of instances)",
+                "recommendation": "Consider eliminating tuna for 2-4 weeks to test your sensitivity"
+              },
+              {
+                "type": "food-symptom",
+                "trigger": "tuna",
+                "effect": "joint pain",
+                "timeWindow": 48,
+                "timeWindowDescription": "within 48 hours",
+                "confidence": 0.7,
+                "frequency": "33/47 times",
+                "occurrences": 33,
+                "totalOpportunities": 47,
+                "description": "Your data suggests tuna may trigger joint pain (70% of instances)",
+                "recommendation": "Consider eliminating tuna for 2-4 weeks to test your sensitivity"
+              },
+              {
+                "type": "food-symptom",
                 "trigger": "broccoli",
                 "effect": "swelling",
                 "timeWindow": 48,
@@ -447,6 +434,19 @@
               },
               {
                 "type": "food-symptom",
+                "trigger": "pineapple",
+                "effect": "joint pain",
+                "timeWindow": 48,
+                "timeWindowDescription": "within 48 hours",
+                "confidence": 0.6,
+                "frequency": "26/43 times",
+                "occurrences": 26,
+                "totalOpportunities": 43,
+                "description": "Your data suggests pineapple may trigger joint pain (60% of instances)",
+                "recommendation": "Monitor pineapple consumption and joint pain symptoms more closely"
+              },
+              {
+                "type": "food-symptom",
                 "trigger": "kale",
                 "effect": "swelling",
                 "timeWindow": 48,
@@ -483,54 +483,6 @@
                 "totalOpportunities": 10,
                 "description": "For you, eggplant frequently appears to trigger digestive issues (80% of the time)",
                 "recommendation": "Consider eliminating eggplant for 2-4 weeks to test your sensitivity"
-              },
-              {
-                "type": "supplement-improvement",
-                "trigger": "vitamin d3 5000 iu",
-                "effect": "reduced swelling",
-                "timeWindow": 672,
-                "timeWindowDescription": "after 4 weeks",
-                "confidence": 1,
-                "frequency": "100% reduction in frequency",
-                "severityChange": "100% reduction in severity",
-                "description": "For you, vitamin d3 5000 iu appears to significantly reduce swelling (100% improvement after 4 weeks)",
-                "recommendation": "Continue vitamin d3 5000 iu - your data shows positive effects on swelling"
-              },
-              {
-                "type": "supplement-improvement",
-                "trigger": "vitamin d3 5000 iu",
-                "effect": "reduced joint pain",
-                "timeWindow": 672,
-                "timeWindowDescription": "after 4 weeks",
-                "confidence": 1,
-                "frequency": "100% reduction in frequency",
-                "severityChange": "100% reduction in severity",
-                "description": "For you, vitamin d3 5000 iu appears to significantly reduce joint pain (100% improvement after 4 weeks)",
-                "recommendation": "Continue vitamin d3 5000 iu - your data shows positive effects on joint pain"
-              },
-              {
-                "type": "supplement-improvement",
-                "trigger": "vitamin d3 5000 iu",
-                "effect": "reduced digestive issues",
-                "timeWindow": 672,
-                "timeWindowDescription": "after 4 weeks",
-                "confidence": 1,
-                "frequency": "100% reduction in frequency",
-                "severityChange": "100% reduction in severity",
-                "description": "For you, vitamin d3 5000 iu appears to significantly reduce digestive issues (100% improvement after 4 weeks)",
-                "recommendation": "Continue vitamin d3 5000 iu - your data shows positive effects on digestive issues"
-              },
-              {
-                "type": "supplement-improvement",
-                "trigger": "vitamin d3 5000 iu",
-                "effect": "reduced headache",
-                "timeWindow": 672,
-                "timeWindowDescription": "after 4 weeks",
-                "confidence": 1,
-                "frequency": "100% reduction in frequency",
-                "severityChange": "100% reduction in severity",
-                "description": "For you, vitamin d3 5000 iu appears to significantly reduce headache (100% improvement after 4 weeks)",
-                "recommendation": "Continue vitamin d3 5000 iu - your data shows positive effects on headache"
               },
               {
                 "type": "supplement-improvement",
@@ -582,6 +534,54 @@
               },
               {
                 "type": "supplement-improvement",
+                "trigger": "vitamin d3 5000 iu",
+                "effect": "reduced swelling",
+                "timeWindow": 672,
+                "timeWindowDescription": "after 4 weeks",
+                "confidence": 1,
+                "frequency": "100% reduction in frequency",
+                "severityChange": "100% reduction in severity",
+                "description": "For you, vitamin d3 5000 iu appears to significantly reduce swelling (100% improvement after 4 weeks)",
+                "recommendation": "Continue vitamin d3 5000 iu - your data shows positive effects on swelling"
+              },
+              {
+                "type": "supplement-improvement",
+                "trigger": "vitamin d3 5000 iu",
+                "effect": "reduced joint pain",
+                "timeWindow": 672,
+                "timeWindowDescription": "after 4 weeks",
+                "confidence": 1,
+                "frequency": "100% reduction in frequency",
+                "severityChange": "100% reduction in severity",
+                "description": "For you, vitamin d3 5000 iu appears to significantly reduce joint pain (100% improvement after 4 weeks)",
+                "recommendation": "Continue vitamin d3 5000 iu - your data shows positive effects on joint pain"
+              },
+              {
+                "type": "supplement-improvement",
+                "trigger": "vitamin d3 5000 iu",
+                "effect": "reduced digestive issues",
+                "timeWindow": 672,
+                "timeWindowDescription": "after 4 weeks",
+                "confidence": 1,
+                "frequency": "100% reduction in frequency",
+                "severityChange": "100% reduction in severity",
+                "description": "For you, vitamin d3 5000 iu appears to significantly reduce digestive issues (100% improvement after 4 weeks)",
+                "recommendation": "Continue vitamin d3 5000 iu - your data shows positive effects on digestive issues"
+              },
+              {
+                "type": "supplement-improvement",
+                "trigger": "vitamin d3 5000 iu",
+                "effect": "reduced headache",
+                "timeWindow": 672,
+                "timeWindowDescription": "after 4 weeks",
+                "confidence": 1,
+                "frequency": "100% reduction in frequency",
+                "severityChange": "100% reduction in severity",
+                "description": "For you, vitamin d3 5000 iu appears to significantly reduce headache (100% improvement after 4 weeks)",
+                "recommendation": "Continue vitamin d3 5000 iu - your data shows positive effects on headache"
+              },
+              {
+                "type": "supplement-improvement",
                 "trigger": "melatonin 3mg",
                 "effect": "reduced swelling",
                 "timeWindow": 672,
@@ -627,14 +627,40 @@
                 "severityChange": "100% reduction in severity",
                 "description": "For you, melatonin 3mg appears to significantly reduce headache (100% improvement after 4 weeks)",
                 "recommendation": "Continue melatonin 3mg - your data shows positive effects on headache"
+              },
+              {
+                "type": "exercise-energy",
+                "trigger": "morning walk",
+                "effect": "increased energy",
+                "timeWindow": 4,
+                "timeWindowDescription": "within 4 hours",
+                "confidence": 0.5079365079365079,
+                "energyChange": 1.5,
+                "baselineEnergy": 6.5,
+                "sessionsAnalyzed": 7,
+                "description": "For you, morning walk consistently boosts energy levels (+1.5 points above your baseline)",
+                "recommendation": "Continue morning walk - it appears to energize you"
+              },
+              {
+                "type": "exercise-energy",
+                "trigger": "weight training",
+                "effect": "decreased energy",
+                "timeWindow": 4,
+                "timeWindowDescription": "within 4 hours",
+                "confidence": 0.4920634920634921,
+                "energyChange": -1.5,
+                "baselineEnergy": 6.5,
+                "sessionsAnalyzed": 7,
+                "description": "Your data shows weight training tends to reduce energy levels (-1.5 points below baseline)",
+                "recommendation": "Consider adjusting weight training intensity or timing to reduce fatigue"
               }
             ],
             "summary": {
-              "totalCorrelations": 39,
+              "totalCorrelations": 41,
               "triggers": 27,
               "improvements": 12,
               "medicationEffects": 0,
-              "exerciseImpacts": 0,
+              "exerciseImpacts": 2,
               "sleepFactors": 0,
               "stressAmplifiers": 0
             },
@@ -642,7 +668,7 @@
             "confidence_threshold": 0.6,
             "user_id": "8e8a568a-c2f8-43a8-abf2-4e54408dbdc0"
           },
-          "responseSize": 16302
+          "responseSize": 17127
         },
         {
           "path": "/api/v1/detox-types",
@@ -653,7 +679,7 @@
           "params": [],
           "status": 404,
           "working": false,
-          "responseTime": 150,
+          "responseTime": 264,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -704,7 +730,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 152,
+          "responseTime": 266,
           "responseData": {
             "foods": [
               {
@@ -752,7 +778,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 273,
+          "responseTime": 107,
           "responseData": {
             "protocols": [
               {
@@ -926,7 +952,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 168,
+          "responseTime": 261,
           "responseData": {
             "entries": [],
             "total": 0
@@ -947,7 +973,7 @@
           ],
           "status": 500,
           "working": false,
-          "responseTime": 110,
+          "responseTime": 116,
           "responseData": {
             "error": "Failed to complete create timeline entry"
           },
@@ -967,7 +993,7 @@
           ],
           "status": 404,
           "working": false,
-          "responseTime": 242,
+          "responseTime": 237,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -1018,7 +1044,7 @@
           ],
           "status": 404,
           "working": false,
-          "responseTime": 234,
+          "responseTime": 240,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -1064,7 +1090,7 @@
           "params": [],
           "status": 400,
           "working": false,
-          "responseTime": 152,
+          "responseTime": 101,
           "responseData": {
             "error": "Email and password required"
           },
@@ -1079,7 +1105,7 @@
           "params": [],
           "status": 404,
           "working": false,
-          "responseTime": 99,
+          "responseTime": 250,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -1125,7 +1151,7 @@
           "params": [],
           "status": 401,
           "working": false,
-          "responseTime": 333,
+          "responseTime": 102,
           "responseData": {
             "error": "No authorization header"
           },
@@ -1140,7 +1166,7 @@
           "params": [],
           "status": 404,
           "working": false,
-          "responseTime": 105,
+          "responseTime": 236,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -1186,7 +1212,7 @@
           "params": [],
           "status": 400,
           "working": false,
-          "responseTime": 232,
+          "responseTime": 280,
           "responseData": {
             "error": "Missing required fields"
           },
@@ -1201,7 +1227,7 @@
           "params": [],
           "status": 400,
           "working": false,
-          "responseTime": 291,
+          "responseTime": 99,
           "responseData": {
             "error": "Email and password required"
           },
@@ -1242,7 +1268,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 134,
+          "responseTime": 146,
           "responseData": {
             "protocols": [],
             "total": 0
@@ -1263,10 +1289,10 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 107,
+          "responseTime": 238,
           "responseData": {
             "protocols": [
-              "7c728266-7c7e-4389-a9b6-7c5280f2edd2"
+              "1495844a-19de-404c-a288-7660eda0cbe1"
             ],
             "quick_detox": [],
             "quick_foods": [],
@@ -1291,7 +1317,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 256,
+          "responseTime": 393,
           "responseData": {
             "foods": [
               {
@@ -5220,7 +5246,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 101,
+          "responseTime": 139,
           "responseData": {
             "supplements": [],
             "total": 0,
@@ -5242,7 +5268,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 103,
+          "responseTime": 252,
           "responseData": {
             "medications": [],
             "total": 0,
@@ -5264,7 +5290,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 103,
+          "responseTime": 239,
           "responseData": {
             "detox_types": [],
             "total": 0,
@@ -5281,7 +5307,7 @@
           "params": [],
           "status": 500,
           "working": false,
-          "responseTime": 104,
+          "responseTime": 234,
           "responseData": {
             "error": "Internal server error: handleGetJournalEntries is not a function"
           },
@@ -5296,7 +5322,7 @@
           "params": [],
           "status": 500,
           "working": false,
-          "responseTime": 100,
+          "responseTime": 112,
           "responseData": {
             "error": "Internal server error: handleGetJournalEntry is not a function"
           },
@@ -5311,7 +5337,7 @@
           "params": [],
           "status": 404,
           "working": false,
-          "responseTime": 100,
+          "responseTime": 101,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -5357,7 +5383,7 @@
           "params": [],
           "status": 404,
           "working": false,
-          "responseTime": 99,
+          "responseTime": 100,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -5403,7 +5429,7 @@
           "params": [],
           "status": 404,
           "working": false,
-          "responseTime": 113,
+          "responseTime": 235,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -5652,7 +5678,7 @@
             {
               "name": "CorrelationInsights",
               "path": "frontend/web-app/src/features/insights/CorrelationInsights.jsx",
-              "size": 14640,
+              "size": 16528,
               "hooks": [
                 "useState",
                 "useCorrelations",
@@ -5770,7 +5796,7 @@
             }
           ],
           "utilities": [],
-          "size": "318.91 KB"
+          "size": "320.76 KB"
         },
         "frontend/shared": {
           "totalFiles": 24,
@@ -6008,18 +6034,18 @@
       "repository": "https://github.com/deebyrne26/health-platform",
       "branch": "main",
       "lastCommit": {
-        "hash": "2d08214",
-        "message": "auth state",
+        "hash": "36f4967",
+        "message": "Correlations part 56",
         "author": "deebyrne26",
-        "date": "Mon Jul 7 17:26:38 2025 -0400"
+        "date": "Tue Jul 8 12:58:11 2025 -0400"
       },
       "contributors": [
         {
           "name": "deebyrne26",
-          "commits": 42
+          "commits": 43
         }
       ],
-      "totalCommits": 42
+      "totalCommits": 43
     }
   }
 }
