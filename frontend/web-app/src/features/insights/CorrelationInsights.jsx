@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useCorrelations } from '../../../../shared/hooks/useCorrelations';
 import useAuth from '../../../../shared/hooks/useAuth';
-import { AlertTriangle, TrendingUp, Clock, Target, Activity, Pill, Moon, Dumbbell, Brain, Heart } from 'lucide-react';
+import { AlertTriangle, TrendingUp, Clock, Target, Activity, Pill, Moon, Dumbbell, Brain, Heart, Eye } from 'lucide-react';
+import { Button, Select } from '../../../../shared/components/ui';
 
 const CorrelationInsights = () => {
   const [timeframeFilter, setTimeframeFilter] = useState(180);
-  const [activeTab, setActiveTab] = useState('issues');
+  const [activeTab, setActiveTab] = useState('review');
+  const [typeFilter, setTypeFilter] = useState('all');
   const [showMore, setShowMore] = useState(false);
   
   // Get current user from auth context
@@ -42,6 +44,11 @@ const CorrelationInsights = () => {
     return hasPositive && !hasNegative;
   };
 
+  // Check if correlation is critical (high confidence + negative impact)
+  const isCriticalCorrelation = (correlation) => {
+    return correlation.confidence >= 0.7 && !isPositiveCorrelation(correlation);
+  };
+
   // Get appropriate icon based on correlation type
   const getCorrelationIcon = (correlation) => {
     const isPositive = isPositiveCorrelation(correlation);
@@ -63,28 +70,30 @@ const CorrelationInsights = () => {
     }
   };
 
-  // Get correlation type display name
+  // Get correlation type display name for filters
   const getCorrelationTypeLabel = (type) => {
     const labels = {
-      'medication-effect': 'Medication Effect',
-      'sleep-quality': 'Sleep Factor', 
-      'exercise-energy': 'Exercise Impact',
-      'stress-symptom': 'Stress Factor',
-      'supplement-improvement': 'Supplement Benefit',
-      'food-symptom': 'Food Response'
+      'medication-effect': 'Medication Effects',
+      'sleep-quality': 'Sleep Factors', 
+      'exercise-energy': 'Exercise Impacts',
+      'stress-symptom': 'Stress Factors',
+      'supplement-improvement': 'Supplement Benefits',
+      'food-symptom': 'Food Triggers'
     };
     return labels[type] || 'Health Pattern';
   };
 
-  // Get correlation type color
-  const getCorrelationTypeColor = (correlation) => {
-    const isPositive = isPositiveCorrelation(correlation);
-    
-    if (isPositive) {
-      return 'bg-green-100 text-green-800';
-    } else {
-      return 'bg-red-100 text-red-800';
+  // Format percentage display
+  const getPercentageDisplay = (correlation) => {
+    // If DB provides occurrence data, use it
+    if (correlation.occurrences && correlation.total_opportunities) {
+      const percentage = Math.round((correlation.occurrences / correlation.total_opportunities) * 100);
+      return `${percentage}% (${correlation.occurrences}/${correlation.total_opportunities} times)`;
     }
+    
+    // Fallback to confidence percentage
+    const percentage = Math.round(correlation.confidence * 100);
+    return `${percentage}%`;
   };
 
   // Calculate impact score for sorting (prioritize by severity/importance)
@@ -139,19 +148,36 @@ const CorrelationInsights = () => {
 
   // Safe correlations array
   const safeCorrelations = correlations || [];
+
+  // Get unique correlation types for dynamic filtering
+  const availableTypes = useMemo(() => {
+    const types = [...new Set(safeCorrelations.map(c => c.type))];
+    return types.map(type => ({
+      value: type,
+      label: getCorrelationTypeLabel(type)
+    }));
+  }, [safeCorrelations]);
   
-  // Filter correlations based on tab selection
+  // Filter correlations based on tab selection and type filter
   const getFilteredCorrelations = () => {
-    const baseCorrelations = safeCorrelations.filter(c => c.confidence >= 0.5);
+    let baseCorrelations = safeCorrelations.filter(c => c.confidence >= 0.5);
     
+    // Apply type filter if not "all"
+    if (typeFilter !== 'all') {
+      baseCorrelations = baseCorrelations.filter(c => c.type === typeFilter);
+    }
+    
+    // Apply tab filter
     switch (activeTab) {
-      case 'issues':
-        // Things to investigate: food triggers, med side effects, stress amplifiers
-        return baseCorrelations.filter(c => !isPositiveCorrelation(c));
-      case 'helping':
-        // What's working: supplements, positive exercise/sleep effects
+      case 'review':
+        // Critical issues needing immediate attention
+        return baseCorrelations.filter(c => isCriticalCorrelation(c));
+      case 'observe':
+        // Non-critical issues to monitor
+        return baseCorrelations.filter(c => !isPositiveCorrelation(c) && !isCriticalCorrelation(c));
+      case 'positive':
+        // Positive patterns to maintain
         return baseCorrelations.filter(c => isPositiveCorrelation(c));
-      case 'all':
       default:
         return baseCorrelations;
     }
@@ -169,8 +195,9 @@ const CorrelationInsights = () => {
   const displayedCorrelations = showMore ? sortedCorrelations : sortedCorrelations.slice(0, 5);
 
   // Calculate counts for different categories
-  const issuesCount = safeCorrelations.filter(c => c.confidence >= 0.5 && !isPositiveCorrelation(c)).length;
-  const helpingCount = safeCorrelations.filter(c => c.confidence >= 0.5 && isPositiveCorrelation(c)).length;
+  const reviewCount = safeCorrelations.filter(c => c.confidence >= 0.5 && isCriticalCorrelation(c)).length;
+  const observeCount = safeCorrelations.filter(c => c.confidence >= 0.5 && !isPositiveCorrelation(c) && !isCriticalCorrelation(c)).length;
+  const positiveCount = safeCorrelations.filter(c => c.confidence >= 0.5 && isPositiveCorrelation(c)).length;
   
   // Combined loading state
   const loading = authLoading || correlationsLoading;
@@ -225,68 +252,80 @@ const CorrelationInsights = () => {
               <span>Health Insights</span>
             </h2>
             <p className="text-gray-600 mt-1">
-              {issuesCount} issues to investigate, {helpingCount} patterns helping you
+              {reviewCount} to review, {observeCount} to observe, {positiveCount} to keep up
             </p>
           </div>
           <div className="text-right flex-shrink-0 ml-4">
             <div className="text-sm text-gray-600 mb-1">Time Period</div>
-            <select 
-              value={timeframeFilter} 
+            <Select
+              value={timeframeFilter}
               onChange={(e) => setTimeframeFilter(parseInt(e.target.value))}
-              className="border border-gray-300 rounded px-2 py-1 text-sm bg-white"
+              className="text-sm"
             >
               <option value={30}>30 days</option>
               <option value={90}>3 months</option>
               <option value={180}>6 months</option>
               <option value={365}>1 year</option>
-            </select>
+            </Select>
           </div>
         </div>
       </div>
 
       {/* Navigation Tabs */}
       <div className="flex space-x-2">
-        <button
-          onClick={() => setActiveTab('issues')}
-          className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-            activeTab === 'issues'
-              ? 'bg-red-500 text-white'
-              : 'bg-white text-gray-700 hover:bg-gray-50'
-          }`}
+        <Button
+          variant={activeTab === 'review' ? 'danger' : 'ghost'}
+          onClick={() => setActiveTab('review')}
+          size="sm"
         >
-          Issues ({issuesCount})
-        </button>
-        <button
-          onClick={() => setActiveTab('helping')}
-          className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-            activeTab === 'helping'
-              ? 'bg-green-500 text-white'
-              : 'bg-white text-gray-700 hover:bg-gray-50'
-          }`}
+          Review ({reviewCount})
+        </Button>
+        <Button
+          variant={activeTab === 'observe' ? 'warning' : 'ghost'}
+          onClick={() => setActiveTab('observe')}
+          size="sm"
         >
-          Helping ({helpingCount})
-        </button>
-        <button
-          onClick={() => setActiveTab('all')}
-          className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-            activeTab === 'all'
-              ? 'bg-blue-500 text-white'
-              : 'bg-white text-gray-700 hover:bg-gray-50'
-          }`}
+          Observe ({observeCount})
+        </Button>
+        <Button
+          variant={activeTab === 'positive' ? 'success' : 'ghost'}
+          onClick={() => setActiveTab('positive')}
+          size="sm"
         >
-          All ({safeCorrelations.filter(c => c.confidence >= 0.5).length})
-        </button>
+          Keep it Up ({positiveCount})
+        </Button>
       </div>
+
+      {/* Type Filter */}
+      {availableTypes.length > 0 && (
+        <div className="flex items-center space-x-3">
+          <span className="text-sm text-gray-600">Filter by type:</span>
+          <Select
+            value={typeFilter}
+            onChange={(e) => setTypeFilter(e.target.value)}
+            className="w-auto min-w-[200px]"
+          >
+            <option value="all">All Types</option>
+            {availableTypes.map(type => (
+              <option key={type.value} value={type.value}>
+                {type.label}
+              </option>
+            ))}
+          </Select>
+        </div>
+      )}
 
       {/* Patterns Display */}
       <div className="bg-white rounded-lg border border-gray-200">
         <div className="p-4 border-b border-gray-200">
           <h3 className="text-lg font-semibold text-gray-900 flex items-center space-x-2">
-            <TrendingUp className="w-5 h-5 text-blue-500" />
+            {activeTab === 'review' && <AlertTriangle className="w-5 h-5 text-red-500" />}
+            {activeTab === 'observe' && <Eye className="w-5 h-5 text-orange-500" />}
+            {activeTab === 'positive' && <TrendingUp className="w-5 h-5 text-green-500" />}
             <span>
-              {activeTab === 'issues' ? 'Issues to Investigate' : 
-               activeTab === 'helping' ? "What's Helping" :
-               'All Patterns'}
+              {activeTab === 'review' ? 'Critical Issues to Review' : 
+               activeTab === 'observe' ? 'Patterns to Observe' :
+               'Positive Patterns to Keep Up'}
             </span>
             <span className="text-sm text-gray-500">({filteredCorrelations.length} total)</span>
           </h3>
@@ -296,14 +335,14 @@ const CorrelationInsights = () => {
           <div className="p-8 text-center">
             <Activity className="w-12 h-12 text-gray-400 mx-auto mb-3" />
             <p className="text-gray-500">
-              {activeTab === 'issues' ? 'No issues found - great news!' :
-               activeTab === 'helping' ? 'No helpful patterns identified yet.' :
-               'No patterns found.'}
+              {activeTab === 'review' ? 'No critical issues found - great news!' :
+               activeTab === 'observe' ? 'No patterns to observe right now.' :
+               'No positive patterns identified yet.'}
             </p>
             <p className="text-sm text-gray-400 mt-1">
-              {activeTab === 'issues' ? 'Keep tracking to identify potential triggers.' :
-               activeTab === 'helping' ? 'Continue tracking to discover what works for you.' :
-               'Try adjusting the time period or add more data.'}
+              {activeTab === 'review' ? 'Keep tracking to identify potential critical triggers.' :
+               activeTab === 'observe' ? 'Continue tracking to discover patterns worth monitoring.' :
+               'Continue tracking to discover what works for you.'}
             </p>
           </div>
         ) : (
@@ -333,8 +372,8 @@ const CorrelationInsights = () => {
                       </div>
                     </div>
                     <div className="text-right ml-4 flex-shrink-0">
-                      <span className={`px-2 py-1 text-xs rounded-full ${getCorrelationTypeColor(correlation)}`}>
-                        {getCorrelationTypeLabel(correlation.type)}
+                      <span className="px-2 py-1 text-xs rounded-full bg-gray-100 text-gray-800">
+                        {getPercentageDisplay(correlation)}
                       </span>
                     </div>
                   </div>
@@ -345,70 +384,55 @@ const CorrelationInsights = () => {
             {/* Show More/Less Button */}
             {sortedCorrelations.length > 5 && (
               <div className="text-center pt-4">
-                <button
+                <Button
+                  variant="outline-primary"
+                  size="sm"
                   onClick={() => setShowMore(!showMore)}
-                  className="px-4 py-2 text-sm font-medium text-blue-600 hover:text-blue-800 border border-blue-200 rounded-lg hover:bg-blue-50 transition-colors"
                 >
                   {showMore ? 
                     `Show Less (showing all ${sortedCorrelations.length})` : 
                     `Show More (${sortedCorrelations.length - 5} more patterns)`
                   }
-                </button>
+                </Button>
               </div>
             )}
           </div>
         )}
       </div>
 
-      {/* Summary Stats */}
+      {/* Dynamic Summary Stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-          <div className="flex items-center space-x-3">
-            <AlertTriangle className="w-8 h-8 text-red-600" />
-            <div>
-              <div className="text-2xl font-bold text-red-600">
-                {safeCorrelations.filter(c => c.confidence >= 0.5 && c.type === 'food-symptom').length}
+        {availableTypes.map(type => {
+          const count = safeCorrelations.filter(c => c.confidence >= 0.5 && c.type === type.value).length;
+          const isPositive = safeCorrelations.some(c => c.type === type.value && isPositiveCorrelation(c));
+          
+          return (
+            <div key={type.value} className={`border rounded-lg p-4 ${
+              isPositive ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200'
+            }`}>
+              <div className="flex items-center space-x-3">
+                {type.value === 'food-symptom' && <AlertTriangle className="w-8 h-8 text-red-600" />}
+                {type.value === 'medication-effect' && <Pill className="w-8 h-8 text-orange-600" />}
+                {type.value === 'stress-symptom' && <Brain className="w-8 h-8 text-purple-600" />}
+                {type.value === 'supplement-improvement' && <Heart className="w-8 h-8 text-green-600" />}
+                {type.value === 'sleep-quality' && <Moon className="w-8 h-8 text-blue-600" />}
+                {type.value === 'exercise-energy' && <Dumbbell className="w-8 h-8 text-indigo-600" />}
+                <div>
+                  <div className={`text-2xl font-bold ${
+                    isPositive ? 'text-green-600' : 'text-red-600'
+                  }`}>
+                    {count}
+                  </div>
+                  <div className={`text-sm ${
+                    isPositive ? 'text-green-700' : 'text-red-700'
+                  }`}>
+                    {type.label}
+                  </div>
+                </div>
               </div>
-              <div className="text-sm text-red-700">Food Triggers</div>
             </div>
-          </div>
-        </div>
-        
-        <div className="bg-orange-50 border border-orange-200 rounded-lg p-4">
-          <div className="flex items-center space-x-3">
-            <Pill className="w-8 h-8 text-orange-600" />
-            <div>
-              <div className="text-2xl font-bold text-orange-600">
-                {safeCorrelations.filter(c => c.confidence >= 0.5 && c.type === 'medication-effect').length}
-              </div>
-              <div className="text-sm text-orange-700">Medication Effects</div>
-            </div>
-          </div>
-        </div>
-        
-        <div className="bg-purple-50 border border-purple-200 rounded-lg p-4">
-          <div className="flex items-center space-x-3">
-            <Brain className="w-8 h-8 text-purple-600" />
-            <div>
-              <div className="text-2xl font-bold text-purple-600">
-                {safeCorrelations.filter(c => c.confidence >= 0.5 && c.type === 'stress-symptom').length}
-              </div>
-              <div className="text-sm text-purple-700">Stress Factors</div>
-            </div>
-          </div>
-        </div>
-        
-        <div className="bg-green-50 border border-green-200 rounded-lg p-4">
-          <div className="flex items-center space-x-3">
-            <Heart className="w-8 h-8 text-green-600" />
-            <div>
-              <div className="text-2xl font-bold text-green-600">
-                {helpingCount}
-              </div>
-              <div className="text-sm text-green-700">Positive Patterns</div>
-            </div>
-          </div>
-        </div>
+          );
+        })}
       </div>
     </div>
   );
