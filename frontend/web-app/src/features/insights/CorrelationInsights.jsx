@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import { useCorrelations } from '../../../../shared/hooks/useCorrelations';
 import useAuth from '../../../../shared/hooks/useAuth';
 import { AlertTriangle, TrendingUp, Clock, Target, Activity, Pill, Moon, Dumbbell, Brain, Heart, Eye } from 'lucide-react';
