@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { useCorrelations } from '../../../../shared/hooks/useCorrelations';
 import useAuth from '../../../../shared/hooks/useAuth';
-import { AlertTriangle, TrendingUp, Clock, Target, Activity, Pill, Moon, Dumbbell, Brain, Heart, Eye } from 'lucide-react';
+import { AlertTriangle, TrendingUp, Clock, Target, Activity, Pill, Moon, Dumbbell, Brain, Heart, Eye, X } from 'lucide-react';
 import { Button, Select } from '../../../../shared/components/ui';
 
 const CorrelationInsights = () => {
@@ -21,19 +21,16 @@ const CorrelationInsights = () => {
 
   // Helper function to determine if correlation is positive/beneficial
   const isPositiveCorrelation = (correlation) => {
-    // Check if DB already provides this classification
     if (correlation.is_beneficial !== undefined) {
       return correlation.is_beneficial;
     }
     
-    // Fallback logic based on type and description
     const positiveTypes = ['supplement-improvement'];
     const negativeTypes = ['food-symptom', 'medication-effect', 'stress-symptom'];
     
     if (positiveTypes.includes(correlation.type)) return true;
     if (negativeTypes.includes(correlation.type)) return false;
     
-    // For exercise/sleep, check description
     const text = (correlation.description || correlation.effect || '').toLowerCase();
     const positiveKeywords = ['reduce', 'improve', 'help', 'boost', 'increase energy', 'better', 'benefit'];
     const negativeKeywords = ['cause', 'trigger', 'worsen', 'amplify', 'side effect'];
@@ -85,28 +82,29 @@ const CorrelationInsights = () => {
 
   // Format percentage display
   const getPercentageDisplay = (correlation) => {
-    // If DB provides occurrence data, use it
     if (correlation.occurrences && correlation.total_opportunities) {
       const percentage = Math.round((correlation.occurrences / correlation.total_opportunities) * 100);
-      return `${percentage}% (${correlation.occurrences}/${correlation.total_opportunities} times)`;
+      return {
+        percentage: `${percentage}%`,
+        occurrence: `(${correlation.occurrences}/${correlation.total_opportunities})`
+      };
     }
     
-    // Fallback to confidence percentage
     const percentage = Math.round(correlation.confidence * 100);
-    return `${percentage}%`;
+    return {
+      percentage: `${percentage}%`,
+      occurrence: ''
+    };
   };
 
-  // Calculate impact score for sorting (prioritize by severity/importance)
+  // Calculate impact score for sorting
   const getImpactScore = (correlation) => {
-    // If DB provides impact score, use it
     if (correlation.impact_score !== undefined) {
       return correlation.impact_score;
     }
     
-    // Fallback calculation
     let baseScore = correlation.confidence || 0.5;
     
-    // Boost critical health issues
     const criticalKeywords = ['severe', 'intense', 'debilitating', 'migraine', 'pain'];
     const text = (correlation.description || correlation.effect || '').toLowerCase();
     
@@ -114,7 +112,6 @@ const CorrelationInsights = () => {
       baseScore += 0.3;
     }
     
-    // Medication effects are high priority
     if (correlation.type === 'medication-effect') {
       baseScore += 0.2;
     }
@@ -122,28 +119,17 @@ const CorrelationInsights = () => {
     return Math.min(baseScore, 1.0);
   };
 
-  // Clean up correlation description text
-  const getCleanDescription = (correlation) => {
-    if (!correlation.description) return null;
+  // Generate user-friendly description
+  const getCorrelationDescription = (correlation) => {
+    const isPositive = isPositiveCorrelation(correlation);
+    const trigger = correlation.trigger;
+    const effect = correlation.effect;
     
-    let description = correlation.description;
-    
-    // Remove verbose prefixes
-    description = description.replace(/^For you,?\s*/i, '');
-    description = description.replace(/\s*(frequently|sometimes|appears to|seems to)\s*/gi, ' ');
-    description = description.replace(/\s*\(\d+%.*?\)/g, ''); // Remove percentage info
-    
-    // Simplify time references
-    description = description.replace(/\(improvement after \d+ weeks?\)/gi, 
-      (match) => match.replace('improvement after', 'improvement after'));
-    
-    // Clean up extra spaces
-    description = description.replace(/\s+/g, ' ').trim();
-    
-    // Capitalize first letter
-    description = description.charAt(0).toUpperCase() + description.slice(1);
-    
-    return description;
+    if (isPositive) {
+      return `💡 Your data suggests ${trigger} may help with ${effect}`;
+    } else {
+      return `🔍 Your data suggests ${trigger} may trigger ${effect}`;
+    }
   };
 
   // Safe correlations array
@@ -170,37 +156,90 @@ const CorrelationInsights = () => {
     // Apply tab filter
     switch (activeTab) {
       case 'review':
-        // Critical issues needing immediate attention
         return baseCorrelations.filter(c => isCriticalCorrelation(c));
       case 'observe':
-        // Non-critical issues to monitor
         return baseCorrelations.filter(c => !isPositiveCorrelation(c) && !isCriticalCorrelation(c));
       case 'positive':
-        // Positive patterns to maintain
         return baseCorrelations.filter(c => isPositiveCorrelation(c));
       default:
         return baseCorrelations;
     }
   };
 
-  const filteredCorrelations = getFilteredCorrelations();
-  
-  // Sort by impact score instead of confidence
-  const sortedCorrelations = [...filteredCorrelations].sort((a, b) => {
-    const impactA = getImpactScore(a);
-    const impactB = getImpactScore(b);
-    return impactB - impactA; // Highest impact first
-  });
-  
-  const displayedCorrelations = showMore ? sortedCorrelations : sortedCorrelations.slice(0, 5);
+  // Group correlations by trigger item
+  const getGroupedCorrelations = () => {
+    const filteredCorrelations = getFilteredCorrelations();
+    const grouped = {};
+    
+    filteredCorrelations.forEach(correlation => {
+      const trigger = correlation.trigger;
+      if (!grouped[trigger]) {
+        grouped[trigger] = [];
+      }
+      grouped[trigger].push(correlation);
+    });
+    
+    // Sort each group by impact score
+    Object.keys(grouped).forEach(trigger => {
+      grouped[trigger].sort((a, b) => getImpactScore(b) - getImpactScore(a));
+    });
+    
+    // Convert to array and sort by highest impact correlation per trigger
+    const groupedArray = Object.entries(grouped).map(([trigger, correlations]) => ({
+      trigger,
+      correlations,
+      maxImpact: Math.max(...correlations.map(c => getImpactScore(c)))
+    }));
+    
+    return groupedArray.sort((a, b) => b.maxImpact - a.maxImpact);
+  };
+
+  const groupedCorrelations = getGroupedCorrelations();
+  const displayedGroups = showMore ? groupedCorrelations : groupedCorrelations.slice(0, 5);
 
   // Calculate counts for different categories
   const reviewCount = safeCorrelations.filter(c => c.confidence >= 0.5 && isCriticalCorrelation(c)).length;
   const observeCount = safeCorrelations.filter(c => c.confidence >= 0.5 && !isPositiveCorrelation(c) && !isCriticalCorrelation(c)).length;
   const positiveCount = safeCorrelations.filter(c => c.confidence >= 0.5 && isPositiveCorrelation(c)).length;
   
+  // Get filtered counts for type filter
+  const getFilteredCounts = () => {
+    const filteredCorrelations = typeFilter === 'all' 
+      ? safeCorrelations.filter(c => c.confidence >= 0.5)
+      : safeCorrelations.filter(c => c.confidence >= 0.5 && c.type === typeFilter);
+      
+    const currentReviewCount = filteredCorrelations.filter(c => isCriticalCorrelation(c)).length;
+    const currentObserveCount = filteredCorrelations.filter(c => !isPositiveCorrelation(c) && !isCriticalCorrelation(c)).length;
+    const currentPositiveCount = filteredCorrelations.filter(c => isPositiveCorrelation(c)).length;
+    
+    return { currentReviewCount, currentObserveCount, currentPositiveCount };
+  };
+
+  const { currentReviewCount, currentObserveCount, currentPositiveCount } = getFilteredCounts();
+  
   // Combined loading state
   const loading = authLoading || correlationsLoading;
+
+  // Get current tab display info
+  const getTabDisplayInfo = () => {
+    const totalItems = groupedCorrelations.length;
+    const baseTitle = activeTab === 'review' ? 'Critical Issues to Review' : 
+                     activeTab === 'observe' ? 'Patterns to Observe' :
+                     'Positive Patterns to Keep Up';
+    
+    if (typeFilter === 'all') {
+      return { title: baseTitle, count: totalItems, breadcrumb: null };
+    } else {
+      const typeLabel = availableTypes.find(t => t.value === typeFilter)?.label || typeFilter;
+      return { 
+        title: baseTitle, 
+        count: totalItems, 
+        breadcrumb: typeLabel 
+      };
+    }
+  };
+
+  const tabInfo = getTabDisplayInfo();
 
   if (loading || (user && correlationsLoading)) {
     return (
@@ -278,40 +317,37 @@ const CorrelationInsights = () => {
           onClick={() => setActiveTab('review')}
           size="sm"
         >
-          Review ({reviewCount})
+          Review ({currentReviewCount})
         </Button>
         <Button
           variant={activeTab === 'observe' ? 'warning' : 'ghost'}
           onClick={() => setActiveTab('observe')}
           size="sm"
         >
-          Observe ({observeCount})
+          Observe ({currentObserveCount})
         </Button>
         <Button
           variant={activeTab === 'positive' ? 'success' : 'ghost'}
           onClick={() => setActiveTab('positive')}
           size="sm"
         >
-          Keep it Up ({positiveCount})
+          Keep it Up ({currentPositiveCount})
         </Button>
       </div>
 
-      {/* Type Filter */}
-      {availableTypes.length > 0 && (
-        <div className="flex items-center space-x-3">
-          <span className="text-sm text-gray-600">Filter by type:</span>
-          <Select
-            value={typeFilter}
-            onChange={(e) => setTypeFilter(e.target.value)}
-            className="w-auto min-w-[200px]"
+      {/* Breadcrumb and Clear Filter */}
+      {typeFilter !== 'all' && (
+        <div className="flex items-center space-x-2 text-sm text-gray-600">
+          <span>Showing:</span>
+          <span className="font-medium">{tabInfo.breadcrumb}</span>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => setTypeFilter('all')}
+            icon={X}
           >
-            <option value="all">All Types</option>
-            {availableTypes.map(type => (
-              <option key={type.value} value={type.value}>
-                {type.label}
-              </option>
-            ))}
-          </Select>
+            Clear filter
+          </Button>
         </div>
       )}
 
@@ -322,16 +358,12 @@ const CorrelationInsights = () => {
             {activeTab === 'review' && <AlertTriangle className="w-5 h-5 text-red-500" />}
             {activeTab === 'observe' && <Eye className="w-5 h-5 text-orange-500" />}
             {activeTab === 'positive' && <TrendingUp className="w-5 h-5 text-green-500" />}
-            <span>
-              {activeTab === 'review' ? 'Critical Issues to Review' : 
-               activeTab === 'observe' ? 'Patterns to Observe' :
-               'Positive Patterns to Keep Up'}
-            </span>
-            <span className="text-sm text-gray-500">({filteredCorrelations.length} total)</span>
+            <span>{tabInfo.title}</span>
+            <span className="text-sm text-gray-500">({tabInfo.count} items)</span>
           </h3>
         </div>
         
-        {displayedCorrelations.length === 0 ? (
+        {displayedGroups.length === 0 ? (
           <div className="p-8 text-center">
             <Activity className="w-12 h-12 text-gray-400 mx-auto mb-3" />
             <p className="text-gray-500">
@@ -346,43 +378,55 @@ const CorrelationInsights = () => {
             </p>
           </div>
         ) : (
-          <div className="space-y-3 p-4">
-            {displayedCorrelations.map((correlation, index) => {
-              const cleanDescription = getCleanDescription(correlation);
-              
-              return (
-                <div key={correlation.id || index} className="bg-gray-50 rounded-lg p-4 border border-gray-200">
-                  <div className="flex items-start justify-between">
-                    <div className="flex items-center space-x-3 flex-1">
-                      {getCorrelationIcon(correlation)}
-                      <div className="flex-1">
-                        <div className="font-medium text-gray-900">
-                          {correlation.trigger} → {correlation.effect}
-                        </div>
-                        {correlation.timeWindowDescription && (
-                          <div className="text-sm text-gray-600">
-                            {correlation.timeWindowDescription} • {correlation.frequency}
-                          </div>
-                        )}
-                        {cleanDescription && (
-                          <div className="text-sm text-blue-600 mt-1">
-                            {isPositiveCorrelation(correlation) ? '💡' : '🔍'} {cleanDescription}
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                    <div className="text-right ml-4 flex-shrink-0">
-                      <span className="px-2 py-1 text-xs rounded-full bg-gray-100 text-gray-800">
-                        {getPercentageDisplay(correlation)}
-                      </span>
-                    </div>
+          <div className="space-y-4 p-4">
+            {displayedGroups.map((group, index) => (
+              <div key={group.trigger} className="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                <div className="space-y-3">
+                  <div className="flex items-center space-x-3">
+                    {getCorrelationIcon(group.correlations[0])}
+                    <h4 className="font-semibold text-gray-900 text-lg">{group.trigger}</h4>
                   </div>
+                  
+                  {group.correlations.map((correlation, corrIndex) => {
+                    const percentageData = getPercentageDisplay(correlation);
+                    const description = getCorrelationDescription(correlation);
+                    
+                    return (
+                      <div key={corrIndex} className="flex items-start justify-between">
+                        <div className="flex-1">
+                          <div className="flex items-center space-x-2 mb-1">
+                            <span className="font-medium text-gray-900">
+                              • {correlation.effect}
+                            </span>
+                            {correlation.timeWindowDescription && (
+                              <span className="text-sm text-gray-500">
+                                ({correlation.timeWindowDescription})
+                              </span>
+                            )}
+                          </div>
+                          <div className="text-sm text-blue-600 ml-2">
+                            {description}
+                          </div>
+                        </div>
+                        <div className="text-right ml-4 flex-shrink-0">
+                          <div className="text-lg font-semibold text-gray-900">
+                            {percentageData.percentage}
+                          </div>
+                          {percentageData.occurrence && (
+                            <div className="text-sm text-gray-500">
+                              {percentageData.occurrence}
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
-              );
-            })}
+              </div>
+            ))}
             
             {/* Show More/Less Button */}
-            {sortedCorrelations.length > 5 && (
+            {groupedCorrelations.length > 5 && (
               <div className="text-center pt-4">
                 <Button
                   variant="outline-primary"
@@ -390,8 +434,8 @@ const CorrelationInsights = () => {
                   onClick={() => setShowMore(!showMore)}
                 >
                   {showMore ? 
-                    `Show Less (showing all ${sortedCorrelations.length})` : 
-                    `Show More (${sortedCorrelations.length - 5} more patterns)`
+                    `Show Less (showing all ${groupedCorrelations.length} items)` : 
+                    `Show More (${groupedCorrelations.length - 5} more items)`
                   }
                 </Button>
               </div>
@@ -400,16 +444,25 @@ const CorrelationInsights = () => {
         )}
       </div>
 
-      {/* Dynamic Summary Stats */}
+      {/* Clickable Summary Stats - Sub-filters */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {availableTypes.map(type => {
           const count = safeCorrelations.filter(c => c.confidence >= 0.5 && c.type === type.value).length;
           const isPositive = safeCorrelations.some(c => c.type === type.value && isPositiveCorrelation(c));
+          const isActive = typeFilter === type.value;
           
           return (
-            <div key={type.value} className={`border rounded-lg p-4 ${
-              isPositive ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200'
-            }`}>
+            <button
+              key={type.value}
+              onClick={() => setTypeFilter(isActive ? 'all' : type.value)}
+              className={`border rounded-lg p-4 transition-all hover:shadow-md ${
+                isActive 
+                  ? 'ring-2 ring-blue-500 bg-blue-50 border-blue-200' 
+                  : isPositive 
+                    ? 'bg-green-50 border-green-200 hover:bg-green-100' 
+                    : 'bg-red-50 border-red-200 hover:bg-red-100'
+              }`}
+            >
               <div className="flex items-center space-x-3">
                 {type.value === 'food-symptom' && <AlertTriangle className="w-8 h-8 text-red-600" />}
                 {type.value === 'medication-effect' && <Pill className="w-8 h-8 text-orange-600" />}
@@ -417,20 +470,20 @@ const CorrelationInsights = () => {
                 {type.value === 'supplement-improvement' && <Heart className="w-8 h-8 text-green-600" />}
                 {type.value === 'sleep-quality' && <Moon className="w-8 h-8 text-blue-600" />}
                 {type.value === 'exercise-energy' && <Dumbbell className="w-8 h-8 text-indigo-600" />}
-                <div>
+                <div className="text-left">
                   <div className={`text-2xl font-bold ${
-                    isPositive ? 'text-green-600' : 'text-red-600'
+                    isActive ? 'text-blue-600' : isPositive ? 'text-green-600' : 'text-red-600'
                   }`}>
                     {count}
                   </div>
                   <div className={`text-sm ${
-                    isPositive ? 'text-green-700' : 'text-red-700'
+                    isActive ? 'text-blue-700' : isPositive ? 'text-green-700' : 'text-red-700'
                   }`}>
                     {type.label}
                   </div>
                 </div>
               </div>
-            </div>
+            </button>
           );
         })}
       </div>
