@@ -26,7 +26,7 @@ const CorrelationInsights = () => {
     }
     
     const positiveTypes = ['supplement-improvement'];
-    const negativeTypes = ['food-symptom', 'medication-effect', 'stress-symptom'];
+    const negativeTypes = ['food-symptom', 'medication-effect', 'stress-symptom', 'food-property-pattern'];
     
     if (positiveTypes.includes(correlation.type)) return true;
     if (negativeTypes.includes(correlation.type)) return false;
@@ -51,6 +51,8 @@ const CorrelationInsights = () => {
     const isPositive = isPositiveCorrelation(correlation);
     
     switch (correlation.type) {
+      case 'food-property-pattern':
+        return <AlertTriangle className="w-5 h-5 text-orange-500" />;
       case 'medication-effect':
         return <Pill className="w-5 h-5 text-red-500" />;
       case 'sleep-quality':
@@ -111,6 +113,12 @@ const CorrelationInsights = () => {
   // Generate user-friendly description
   const getCorrelationDescription = (correlation) => {
     const isPositive = isPositiveCorrelation(correlation);
+    
+    // Handle pattern correlations specially
+    if (correlation.type === 'food-property-pattern') {
+      return correlation.description || `🔍 Your data suggests ${correlation.trigger} may trigger ${correlation.effect}`;
+    }
+    
     const trigger = correlation.trigger;
     const effect = correlation.effect;
     
@@ -143,7 +151,7 @@ const CorrelationInsights = () => {
     }
   };
 
-  // Group correlations by trigger item
+  // Group correlations by trigger item (enhanced for patterns)
   const getGroupedCorrelations = () => {
     const filteredCorrelations = getFilteredCorrelations();
     const grouped = {};
@@ -165,7 +173,8 @@ const CorrelationInsights = () => {
     const groupedArray = Object.entries(grouped).map(([trigger, correlations]) => ({
       trigger,
       correlations,
-      maxImpact: Math.max(...correlations.map(c => getImpactScore(c)))
+      maxImpact: Math.max(...correlations.map(c => getImpactScore(c))),
+      isPattern: correlations[0].type === 'food-property-pattern'
     }));
     
     return groupedArray.sort((a, b) => b.maxImpact - a.maxImpact);
@@ -238,20 +247,23 @@ const CorrelationInsights = () => {
       {/* Compact Header */}
       <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg p-3 border border-blue-200">
         <div className="flex items-center justify-between">
-          <h2 className="text-lg font-bold text-gray-900 flex items-center space-x-2">
+          <div className="flex items-center space-x-2">
             <Target className="w-5 h-5 text-blue-600" />
-            <span>FILO Insights</span>
-          </h2>
-          <Select
-            value={timeframeFilter}
-            onChange={(e) => setTimeframeFilter(parseInt(e.target.value))}
-            className="text-sm w-24"
-          >
-            <option value={30}>30d</option>
-            <option value={90}>3m</option>
-            <option value={180}>6m</option>
-            <option value={365}>1y</option>
-          </Select>
+            <span className="text-lg font-bold text-gray-900">FILO Insights</span>
+          </div>
+          <div className="text-right">
+            <div className="text-xs text-gray-500 mb-1">Time period</div>
+            <Select
+              value={timeframeFilter}
+              onChange={(e) => setTimeframeFilter(parseInt(e.target.value))}
+              className="text-sm w-20"
+            >
+              <option value={30}>30d</option>
+              <option value={90}>3m</option>
+              <option value={180}>6m</option>
+              <option value={365}>1y</option>
+            </Select>
+          </div>
         </div>
       </div>
 
@@ -315,7 +327,16 @@ const CorrelationInsights = () => {
                 <div className="space-y-3">
                   <div className="flex items-center space-x-3">
                     {getCorrelationIcon(group.correlations[0])}
-                    <h4 className="font-semibold text-gray-900 text-lg">{group.trigger}</h4>
+                    <div className="flex-1">
+                      <h4 className="font-semibold text-gray-900 text-lg">{group.trigger}</h4>
+                      {group.isPattern && group.correlations[0].contributingFoods && (
+                        <div className="text-sm text-gray-600 mt-1">
+                          Includes: {group.correlations[0].contributingFoods.length > 3 
+                            ? `${group.correlations[0].contributingFoods.slice(0, 3).join(', ')} and ${group.correlations[0].contributingFoods.length - 3} others`
+                            : group.correlations[0].contributingFoods.join(', ')}
+                        </div>
+                      )}
+                    </div>
                   </div>
                   
                   {group.correlations.map((correlation, corrIndex) => {
@@ -338,6 +359,11 @@ const CorrelationInsights = () => {
                           <div className="text-sm text-blue-600 ml-2">
                             {description}
                           </div>
+                          {correlation.patternInsight && (
+                            <div className="text-sm text-purple-600 ml-2 mt-1">
+                              💡 {correlation.patternInsight}
+                            </div>
+                          )}
                         </div>
                         <div className="text-right ml-4 flex-shrink-0">
                           <div className="text-lg font-semibold text-gray-900">

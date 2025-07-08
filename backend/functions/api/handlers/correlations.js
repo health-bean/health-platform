@@ -34,7 +34,8 @@ async function handleGetCorrelationInsights(queryParams, event) {
       medicationEffects: correlations.filter(c => c.type === 'medication-effect').length,
       exerciseImpacts: correlations.filter(c => c.type === 'exercise-energy').length,
       sleepFactors: correlations.filter(c => c.type === 'sleep-quality').length,
-      stressAmplifiers: correlations.filter(c => c.type === 'stress-symptom').length
+      stressAmplifiers: correlations.filter(c => c.type === 'stress-symptom').length,
+      foodPatterns: correlations.filter(c => c.type === 'food-property-pattern').length
     };
 
     return successResponse({
@@ -87,27 +88,27 @@ async function getTimelineData(userId, timeframeDays) {
 async function detectAllCorrelations(timelineData, confidenceThreshold) {
   const correlations = [];
 
-  // 1. Food-Symptom Correlations (existing)
+  // 1. ENHANCED: Food-Symptom Correlations with Pattern Detection
   const foodSymptomCorrelations = await detectFoodSymptomCorrelations(timelineData, confidenceThreshold);
   correlations.push(...foodSymptomCorrelations);
 
-  // 2. Supplement-Improvement Correlations (existing)
+  // 2. Supplement-Improvement Correlations
   const supplementCorrelations = await detectSupplementImprovements(timelineData, confidenceThreshold);
   correlations.push(...supplementCorrelations);
 
-  // 3. NEW: Medication-Side Effect Correlations
+  // 3. Medication-Side Effect Correlations
   const medicationCorrelations = await detectMedicationEffects(timelineData, confidenceThreshold);
   correlations.push(...medicationCorrelations);
 
-  // 4. NEW: Exercise-Energy Correlations
+  // 4. Exercise-Energy Correlations
   const exerciseCorrelations = await detectExerciseEnergyCorrelations(timelineData, confidenceThreshold);
   correlations.push(...exerciseCorrelations);
 
-  // 5. NEW: Sleep Quality Correlations
+  // 5. Sleep Quality Correlations
   const sleepCorrelations = await detectSleepQualityCorrelations(timelineData, confidenceThreshold);
   correlations.push(...sleepCorrelations);
 
-  // 6. NEW: Stress-Symptom Amplification
+  // 6. Stress-Symptom Amplification
   const stressCorrelations = await detectStressSymptomCorrelations(timelineData, confidenceThreshold);
   correlations.push(...stressCorrelations);
 
@@ -115,7 +116,342 @@ async function detectAllCorrelations(timelineData, confidenceThreshold) {
 }
 
 /**
- * NEW: Detect medication → side effect correlations
+ * ENHANCED: Food-symptom correlations with pattern detection
+ */
+async function detectFoodSymptomCorrelations(timelineData, confidenceThreshold) {
+  const correlations = [];
+  
+  const foodEntries = timelineData.filter(entry => entry.entry_type === 'food');
+  const symptomEntries = timelineData.filter(entry => entry.entry_type === 'symptom');
+
+  if (foodEntries.length === 0 || symptomEntries.length === 0) {
+    return correlations;
+  }
+
+  const foodProperties = await getFoodProperties();
+  
+  const timeWindows = [
+    { name: 'immediate', hours: 8, description: 'within 8 hours' },
+    { name: 'short', hours: 24, description: 'within 24 hours' },
+    { name: 'medium', hours: 48, description: 'within 48 hours' }
+  ];
+
+  // Step 1: Get individual food correlations
+  const individualCorrelations = await getIndividualFoodCorrelations(
+    foodEntries, symptomEntries, timeWindows, confidenceThreshold
+  );
+
+  // Step 2: NEW - Detect food property patterns
+  const patternCorrelations = await detectFoodPropertyPatterns(
+    individualCorrelations, foodProperties, confidenceThreshold
+  );
+
+  // Step 3: Return pattern correlations + remaining individual correlations
+  const finalCorrelations = [...patternCorrelations];
+  
+  // Add individual correlations that weren't grouped into patterns
+  for (const correlation of individualCorrelations) {
+    const isPartOfPattern = patternCorrelations.some(pattern => 
+      pattern.contributingFoods && pattern.contributingFoods.includes(correlation.trigger)
+    );
+    
+    if (!isPartOfPattern) {
+      finalCorrelations.push(correlation);
+    }
+  }
+
+  return finalCorrelations;
+}
+
+/**
+ * Get individual food-symptom correlations
+ */
+async function getIndividualFoodCorrelations(foodEntries, symptomEntries, timeWindows, confidenceThreshold) {
+  const correlations = [];
+  
+  // Group foods by name
+  const foodCounts = {};
+  for (const entry of foodEntries) {
+    const foods = entry.content.split(',').map(f => f.trim().toLowerCase());
+    for (const food of foods) {
+      if (!foodCounts[food]) foodCounts[food] = [];
+      foodCounts[food].push(entry);
+    }
+  }
+
+  // Analyze each food
+  for (const [foodName, foodInstances] of Object.entries(foodCounts)) {
+    if (foodInstances.length < 3) continue;
+
+    for (const window of timeWindows) {
+      for (const symptomType of getUniqueSymptoms(symptomEntries)) {
+        const symptomTypeEntries = symptomEntries.filter(s => s.content === symptomType);
+        
+        const correlation = analyzePersonalizedFoodSymptomCorrelation(
+          foodInstances, symptomTypeEntries, window, foodName, symptomType
+        );
+
+        if (correlation.confidence >= confidenceThreshold) {
+          correlations.push(correlation);
+        }
+      }
+    }
+  }
+
+  return correlations;
+}
+
+/**
+ * NEW: Detect food property patterns from individual correlations
+ */
+async function detectFoodPropertyPatterns(individualCorrelations, foodProperties, confidenceThreshold) {
+  const patternCorrelations = [];
+  
+  // Group correlations by symptom and time window
+  const symptomGroups = {};
+  
+  for (const correlation of individualCorrelations) {
+    const key = `${correlation.effect}_${correlation.timeWindow}`;
+    if (!symptomGroups[key]) {
+      symptomGroups[key] = [];
+    }
+    symptomGroups[key].push(correlation);
+  }
+
+  // Analyze each symptom group for food property patterns
+  for (const [key, correlations] of Object.entries(symptomGroups)) {
+    if (correlations.length < 3) continue; // Need at least 3 correlations to find patterns
+
+    const patterns = await findFoodPropertyPatterns(correlations, foodProperties);
+    
+    for (const pattern of patterns) {
+      if (pattern.confidence >= confidenceThreshold) {
+        patternCorrelations.push(pattern);
+      }
+    }
+  }
+
+  return patternCorrelations;
+}
+
+/**
+ * Find patterns based on food properties
+ */
+async function findFoodPropertyPatterns(correlations, foodProperties) {
+  const patterns = [];
+  
+  // Define property categories to check
+  const propertyCategories = [
+    { name: 'high oxalate', property: 'oxalate', values: ['high', 'very high'] },
+    { name: 'high histamine', property: 'histamine', values: ['high', 'very high'] },
+    { name: 'high lectin', property: 'lectin', values: ['high', 'very high'] },
+    { name: 'nightshade', property: 'nightshade', values: [true] },
+    { name: 'high FODMAP', property: 'fodmap', values: ['high', 'very high'] },
+    { name: 'high salicylate', property: 'salicylate', values: ['high', 'very high'] }
+  ];
+
+  // Check each property category
+  for (const category of propertyCategories) {
+    const matchingCorrelations = correlations.filter(correlation => {
+      const foodProps = foodProperties[correlation.trigger.toLowerCase()];
+      if (!foodProps) return false;
+      
+      const propertyValue = foodProps[category.property];
+      return category.values.includes(propertyValue);
+    });
+
+    // If 3+ foods with same property trigger the same symptom, create pattern
+    if (matchingCorrelations.length >= 3) {
+      const pattern = createPropertyPattern(category, matchingCorrelations);
+      patterns.push(pattern);
+    }
+  }
+
+  return patterns;
+}
+
+/**
+ * Create a food property pattern correlation
+ */
+function createPropertyPattern(category, matchingCorrelations) {
+  // Calculate pattern confidence (average of individual correlations)
+  const avgConfidence = matchingCorrelations.reduce((sum, c) => sum + c.confidence, 0) / matchingCorrelations.length;
+  
+  // Calculate total occurrences
+  const totalOccurrences = matchingCorrelations.reduce((sum, c) => sum + c.occurrences, 0);
+  const totalOpportunities = matchingCorrelations.reduce((sum, c) => sum + c.totalOpportunities, 0);
+  
+  // Get consistent time window and symptom
+  const timeWindow = matchingCorrelations[0].timeWindow;
+  const timeWindowDescription = matchingCorrelations[0].timeWindowDescription;
+  const symptomType = matchingCorrelations[0].effect;
+  
+  // Contributing foods
+  const contributingFoods = matchingCorrelations.map(c => c.trigger);
+  const foodList = contributingFoods.length > 3 
+    ? `${contributingFoods.slice(0, 3).join(', ')} and ${contributingFoods.length - 3} others`
+    : contributingFoods.join(', ');
+
+  const percentage = Math.round(avgConfidence * 100);
+
+  return {
+    type: 'food-property-pattern',
+    trigger: `${category.name} foods`,
+    effect: symptomType,
+    timeWindow,
+    timeWindowDescription,
+    confidence: Math.round(avgConfidence * 100) / 100,
+    frequency: `${totalOccurrences}/${totalOpportunities} times`,
+    occurrences: totalOccurrences,
+    totalOpportunities,
+    
+    // Pattern-specific data
+    propertyType: category.property,
+    propertyValue: category.name,
+    contributingFoods,
+    foodCount: contributingFoods.length,
+    
+    // Enhanced description for patterns
+    description: `🔍 Your data suggests ${category.name} foods may trigger ${symptomType} (${contributingFoods.length} foods: ${foodList})`,
+    
+    // Enhanced recommendation for patterns
+    recommendation: percentage > 60 
+      ? `Consider avoiding ${category.name} foods to test your sensitivity. This includes: ${foodList}`
+      : `Monitor your reaction to ${category.name} foods more closely. Focus on: ${foodList}`,
+    
+    // Additional pattern insights
+    patternInsight: `This pattern suggests you may be sensitive to ${category.name} compounds. Common sources include: ${foodList}`,
+    
+    // Confidence boost for patterns (stronger evidence when multiple foods align)
+    patternBoost: Math.min(contributingFoods.length * 0.05, 0.15) // Up to 15% boost for strong patterns
+  };
+}
+
+/**
+ * ENHANCED: Analyze food-symptom correlation with impact scoring
+ */
+function analyzePersonalizedFoodSymptomCorrelation(foodInstances, symptoms, timeWindow, foodName, symptomType) {
+  let correlationCount = 0;
+  let totalOpportunities = foodInstances.length;
+  let severitySum = 0;
+  let severityCount = 0;
+
+  for (const foodEntry of foodInstances) {
+    const foodTime = parseDateTime(foodEntry);
+    const windowEnd = new Date(foodTime.getTime() + timeWindow.hours * 60 * 60 * 1000);
+
+    const symptomInWindow = symptoms.find(symptom => {
+      const symptomTime = parseDateTime(symptom);
+      return symptomTime > foodTime && symptomTime <= windowEnd;
+    });
+
+    if (symptomInWindow) {
+      correlationCount++;
+      if (symptomInWindow.severity) {
+        severitySum += symptomInWindow.severity;
+        severityCount++;
+      }
+    }
+  }
+
+  const confidence = correlationCount / totalOpportunities;
+  const percentage = Math.round(confidence * 100);
+  const avgSeverity = severityCount > 0 ? severitySum / severityCount : null;
+
+  return {
+    type: 'food-symptom',
+    trigger: foodName,
+    effect: symptomType,
+    timeWindow: timeWindow.hours,
+    timeWindowDescription: timeWindow.description,
+    confidence: Math.round(confidence * 100) / 100,
+    frequency: `${correlationCount}/${totalOpportunities} times`,
+    occurrences: correlationCount,
+    totalOpportunities,
+    avgSeverity: avgSeverity ? Math.round(avgSeverity * 10) / 10 : null,
+    
+    // Enhanced impact scoring
+    impactScore: calculateImpactScore(confidence, avgSeverity, correlationCount),
+    
+    description: percentage > 70 
+      ? `🔍 Your data suggests ${foodName} may trigger ${symptomType} (${percentage}% of the time)`
+      : percentage > 40 
+      ? `🔍 Your data suggests ${foodName} may trigger ${symptomType} (${percentage}% of instances)`
+      : `🔍 Possible pattern: ${foodName} and ${symptomType} (${percentage}% correlation)`,
+    
+    recommendation: percentage > 60 
+      ? `Consider eliminating ${foodName} for 2-4 weeks to test your sensitivity`
+      : percentage > 30 
+      ? `Monitor ${foodName} consumption and ${symptomType} symptoms more closely`
+      : `Continue tracking to confirm this potential trigger pattern`
+  };
+}
+
+/**
+ * Calculate impact score for sorting (patterns get higher scores)
+ */
+function calculateImpactScore(confidence, avgSeverity, occurrences) {
+  let score = confidence;
+  
+  // Boost for higher severity
+  if (avgSeverity) {
+    score += (avgSeverity / 10) * 0.2; // Up to 20% boost for severity 10
+  }
+  
+  // Boost for more occurrences (more data = more reliable)
+  if (occurrences >= 5) {
+    score += 0.1; // 10% boost for 5+ occurrences
+  }
+  
+  return Math.min(score, 1.0);
+}
+
+/**
+ * ENHANCED: Get food properties for pattern analysis
+ */
+async function getFoodProperties() {
+  const client = await pool.connect();
+  
+  try {
+    const query = `
+      SELECT 
+        name, 
+        nightshade, 
+        histamine, 
+        oxalate, 
+        lectin, 
+        fodmap, 
+        salicylate,
+        category
+      FROM food_properties
+    `;
+    
+    const result = await client.query(query);
+    const properties = {};
+    
+    for (const row of result.rows) {
+      properties[row.name.toLowerCase()] = {
+        nightshade: row.nightshade,
+        histamine: row.histamine,
+        oxalate: row.oxalate,
+        lectin: row.lectin,
+        fodmap: row.fodmap,
+        salicylate: row.salicylate,
+        category: row.category
+      };
+    }
+    
+    return properties;
+  } catch (error) {
+    console.error('Error fetching food properties:', error);
+    return {}; // Return empty object if database fails
+  } finally {
+    client.release();
+  }
+}
+
+/**
+ * Detect medication → side effect correlations
  */
 async function detectMedicationEffects(timelineData, confidenceThreshold) {
   const correlations = [];
@@ -194,8 +530,8 @@ function analyzeMedicationSideEffectCorrelation(medicationInstances, sideEffects
     totalOpportunities: totalDoses,
     // PERSONALIZED LANGUAGE
     description: percentage > 50 
-      ? `For you, ${medicationName} frequently appears to cause ${effectType} (${percentage}% of doses)`
-      : `Your data suggests ${medicationName} may sometimes cause ${effectType} (${percentage}% of doses)`,
+      ? `🔍 Your data suggests ${medicationName} may cause ${effectType} (${percentage}% of doses)`
+      : `🔍 Your data suggests ${medicationName} may sometimes cause ${effectType} (${percentage}% of doses)`,
     recommendation: percentage > 30 
       ? `Consider discussing this pattern with your healthcare provider`
       : `Continue monitoring this potential side effect pattern`
@@ -203,7 +539,7 @@ function analyzeMedicationSideEffectCorrelation(medicationInstances, sideEffects
 }
 
 /**
- * NEW: Detect exercise → energy correlations
+ * Detect exercise → energy correlations
  */
 async function detectExerciseEnergyCorrelations(timelineData, confidenceThreshold) {
   const correlations = [];
@@ -327,10 +663,10 @@ function analyzeExerciseEnergyCorrelation(exerciseInstances, energyEntries, exer
     sessionsAnalyzed: exerciseInstances.length,
     // PERSONALIZED LANGUAGE
     description: primaryChange > 1 
-      ? `For you, ${exerciseType} consistently boosts energy levels (+${Math.round(primaryChange * 10) / 10} points above your baseline)`
+      ? `💡 Your data suggests ${exerciseType} consistently boosts energy levels (+${Math.round(primaryChange * 10) / 10} points above your baseline)`
       : primaryChange < -1 
-      ? `Your data shows ${exerciseType} tends to reduce energy levels (${Math.round(primaryChange * 10) / 10} points below baseline)`
-      : `Your ${exerciseType} sessions show minimal energy impact`,
+      ? `🔍 Your data shows ${exerciseType} tends to reduce energy levels (${Math.round(primaryChange * 10) / 10} points below baseline)`
+      : `🔍 Your ${exerciseType} sessions show minimal energy impact`,
     recommendation: primaryChange > 1 
       ? `Continue ${exerciseType} - it appears to energize you`
       : primaryChange < -1 
@@ -340,7 +676,7 @@ function analyzeExerciseEnergyCorrelation(exerciseInstances, energyEntries, exer
 }
 
 /**
- * NEW: Detect sleep quality correlations
+ * Detect sleep quality correlations
  */
 async function detectSleepQualityCorrelations(timelineData, confidenceThreshold) {
   const correlations = [];
@@ -424,12 +760,12 @@ function analyzeSupplementSleepCorrelation(supplementInstances, sleepEntries, su
     nightsAnalyzed: sleepWithSupplement.length,
     // PERSONALIZED LANGUAGE
     description: improvement > 20 
-      ? `For you, ${supplementName} appears to significantly improve sleep quality (${improvement}% better than baseline)`
+      ? `💡 Your data suggests ${supplementName} significantly improves sleep quality (${improvement}% better than baseline)`
       : improvement > 10 
-      ? `Your data suggests ${supplementName} may help with sleep quality (${improvement}% improvement)`
+      ? `💡 Your data suggests ${supplementName} may help with sleep quality (${improvement}% improvement)`
       : improvement < -10 
-      ? `Your data suggests ${supplementName} may negatively affect sleep quality`
-      : `Minimal sleep impact observed from ${supplementName}`,
+      ? `🔍 Your data suggests ${supplementName} may negatively affect sleep quality`
+      : `🔍 Minimal sleep impact observed from ${supplementName}`,
     recommendation: improvement > 15 
       ? `Continue ${supplementName} - it appears to help your sleep`
       : improvement < -10 
@@ -439,7 +775,7 @@ function analyzeSupplementSleepCorrelation(supplementInstances, sleepEntries, su
 }
 
 /**
- * NEW: Detect stress → symptom amplification
+ * Detect stress → symptom amplification
  */
 async function detectStressSymptomCorrelations(timelineData, confidenceThreshold) {
   const correlations = [];
@@ -511,139 +847,13 @@ function analyzeStressSymptomCorrelation(stressEntries, symptoms, symptomType) {
     lowStressOccurrences: lowStressSymptoms.length,
     // PERSONALIZED LANGUAGE
     description: amplificationPercent > 50 
-      ? `For you, high stress days significantly worsen ${symptomType} (${amplificationPercent}% more severe)`
+      ? `🔍 Your data shows high stress days significantly worsen ${symptomType} (${amplificationPercent}% more severe)`
       : amplificationPercent > 20 
-      ? `Your data shows stress tends to amplify ${symptomType} symptoms (${amplificationPercent}% increase)`
-      : `Minimal stress impact observed on ${symptomType}`,
+      ? `🔍 Your data shows stress tends to amplify ${symptomType} symptoms (${amplificationPercent}% increase)`
+      : `🔍 Minimal stress impact observed on ${symptomType}`,
     recommendation: amplificationPercent > 30 
       ? `Focus on stress management to help control ${symptomType}`
       : `Continue monitoring stress levels and ${symptomType} patterns`
-  };
-}
-
-// Existing functions (parseDateTime, getUniqueSymptoms, etc.) remain the same...
-
-/**
- * Helper function to safely parse date and time
- */
-function parseDateTime(entry) {
-  let dateStr;
-  
-  if (entry.entry_date instanceof Date) {
-    dateStr = entry.entry_date.toISOString().split('T')[0];
-  } else {
-    dateStr = entry.entry_date;
-  }
-  
-  return new Date(`${dateStr}T${entry.entry_time}`);
-}
-
-/**
- * Get unique symptom types
- */
-function getUniqueSymptoms(symptomEntries) {
-  return [...new Set(symptomEntries.map(s => s.content))];
-}
-
-// Keep existing food correlation functions but update language to be personalized...
-
-/**
- * Enhanced food-symptom correlations with personalized language
- */
-async function detectFoodSymptomCorrelations(timelineData, confidenceThreshold) {
-  const correlations = [];
-  
-  const foodEntries = timelineData.filter(entry => entry.entry_type === 'food');
-  const symptomEntries = timelineData.filter(entry => entry.entry_type === 'symptom');
-
-  if (foodEntries.length === 0 || symptomEntries.length === 0) {
-    return correlations;
-  }
-
-  const foodProperties = await getFoodProperties();
-  
-  const timeWindows = [
-    { name: 'immediate', hours: 8, description: 'within 8 hours' },
-    { name: 'short', hours: 24, description: 'within 24 hours' },
-    { name: 'medium', hours: 48, description: 'within 48 hours' }
-  ];
-
-  // Individual food correlations with personalized language
-  const foodCounts = {};
-  for (const entry of foodEntries) {
-    const foods = entry.content.split(',').map(f => f.trim().toLowerCase());
-    for (const food of foods) {
-      if (!foodCounts[food]) foodCounts[food] = [];
-      foodCounts[food].push(entry);
-    }
-  }
-
-  for (const [foodName, foodInstances] of Object.entries(foodCounts)) {
-    if (foodInstances.length < 3) continue;
-
-    for (const window of timeWindows) {
-      for (const symptomType of getUniqueSymptoms(symptomEntries)) {
-        const symptomTypeEntries = symptomEntries.filter(s => s.content === symptomType);
-        
-        const correlation = analyzePersonalizedFoodSymptomCorrelation(
-          foodInstances, symptomTypeEntries, window, foodName, symptomType
-        );
-
-        if (correlation.confidence >= confidenceThreshold) {
-          correlations.push(correlation);
-        }
-      }
-    }
-  }
-
-  return correlations;
-}
-
-/**
- * Analyze food-symptom correlation with personalized language
- */
-function analyzePersonalizedFoodSymptomCorrelation(foodInstances, symptoms, timeWindow, foodName, symptomType) {
-  let correlationCount = 0;
-  let totalOpportunities = foodInstances.length;
-
-  for (const foodEntry of foodInstances) {
-    const foodTime = parseDateTime(foodEntry);
-    const windowEnd = new Date(foodTime.getTime() + timeWindow.hours * 60 * 60 * 1000);
-
-    const symptomInWindow = symptoms.find(symptom => {
-      const symptomTime = parseDateTime(symptom);
-      return symptomTime > foodTime && symptomTime <= windowEnd;
-    });
-
-    if (symptomInWindow) {
-      correlationCount++;
-    }
-  }
-
-  const confidence = correlationCount / totalOpportunities;
-  const percentage = Math.round(confidence * 100);
-
-  return {
-    type: 'food-symptom',
-    trigger: foodName,
-    effect: symptomType,
-    timeWindow: timeWindow.hours,
-    timeWindowDescription: timeWindow.description,
-    confidence: Math.round(confidence * 100) / 100,
-    frequency: `${correlationCount}/${totalOpportunities} times`,
-    occurrences: correlationCount,
-    totalOpportunities,
-    // PERSONALIZED LANGUAGE
-    description: percentage > 70 
-      ? `For you, ${foodName} frequently appears to trigger ${symptomType} (${percentage}% of the time)`
-      : percentage > 40 
-      ? `Your data suggests ${foodName} may trigger ${symptomType} (${percentage}% of instances)`
-      : `Possible pattern: ${foodName} and ${symptomType} (${percentage}% correlation)`,
-    recommendation: percentage > 60 
-      ? `Consider eliminating ${foodName} for 2-4 weeks to test your sensitivity`
-      : percentage > 30 
-      ? `Monitor ${foodName} consumption and ${symptomType} symptoms more closely`
-      : `Continue tracking to confirm this potential trigger pattern`
   };
 }
 
@@ -743,10 +953,10 @@ function analyzePersonalizedSupplementImprovement(supplementInstances, symptoms,
     severityChange: `${Math.round(severityImprovement * 100)}% reduction in severity`,
     // PERSONALIZED LANGUAGE
     description: improvementPercent > 50 
-      ? `For you, ${supplementName} appears to significantly reduce ${symptomType} (${improvementPercent}% improvement after 4 weeks)`
+      ? `💡 Your data suggests ${supplementName} significantly reduces ${symptomType} (${improvementPercent}% improvement after 4 weeks)`
       : improvementPercent > 25 
-      ? `Your data suggests ${supplementName} may help with ${symptomType} (${improvementPercent}% improvement)`
-      : `Possible benefit: ${supplementName} for ${symptomType} (${improvementPercent}% improvement)`,
+      ? `💡 Your data suggests ${supplementName} may help with ${symptomType} (${improvementPercent}% improvement)`
+      : `💡 Possible benefit: ${supplementName} for ${symptomType} (${improvementPercent}% improvement)`,
     recommendation: improvementPercent > 40 
       ? `Continue ${supplementName} - your data shows positive effects on ${symptomType}`
       : improvementPercent > 20 
@@ -756,33 +966,25 @@ function analyzePersonalizedSupplementImprovement(supplementInstances, symptoms,
 }
 
 /**
- * Get food properties for correlation analysis
+ * Helper function to safely parse date and time
  */
-async function getFoodProperties() {
-  const client = await pool.connect();
+function parseDateTime(entry) {
+  let dateStr;
   
-  try {
-    const query = `
-      SELECT name, nightshade, histamine, oxalate, lectin
-      FROM food_properties
-    `;
-    
-    const result = await client.query(query);
-    const properties = {};
-    
-    for (const row of result.rows) {
-      properties[row.name.toLowerCase()] = {
-        nightshade: row.nightshade,
-        histamine: row.histamine,
-        oxalate: row.oxalate,
-        lectin: row.lectin
-      };
-    }
-    
-    return properties;
-  } finally {
-    client.release();
+  if (entry.entry_date instanceof Date) {
+    dateStr = entry.entry_date.toISOString().split('T')[0];
+  } else {
+    dateStr = entry.entry_date;
   }
+  
+  return new Date(`${dateStr}T${entry.entry_time}`);
+}
+
+/**
+ * Get unique symptom types
+ */
+function getUniqueSymptoms(symptomEntries) {
+  return [...new Set(symptomEntries.map(s => s.content))];
 }
 
 module.exports = {
