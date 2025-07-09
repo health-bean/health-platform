@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generated": "2025-07-08T22:24:48.044Z",
+    "generated": "2025-07-09T00:28:31.159Z",
     "version": "1.0.0",
     "generator": "AutomatedProfessionalDocsGenerator"
   },
@@ -17,7 +17,7 @@
     "workingAPIs": 12,
     "totalAPIs": 27,
     "totalTables": 21,
-    "totalCommits": 50,
+    "totalCommits": 51,
     "contributors": 1
   },
   "discoveredInfo": {
@@ -129,82 +129,22 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 4571,
+          "responseTime": 4683,
           "responseData": {
             "insights": [
-              {
-                "type": "food-symptom",
-                "trigger": "cucumber",
-                "effect": "swelling",
-                "timeWindow": 48,
-                "timeWindowDescription": "within 48 hours",
-                "confidence": 0.6,
-                "frequency": "26/43 times",
-                "occurrences": 26,
-                "totalOpportunities": 43,
-                "avgSeverity": 4.8,
-                "impactScore": 0.8015742397137745,
-                "description": "🔍 Your data suggests cucumber may trigger swelling (60% of instances)",
-                "recommendation": "Monitor cucumber consumption and swelling symptoms more closely"
-              },
-              {
-                "type": "food-symptom",
-                "trigger": "grapefruit",
-                "effect": "joint pain",
-                "timeWindow": 48,
-                "timeWindowDescription": "within 48 hours",
-                "confidence": 0.6,
-                "frequency": "31/52 times",
-                "occurrences": 31,
-                "totalOpportunities": 52,
-                "avgSeverity": 6,
-                "impactScore": 0.8167990074441688,
-                "description": "🔍 Your data suggests grapefruit may trigger joint pain (60% of instances)",
-                "recommendation": "Monitor grapefruit consumption and joint pain symptoms more closely"
-              },
-              {
-                "type": "food-symptom",
-                "trigger": "sweet potato",
-                "effect": "swelling",
-                "timeWindow": 48,
-                "timeWindowDescription": "within 48 hours",
-                "confidence": 0.62,
-                "frequency": "33/53 times",
-                "occurrences": 33,
-                "totalOpportunities": 53,
-                "avgSeverity": 4.8,
-                "impactScore": 0.8177930245854773,
-                "description": "🔍 Your data suggests sweet potato may trigger swelling (62% of instances)",
-                "recommendation": "Consider eliminating sweet potato for 2-4 weeks to test your sensitivity"
-              },
-              {
-                "type": "food-symptom",
-                "trigger": "spinach",
-                "effect": "joint pain",
-                "timeWindow": 48,
-                "timeWindowDescription": "within 48 hours",
-                "confidence": 0.65,
-                "frequency": "30/46 times",
-                "occurrences": 30,
-                "totalOpportunities": 46,
-                "avgSeverity": 6,
-                "impactScore": 0.8721739130434782,
-                "description": "🔍 Your data suggests spinach may trigger joint pain (65% of instances)",
-                "recommendation": "Consider eliminating spinach for 2-4 weeks to test your sensitivity"
-              },
               {
                 "type": "food-symptom",
                 "trigger": "mango",
                 "effect": "swelling",
                 "timeWindow": 48,
                 "timeWindowDescription": "within 48 hours",
-                "confidence": 0.63,
-                "frequency": "25/40 times",
-                "occurrences": 25,
-                "totalOpportunities": 40,
+                "confidence": 0.62,
+                "frequency": "24/39 times",
+                "occurrences": 24,
+                "totalOpportunities": 39,
                 "avgSeverity": 4.7,
-                "impactScore": 0.8194,
-                "description": "🔍 Your data suggests mango may trigger swelling (63% of instances)",
+                "impactScore": 0.8087179487179488,
+                "description": "🔍 Your data suggests mango may trigger swelling (62% of instances)",
                 "recommendation": "Consider eliminating mango for 2-4 weeks to test your sensitivity"
               },
               {
@@ -284,6 +224,66 @@
               },
               {
                 "type": "food-symptom",
+                "trigger": "sweet potato",
+                "effect": "swelling",
+                "timeWindow": 48,
+                "timeWindowDescription": "within 48 hours",
+                "confidence": 0.63,
+                "frequency": "33/52 times",
+                "occurrences": 33,
+                "totalOpportunities": 52,
+                "avgSeverity": 4.8,
+                "impactScore": 0.8297668997668998,
+                "description": "🔍 Your data suggests sweet potato may trigger swelling (63% of instances)",
+                "recommendation": "Consider eliminating sweet potato for 2-4 weeks to test your sensitivity"
+              },
+              {
+                "type": "food-symptom",
+                "trigger": "spinach",
+                "effect": "joint pain",
+                "timeWindow": 48,
+                "timeWindowDescription": "within 48 hours",
+                "confidence": 0.67,
+                "frequency": "30/45 times",
+                "occurrences": 30,
+                "totalOpportunities": 45,
+                "avgSeverity": 6,
+                "impactScore": 0.8866666666666666,
+                "description": "🔍 Your data suggests spinach may trigger joint pain (67% of instances)",
+                "recommendation": "Consider eliminating spinach for 2-4 weeks to test your sensitivity"
+              },
+              {
+                "type": "food-symptom",
+                "trigger": "cucumber",
+                "effect": "swelling",
+                "timeWindow": 48,
+                "timeWindowDescription": "within 48 hours",
+                "confidence": 0.62,
+                "frequency": "26/42 times",
+                "occurrences": 26,
+                "totalOpportunities": 42,
+                "avgSeverity": 4.8,
+                "impactScore": 0.8159706959706959,
+                "description": "🔍 Your data suggests cucumber may trigger swelling (62% of instances)",
+                "recommendation": "Consider eliminating cucumber for 2-4 weeks to test your sensitivity"
+              },
+              {
+                "type": "food-symptom",
+                "trigger": "cucumber",
+                "effect": "joint pain",
+                "timeWindow": 48,
+                "timeWindowDescription": "within 48 hours",
+                "confidence": 0.6,
+                "frequency": "25/42 times",
+                "occurrences": 25,
+                "totalOpportunities": 42,
+                "avgSeverity": 6.1,
+                "impactScore": 0.8176380952380952,
+                "description": "🔍 Your data suggests cucumber may trigger joint pain (60% of instances)",
+                "recommendation": "Monitor cucumber consumption and joint pain symptoms more closely"
+              },
+              {
+                "type": "food-symptom",
                 "trigger": "cauliflower",
                 "effect": "swelling",
                 "timeWindow": 48,
@@ -326,6 +326,21 @@
                 "impactScore": 0.8244444444444444,
                 "description": "🔍 Your data suggests strawberries may trigger joint pain (60% of instances)",
                 "recommendation": "Monitor strawberries consumption and joint pain symptoms more closely"
+              },
+              {
+                "type": "food-symptom",
+                "trigger": "grapefruit",
+                "effect": "joint pain",
+                "timeWindow": 48,
+                "timeWindowDescription": "within 48 hours",
+                "confidence": 0.61,
+                "frequency": "31/51 times",
+                "occurrences": 31,
+                "totalOpportunities": 51,
+                "avgSeverity": 6,
+                "impactScore": 0.8284882985452245,
+                "description": "🔍 Your data suggests grapefruit may trigger joint pain (61% of instances)",
+                "recommendation": "Consider eliminating grapefruit for 2-4 weeks to test your sensitivity"
               },
               {
                 "type": "food-symptom",
@@ -693,27 +708,14 @@
                 "sessionsAnalyzed": 7,
                 "description": "💡 Your data suggests morning walk consistently boosts energy levels (+1.5 points above your baseline)",
                 "recommendation": "Continue morning walk - it appears to energize you"
-              },
-              {
-                "type": "exercise-energy",
-                "trigger": "weight training",
-                "effect": "decreased energy",
-                "timeWindow": 4,
-                "timeWindowDescription": "within 4 hours",
-                "confidence": 0.4920634920634921,
-                "energyChange": -1.5,
-                "baselineEnergy": 6.5,
-                "sessionsAnalyzed": 7,
-                "description": "🔍 Your data shows weight training tends to reduce energy levels (-1.5 points below baseline)",
-                "recommendation": "Consider adjusting weight training intensity or timing to reduce fatigue"
               }
             ],
             "summary": {
               "totalCorrelations": 41,
-              "triggers": 27,
+              "triggers": 28,
               "improvements": 12,
               "medicationEffects": 0,
-              "exerciseImpacts": 2,
+              "exerciseImpacts": 1,
               "sleepFactors": 0,
               "stressAmplifiers": 0,
               "foodPatterns": 0
@@ -722,7 +724,7 @@
             "confidence_threshold": 0.6,
             "user_id": "8e8a568a-c2f8-43a8-abf2-4e54408dbdc0"
           },
-          "responseSize": 18538
+          "responseSize": 18559
         },
         {
           "path": "/api/v1/detox-types",
@@ -733,7 +735,7 @@
           "params": [],
           "status": 404,
           "working": false,
-          "responseTime": 73,
+          "responseTime": 95,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -784,7 +786,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 56,
+          "responseTime": 48,
           "responseData": {
             "foods": [
               {
@@ -832,7 +834,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 155,
+          "responseTime": 60,
           "responseData": {
             "protocols": [
               {
@@ -1006,7 +1008,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 53,
+          "responseTime": 78,
           "responseData": {
             "entries": [],
             "total": 0
@@ -1027,7 +1029,7 @@
           ],
           "status": 500,
           "working": false,
-          "responseTime": 169,
+          "responseTime": 78,
           "responseData": {
             "error": "Failed to complete create timeline entry"
           },
@@ -1047,7 +1049,7 @@
           ],
           "status": 404,
           "working": false,
-          "responseTime": 54,
+          "responseTime": 70,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -1098,7 +1100,7 @@
           ],
           "status": 404,
           "working": false,
-          "responseTime": 62,
+          "responseTime": 51,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -1144,7 +1146,7 @@
           "params": [],
           "status": 400,
           "working": false,
-          "responseTime": 36,
+          "responseTime": 111,
           "responseData": {
             "error": "Email and password required"
           },
@@ -1159,7 +1161,7 @@
           "params": [],
           "status": 404,
           "working": false,
-          "responseTime": 44,
+          "responseTime": 46,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -1205,7 +1207,7 @@
           "params": [],
           "status": 401,
           "working": false,
-          "responseTime": 32,
+          "responseTime": 38,
           "responseData": {
             "error": "No authorization header"
           },
@@ -1220,7 +1222,7 @@
           "params": [],
           "status": 404,
           "working": false,
-          "responseTime": 45,
+          "responseTime": 34,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -1266,7 +1268,7 @@
           "params": [],
           "status": 400,
           "working": false,
-          "responseTime": 34,
+          "responseTime": 33,
           "responseData": {
             "error": "Missing required fields"
           },
@@ -1281,7 +1283,7 @@
           "params": [],
           "status": 400,
           "working": false,
-          "responseTime": 39,
+          "responseTime": 46,
           "responseData": {
             "error": "Email and password required"
           },
@@ -1296,7 +1298,7 @@
           "params": [],
           "status": 200,
           "working": true,
-          "responseTime": 41,
+          "responseTime": 47,
           "responseData": {
             "user": {
               "id": "8e8a568a-c2f8-43a8-abf2-4e54408dbdc0",
@@ -1322,7 +1324,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 84,
+          "responseTime": 78,
           "responseData": {
             "protocols": [],
             "total": 0
@@ -1343,10 +1345,10 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 77,
+          "responseTime": 45,
           "responseData": {
             "protocols": [
-              "1495844a-19de-404c-a288-7660eda0cbe1"
+              "a80be547-6db1-4722-a5a4-60930143a2d9"
             ],
             "quick_detox": [],
             "quick_foods": [],
@@ -1371,7 +1373,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 59,
+          "responseTime": 56,
           "responseData": {
             "foods": [
               {
@@ -5278,7 +5280,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 39,
+          "responseTime": 66,
           "responseData": {
             "symptoms": [],
             "total": 0,
@@ -5300,7 +5302,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 43,
+          "responseTime": 37,
           "responseData": {
             "supplements": [],
             "total": 0,
@@ -5322,7 +5324,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 43,
+          "responseTime": 37,
           "responseData": {
             "medications": [],
             "total": 0,
@@ -5344,7 +5346,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 46,
+          "responseTime": 38,
           "responseData": {
             "detox_types": [],
             "total": 0,
@@ -5361,7 +5363,7 @@
           "params": [],
           "status": 500,
           "working": false,
-          "responseTime": 34,
+          "responseTime": 42,
           "responseData": {
             "error": "Internal server error: handleGetJournalEntries is not a function"
           },
@@ -5376,7 +5378,7 @@
           "params": [],
           "status": 500,
           "working": false,
-          "responseTime": 37,
+          "responseTime": 127,
           "responseData": {
             "error": "Internal server error: handleGetJournalEntry is not a function"
           },
@@ -5391,7 +5393,7 @@
           "params": [],
           "status": 404,
           "working": false,
-          "responseTime": 37,
+          "responseTime": 38,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -5437,7 +5439,7 @@
           "params": [],
           "status": 404,
           "working": false,
-          "responseTime": 80,
+          "responseTime": 113,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -5483,7 +5485,7 @@
           "params": [],
           "status": 404,
           "working": false,
-          "responseTime": 38,
+          "responseTime": 44,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -5732,7 +5734,7 @@
             {
               "name": "CorrelationInsights",
               "path": "frontend/web-app/src/features/insights/CorrelationInsights.jsx",
-              "size": 15730,
+              "size": 17033,
               "hooks": [
                 "useState",
                 "useCorrelations",
@@ -5850,7 +5852,7 @@
             }
           ],
           "utilities": [],
-          "size": "319.98 KB"
+          "size": "321.25 KB"
         },
         "frontend/shared": {
           "totalFiles": 24,
@@ -6088,18 +6090,18 @@
       "repository": "https://github.com/deebyrne26/health-platform",
       "branch": "main",
       "lastCommit": {
-        "hash": "3d67ef9",
-        "message": "Correlation improvements",
+        "hash": "3cc99b6",
+        "message": "Correlations",
         "author": "deebyrne26",
-        "date": "Tue Jul 8 18:24:08 2025 -0400"
+        "date": "Tue Jul 8 20:27:48 2025 -0400"
       },
       "contributors": [
         {
           "name": "deebyrne26",
-          "commits": 50
+          "commits": 51
         }
       ],
-      "totalCommits": 50
+      "totalCommits": 51
     }
   }
 }
