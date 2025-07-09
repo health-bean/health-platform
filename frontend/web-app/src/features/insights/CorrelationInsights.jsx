@@ -320,59 +320,79 @@ const CorrelationInsights = () => {
             {displayedGroups.map((group, index) => (
               <div key={group.trigger} className="bg-gray-50 rounded-lg p-4 border border-gray-200">
                 <div className="space-y-3">
-                  <div className="flex items-center space-x-3">
-                    {getCorrelationIcon(group.correlations[0])}
-                    <div className="flex-1">
-                      <h4 className="font-semibold text-gray-900 text-lg">{group.trigger}</h4>
-                      {group.isPattern && group.correlations[0].contributingFoods && (
-                        <div className="text-sm text-gray-600 mt-1">
-                          Includes: {group.correlations[0].contributingFoods.length > 3 
-                            ? `${group.correlations[0].contributingFoods.slice(0, 3).join(', ')} and ${group.correlations[0].contributingFoods.length - 3} others`
-                            : group.correlations[0].contributingFoods.join(', ')}
-                        </div>
-                      )}
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-3 flex-1">
+                      {getCorrelationIcon(group.correlations[0])}
+                      <div className="flex-1">
+                        <h4 className="font-semibold text-gray-900 text-lg">
+                          {group.isPattern ? 
+                            `${group.trigger} emerging in your data` : 
+                            `${group.trigger} trend emerging in your data`
+                          }
+                        </h4>
+                        {group.isPattern && group.correlations[0].contributingFoods ? (
+                          <div className="text-sm text-gray-600 mt-1">
+                            Pattern observed across {group.correlations[0].contributingFoods.length} foods: {group.correlations[0].contributingFoods.length > 3 
+                              ? `${group.correlations[0].contributingFoods.slice(0, 3).join(', ')} and ${group.correlations[0].contributingFoods.length - 3} others`
+                              : group.correlations[0].contributingFoods.join(', ')}
+                          </div>
+                        ) : (
+                          <div className="text-sm text-gray-600 mt-1">
+                            {group.correlations.length === 1 
+                              ? `Your body reacts ${group.correlations[0].timeWindowDescription} - ${group.correlations[0].effect}`
+                              : `Multiple reactions observed: ${group.correlations.map(c => c.effect).join(', ')}`
+                            }
+                          </div>
+                        )}
+                      </div>
                     </div>
+                    {group.isPattern && (
+                      <div className="text-sm text-blue-600 hover:text-blue-800 cursor-pointer ml-4">
+                        explore &gt;
+                      </div>
+                    )}
                   </div>
                   
-                  {group.correlations.map((correlation, corrIndex) => {
-                    const percentageData = getPercentageDisplay(correlation);
-                    const description = getCorrelationDescription(correlation);
-                    
-                    return (
-                      <div key={corrIndex} className="flex items-start justify-between">
-                        <div className="flex-1">
-                          <div className="flex items-center space-x-2 mb-1">
-                            <span className="font-medium text-gray-900">
-                              • {correlation.effect}
-                            </span>
-                            {correlation.timeWindowDescription && (
-                              <span className="text-sm text-gray-500">
-                                ({correlation.timeWindowDescription})
-                              </span>
-                            )}
-                          </div>
-                          <div className="text-sm text-blue-600 ml-2">
-                            {description}
-                          </div>
-                          {correlation.patternInsight && (
-                            <div className="text-sm text-purple-600 ml-2 mt-1">
-                              💡 {correlation.patternInsight}
+                  {/* Only show detailed breakdown for patterns when clicked through */}
+                  {group.isPattern && (
+                    <div className="space-y-2 pt-2 border-t border-gray-200">
+                      {group.correlations.map((correlation, corrIndex) => {
+                        const percentageData = getPercentageDisplay(correlation);
+                        
+                        return (
+                          <div key={corrIndex} className="flex items-start justify-between">
+                            <div className="flex-1">
+                              <div className="flex items-center space-x-2 mb-1">
+                                <span className="font-medium text-gray-900">
+                                  • {correlation.effect}
+                                </span>
+                                {correlation.timeWindowDescription && (
+                                  <span className="text-sm text-gray-500">
+                                    ({correlation.timeWindowDescription})
+                                  </span>
+                                )}
+                              </div>
+                              {correlation.patternInsight && (
+                                <div className="text-sm text-purple-600 ml-2 mt-1">
+                                  💡 {correlation.patternInsight}
+                                </div>
+                              )}
                             </div>
-                          )}
-                        </div>
-                        <div className="text-right ml-4 flex-shrink-0">
-                          <div className="text-lg font-semibold text-gray-900">
-                            {percentageData.percentage}
-                          </div>
-                          {percentageData.occurrence && (
-                            <div className="text-sm text-gray-500">
-                              {percentageData.occurrence}
+                            <div className="text-right ml-4 flex-shrink-0">
+                              <div className="text-lg font-semibold text-gray-900">
+                                {percentageData.percentage}
+                              </div>
+                              {percentageData.occurrence && (
+                                <div className="text-sm text-gray-500">
+                                  {percentageData.occurrence}
+                                </div>
+                              )}
                             </div>
-                          )}
-                        </div>
-                      </div>
-                    );
-                  })}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
                 </div>
               </div>
             ))}
