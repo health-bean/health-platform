@@ -3,7 +3,12 @@ const jwt = require('jsonwebtoken');
 const { pool } = require('../database/connection');
 const { errorResponse } = require('../utils/responses');
 
-const JWT_SECRET = process.env.JWT_SECRET || 'your-super-secret-key';
+// Generate a secure JWT secret - MUST be set in production
+const JWT_SECRET = process.env.JWT_SECRET || (() => {
+  console.warn('⚠️  WARNING: JWT_SECRET not set! Using generated secret for development.');
+  console.warn('⚠️  This will invalidate tokens on restart. Set JWT_SECRET environment variable.');
+  return require('crypto').randomBytes(32).toString('base64');
+})();
 
 /**
  * Parse JWT token and return user information
@@ -15,19 +20,26 @@ const getCurrentUser = async (event) => {
     const authHeader = event.headers?.Authorization || event.headers?.authorization;
     
     if (!authHeader) {
-      // DEVELOPMENT MODE: Return demo user when no auth header
-      console.log('No auth header found, returning demo user');
-      return {
-        id: '8e8a568a-c2f8-43a8-abf2-4e54408dbdc0',
-        email: 'patient@example.com',
-        first_name: 'Patient',
-        last_name: 'Demo',
-        user_type: 'patient',
-        is_active: true,
-        // Add these for compatibility with existing code
-        firstName: 'Patient',
-        lastName: 'Demo',
-        userType: 'patient'
+      // DEVELOPMENT MODE: Only allow demo user if explicitly enabled
+      if (process.env.NODE_ENV === 'development' && process.env.ALLOW_DEMO_USER === 'true') {
+        console.log('🔓 Development mode: Using demo user (set ALLOW_DEMO_USER=false to disable)');
+        return {
+          id: '8e8a568a-c2f8-43a8-abf2-4e54408dbdc0',
+          email: 'sarah.aip@test.com',
+          first_name: 'Sarah',
+          last_name: 'Demo',
+          user_type: 'patient',
+          is_active: true,
+          // Add these for compatibility with existing code
+          firstName: 'Sarah',
+          lastName: 'Demo',
+          userType: 'patient'
+        };
+      }
+      
+      console.log('❌ No authorization header provided');
+      return null;
+    }
       };
     }
 
