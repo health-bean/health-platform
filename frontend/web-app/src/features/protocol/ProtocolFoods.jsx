@@ -56,6 +56,15 @@ const ProtocolFoods = ({ protocolId }) => {
     }
   };
 
+  const getComplianceLabel = (status) => {
+    switch (status) {
+      case 'allowed': return 'Included';
+      case 'avoid': return 'Avoid for now';
+      case 'reintroduction': return 'Try in moderation';
+      default: return 'Not specified';
+    }
+  };
+
   const getPropertyColor = (property, value) => {
     if (property === 'histamine') {
       switch (value) {
@@ -108,7 +117,7 @@ const ProtocolFoods = ({ protocolId }) => {
             <span className="text-lg font-medium capitalize">{food.name}</span>
             {showCompliance && food.compliance_status && (
               <span className={`px-2 py-1 rounded text-xs font-medium border ${getComplianceColor(food.compliance_status)}`}>
-                {getComplianceIcon(food.compliance_status)} {food.compliance_status}
+                {getComplianceIcon(food.compliance_status)} {getComplianceLabel(food.compliance_status)}
               </span>
             )}
             {showProtocolWarning && !food.compliance_status && (
@@ -191,7 +200,7 @@ const ProtocolFoods = ({ protocolId }) => {
             </h2>
             <p className="text-gray-600 mt-1">
               {hasValidProtocol 
-                ? 'Foods that are approved for your protocol'
+                ? 'Foods that are included in your protocol'
                 : 'Search our comprehensive food database'
               }
             </p>
@@ -199,7 +208,7 @@ const ProtocolFoods = ({ protocolId }) => {
           {hasValidProtocol && (
             <div className="text-right">
               <div className="text-3xl font-bold text-green-600">{complianceStats.allowed || 0}</div>
-              <div className="text-sm text-gray-500">Allowed Foods</div>
+              <div className="text-sm text-gray-500">Included Foods</div>
             </div>
           )}
         </div>
@@ -211,7 +220,7 @@ const ProtocolFoods = ({ protocolId }) => {
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
           <input
             type="text"
-            placeholder={hasValidProtocol ? "Search to check if foods are allowed..." : "Search foods..."}
+            placeholder={hasValidProtocol ? "Search to check if foods are included..." : "Search foods..."}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -220,7 +229,7 @@ const ProtocolFoods = ({ protocolId }) => {
         {hasValidProtocol && (
           <div className="mt-2 text-sm text-gray-600">
             <Info className="w-4 h-4 inline mr-1" />
-            Search any food to see if it's allowed, avoided, or not in your protocol
+            Search any food to see if it's included, should be avoided, or can be tried in moderation
           </div>
         )}
       </div>
@@ -328,7 +337,7 @@ const ProtocolFoods = ({ protocolId }) => {
           {/* Stats Toggle */}
           <div className="flex items-center justify-between">
             <div className="text-sm text-gray-600">
-              Showing {complianceStats.allowed || 0} allowed foods from your protocol
+              Showing {complianceStats.allowed || 0} included foods from your protocol
             </div>
             <button
               onClick={() => setShowStats(!showStats)}
@@ -347,7 +356,7 @@ const ProtocolFoods = ({ protocolId }) => {
                   <span className="text-2xl">✅</span>
                   <div>
                     <div className="text-2xl font-bold text-green-600">{complianceStats.allowed || 0}</div>
-                    <div className="text-sm text-green-700">Allowed Foods</div>
+                    <div className="text-sm text-green-700">Included Foods</div>
                   </div>
                 </div>
               </div>
@@ -357,7 +366,7 @@ const ProtocolFoods = ({ protocolId }) => {
                   <span className="text-2xl">❌</span>
                   <div>
                     <div className="text-2xl font-bold text-red-600">{complianceStats.avoid || 0}</div>
-                    <div className="text-sm text-red-700">Foods to Avoid</div>
+                    <div className="text-sm text-red-700">Avoid for now</div>
                   </div>
                 </div>
               </div>
@@ -367,7 +376,7 @@ const ProtocolFoods = ({ protocolId }) => {
                   <span className="text-2xl">🟡</span>
                   <div>
                     <div className="text-2xl font-bold text-yellow-600">{complianceStats.reintroduction || 0}</div>
-                    <div className="text-sm text-yellow-700">Reintroduction</div>
+                    <div className="text-sm text-yellow-700">Try in moderation</div>
                   </div>
                 </div>
               </div>
@@ -387,7 +396,7 @@ const ProtocolFoods = ({ protocolId }) => {
                     <h3 className="text-lg font-semibold text-gray-900 flex items-center space-x-2">
                       <TrendingUp className="w-5 h-5 text-green-500" />
                       <span className="capitalize">{category}</span>
-                      <span className="text-sm text-gray-500">({allowedFoods.length} allowed)</span>
+                      <span className="text-sm text-gray-500">({allowedFoods.length} included)</span>
                     </h3>
                   </div>
                   
@@ -407,7 +416,7 @@ const ProtocolFoods = ({ protocolId }) => {
               <div className="text-gray-400 mb-4">
                 <Filter className="w-12 h-12 mx-auto" />
               </div>
-              <p className="text-gray-600">No allowed foods available for this protocol</p>
+              <p className="text-gray-600">No included foods available for this protocol</p>
             </div>
           )}
         </>
