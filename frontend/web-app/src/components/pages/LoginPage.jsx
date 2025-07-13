@@ -1,5 +1,6 @@
 // File: frontend/web-app/src/components/pages/LoginPage.jsx
-// CACHE BUST: v2.0 - Clean login form without autofill interference
+// CACHE BUST: v3.0 - TIMESTAMP: 2025-07-13-15:45:00
+// FORCE RELOAD: Password should NOT auto-fill
 
 import React, { useState, useEffect } from 'react';
 import { Loader2, Mail, Lock, Rocket, AlertTriangle } from 'lucide-react';
@@ -74,14 +75,19 @@ const LoginPage = () => {
   }, []);
 
   const handleDemoLogin = (demoEmail) => {
-    console.log('🔍 DEBUG: handleDemoLogin called with:', demoEmail);
-    console.log('🔍 DEBUG: Setting password to empty string');
+    console.log('🔍 DEBUG v3.0: handleDemoLogin called with:', demoEmail);
+    console.log('🔍 DEBUG v3.0: Current password value before clear:', password);
     setEmail(demoEmail);
     // SECURITY: Don't auto-fill password - user must enter it
     setPassword('');
+    console.log('🔍 DEBUG v3.0: setPassword("") called - should be empty now');
     setError(null);
     setShowDemoWarning(true);
-    console.log('🔍 DEBUG: Password should now be empty');
+    
+    // Force re-render to ensure state update
+    setTimeout(() => {
+      console.log('🔍 DEBUG v3.0: Password value after timeout:', password);
+    }, 100);
   };
 
   return (
