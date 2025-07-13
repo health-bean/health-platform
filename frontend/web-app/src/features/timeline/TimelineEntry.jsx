@@ -4,12 +4,21 @@ import { getEntryIcon, getEntryColor } from '../../../../shared/utils/entryHelpe
 const TimelineEntry = ({ entry }) => {
   // Helper function to render content properly
   const renderContent = (content) => {
+    // Handle null/undefined
+    if (!content) return 'No content';
+    
+    // Handle strings
     if (typeof content === 'string') {
       return content;
     }
     
+    // Handle numbers
+    if (typeof content === 'number') {
+      return content.toString();
+    }
+    
     if (typeof content === 'object' && content !== null) {
-      // Handle structured content
+      // Handle structured content with name
       if (content.name) {
         const parts = [content.name];
         
@@ -28,28 +37,37 @@ const TimelineEntry = ({ entry }) => {
       }
       
       if (content.value) {
-        return content.value;
+        return String(content.value);
+      }
+      
+      if (content.text) {
+        return content.text;
       }
       
       // Handle arrays
       if (Array.isArray(content)) {
-        return content.join(', ');
+        return content.map(item => 
+          typeof item === 'string' ? item : 
+          typeof item === 'object' && item.name ? item.name :
+          String(item)
+        ).join(', ');
       }
       
-      // For objects without name/description/value, show key-value pairs
+      // For objects without standard properties, show key-value pairs
       const entries = Object.entries(content);
       if (entries.length > 0) {
         return entries
           .filter(([key, value]) => value !== null && value !== undefined && value !== '')
-          .map(([key, value]) => `${key}: ${value}`)
+          .map(([key, value]) => `${key}: ${String(value)}`)
           .join(', ');
       }
       
-      // Last resort fallback
-      return 'No content available';
+      // Last resort - but avoid [object Object]
+      return 'Content available';
     }
     
-    return 'Unknown content';
+    // Final fallback
+    return String(content);
   };
 
   return (

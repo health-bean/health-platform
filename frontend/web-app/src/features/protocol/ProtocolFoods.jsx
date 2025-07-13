@@ -75,6 +75,38 @@ const ProtocolFoods = ({ protocolId }) => {
     }
   };
 
+  // Smart food deduplication and status merging
+  const deduplicateAndMergeFoods = (foods) => {
+    const foodMap = new Map();
+    
+    foods.forEach(food => {
+      const baseName = food.name.toLowerCase().trim();
+      
+      if (foodMap.has(baseName)) {
+        const existing = foodMap.get(baseName);
+        // Prioritize foods with known compliance status
+        if (food.compliance_status && food.compliance_status !== 'unknown' && 
+            (!existing.compliance_status || existing.compliance_status === 'unknown')) {
+          foodMap.set(baseName, {
+            ...food,
+            // Keep the simpler name if it exists
+            name: existing.name.length <= food.name.length ? existing.name : food.name
+          });
+        }
+      } else {
+        foodMap.set(baseName, food);
+      }
+    });
+    
+    return Array.from(foodMap.values());
+  };
+
+  // Process search results with deduplication
+  const processedSearchResults = React.useMemo(() => {
+    if (!searchResults || searchResults.length === 0) return [];
+    return deduplicateAndMergeFoods(searchResults);
+  }, [searchResults]);
+
   const getPropertyColor = (property, value) => {
     if (property === 'histamine') {
       switch (value) {
@@ -105,18 +137,20 @@ const ProtocolFoods = ({ protocolId }) => {
     if (!searchTerm.trim()) return { type: 'none' };
     if (searchLoading) return { type: 'loading' };
     
-    const hasResults = searchResults.length > 0;
-    const hasProtocolCompliance = searchResults.some(food => food.compliance_status);
+    const hasResults = processedSearchResults.length > 0;
+    const hasProtocolCompliance = processedSearchResults.some(food => 
+      food.compliance_status && food.compliance_status !== 'unknown'
+    );
     
     if (!hasResults) {
       return { type: 'no_results' };
     }
     
     if (hasValidProtocol && !hasProtocolCompliance) {
-      return { type: 'not_in_protocol', foods: searchResults };
+      return { type: 'not_in_protocol', foods: processedSearchResults };
     }
     
-    return { type: 'results', foods: searchResults };
+    return { type: 'results', foods: processedSearchResults };
   };
 
   const FoodItem = ({ food, showCompliance = true, showProtocolWarning = false }) => (
