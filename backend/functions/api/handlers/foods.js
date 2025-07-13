@@ -101,8 +101,8 @@ const handleGetProtocolFoods = async (queryParams, event) => {
             WHERE pfr.protocol_id = $1
             ORDER BY 
                 CASE 
-                    WHEN pfr.status = 'allowed' THEN 1
-                    WHEN pfr.status = 'avoid' THEN 2
+                    WHEN pfr.status = 'included' THEN 1
+                    WHEN pfr.status = 'avoid_for_now' THEN 2
                     ELSE 3
                 END,
                 fp.category ASC,
@@ -120,9 +120,9 @@ const handleGetProtocolFoods = async (queryParams, event) => {
         
         // Nested structure for any new frontend features
         const foodsByStatusCategory = {
-            allowed: {},
-            avoid: {},
-            reintroduction: {},
+            included: {},
+            avoid_for_now: {},
+            try_in_moderation: {},
             unknown: {}
         };
         
@@ -154,10 +154,10 @@ const handleGetProtocolFoods = async (queryParams, event) => {
         
         // Calculate summary stats with the names the old frontend expects
         const foodsByStatus = {
-            allowed: result.rows.filter(f => (f.protocol_status || 'unknown') === 'allowed'),
-            avoid: result.rows.filter(f => (f.protocol_status || 'unknown') === 'avoid'),
-            reintroduction: result.rows.filter(f => (f.protocol_status || 'unknown') === 'reintroduction'),
-            unknown: result.rows.filter(f => !['allowed', 'avoid', 'reintroduction'].includes(f.protocol_status || 'unknown'))
+            allowed: result.rows.filter(f => (f.protocol_status || 'unknown') === 'included'),
+            avoid: result.rows.filter(f => (f.protocol_status || 'unknown') === 'avoid_for_now'),
+            reintroduction: result.rows.filter(f => (f.protocol_status || 'unknown') === 'try_in_moderation'),
+            unknown: result.rows.filter(f => !['included', 'avoid_for_now', 'try_in_moderation'].includes(f.protocol_status || 'unknown'))
         };
         
         const summary = {
