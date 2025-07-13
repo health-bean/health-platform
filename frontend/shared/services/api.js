@@ -14,8 +14,12 @@ class ApiConfig {
     // Add auth headers when auth is enabled
     if (this.authEnabled) {
       const token = this.getAuthToken();
+      console.log('🔍 API Client authEnabled:', this.authEnabled, 'token:', token ? 'present' : 'missing');
       if (token) {
         headers.Authorization = `Bearer ${token}`;
+        console.log('🔍 API Client added Authorization header');
+      } else {
+        console.log('🔍 API Client no token available for Authorization header');
       }
     }
 
@@ -24,12 +28,15 @@ class ApiConfig {
 
   getAuthToken() {
     // SECURITY: Use sessionStorage for health data privacy
-    return sessionStorage.getItem('auth_token') || null;
+    const token = sessionStorage.getItem('auth_token');
+    console.log('🔍 API Client getAuthToken():', token ? 'Token found' : 'No token found');
+    return token || null;
   }
 
   async request(endpoint, options = {}) {
     const url = `${this.baseURL}${endpoint}`;
     
+    // Always get fresh headers (including token) for each request
     const config = {
       headers: this.getHeaders(),
       ...options,
@@ -37,6 +44,7 @@ class ApiConfig {
 
     try {
       console.log(`[API] ${options.method || 'GET'} ${endpoint}`);
+      console.log('🔍 API Request headers:', config.headers);
       
       const response = await fetch(url, config);
       

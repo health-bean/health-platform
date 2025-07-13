@@ -186,6 +186,7 @@ export const AuthProvider = ({ children }) => {
 
       if (response?.user && response?.token) {
         console.log('Login successful:', response.user);
+        console.log('🔍 AUTH: Token received:', response.token ? 'YES' : 'NO');
         
         // Determine if this is a demo user
         const isDemo = isDemoUser(response.user);
@@ -208,6 +209,9 @@ export const AuthProvider = ({ children }) => {
         if (response.refreshToken) {
           sessionStorage.setItem('refresh_token', response.refreshToken);
         }
+        
+        console.log('🔍 AUTH: Token stored in sessionStorage');
+        console.log('🔍 AUTH: Verifying token storage:', sessionStorage.getItem('auth_token') ? 'STORED' : 'NOT STORED');
         
         // SECURITY: Ensure localStorage is clean
         localStorage.removeItem('auth_token');

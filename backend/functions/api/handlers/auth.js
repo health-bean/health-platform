@@ -197,9 +197,17 @@ const handleLogin = async (body, event) => {
     `;
     await client.query(updateLoginQuery, [user.id]);
 
+    // Fetch user preferences
+    console.log('🔍 AUTH: Fetching user preferences...');
+    const preferencesQuery = `
+      SELECT preferences FROM user_preferences WHERE user_id = $1
+    `;
+    const preferencesResult = await client.query(preferencesQuery, [user.id]);
+    const userPreferences = preferencesResult.rows.length > 0 ? preferencesResult.rows[0].preferences : null;
+
     client.release();
 
-    console.log('🔍 AUTH: Returning success response');
+    console.log('🔍 AUTH: Returning success response with preferences');
     return successResponse({
       message: 'Login successful',
       user: {
@@ -207,7 +215,8 @@ const handleLogin = async (body, event) => {
         email: user.email,
         firstName: user.first_name,
         lastName: user.last_name,
-        userType: user.user_type
+        userType: user.user_type,
+        preferences: userPreferences
       },
       token: accessToken,
       refreshToken

@@ -83,8 +83,8 @@ const LoginPage = () => {
     console.log('🔍 DEBUG v3.0: Current password value before clear:', password);
     setEmail(demoEmail);
     // SECURITY: Don't auto-fill password - user must enter it
-    debugSetPassword('');
-    console.log('🔍 DEBUG v3.0: debugSetPassword("") called - should be empty now');
+    setPassword('');
+    console.log('🔍 DEBUG v3.0: setPassword("") called - should be empty now');
     setError(null);
     setShowDemoWarning(true);
     
