@@ -11,6 +11,13 @@ import useAuth from '../../../../shared/hooks/useAuth';
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  // Debug wrapper for setPassword to track all changes
+  const debugSetPassword = (value) => {
+    console.log('🔍 setPassword called with:', value);
+    console.log('🔍 Stack trace:', new Error().stack);
+    setPassword(value);
+  };
   const [isLoading, setIsLoading] = useState(false);
   const [showDemoWarning, setShowDemoWarning] = useState(false);
   const { login, error, setError, isDemoMode } = useAuth();
@@ -71,7 +78,8 @@ const LoginPage = () => {
 
   // Clear password field on mount to ensure clean state
   useEffect(() => {
-    setPassword('');
+    console.log('🔍 useEffect: Clearing password on mount');
+    debugSetPassword('');
   }, []);
 
   const handleDemoLogin = (demoEmail) => {
@@ -79,8 +87,8 @@ const LoginPage = () => {
     console.log('🔍 DEBUG v3.0: Current password value before clear:', password);
     setEmail(demoEmail);
     // SECURITY: Don't auto-fill password - user must enter it
-    setPassword('');
-    console.log('🔍 DEBUG v3.0: setPassword("") called - should be empty now');
+    debugSetPassword('');
+    console.log('🔍 DEBUG v3.0: debugSetPassword("") called - should be empty now');
     setError(null);
     setShowDemoWarning(true);
     
@@ -150,7 +158,10 @@ const LoginPage = () => {
               <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
               <PasswordInput
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e) => {
+                  console.log('🔍 Password input onChange:', e.target.value);
+                  debugSetPassword(e.target.value);
+                }}
                 placeholder="Enter your password"
                 className="pl-10"
                 disabled={isLoading}
