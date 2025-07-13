@@ -52,11 +52,11 @@ jobs:
         
     - name: Generate Professional Documentation
       run: |
-        # Make the documentation generator executable (now in dev-notes directory)
-        chmod +x dev-notes/comprehensive-docs-generator.js || { echo "❌ chmod failed"; exit 1; }
+        # Make the documentation generator executable (back in root directory)
+        chmod +x comprehensive-docs-generator.js || { echo "❌ chmod failed"; exit 1; }
         
         # Run the enhanced documentation generator
-        node dev-notes/comprehensive-docs-generator.js || { echo "❌ documentation generation failed"; exit 1; }
+        node comprehensive-docs-generator.js || { echo "❌ documentation generation failed"; exit 1; }
         
         # Verify generated files
         ls -la docs-site/ || { echo "❌ docs-site directory not found"; exit 1; }
