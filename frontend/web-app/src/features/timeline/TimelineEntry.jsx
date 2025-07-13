@@ -22,8 +22,31 @@ const TimelineEntry = ({ entry }) => {
         return parts.join(' ');
       }
       
-      // Fallback for other object structures
-      return JSON.stringify(content);
+      // Handle other common object structures
+      if (content.description) {
+        return content.description;
+      }
+      
+      if (content.value) {
+        return content.value;
+      }
+      
+      // Handle arrays
+      if (Array.isArray(content)) {
+        return content.join(', ');
+      }
+      
+      // For objects without name/description/value, show key-value pairs
+      const entries = Object.entries(content);
+      if (entries.length > 0) {
+        return entries
+          .filter(([key, value]) => value !== null && value !== undefined && value !== '')
+          .map(([key, value]) => `${key}: ${value}`)
+          .join(', ');
+      }
+      
+      // Last resort fallback
+      return 'No content available';
     }
     
     return 'Unknown content';
