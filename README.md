@@ -53,7 +53,7 @@ npm run dev
 ## API Status
 
 - **Base URL:** https://suhoxvn8ik.execute-api.us-east-1.amazonaws.com/dev
-- **Working Endpoints:** 8/30
+- **Working Endpoints:** 9/30
 - **Categories:** AI, Lookup Data, Foods, Protocols, Timeline, Users, Other, Health Data
 
 ## Database

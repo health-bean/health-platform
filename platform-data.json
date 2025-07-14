@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generated": "2025-07-14T02:22:13.825Z",
+    "generated": "2025-07-14T02:25:17.039Z",
     "version": "1.0.0",
     "generator": "AutomatedProfessionalDocsGenerator"
   },
@@ -14,10 +14,10 @@
     "totalComponents": 40,
     "totalHooks": 12,
     "totalFiles": 83,
-    "workingAPIs": 8,
+    "workingAPIs": 9,
     "totalAPIs": 30,
     "totalTables": 22,
-    "totalCommits": 88,
+    "totalCommits": 89,
     "contributors": 1
   },
   "discoveredInfo": {
@@ -128,13 +128,55 @@
               "value": "8e8a568a-c2f8-43a8-abf2-4e54408dbdc0"
             }
           ],
-          "status": 500,
-          "working": false,
-          "responseTime": 923,
+          "status": 200,
+          "working": true,
+          "responseTime": 2334,
           "responseData": {
-            "error": "Failed to analyze correlations"
+            "insights": [
+              {
+                "type": "food-symptom",
+                "trigger": "unknown",
+                "effect": "Unknown",
+                "timeWindow": 48,
+                "timeWindowDescription": "within 48 hours",
+                "confidence": 0.69,
+                "frequency": "401/578 times",
+                "occurrences": 401,
+                "totalOpportunities": 578,
+                "avgSeverity": 5.4,
+                "impactScore": 0.901352673679124,
+                "description": "🔍 Your data suggests unknown may trigger Unknown (69% of instances)",
+                "recommendation": "Consider eliminating unknown for 2-4 weeks to test your sensitivity"
+              },
+              {
+                "type": "exercise-energy",
+                "trigger": "unknown",
+                "effect": "increased energy",
+                "timeWindow": 4,
+                "timeWindowDescription": "within 4 hours",
+                "confidence": 0.3412698412698412,
+                "energyChange": 1,
+                "baselineEnergy": 6.5,
+                "sessionsAnalyzed": 14,
+                "description": "💡 Your data suggests unknown consistently boosts energy levels (+1 points above your baseline)",
+                "recommendation": "Continue unknown - it appears to energize you"
+              }
+            ],
+            "summary": {
+              "totalCorrelations": 2,
+              "triggers": 1,
+              "improvements": 0,
+              "medicationEffects": 0,
+              "exerciseImpacts": 1,
+              "sleepFactors": 0,
+              "stressAmplifiers": 0,
+              "foodPatterns": 0
+            },
+            "timeframe_days": 180,
+            "confidence_threshold": 0.6,
+            "user_id": "8e8a568a-c2f8-43a8-abf2-4e54408dbdc0"
           },
-          "responseSize": 42
+          "responseSize": 1104
         },
         {
           "path": "/api/v1/detox-types",
@@ -145,7 +187,7 @@
           "params": [],
           "status": 404,
           "working": false,
-          "responseTime": 140,
+          "responseTime": 247,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -191,7 +233,7 @@
           "params": [],
           "status": 404,
           "working": false,
-          "responseTime": 106,
+          "responseTime": 249,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -293,7 +335,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 301,
+          "responseTime": 260,
           "responseData": {
             "foods": [
               {
@@ -4200,7 +4242,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 144,
+          "responseTime": 112,
           "responseData": {
             "protocols": [
               {
@@ -4374,7 +4416,7 @@
           ],
           "status": 401,
           "working": false,
-          "responseTime": 174,
+          "responseTime": 247,
           "responseData": {
             "error": "Authentication required"
           },
@@ -4394,7 +4436,7 @@
           ],
           "status": 401,
           "working": false,
-          "responseTime": 151,
+          "responseTime": 235,
           "responseData": {
             "error": "Authentication required"
           },
@@ -4414,7 +4456,7 @@
           ],
           "status": 404,
           "working": false,
-          "responseTime": 103,
+          "responseTime": 99,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -4465,7 +4507,7 @@
           ],
           "status": 404,
           "working": false,
-          "responseTime": 148,
+          "responseTime": 105,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -4511,7 +4553,7 @@
           "params": [],
           "status": 400,
           "working": false,
-          "responseTime": 107,
+          "responseTime": 103,
           "responseData": {
             "error": "Email and password required"
           },
@@ -4526,7 +4568,7 @@
           "params": [],
           "status": 404,
           "working": false,
-          "responseTime": 100,
+          "responseTime": 97,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -4572,7 +4614,7 @@
           "params": [],
           "status": 401,
           "working": false,
-          "responseTime": 101,
+          "responseTime": 105,
           "responseData": {
             "error": "No authorization header"
           },
@@ -4587,7 +4629,7 @@
           "params": [],
           "status": 404,
           "working": false,
-          "responseTime": 98,
+          "responseTime": 102,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -4633,7 +4675,7 @@
           "params": [],
           "status": 400,
           "working": false,
-          "responseTime": 101,
+          "responseTime": 234,
           "responseData": {
             "error": "Missing required fields"
           },
@@ -4648,7 +4690,7 @@
           "params": [],
           "status": 400,
           "working": false,
-          "responseTime": 234,
+          "responseTime": 277,
           "responseData": {
             "error": "Email and password required"
           },
@@ -4663,7 +4705,7 @@
           "params": [],
           "status": 401,
           "working": false,
-          "responseTime": 99,
+          "responseTime": 114,
           "responseData": {
             "error": "Authentication required"
           },
@@ -4683,7 +4725,7 @@
           ],
           "status": 401,
           "working": false,
-          "responseTime": 140,
+          "responseTime": 239,
           "responseData": {
             "error": "Authentication required"
           },
@@ -4703,7 +4745,7 @@
           ],
           "status": 401,
           "working": false,
-          "responseTime": 150,
+          "responseTime": 103,
           "responseData": {
             "error": "Authentication required"
           },
@@ -4723,7 +4765,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 236,
+          "responseTime": 99,
           "responseData": {
             "symptoms": [],
             "total": 0,
@@ -4746,7 +4788,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 109,
+          "responseTime": 105,
           "responseData": {
             "supplements": [],
             "total": 0,
@@ -4768,7 +4810,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 100,
+          "responseTime": 141,
           "responseData": {
             "medications": [],
             "total": 0,
@@ -4790,7 +4832,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 255,
+          "responseTime": 126,
           "responseData": {
             "detox_types": [],
             "total": 0,
@@ -4812,7 +4854,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 109,
+          "responseTime": 103,
           "responseData": {
             "exposures": [],
             "total": 0,
@@ -4829,7 +4871,7 @@
           "params": [],
           "status": 404,
           "working": false,
-          "responseTime": 100,
+          "responseTime": 102,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -4875,7 +4917,7 @@
           "params": [],
           "status": 500,
           "working": false,
-          "responseTime": 102,
+          "responseTime": 103,
           "responseData": {
             "error": "Failed to complete get journal entries"
           },
@@ -4890,7 +4932,7 @@
           "params": [],
           "status": 500,
           "working": false,
-          "responseTime": 145,
+          "responseTime": 147,
           "responseData": {
             "error": "Failed to complete get journal entry"
           },
@@ -4905,7 +4947,7 @@
           "params": [],
           "status": 404,
           "working": false,
-          "responseTime": 192,
+          "responseTime": 111,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -4951,7 +4993,7 @@
           "params": [],
           "status": 404,
           "working": false,
-          "responseTime": 112,
+          "responseTime": 107,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -4997,7 +5039,7 @@
           "params": [],
           "status": 404,
           "working": false,
-          "responseTime": 103,
+          "responseTime": 111,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -5035,11 +5077,11 @@
           "responseSize": 842
         }
       ],
-      "workingCount": 8,
+      "workingCount": 9,
       "totalCount": 30,
       "categories": {
         "AI": {
-          "working": 0,
+          "working": 1,
           "total": 1
         },
         "Lookup Data": {
@@ -5594,7 +5636,7 @@
             }
           ],
           "utilities": [],
-          "size": "154.52 KB"
+          "size": "155.63 KB"
         },
         "backend/functions": {
           "totalFiles": 24,
@@ -5611,7 +5653,7 @@
             }
           ],
           "utilities": [],
-          "size": "154.52 KB"
+          "size": "155.63 KB"
         },
         "backend": {
           "totalFiles": 28,
@@ -5631,7 +5673,7 @@
             }
           ],
           "utilities": [],
-          "size": "199.62 KB"
+          "size": "200.73 KB"
         }
       },
       "shared": {},
@@ -5724,18 +5766,18 @@
       "repository": "https://github.com/deebyrne26/health-platform",
       "branch": "main",
       "lastCommit": {
-        "hash": "d43c296",
-        "message": "Fix timeline entry display: use structured_content instead of removed content field",
+        "hash": "f36daf8",
+        "message": "Fix correlations/insights: use structured_content instead of removed content column",
         "author": "deebyrne26",
-        "date": "Sun Jul 13 22:21:29 2025 -0400"
+        "date": "Sun Jul 13 22:24:29 2025 -0400"
       },
       "contributors": [
         {
           "name": "deebyrne26",
-          "commits": 88
+          "commits": 89
         }
       ],
-      "totalCommits": 88
+      "totalCommits": 89
     }
   }
 }
