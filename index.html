@@ -268,11 +268,11 @@
                 
                 <div class="stats-grid">
                     <div class="stat-card">
-                        <div class="stat-number">37</div>
+                        <div class="stat-number">40</div>
                         <div class="stat-label">Components</div>
                     </div>
                     <div class="stat-card api">
-                        <div class="stat-number">7/28</div>
+                        <div class="stat-number">8/30</div>
                         <div class="stat-label">API Endpoints</div>
                     </div>
                     <div class="stat-card db">
@@ -280,7 +280,7 @@
                         <div class="stat-label">Database Tables</div>
                     </div>
                     <div class="stat-card git">
-                        <div class="stat-number">85</div>
+                        <div class="stat-number">86</div>
                         <div class="stat-label">Git Commits</div>
                     </div>
                 </div>
@@ -342,7 +342,7 @@
                     <div>
                         <h3>API Status</h3>
                         <p><strong>Base URL:</strong> <code>https://suhoxvn8ik.execute-api.us-east-1.amazonaws.com/dev</code></p>
-                        <p><strong>Working Endpoints:</strong> 7/28</p>
+                        <p><strong>Working Endpoints:</strong> 8/30</p>
                         <p><strong>Categories:</strong> 8</p>
                     </div>
                     <div>
@@ -358,17 +358,17 @@ curl "https://suhoxvn8ik.execute-api.us-east-1.amazonaws.com/dev/api/v1/protocol
                 <div class="stats-grid">
                     
                     <div class="stat-card api">
-                        <div class="stat-number">1/1</div>
+                        <div class="stat-number">0/1</div>
                         <div class="stat-label">AI APIs</div>
                     </div>
                     
                     <div class="stat-card api">
-                        <div class="stat-number">1/2</div>
+                        <div class="stat-number">2/4</div>
                         <div class="stat-label">Lookup Data APIs</div>
                     </div>
                     
                     <div class="stat-card api">
-                        <div class="stat-number">0/1</div>
+                        <div class="stat-number">1/1</div>
                         <div class="stat-label">Foods APIs</div>
                     </div>
                     
@@ -404,15 +404,15 @@ curl "https://suhoxvn8ik.execute-api.us-east-1.amazonaws.com/dev/api/v1/protocol
                 <h3>📋 Available Endpoints</h3>
                 <div class="api-endpoints">
                     
-                    <div class="endpoint-card working">
+                    <div class="endpoint-card failed">
                         <div class="endpoint-header">
                             <span class="method get">GET</span>
                             <span class="path">/api/v1/correlations/insights</span>
-                            <span class="status success">✅ 200</span>
+                            <span class="status error">❌ 500</span>
                         </div>
                         <div class="endpoint-description">Get insights</div>
                         <div class="endpoint-params">Params: userId=8e8a568a-c2f8-43a8-abf2-4e54408dbdc0</div>
-                        <div class="endpoint-time">Response: 4538ms</div>
+                        <div class="endpoint-time">Response: 703ms</div>
                     </div>
                     
                     <div class="endpoint-card failed">
@@ -423,172 +423,29 @@ curl "https://suhoxvn8ik.execute-api.us-east-1.amazonaws.com/dev/api/v1/protocol
                         </div>
                         <div class="endpoint-description">Get detox-types</div>
                         <div class="endpoint-params">Params: </div>
-                        <div class="endpoint-time">Response: 110ms</div>
+                        <div class="endpoint-time">Response: 75ms</div>
                     </div>
                     
                     <div class="endpoint-card failed">
                         <div class="endpoint-header">
                             <span class="method get">GET</span>
-                            <span class="path">/api/v1/foods/search</span>
-                            <span class="status error">❌ 500</span>
+                            <span class="path">/api/v1/exposure-types</span>
+                            <span class="status error">❌ 404</span>
                         </div>
-                        <div class="endpoint-description">Get search</div>
-                        <div class="endpoint-params">Params: search=chicken</div>
-                        <div class="endpoint-time">Response: 115ms</div>
+                        <div class="endpoint-description">Get exposure-types</div>
+                        <div class="endpoint-params">Params: </div>
+                        <div class="endpoint-time">Response: 51ms</div>
                     </div>
                     
                     <div class="endpoint-card working">
                         <div class="endpoint-header">
                             <span class="method get">GET</span>
-                            <span class="path">/api/v1/protocols</span>
+                            <span class="path">/api/v1/foods/search</span>
                             <span class="status success">✅ 200</span>
                         </div>
-                        <div class="endpoint-description">Get protocols</div>
-                        <div class="endpoint-params">Params: protocol_id=1495844a-19de-404c-a288-7660eda0cbe1</div>
-                        <div class="endpoint-time">Response: 187ms</div>
-                    </div>
-                    
-                    <div class="endpoint-card failed">
-                        <div class="endpoint-header">
-                            <span class="method get">GET</span>
-                            <span class="path">/api/v1/timeline/entries</span>
-                            <span class="status error">❌ 401</span>
-                        </div>
-                        <div class="endpoint-description">Get entries</div>
-                        <div class="endpoint-params">Params: date=2024-07-06</div>
-                        <div class="endpoint-time">Response: 254ms</div>
-                    </div>
-                    
-                    <div class="endpoint-card failed">
-                        <div class="endpoint-header">
-                            <span class="method post">POST</span>
-                            <span class="path">/api/v1/timeline/entries</span>
-                            <span class="status error">❌ 401</span>
-                        </div>
-                        <div class="endpoint-description">Create entries</div>
-                        <div class="endpoint-params">Params: date=2024-07-06</div>
-                        <div class="endpoint-time">Response: 248ms</div>
-                    </div>
-                    
-                    <div class="endpoint-card failed">
-                        <div class="endpoint-header">
-                            <span class="method get">GET</span>
-                            <span class="path">/api/v1/users/preferences</span>
-                            <span class="status error">❌ 404</span>
-                        </div>
-                        <div class="endpoint-description">Get preferences</div>
-                        <div class="endpoint-params">Params: userId=8e8a568a-c2f8-43a8-abf2-4e54408dbdc0</div>
-                        <div class="endpoint-time">Response: 108ms</div>
-                    </div>
-                    
-                    <div class="endpoint-card failed">
-                        <div class="endpoint-header">
-                            <span class="method put">PUT</span>
-                            <span class="path">/api/v1/users/preferences</span>
-                            <span class="status error">❌ 404</span>
-                        </div>
-                        <div class="endpoint-description">Update preferences</div>
-                        <div class="endpoint-params">Params: userId=8e8a568a-c2f8-43a8-abf2-4e54408dbdc0</div>
-                        <div class="endpoint-time">Response: 234ms</div>
-                    </div>
-                    
-                    <div class="endpoint-card failed">
-                        <div class="endpoint-header">
-                            <span class="method post">POST</span>
-                            <span class="path">/api/v1/auth/login</span>
-                            <span class="status error">❌ 400</span>
-                        </div>
-                        <div class="endpoint-description">Create login</div>
-                        <div class="endpoint-params">Params: </div>
-                        <div class="endpoint-time">Response: 98ms</div>
-                    </div>
-                    
-                    <div class="endpoint-card failed">
-                        <div class="endpoint-header">
-                            <span class="method get">GET</span>
-                            <span class="path">/api/v1/auth/logout</span>
-                            <span class="status error">❌ 404</span>
-                        </div>
-                        <div class="endpoint-description">Get logout</div>
-                        <div class="endpoint-params">Params: </div>
-                        <div class="endpoint-time">Response: 231ms</div>
-                    </div>
-                    
-                    <div class="endpoint-card failed">
-                        <div class="endpoint-header">
-                            <span class="method get">GET</span>
-                            <span class="path">/api/v1/auth/verify</span>
-                            <span class="status error">❌ 401</span>
-                        </div>
-                        <div class="endpoint-description">Get verify</div>
-                        <div class="endpoint-params">Params: </div>
-                        <div class="endpoint-time">Response: 106ms</div>
-                    </div>
-                    
-                    <div class="endpoint-card failed">
-                        <div class="endpoint-header">
-                            <span class="method get">GET</span>
-                            <span class="path">/api/v1/auth/refresh</span>
-                            <span class="status error">❌ 404</span>
-                        </div>
-                        <div class="endpoint-description">Get refresh</div>
-                        <div class="endpoint-params">Params: </div>
-                        <div class="endpoint-time">Response: 239ms</div>
-                    </div>
-                    
-                    <div class="endpoint-card failed">
-                        <div class="endpoint-header">
-                            <span class="method post">POST</span>
-                            <span class="path">/api/v1/auth/register</span>
-                            <span class="status error">❌ 400</span>
-                        </div>
-                        <div class="endpoint-description">Create register</div>
-                        <div class="endpoint-params">Params: </div>
-                        <div class="endpoint-time">Response: 111ms</div>
-                    </div>
-                    
-                    <div class="endpoint-card failed">
-                        <div class="endpoint-header">
-                            <span class="method post">POST</span>
-                            <span class="path">/api/v1/auth</span>
-                            <span class="status error">❌ 400</span>
-                        </div>
-                        <div class="endpoint-description">Create auth</div>
-                        <div class="endpoint-params">Params: </div>
-                        <div class="endpoint-time">Response: 112ms</div>
-                    </div>
-                    
-                    <div class="endpoint-card failed">
-                        <div class="endpoint-header">
-                            <span class="method get">GET</span>
-                            <span class="path">/api/v1/users</span>
-                            <span class="status error">❌ 401</span>
-                        </div>
-                        <div class="endpoint-description">Get users</div>
-                        <div class="endpoint-params">Params: </div>
-                        <div class="endpoint-time">Response: 106ms</div>
-                    </div>
-                    
-                    <div class="endpoint-card failed">
-                        <div class="endpoint-header">
-                            <span class="method get">GET</span>
-                            <span class="path">/api/v1/user/protocols</span>
-                            <span class="status error">❌ 401</span>
-                        </div>
-                        <div class="endpoint-description">Get protocols</div>
-                        <div class="endpoint-params">Params: protocol_id=1495844a-19de-404c-a288-7660eda0cbe1</div>
-                        <div class="endpoint-time">Response: 248ms</div>
-                    </div>
-                    
-                    <div class="endpoint-card failed">
-                        <div class="endpoint-header">
-                            <span class="method get">GET</span>
-                            <span class="path">/api/v1/user/preferences</span>
-                            <span class="status error">❌ 401</span>
-                        </div>
-                        <div class="endpoint-description">Get preferences</div>
-                        <div class="endpoint-params">Params: userId=8e8a568a-c2f8-43a8-abf2-4e54408dbdc0</div>
-                        <div class="endpoint-time">Response: 275ms</div>
+                        <div class="endpoint-description">Get search</div>
+                        <div class="endpoint-params">Params: search=chicken</div>
+                        <div class="endpoint-time">Response: 103ms</div>
                     </div>
                     
                     <div class="endpoint-card working">
@@ -599,7 +456,161 @@ curl "https://suhoxvn8ik.execute-api.us-east-1.amazonaws.com/dev/api/v1/protocol
                         </div>
                         <div class="endpoint-description">Get by-protocol</div>
                         <div class="endpoint-params">Params: protocol_id=1495844a-19de-404c-a288-7660eda0cbe1</div>
-                        <div class="endpoint-time">Response: 182ms</div>
+                        <div class="endpoint-time">Response: 81ms</div>
+                    </div>
+                    
+                    <div class="endpoint-card working">
+                        <div class="endpoint-header">
+                            <span class="method get">GET</span>
+                            <span class="path">/api/v1/protocols</span>
+                            <span class="status success">✅ 200</span>
+                        </div>
+                        <div class="endpoint-description">Get protocols</div>
+                        <div class="endpoint-params">Params: protocol_id=1495844a-19de-404c-a288-7660eda0cbe1</div>
+                        <div class="endpoint-time">Response: 38ms</div>
+                    </div>
+                    
+                    <div class="endpoint-card failed">
+                        <div class="endpoint-header">
+                            <span class="method get">GET</span>
+                            <span class="path">/api/v1/timeline/entries</span>
+                            <span class="status error">❌ 401</span>
+                        </div>
+                        <div class="endpoint-description">Get entries</div>
+                        <div class="endpoint-params">Params: date=2024-07-06</div>
+                        <div class="endpoint-time">Response: 70ms</div>
+                    </div>
+                    
+                    <div class="endpoint-card failed">
+                        <div class="endpoint-header">
+                            <span class="method post">POST</span>
+                            <span class="path">/api/v1/timeline/entries</span>
+                            <span class="status error">❌ 401</span>
+                        </div>
+                        <div class="endpoint-description">Create entries</div>
+                        <div class="endpoint-params">Params: date=2024-07-06</div>
+                        <div class="endpoint-time">Response: 43ms</div>
+                    </div>
+                    
+                    <div class="endpoint-card failed">
+                        <div class="endpoint-header">
+                            <span class="method get">GET</span>
+                            <span class="path">/api/v1/users/preferences</span>
+                            <span class="status error">❌ 404</span>
+                        </div>
+                        <div class="endpoint-description">Get preferences</div>
+                        <div class="endpoint-params">Params: userId=8e8a568a-c2f8-43a8-abf2-4e54408dbdc0</div>
+                        <div class="endpoint-time">Response: 33ms</div>
+                    </div>
+                    
+                    <div class="endpoint-card failed">
+                        <div class="endpoint-header">
+                            <span class="method put">PUT</span>
+                            <span class="path">/api/v1/users/preferences</span>
+                            <span class="status error">❌ 404</span>
+                        </div>
+                        <div class="endpoint-description">Update preferences</div>
+                        <div class="endpoint-params">Params: userId=8e8a568a-c2f8-43a8-abf2-4e54408dbdc0</div>
+                        <div class="endpoint-time">Response: 36ms</div>
+                    </div>
+                    
+                    <div class="endpoint-card failed">
+                        <div class="endpoint-header">
+                            <span class="method post">POST</span>
+                            <span class="path">/api/v1/auth/login</span>
+                            <span class="status error">❌ 400</span>
+                        </div>
+                        <div class="endpoint-description">Create login</div>
+                        <div class="endpoint-params">Params: </div>
+                        <div class="endpoint-time">Response: 81ms</div>
+                    </div>
+                    
+                    <div class="endpoint-card failed">
+                        <div class="endpoint-header">
+                            <span class="method get">GET</span>
+                            <span class="path">/api/v1/auth/logout</span>
+                            <span class="status error">❌ 404</span>
+                        </div>
+                        <div class="endpoint-description">Get logout</div>
+                        <div class="endpoint-params">Params: </div>
+                        <div class="endpoint-time">Response: 32ms</div>
+                    </div>
+                    
+                    <div class="endpoint-card failed">
+                        <div class="endpoint-header">
+                            <span class="method get">GET</span>
+                            <span class="path">/api/v1/auth/verify</span>
+                            <span class="status error">❌ 401</span>
+                        </div>
+                        <div class="endpoint-description">Get verify</div>
+                        <div class="endpoint-params">Params: </div>
+                        <div class="endpoint-time">Response: 39ms</div>
+                    </div>
+                    
+                    <div class="endpoint-card failed">
+                        <div class="endpoint-header">
+                            <span class="method get">GET</span>
+                            <span class="path">/api/v1/auth/refresh</span>
+                            <span class="status error">❌ 404</span>
+                        </div>
+                        <div class="endpoint-description">Get refresh</div>
+                        <div class="endpoint-params">Params: </div>
+                        <div class="endpoint-time">Response: 33ms</div>
+                    </div>
+                    
+                    <div class="endpoint-card failed">
+                        <div class="endpoint-header">
+                            <span class="method post">POST</span>
+                            <span class="path">/api/v1/auth/register</span>
+                            <span class="status error">❌ 400</span>
+                        </div>
+                        <div class="endpoint-description">Create register</div>
+                        <div class="endpoint-params">Params: </div>
+                        <div class="endpoint-time">Response: 63ms</div>
+                    </div>
+                    
+                    <div class="endpoint-card failed">
+                        <div class="endpoint-header">
+                            <span class="method post">POST</span>
+                            <span class="path">/api/v1/auth</span>
+                            <span class="status error">❌ 400</span>
+                        </div>
+                        <div class="endpoint-description">Create auth</div>
+                        <div class="endpoint-params">Params: </div>
+                        <div class="endpoint-time">Response: 40ms</div>
+                    </div>
+                    
+                    <div class="endpoint-card failed">
+                        <div class="endpoint-header">
+                            <span class="method get">GET</span>
+                            <span class="path">/api/v1/users</span>
+                            <span class="status error">❌ 401</span>
+                        </div>
+                        <div class="endpoint-description">Get users</div>
+                        <div class="endpoint-params">Params: </div>
+                        <div class="endpoint-time">Response: 71ms</div>
+                    </div>
+                    
+                    <div class="endpoint-card failed">
+                        <div class="endpoint-header">
+                            <span class="method get">GET</span>
+                            <span class="path">/api/v1/user/protocols</span>
+                            <span class="status error">❌ 401</span>
+                        </div>
+                        <div class="endpoint-description">Get protocols</div>
+                        <div class="endpoint-params">Params: protocol_id=1495844a-19de-404c-a288-7660eda0cbe1</div>
+                        <div class="endpoint-time">Response: 113ms</div>
+                    </div>
+                    
+                    <div class="endpoint-card failed">
+                        <div class="endpoint-header">
+                            <span class="method get">GET</span>
+                            <span class="path">/api/v1/user/preferences</span>
+                            <span class="status error">❌ 401</span>
+                        </div>
+                        <div class="endpoint-description">Get preferences</div>
+                        <div class="endpoint-params">Params: userId=8e8a568a-c2f8-43a8-abf2-4e54408dbdc0</div>
+                        <div class="endpoint-time">Response: 38ms</div>
                     </div>
                     
                     <div class="endpoint-card working">
@@ -610,7 +621,7 @@ curl "https://suhoxvn8ik.execute-api.us-east-1.amazonaws.com/dev/api/v1/protocol
                         </div>
                         <div class="endpoint-description">Get search</div>
                         <div class="endpoint-params">Params: search=chicken</div>
-                        <div class="endpoint-time">Response: 103ms</div>
+                        <div class="endpoint-time">Response: 49ms</div>
                     </div>
                     
                     <div class="endpoint-card working">
@@ -621,7 +632,7 @@ curl "https://suhoxvn8ik.execute-api.us-east-1.amazonaws.com/dev/api/v1/protocol
                         </div>
                         <div class="endpoint-description">Get search</div>
                         <div class="endpoint-params">Params: search=chicken</div>
-                        <div class="endpoint-time">Response: 99ms</div>
+                        <div class="endpoint-time">Response: 41ms</div>
                     </div>
                     
                     <div class="endpoint-card working">
@@ -632,7 +643,7 @@ curl "https://suhoxvn8ik.execute-api.us-east-1.amazonaws.com/dev/api/v1/protocol
                         </div>
                         <div class="endpoint-description">Get search</div>
                         <div class="endpoint-params">Params: search=chicken</div>
-                        <div class="endpoint-time">Response: 242ms</div>
+                        <div class="endpoint-time">Response: 48ms</div>
                     </div>
                     
                     <div class="endpoint-card working">
@@ -643,7 +654,18 @@ curl "https://suhoxvn8ik.execute-api.us-east-1.amazonaws.com/dev/api/v1/protocol
                         </div>
                         <div class="endpoint-description">Get search</div>
                         <div class="endpoint-params">Params: search=chicken</div>
-                        <div class="endpoint-time">Response: 234ms</div>
+                        <div class="endpoint-time">Response: 59ms</div>
+                    </div>
+                    
+                    <div class="endpoint-card working">
+                        <div class="endpoint-header">
+                            <span class="method get">GET</span>
+                            <span class="path">/api/v1/exposures/search</span>
+                            <span class="status success">✅ 200</span>
+                        </div>
+                        <div class="endpoint-description">Get search</div>
+                        <div class="endpoint-params">Params: search=chicken</div>
+                        <div class="endpoint-time">Response: 41ms</div>
                     </div>
                     
                     <div class="endpoint-card failed">
@@ -654,7 +676,7 @@ curl "https://suhoxvn8ik.execute-api.us-east-1.amazonaws.com/dev/api/v1/protocol
                         </div>
                         <div class="endpoint-description">Get seed-demo-data</div>
                         <div class="endpoint-params">Params: </div>
-                        <div class="endpoint-time">Response: 97ms</div>
+                        <div class="endpoint-time">Response: 44ms</div>
                     </div>
                     
                     <div class="endpoint-card failed">
@@ -665,7 +687,7 @@ curl "https://suhoxvn8ik.execute-api.us-east-1.amazonaws.com/dev/api/v1/protocol
                         </div>
                         <div class="endpoint-description">Get entries</div>
                         <div class="endpoint-params">Params: </div>
-                        <div class="endpoint-time">Response: 102ms</div>
+                        <div class="endpoint-time">Response: 40ms</div>
                     </div>
                     
                     <div class="endpoint-card failed">
@@ -676,7 +698,7 @@ curl "https://suhoxvn8ik.execute-api.us-east-1.amazonaws.com/dev/api/v1/protocol
                         </div>
                         <div class="endpoint-description">Get resource</div>
                         <div class="endpoint-params">Params: </div>
-                        <div class="endpoint-time">Response: 258ms</div>
+                        <div class="endpoint-time">Response: 62ms</div>
                     </div>
                     
                     <div class="endpoint-card failed">
@@ -687,7 +709,7 @@ curl "https://suhoxvn8ik.execute-api.us-east-1.amazonaws.com/dev/api/v1/protocol
                         </div>
                         <div class="endpoint-description">Get symptoms</div>
                         <div class="endpoint-params">Params: </div>
-                        <div class="endpoint-time">Response: 103ms</div>
+                        <div class="endpoint-time">Response: 43ms</div>
                     </div>
                     
                     <div class="endpoint-card failed">
@@ -698,7 +720,7 @@ curl "https://suhoxvn8ik.execute-api.us-east-1.amazonaws.com/dev/api/v1/protocol
                         </div>
                         <div class="endpoint-description">Get supplements</div>
                         <div class="endpoint-params">Params: </div>
-                        <div class="endpoint-time">Response: 102ms</div>
+                        <div class="endpoint-time">Response: 62ms</div>
                     </div>
                     
                     <div class="endpoint-card failed">
@@ -709,7 +731,7 @@ curl "https://suhoxvn8ik.execute-api.us-east-1.amazonaws.com/dev/api/v1/protocol
                         </div>
                         <div class="endpoint-description">Get medications</div>
                         <div class="endpoint-params">Params: </div>
-                        <div class="endpoint-time">Response: 233ms</div>
+                        <div class="endpoint-time">Response: 65ms</div>
                     </div>
                     
                 </div>
@@ -772,12 +794,12 @@ curl "https://suhoxvn8ik.execute-api.us-east-1.amazonaws.com/dev/api/v1/protocol
                     </div>
                     
                     <div class="table-card">
-                        <h4>protocols</h4>
+                        <h4>protocol_food_rules</h4>
                         <div class="table-type">Table</div>
                     </div>
                     
                     <div class="table-card">
-                        <h4>protocol_food_rules</h4>
+                        <h4>protocols</h4>
                         <div class="table-type">Table</div>
                     </div>
                     
@@ -1007,8 +1029,8 @@ npm run dev</div>
 
     <footer style="background: #2d3748; color: white; padding: 2rem 0; text-align: center; margin-top: 3rem;">
         <div class="container">
-            <p>Generated automatically on 7/13/2025 • 
-               Last updated: Sun Jul 13 18:17:36 2025 -0400</p>
+            <p>Generated automatically on 7/14/2025 • 
+               Last updated: Sun Jul 13 22:07:47 2025 -0400</p>
         </div>
     </footer>
 </body>
