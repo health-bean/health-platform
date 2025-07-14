@@ -64,7 +64,7 @@ async function getTimelineData(userId, timeframeDays) {
         entry_date,
         entry_time,
         entry_type,
-        content,
+        structured_content,
         severity,
         protocol_compliant,
         notes,
@@ -76,7 +76,39 @@ async function getTimelineData(userId, timeframeDays) {
     `;
 
     const result = await client.query(query, [userId]);
-    return result.rows;
+    
+    // Transform structured_content to content for backward compatibility
+    const transformedRows = result.rows.map(row => {
+      let content = '';
+      
+      if (row.structured_content) {
+        try {
+          const structured = typeof row.structured_content === 'string' 
+            ? JSON.parse(row.structured_content) 
+            : row.structured_content;
+          
+          // Extract the main item name based on entry type
+          content = structured.item_name || 
+                   structured.food_name || 
+                   structured.symptom_name || 
+                   structured.supplement_name || 
+                   structured.medication_name || 
+                   structured.exposure_type || 
+                   structured.detox_type || 
+                   'Unknown';
+        } catch (error) {
+          console.warn('Error parsing structured_content for correlation analysis:', error);
+          content = 'Unknown';
+        }
+      }
+      
+      return {
+        ...row,
+        content // Add content field for backward compatibility with correlation logic
+      };
+    });
+    
+    return transformedRows;
   } finally {
     client.release();
   }
