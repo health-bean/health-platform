@@ -247,7 +247,7 @@ const MainApp = () => {
         selectedProtocols={safePreferences.protocols}
       />
 
-      <div className="p-4">
+      <div className="p-4 pb-20 sm:pb-4">
         {activeView === 'timeline' && (
           <TimelineView 
             entries={entries}

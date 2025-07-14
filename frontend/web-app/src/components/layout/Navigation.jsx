@@ -17,14 +17,14 @@ const Navigation = ({
       {selectedProtocols && selectedProtocols.length > 0 && (
         <div className="mb-3 text-center">
           <p className="text-xs text-gray-500 mb-1">Active Protocols</p>
-          <p className="text-sm font-medium text-gray-700">
+          <p className="text-sm font-medium text-gray-700 truncate">
             {getProtocolDisplayText(selectedProtocols)}
           </p>
         </div>
       )}
 
       {/* Navigation Tabs */}
-      <div className="flex space-x-2">
+      <div className="flex flex-wrap gap-2 justify-center sm:justify-start">
         <Button
           variant={activeView === 'timeline' ? 'primary' : 'secondary'}
           onClick={() => onViewChange('timeline')}

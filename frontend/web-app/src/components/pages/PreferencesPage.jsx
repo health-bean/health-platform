@@ -201,19 +201,19 @@ const PreferencesPage = ({ onBack }) => {
                 <h4 className="text-xl font-medium text-gray-900 mb-2">
                   {currentProtocol.protocol_name}
                 </h4>
-                <div className="flex items-center space-x-4 text-sm text-gray-600">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-4 space-y-2 sm:space-y-0 text-sm text-gray-600">
                   <div className="flex items-center">
                     <Calendar className="mr-1 h-4 w-4" />
-                    Started {formatDate(currentProtocol.start_date)}
+                    <span className="truncate">Started {formatDate(currentProtocol.start_date)}</span>
                   </div>
                   <div className="flex items-center">
                     <Clock className="mr-1 h-4 w-4" />
-                    {getDurationText(currentProtocol.start_date)}
+                    <span>{getDurationText(currentProtocol.start_date)}</span>
                   </div>
                   {currentProtocol.phase && (
                     <div className="flex items-center">
                       <Activity className="mr-1 h-4 w-4" />
-                      Phase {currentProtocol.phase}
+                      <span>Phase {currentProtocol.phase}</span>
                     </div>
                   )}
                 </div>
@@ -259,7 +259,7 @@ const PreferencesPage = ({ onBack }) => {
               <div className="h-20 bg-gray-200 rounded"></div>
             </div>
           ) : (
-            <div className="grid gap-4 md:grid-cols-2">
+            <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
               {availableProtocols.map((protocol) => (
                 <Card 
                   key={protocol.id} 
@@ -276,10 +276,10 @@ const PreferencesPage = ({ onBack }) => {
                     }
                   }}
                 >
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <h4 className="font-medium text-gray-900">{protocol.name}</h4>
-                      <p className="text-sm text-gray-600 mt-1">{protocol.description}</p>
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between">
+                    <div className="flex-1 min-w-0">
+                      <h4 className="font-medium text-gray-900 truncate">{protocol.name}</h4>
+                      <p className="text-sm text-gray-600 mt-1 line-clamp-2">{protocol.description}</p>
                       {protocol.category && (
                         <Badge variant="secondary" className="mt-2">
                           {protocol.category}
@@ -287,11 +287,13 @@ const PreferencesPage = ({ onBack }) => {
                       )}
                     </div>
                     
-                    {currentProtocol?.protocol_id === protocol.id ? (
-                      <CheckCircle className="h-5 w-5 text-primary-600" />
-                    ) : (
-                      <ArrowRight className="h-5 w-5 text-gray-400" />
-                    )}
+                    <div className="flex-shrink-0 mt-3 sm:mt-0 sm:ml-4">
+                      {currentProtocol?.protocol_id === protocol.id ? (
+                        <CheckCircle className="h-5 w-5 text-primary-600" />
+                      ) : (
+                        <ArrowRight className="h-5 w-5 text-gray-400" />
+                      )}
+                    </div>
                   </div>
                 </Card>
               ))}
@@ -311,9 +313,9 @@ const PreferencesPage = ({ onBack }) => {
             
             <div className="space-y-3">
               {protocolHistory.map((entry, index) => (
-                <div key={index} className="flex items-center justify-between py-3 border-b border-gray-100 last:border-b-0">
-                  <div>
-                    <div className="font-medium text-gray-900">{entry.new_protocol}</div>
+                <div key={index} className="flex flex-col sm:flex-row sm:items-center justify-between py-3 border-b border-gray-100 last:border-b-0 space-y-2 sm:space-y-0">
+                  <div className="flex-1 min-w-0">
+                    <div className="font-medium text-gray-900 truncate">{entry.new_protocol}</div>
                     <div className="text-sm text-gray-600">
                       {formatDate(entry.date)}
                       {entry.duration_days && (
@@ -323,7 +325,7 @@ const PreferencesPage = ({ onBack }) => {
                   </div>
                   
                   {entry.context?.change_reason && (
-                    <div className="text-sm text-gray-500">
+                    <div className="text-sm text-gray-500 sm:text-right">
                       {entry.context.change_reason.replace(/_/g, ' ')}
                     </div>
                   )}
@@ -434,7 +436,7 @@ const PreferencesPage = ({ onBack }) => {
       </div>
 
       {/* Content */}
-      <div className="p-4 max-w-4xl mx-auto">
+      <div className="p-4 pb-20 max-w-6xl mx-auto">
         {activeSection === 'overview' && renderOverviewSection()}
         {activeSection === 'protocols' && renderProtocolsSection()}
       </div>
@@ -442,7 +444,7 @@ const PreferencesPage = ({ onBack }) => {
       {/* Protocol Change Confirmation Modal */}
       {showChangeConfirm && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <Card className="max-w-md w-full">
+          <Card className="max-w-md w-full mx-4">
             <div className="p-6">
               <h3 className="text-lg font-semibold text-gray-900 mb-4">
                 Change Protocol?
@@ -453,7 +455,7 @@ const PreferencesPage = ({ onBack }) => {
                 <strong>{showChangeConfirm.name}</strong>. This change will be tracked for effectiveness analysis.
               </p>
 
-              <div className="flex space-x-3">
+              <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-3">
                 <Button
                   variant="primary"
                   onClick={() => handleProtocolChange(showChangeConfirm.id, 'user_preference_change')}
@@ -479,7 +481,7 @@ const PreferencesPage = ({ onBack }) => {
 
       {/* Beta Notice - Only show on overview */}
       {activeSection === 'overview' && (
-        <div className="p-4 max-w-4xl mx-auto">
+        <div className="p-4 pb-20 max-w-6xl mx-auto">
           <Card variant="warning" padding="default">
             <div className="text-center">
               <Sparkles className="w-8 h-8 text-yellow-600 mx-auto mb-2" />

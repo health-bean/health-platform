@@ -3,6 +3,7 @@
 
 export { designTokens } from './tokens.js';
 export * from './utils.js';
+export * from './responsive.js';
 
 // Re-export commonly used utilities
 export {
@@ -16,3 +17,13 @@ export {
   inputVariants,
   cardVariants,
 } from './utils.js';
+
+// Re-export responsive utilities
+export {
+  breakpoints,
+  responsivePatterns,
+  getResponsiveClass,
+  responsive,
+  useBreakpoint,
+  mediaQueries
+} from './responsive.js';

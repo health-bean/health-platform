@@ -44,9 +44,9 @@ const Header = ({
   return (
     <header className="bg-white border-b border-gray-200 shadow-sm sticky top-0 z-40">
       <div className="px-4 py-3">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between space-y-3 sm:space-y-0">
           {/* Date Selector */}
-          <div className="flex items-center space-x-3">
+          <div className="flex items-center space-x-3 flex-1 min-w-0">
             <div className="relative">
               <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
               <Input
