@@ -1,6 +1,6 @@
 const corsHeaders = {
     'Access-Control-Allow-Origin': '*', // You said keep this for now
-    'Access-Control-Allow-Headers': 'Content-Type,Authorization,X-Amz-Date,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent,X-Requested-With,X-Demo-Mode,x-demo-mode',
+    'Access-Control-Allow-Headers': 'Content-Type,Authorization,X-Amz-Date,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent,X-Requested-With,X-Demo-Mode,x-demo-mode,X-Demo-User-Id,X-Demo-Session-Id',
     'Access-Control-Allow-Methods': 'GET,POST,PUT,DELETE,OPTIONS',
     'Access-Control-Allow-Credentials': 'false',
     'Content-Type': 'application/json',
