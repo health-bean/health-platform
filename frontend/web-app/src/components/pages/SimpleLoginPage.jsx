@@ -128,7 +128,6 @@ const SimpleLoginPage = () => {
           </div>
           
           <div className="text-xs text-gray-500 space-y-1">
-            <p><strong>Password:</strong> demo123 (for all accounts)</p>
             <p><strong>Session:</strong> Automatically cleared on browser close</p>
             <p><strong>Data:</strong> Demo data showcasing different health protocols</p>
           </div>
