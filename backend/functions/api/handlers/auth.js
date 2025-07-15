@@ -122,6 +122,23 @@ const handleLogin = async (body, event) => {
   const { email, password } = body;
   console.log('🔍 AUTH: Starting login for email:', email);
 
+  // Check for demo mode first (clean auth system)
+  const demoMode = event.headers?.['X-Demo-Mode'] || event.headers?.['x-demo-mode'];
+  if (demoMode === 'true') {
+    console.log('🔍 AUTH: Demo mode login detected');
+    return successResponse({
+      message: 'Demo login successful',
+      user: {
+        id: 'demo-user',
+        email: email || 'demo@example.com',
+        firstName: 'Demo',
+        lastName: 'User',
+        userType: 'demo'
+      },
+      isDemo: true
+    });
+  }
+
   if (!email || !password) {
     console.log('🔍 AUTH: Missing email or password');
     return errorResponse('Email and password required', 400);

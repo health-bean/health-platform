@@ -1,12 +1,11 @@
-// File: frontend/web-app/src/App.jsx (UPDATED WITH AUTH)
+// File: frontend/web-app/src/App.jsx (CLEAN AUTH SYSTEM)
 
 import React, { useEffect, useMemo } from 'react';
 import { Loader2 } from 'lucide-react';
 
-// Import auth components
-import { AuthProvider } from '../../shared/components/AuthProvider';
-import useAuth from '../../shared/hooks/useAuth';
-import LoginPage from './components/pages/LoginPage';
+// Import clean auth components
+import { SimpleAuthProvider, useSimpleAuth } from '../../shared/components/SimpleAuthProvider';
+import SimpleLoginPage from './components/pages/SimpleLoginPage';
 import ErrorBoundary from './components/ErrorBoundary';
 import PreferencesPage from './components/pages/PreferencesPage';
 
@@ -14,10 +13,8 @@ import PreferencesPage from './components/pages/PreferencesPage';
 import { Button, Alert } from '../../shared/components/ui';
 import useProtocols from '../../shared/hooks/useProtocols';
 import useUserPreferences from '../../shared/hooks/useUserPreferences';
-// DISABLED: These hooks were causing duplicate API calls
-// import useExposureTypes from '../../shared/hooks/useExposureTypes';
-// import useDetoxTypes from '../../shared/hooks/useDetoxTypes';
-import useReflectionData from '../../shared/hooks/useReflectionData';
+import { useSimpleApi, useJournalApi } from '../../shared/hooks/useSimpleApi';
+import useSimpleReflectionData from '../../shared/hooks/useSimpleReflectionData';
 
 // Import local hooks
 import { useAppState } from './hooks/useAppState';
@@ -38,9 +35,12 @@ import SetupWizard from './features/setup/SetupWizard';
 // Import utils
 import { getProtocolDisplayText } from '../../shared/utils/entryHelpers';
 
-// Main App Component (Inside AuthProvider)
+// Main App Component (Inside SimpleAuthProvider)
 const MainApp = () => {
-  const { isAuthenticated, user, loading: authLoading, isDemoMode } = useAuth();
+  const { isAuthenticated, user, loading: authLoading, isDemoMode } = useSimpleAuth();
+  
+  // Initialize API client
+  useSimpleApi();
   
   // App state
   const { 
@@ -62,16 +62,9 @@ const MainApp = () => {
   const { protocols, loading: protocolsLoading, error: protocolsError } = useProtocols(isAuthenticated);
   const { preferences, updatePreferences, refreshPreferences, loading: preferencesLoading, error: preferencesError, isReady } = useUserPreferences(isAuthenticated);
   
-  // DISABLED: These hooks are causing duplicate API calls
-  // const { exposureTypes } = useExposureTypes(isAuthenticated);
-  // const { detoxTypes } = useDetoxTypes(isAuthenticated);
+  // Simple reflection data using clean API
+  const { reflectionData, updateReflectionData, saveReflectionData, loading: reflectionLoading, hasUnsavedChanges } = useSimpleReflectionData(selectedDate, isAuthenticated);
   
-  // Temporary replacements to prevent breaking the app
-  const exposureTypes = [];
-  const detoxTypes = [];
-  // Re-enabled: useReflectionData only uses sessionStorage, no API calls
-  const { reflectionData, updateReflectionData, saveReflectionData, loading: reflectionLoading, hasUnsavedChanges } = useReflectionData(selectedDate, isAuthenticated);
-
   // Timeline and entry form (only when authenticated)
   const { entries, loading: entriesLoading, addEntry, hasCriticalInsights } = useTimelineEntries(selectedDate, isAuthenticated);
   const { formData, updateFormData, toggleSelectedFood, handleQuickSelect, resetForm, buildEntryData } = useEntryForm();
@@ -114,16 +107,16 @@ const MainApp = () => {
 
   // Show login if not authenticated
   if (!isAuthenticated) {
-    return <LoginPage />;
+    return <SimpleLoginPage />;
   }
 
-  // Handle app data loading (preferences, protocols, etc.)
-  if (isAppLoading) {
+  // Handle app data loading (simplified for clean auth)
+  if (authLoading || preferencesLoading) {
     return (
       <div className="max-w-md mx-auto bg-white min-h-screen flex items-center justify-center">
         <div className="text-center">
           <Loader2 size={32} className="animate-spin mx-auto mb-4 text-blue-600" />
-          <p className="text-gray-600">Loading your data...</p>
+          <p className="text-gray-600">Loading your health journey...</p>
         </div>
       </div>
     );
@@ -312,12 +305,12 @@ const MainApp = () => {
   );
 };
 
-// Root App Component with AuthProvider
+// Root App Component with SimpleAuthProvider
 function App() {
   return (
-    <AuthProvider>
+    <SimpleAuthProvider>
       <MainApp />
-    </AuthProvider>
+    </SimpleAuthProvider>
   );
 }
 

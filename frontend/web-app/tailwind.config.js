@@ -3,7 +3,8 @@ export default {
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
-    "../shared/**/*.{js,ts,jsx,tsx}", // Include shared components
+    "../shared/components/**/*.{js,ts,jsx,tsx}", // More specific path to avoid node_modules
+    "../shared/utils/**/*.{js,ts,jsx,tsx}",     // More specific path to avoid node_modules
   ],
   theme: {
     extend: {

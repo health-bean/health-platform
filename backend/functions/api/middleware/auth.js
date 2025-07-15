@@ -8,6 +8,50 @@ const JWT_SECRET = process.env.JWT_SECRET || (() => {
   return require('crypto').randomBytes(32).toString('base64');
 })();
 
+// Demo user mapping for clean auth system
+const DEMO_USERS = {
+  'sarah-aip': {
+    id: '8e8a568a-c2f8-43a8-abf2-4e54408dbdc0',
+    email: 'sarah.aip@test.com',
+    first_name: 'Sarah',
+    last_name: 'Johnson',
+    user_type: 'demo',
+    is_active: true
+  },
+  'mike-fodmap': {
+    id: '7d7b457b-b1a7-42b7-a177-6550dcb9cae1',
+    email: 'mike.fodmap@test.com',
+    first_name: 'Mike',
+    last_name: 'Chen',
+    user_type: 'demo',
+    is_active: true
+  },
+  'lisa-histamine': {
+    id: '6c6a346c-a0a6-41a6-a066-5440cba8bde2',
+    email: 'lisa.histamine@test.com',
+    first_name: 'Lisa',
+    last_name: 'Rodriguez',
+    user_type: 'demo',
+    is_active: true
+  },
+  'john-paleo': {
+    id: '5b5a235b-9f95-40a5-9f55-4330ba97ace3',
+    email: 'john.paleo@test.com',
+    first_name: 'John',
+    last_name: 'Williams',
+    user_type: 'demo',
+    is_active: true
+  },
+  'emma-multi': {
+    id: '4a4a124a-8e84-3f94-8e44-3220a986bcd4',
+    email: 'emma.multi@test.com',
+    first_name: 'Emma',
+    last_name: 'Davis',
+    user_type: 'demo',
+    is_active: true
+  }
+};
+
 const getCurrentUser = async (event) => {
   try {
     console.log('AUTH MIDDLEWARE: Event parameter:', typeof event, event ? 'defined' : 'undefined');
@@ -27,6 +71,32 @@ const getCurrentUser = async (event) => {
       return null;
     }
     
+    // Check for demo mode first (clean auth system)
+    const demoMode = event.headers['X-Demo-Mode'] || event.headers['x-demo-mode'];
+    const demoUserId = event.headers['X-Demo-User-Id'] || event.headers['x-demo-user-id'];
+    const demoSessionId = event.headers['X-Demo-Session-Id'] || event.headers['x-demo-session-id'];
+    
+    if (demoMode === 'true' && demoUserId) {
+      console.log('AUTH MIDDLEWARE: Demo mode detected', { 
+        demoUserId, 
+        sessionId: demoSessionId ? 'present' : 'missing' 
+      });
+      
+      const demoUser = DEMO_USERS[demoUserId];
+      if (demoUser) {
+        console.log('AUTH MIDDLEWARE: Demo user found:', demoUser.email);
+        return {
+          ...demoUser,
+          sessionId: demoSessionId,
+          isDemo: true
+        };
+      } else {
+        console.log('AUTH MIDDLEWARE: Demo user not found:', demoUserId);
+        return null;
+      }
+    }
+    
+    // Fallback to JWT auth for non-demo users
     const authHeader = event.headers.Authorization || event.headers.authorization;
     console.log('AUTH MIDDLEWARE: Authorization header:', authHeader ? 'present' : 'missing');
     
