@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generated": "2025-07-14T23:54:57.344Z",
+    "generated": "2025-07-15T00:00:15.716Z",
     "version": "1.0.0",
     "generator": "AutomatedProfessionalDocsGenerator"
   },
@@ -17,7 +17,7 @@
     "workingAPIs": 9,
     "totalAPIs": 33,
     "totalTables": 24,
-    "totalCommits": 108,
+    "totalCommits": 109,
     "contributors": 1
   },
   "discoveredInfo": {
@@ -132,7 +132,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 4211,
+          "responseTime": 4216,
           "responseData": {
             "insights": [
               {
@@ -141,20 +141,20 @@
                 "effect": "joint pain",
                 "timeWindow": 48,
                 "timeWindowDescription": "within 48 hours",
-                "confidence": 0.63,
-                "frequency": "52/82 times",
+                "confidence": 0.64,
+                "frequency": "52/81 times",
                 "occurrences": 52,
-                "totalOpportunities": 82,
+                "totalOpportunities": 81,
                 "propertyType": "oxalate",
                 "propertyValue": "high oxalate",
                 "contributingFoods": [
-                  "swiss chard",
-                  "spinach"
+                  "spinach",
+                  "swiss chard"
                 ],
                 "foodCount": 2,
-                "description": "🔍 Your data suggests high oxalate foods may trigger joint pain (2 foods: swiss chard, spinach)",
-                "recommendation": "Consider avoiding high oxalate foods to test your sensitivity. This includes: swiss chard, spinach",
-                "patternInsight": "This pattern suggests you may be sensitive to high oxalate compounds. Common sources include: swiss chard, spinach",
+                "description": "🔍 Your data suggests high oxalate foods may trigger joint pain (2 foods: spinach, swiss chard)",
+                "recommendation": "Consider avoiding high oxalate foods to test your sensitivity. This includes: spinach, swiss chard",
+                "patternInsight": "This pattern suggests you may be sensitive to high oxalate compounds. Common sources include: spinach, swiss chard",
                 "patternBoost": 0.1
               },
               {
@@ -185,10 +185,10 @@
                 "effect": "swelling",
                 "timeWindow": 48,
                 "timeWindowDescription": "within 48 hours",
-                "confidence": 0.68,
-                "frequency": "58/86 times",
+                "confidence": 0.69,
+                "frequency": "58/85 times",
                 "occurrences": 58,
-                "totalOpportunities": 86,
+                "totalOpportunities": 85,
                 "propertyType": "oxalate",
                 "propertyValue": "high oxalate",
                 "contributingFoods": [
@@ -200,111 +200,6 @@
                 "recommendation": "Consider avoiding high oxalate foods to test your sensitivity. This includes: swiss chard, sweet potato",
                 "patternInsight": "This pattern suggests you may be sensitive to high oxalate compounds. Common sources include: swiss chard, sweet potato",
                 "patternBoost": 0.1
-              },
-              {
-                "type": "food-symptom",
-                "trigger": "cucumber",
-                "effect": "joint pain",
-                "timeWindow": 48,
-                "timeWindowDescription": "within 48 hours",
-                "confidence": 0.6,
-                "frequency": "21/35 times",
-                "occurrences": 21,
-                "totalOpportunities": 35,
-                "avgSeverity": 6.2,
-                "impactScore": 0.8238095238095238,
-                "description": "🔍 Your data suggests cucumber may trigger joint pain (60% of instances)",
-                "recommendation": "Monitor cucumber consumption and joint pain symptoms more closely"
-              },
-              {
-                "type": "food-symptom",
-                "trigger": "cucumber",
-                "effect": "swelling",
-                "timeWindow": 48,
-                "timeWindowDescription": "within 48 hours",
-                "confidence": 0.6,
-                "frequency": "21/35 times",
-                "occurrences": 21,
-                "totalOpportunities": 35,
-                "avgSeverity": 4.8,
-                "impactScore": 0.7961904761904761,
-                "description": "🔍 Your data suggests cucumber may trigger swelling (60% of instances)",
-                "recommendation": "Monitor cucumber consumption and swelling symptoms more closely"
-              },
-              {
-                "type": "food-symptom",
-                "trigger": "watermelon",
-                "effect": "swelling",
-                "timeWindow": 48,
-                "timeWindowDescription": "within 48 hours",
-                "confidence": 0.63,
-                "frequency": "29/46 times",
-                "occurrences": 29,
-                "totalOpportunities": 46,
-                "avgSeverity": 4.8,
-                "impactScore": 0.8269865067466267,
-                "description": "🔍 Your data suggests watermelon may trigger swelling (63% of instances)",
-                "recommendation": "Consider eliminating watermelon for 2-4 weeks to test your sensitivity"
-              },
-              {
-                "type": "food-symptom",
-                "trigger": "grapefruit",
-                "effect": "joint pain",
-                "timeWindow": 48,
-                "timeWindowDescription": "within 48 hours",
-                "confidence": 0.64,
-                "frequency": "27/42 times",
-                "occurrences": 27,
-                "totalOpportunities": 42,
-                "avgSeverity": 6,
-                "impactScore": 0.8635978835978836,
-                "description": "🔍 Your data suggests grapefruit may trigger joint pain (64% of instances)",
-                "recommendation": "Consider eliminating grapefruit for 2-4 weeks to test your sensitivity"
-              },
-              {
-                "type": "food-symptom",
-                "trigger": "eggs",
-                "effect": "digestive issues",
-                "timeWindow": 24,
-                "timeWindowDescription": "within 24 hours",
-                "confidence": 0.63,
-                "frequency": "5/8 times",
-                "occurrences": 5,
-                "totalOpportunities": 8,
-                "avgSeverity": 4.8,
-                "impactScore": 0.821,
-                "description": "🔍 Your data suggests eggs may trigger digestive issues (63% of instances)",
-                "recommendation": "Consider eliminating eggs for 2-4 weeks to test your sensitivity"
-              },
-              {
-                "type": "food-symptom",
-                "trigger": "eggs",
-                "effect": "digestive issues",
-                "timeWindow": 48,
-                "timeWindowDescription": "within 48 hours",
-                "confidence": 0.75,
-                "frequency": "6/8 times",
-                "occurrences": 6,
-                "totalOpportunities": 8,
-                "avgSeverity": 4.8,
-                "impactScore": 0.9466666666666667,
-                "description": "🔍 Your data suggests eggs may trigger digestive issues (75% of the time)",
-                "recommendation": "Consider eliminating eggs for 2-4 weeks to test your sensitivity"
-              },
-              {
-                "type": "food-symptom",
-                "trigger": "eggs",
-                "effect": "swelling",
-                "timeWindow": 48,
-                "timeWindowDescription": "within 48 hours",
-                "confidence": 0.75,
-                "frequency": "6/8 times",
-                "occurrences": 6,
-                "totalOpportunities": 8,
-                "avgSeverity": 5.2,
-                "impactScore": 0.9533333333333334,
-                "description": "🔍 Your data suggests eggs may trigger swelling (75% of the time)",
-                "recommendation": "Consider eliminating eggs for 2-4 weeks to test your sensitivity"
               },
               {
                 "type": "food-symptom",
@@ -320,6 +215,51 @@
                 "impactScore": 0.8428846153846153,
                 "description": "🔍 Your data suggests pineapple may trigger joint pain (62% of instances)",
                 "recommendation": "Consider eliminating pineapple for 2-4 weeks to test your sensitivity"
+              },
+              {
+                "type": "food-symptom",
+                "trigger": "eggs",
+                "effect": "digestive issues",
+                "timeWindow": 24,
+                "timeWindowDescription": "within 24 hours",
+                "confidence": 0.71,
+                "frequency": "5/7 times",
+                "occurrences": 5,
+                "totalOpportunities": 7,
+                "avgSeverity": 4.8,
+                "impactScore": 0.9102857142857143,
+                "description": "🔍 Your data suggests eggs may trigger digestive issues (71% of the time)",
+                "recommendation": "Consider eliminating eggs for 2-4 weeks to test your sensitivity"
+              },
+              {
+                "type": "food-symptom",
+                "trigger": "eggs",
+                "effect": "digestive issues",
+                "timeWindow": 48,
+                "timeWindowDescription": "within 48 hours",
+                "confidence": 0.71,
+                "frequency": "5/7 times",
+                "occurrences": 5,
+                "totalOpportunities": 7,
+                "avgSeverity": 4.8,
+                "impactScore": 0.9102857142857143,
+                "description": "🔍 Your data suggests eggs may trigger digestive issues (71% of the time)",
+                "recommendation": "Consider eliminating eggs for 2-4 weeks to test your sensitivity"
+              },
+              {
+                "type": "food-symptom",
+                "trigger": "eggs",
+                "effect": "swelling",
+                "timeWindow": 48,
+                "timeWindowDescription": "within 48 hours",
+                "confidence": 0.86,
+                "frequency": "6/7 times",
+                "occurrences": 6,
+                "totalOpportunities": 7,
+                "avgSeverity": 5.2,
+                "impactScore": 1,
+                "description": "🔍 Your data suggests eggs may trigger swelling (86% of the time)",
+                "recommendation": "Consider eliminating eggs for 2-4 weeks to test your sensitivity"
               },
               {
                 "type": "food-symptom",
@@ -365,6 +305,36 @@
                 "impactScore": 0.948663967611336,
                 "description": "🔍 Your data suggests orange may trigger joint pain (73% of the time)",
                 "recommendation": "Consider eliminating orange for 2-4 weeks to test your sensitivity"
+              },
+              {
+                "type": "food-symptom",
+                "trigger": "cucumber",
+                "effect": "joint pain",
+                "timeWindow": 48,
+                "timeWindowDescription": "within 48 hours",
+                "confidence": 0.62,
+                "frequency": "21/34 times",
+                "occurrences": 21,
+                "totalOpportunities": 34,
+                "avgSeverity": 6.2,
+                "impactScore": 0.8414565826330532,
+                "description": "🔍 Your data suggests cucumber may trigger joint pain (62% of instances)",
+                "recommendation": "Consider eliminating cucumber for 2-4 weeks to test your sensitivity"
+              },
+              {
+                "type": "food-symptom",
+                "trigger": "cucumber",
+                "effect": "swelling",
+                "timeWindow": 48,
+                "timeWindowDescription": "within 48 hours",
+                "confidence": 0.62,
+                "frequency": "21/34 times",
+                "occurrences": 21,
+                "totalOpportunities": 34,
+                "avgSeverity": 4.8,
+                "impactScore": 0.8138375350140056,
+                "description": "🔍 Your data suggests cucumber may trigger swelling (62% of instances)",
+                "recommendation": "Consider eliminating cucumber for 2-4 weeks to test your sensitivity"
               },
               {
                 "type": "food-symptom",
@@ -443,6 +413,21 @@
               },
               {
                 "type": "food-symptom",
+                "trigger": "grapefruit",
+                "effect": "joint pain",
+                "timeWindow": 48,
+                "timeWindowDescription": "within 48 hours",
+                "confidence": 0.66,
+                "frequency": "27/41 times",
+                "occurrences": 27,
+                "totalOpportunities": 41,
+                "avgSeverity": 6,
+                "impactScore": 0.8792773261065944,
+                "description": "🔍 Your data suggests grapefruit may trigger joint pain (66% of instances)",
+                "recommendation": "Consider eliminating grapefruit for 2-4 weeks to test your sensitivity"
+              },
+              {
+                "type": "food-symptom",
                 "trigger": "broccoli",
                 "effect": "swelling",
                 "timeWindow": 48,
@@ -488,6 +473,36 @@
               },
               {
                 "type": "food-symptom",
+                "trigger": "watermelon",
+                "effect": "joint pain",
+                "timeWindow": 48,
+                "timeWindowDescription": "within 48 hours",
+                "confidence": 0.6,
+                "frequency": "27/45 times",
+                "occurrences": 27,
+                "totalOpportunities": 45,
+                "avgSeverity": 5.7,
+                "impactScore": 0.8133333333333334,
+                "description": "🔍 Your data suggests watermelon may trigger joint pain (60% of instances)",
+                "recommendation": "Monitor watermelon consumption and joint pain symptoms more closely"
+              },
+              {
+                "type": "food-symptom",
+                "trigger": "watermelon",
+                "effect": "swelling",
+                "timeWindow": 48,
+                "timeWindowDescription": "within 48 hours",
+                "confidence": 0.64,
+                "frequency": "29/45 times",
+                "occurrences": 29,
+                "totalOpportunities": 45,
+                "avgSeverity": 4.8,
+                "impactScore": 0.8409961685823755,
+                "description": "🔍 Your data suggests watermelon may trigger swelling (64% of instances)",
+                "recommendation": "Consider eliminating watermelon for 2-4 weeks to test your sensitivity"
+              },
+              {
+                "type": "food-symptom",
                 "trigger": "lime",
                 "effect": "joint pain",
                 "timeWindow": 48,
@@ -530,54 +545,6 @@
                 "impactScore": 1,
                 "description": "🔍 Your data suggests eggplant may trigger digestive issues (80% of the time)",
                 "recommendation": "Consider eliminating eggplant for 2-4 weeks to test your sensitivity"
-              },
-              {
-                "type": "supplement-improvement",
-                "trigger": "vitamin d3 5000 iu",
-                "effect": "reduced digestive issues",
-                "timeWindow": 672,
-                "timeWindowDescription": "after 4 weeks",
-                "confidence": 1,
-                "frequency": "100% reduction in frequency",
-                "severityChange": "100% reduction in severity",
-                "description": "💡 Your data suggests vitamin d3 5000 iu significantly reduces digestive issues (100% improvement after 4 weeks)",
-                "recommendation": "Continue vitamin d3 5000 iu - your data shows positive effects on digestive issues"
-              },
-              {
-                "type": "supplement-improvement",
-                "trigger": "vitamin d3 5000 iu",
-                "effect": "reduced joint pain",
-                "timeWindow": 672,
-                "timeWindowDescription": "after 4 weeks",
-                "confidence": 1,
-                "frequency": "100% reduction in frequency",
-                "severityChange": "100% reduction in severity",
-                "description": "💡 Your data suggests vitamin d3 5000 iu significantly reduces joint pain (100% improvement after 4 weeks)",
-                "recommendation": "Continue vitamin d3 5000 iu - your data shows positive effects on joint pain"
-              },
-              {
-                "type": "supplement-improvement",
-                "trigger": "vitamin d3 5000 iu",
-                "effect": "reduced swelling",
-                "timeWindow": 672,
-                "timeWindowDescription": "after 4 weeks",
-                "confidence": 1,
-                "frequency": "100% reduction in frequency",
-                "severityChange": "100% reduction in severity",
-                "description": "💡 Your data suggests vitamin d3 5000 iu significantly reduces swelling (100% improvement after 4 weeks)",
-                "recommendation": "Continue vitamin d3 5000 iu - your data shows positive effects on swelling"
-              },
-              {
-                "type": "supplement-improvement",
-                "trigger": "vitamin d3 5000 iu",
-                "effect": "reduced headache",
-                "timeWindow": 672,
-                "timeWindowDescription": "after 4 weeks",
-                "confidence": 1,
-                "frequency": "100% reduction in frequency",
-                "severityChange": "100% reduction in severity",
-                "description": "💡 Your data suggests vitamin d3 5000 iu significantly reduces headache (100% improvement after 4 weeks)",
-                "recommendation": "Continue vitamin d3 5000 iu - your data shows positive effects on headache"
               },
               {
                 "type": "supplement-improvement",
@@ -629,6 +596,54 @@
               },
               {
                 "type": "supplement-improvement",
+                "trigger": "vitamin d3 5000 iu",
+                "effect": "reduced digestive issues",
+                "timeWindow": 672,
+                "timeWindowDescription": "after 4 weeks",
+                "confidence": 1,
+                "frequency": "100% reduction in frequency",
+                "severityChange": "100% reduction in severity",
+                "description": "💡 Your data suggests vitamin d3 5000 iu significantly reduces digestive issues (100% improvement after 4 weeks)",
+                "recommendation": "Continue vitamin d3 5000 iu - your data shows positive effects on digestive issues"
+              },
+              {
+                "type": "supplement-improvement",
+                "trigger": "vitamin d3 5000 iu",
+                "effect": "reduced joint pain",
+                "timeWindow": 672,
+                "timeWindowDescription": "after 4 weeks",
+                "confidence": 1,
+                "frequency": "100% reduction in frequency",
+                "severityChange": "100% reduction in severity",
+                "description": "💡 Your data suggests vitamin d3 5000 iu significantly reduces joint pain (100% improvement after 4 weeks)",
+                "recommendation": "Continue vitamin d3 5000 iu - your data shows positive effects on joint pain"
+              },
+              {
+                "type": "supplement-improvement",
+                "trigger": "vitamin d3 5000 iu",
+                "effect": "reduced swelling",
+                "timeWindow": 672,
+                "timeWindowDescription": "after 4 weeks",
+                "confidence": 1,
+                "frequency": "100% reduction in frequency",
+                "severityChange": "100% reduction in severity",
+                "description": "💡 Your data suggests vitamin d3 5000 iu significantly reduces swelling (100% improvement after 4 weeks)",
+                "recommendation": "Continue vitamin d3 5000 iu - your data shows positive effects on swelling"
+              },
+              {
+                "type": "supplement-improvement",
+                "trigger": "vitamin d3 5000 iu",
+                "effect": "reduced headache",
+                "timeWindow": 672,
+                "timeWindowDescription": "after 4 weeks",
+                "confidence": 1,
+                "frequency": "100% reduction in frequency",
+                "severityChange": "100% reduction in severity",
+                "description": "💡 Your data suggests vitamin d3 5000 iu significantly reduces headache (100% improvement after 4 weeks)",
+                "recommendation": "Continue vitamin d3 5000 iu - your data shows positive effects on headache"
+              },
+              {
+                "type": "supplement-improvement",
                 "trigger": "melatonin 3mg",
                 "effect": "reduced digestive issues",
                 "timeWindow": 672,
@@ -674,14 +689,27 @@
                 "severityChange": "100% reduction in severity",
                 "description": "💡 Your data suggests melatonin 3mg significantly reduces headache (100% improvement after 4 weeks)",
                 "recommendation": "Continue melatonin 3mg - your data shows positive effects on headache"
+              },
+              {
+                "type": "exercise-energy",
+                "trigger": "morning walk",
+                "effect": "increased energy",
+                "timeWindow": 4,
+                "timeWindowDescription": "within 4 hours",
+                "confidence": 0.5079365079365079,
+                "energyChange": 1.5,
+                "baselineEnergy": 6.5,
+                "sessionsAnalyzed": 7,
+                "description": "💡 Your data suggests morning walk consistently boosts energy levels (+1.5 points above your baseline)",
+                "recommendation": "Continue morning walk - it appears to energize you"
               }
             ],
             "summary": {
-              "totalCorrelations": 37,
-              "triggers": 22,
+              "totalCorrelations": 39,
+              "triggers": 23,
               "improvements": 12,
               "medicationEffects": 0,
-              "exerciseImpacts": 0,
+              "exerciseImpacts": 1,
               "sleepFactors": 0,
               "stressAmplifiers": 0,
               "foodPatterns": 3
@@ -690,7 +718,7 @@
             "confidence_threshold": 0.6,
             "user_id": "8e8a568a-c2f8-43a8-abf2-4e54408dbdc0"
           },
-          "responseSize": 17685
+          "responseSize": 18548
         },
         {
           "path": "/api/v1/detox-types",
@@ -701,7 +729,7 @@
           "params": [],
           "status": 404,
           "working": false,
-          "responseTime": 117,
+          "responseTime": 110,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -747,7 +775,7 @@
           "params": [],
           "status": 404,
           "working": false,
-          "responseTime": 168,
+          "responseTime": 98,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -798,7 +826,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 117,
+          "responseTime": 144,
           "responseData": {
             "foods": [
               {
@@ -849,7 +877,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 283,
+          "responseTime": 166,
           "responseData": {
             "foods": [
               {
@@ -4756,7 +4784,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 165,
+          "responseTime": 111,
           "responseData": {
             "protocols": [
               {
@@ -4930,7 +4958,7 @@
           ],
           "status": 401,
           "working": false,
-          "responseTime": 248,
+          "responseTime": 93,
           "responseData": {
             "error": "Authentication required"
           },
@@ -4950,7 +4978,7 @@
           ],
           "status": 401,
           "working": false,
-          "responseTime": 103,
+          "responseTime": 95,
           "responseData": {
             "error": "Authentication required"
           },
@@ -4970,7 +4998,7 @@
           ],
           "status": 404,
           "working": false,
-          "responseTime": 138,
+          "responseTime": 117,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -5021,7 +5049,7 @@
           ],
           "status": 404,
           "working": false,
-          "responseTime": 243,
+          "responseTime": 94,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -5067,7 +5095,7 @@
           "params": [],
           "status": 400,
           "working": false,
-          "responseTime": 99,
+          "responseTime": 137,
           "responseData": {
             "error": "Email and password required"
           },
@@ -5082,7 +5110,7 @@
           "params": [],
           "status": 404,
           "working": false,
-          "responseTime": 102,
+          "responseTime": 138,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -5128,7 +5156,7 @@
           "params": [],
           "status": 401,
           "working": false,
-          "responseTime": 99,
+          "responseTime": 91,
           "responseData": {
             "error": "No authorization header"
           },
@@ -5143,7 +5171,7 @@
           "params": [],
           "status": 404,
           "working": false,
-          "responseTime": 155,
+          "responseTime": 85,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -5189,7 +5217,7 @@
           "params": [],
           "status": 400,
           "working": false,
-          "responseTime": 109,
+          "responseTime": 94,
           "responseData": {
             "error": "Missing required fields"
           },
@@ -5204,7 +5232,7 @@
           "params": [],
           "status": 400,
           "working": false,
-          "responseTime": 233,
+          "responseTime": 90,
           "responseData": {
             "error": "Email and password required"
           },
@@ -5219,7 +5247,7 @@
           "params": [],
           "status": 401,
           "working": false,
-          "responseTime": 238,
+          "responseTime": 138,
           "responseData": {
             "error": "Authentication required"
           },
@@ -5239,7 +5267,7 @@
           ],
           "status": 401,
           "working": false,
-          "responseTime": 100,
+          "responseTime": 88,
           "responseData": {
             "error": "Authentication required"
           },
@@ -5259,7 +5287,7 @@
           ],
           "status": 401,
           "working": false,
-          "responseTime": 225,
+          "responseTime": 93,
           "responseData": {
             "error": "Authentication required"
           },
@@ -5279,7 +5307,7 @@
           ],
           "status": 401,
           "working": false,
-          "responseTime": 97,
+          "responseTime": 132,
           "responseData": {
             "error": "Authentication required"
           },
@@ -5299,7 +5327,7 @@
           ],
           "status": 401,
           "working": false,
-          "responseTime": 100,
+          "responseTime": 92,
           "responseData": {
             "error": "Authentication required"
           },
@@ -5319,7 +5347,7 @@
           ],
           "status": 404,
           "working": false,
-          "responseTime": 103,
+          "responseTime": 92,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -5370,7 +5398,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 130,
+          "responseTime": 101,
           "responseData": {
             "symptoms": [],
             "total": 0,
@@ -5393,7 +5421,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 98,
+          "responseTime": 93,
           "responseData": {
             "supplements": [],
             "total": 0,
@@ -5415,7 +5443,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 120,
+          "responseTime": 119,
           "responseData": {
             "medications": [],
             "total": 0,
@@ -5437,7 +5465,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 244,
+          "responseTime": 95,
           "responseData": {
             "detox_types": [],
             "total": 0,
@@ -5459,7 +5487,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 101,
+          "responseTime": 108,
           "responseData": {
             "exposures": [],
             "total": 0,
@@ -5476,7 +5504,7 @@
           "params": [],
           "status": 404,
           "working": false,
-          "responseTime": 238,
+          "responseTime": 98,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -5522,7 +5550,7 @@
           "params": [],
           "status": 500,
           "working": false,
-          "responseTime": 100,
+          "responseTime": 96,
           "responseData": {
             "error": "Failed to complete get journal entries"
           },
@@ -5537,7 +5565,7 @@
           "params": [],
           "status": 500,
           "working": false,
-          "responseTime": 135,
+          "responseTime": 137,
           "responseData": {
             "error": "Failed to complete get journal entry"
           },
@@ -5552,7 +5580,7 @@
           "params": [],
           "status": 404,
           "working": false,
-          "responseTime": 113,
+          "responseTime": 89,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -5598,7 +5626,7 @@
           "params": [],
           "status": 404,
           "working": false,
-          "responseTime": 237,
+          "responseTime": 92,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -5644,7 +5672,7 @@
           "params": [],
           "status": 404,
           "working": false,
-          "responseTime": 95,
+          "responseTime": 112,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -5838,7 +5866,7 @@
             {
               "name": "App",
               "path": "frontend/web-app/src/App.jsx",
-              "size": 12367,
+              "size": 11824,
               "hooks": [
                 "useEffect",
                 "useMemo",
@@ -6087,11 +6115,8 @@
             {
               "name": "TimelineView",
               "path": "frontend/web-app/src/features/timeline/TimelineView.jsx",
-              "size": 8092,
-              "hooks": [
-                "useState",
-                "useEffect"
-              ]
+              "size": 6989,
+              "hooks": []
             },
             {
               "name": "TimePickerInput",
@@ -6127,7 +6152,7 @@
             }
           ],
           "utilities": [],
-          "size": "404.5 KB"
+          "size": "402.89 KB"
         },
         "frontend/shared": {
           "totalFiles": 38,
@@ -6424,18 +6449,18 @@
       "repository": "https://github.com/deebyrne26/health-platform",
       "branch": "main",
       "lastCommit": {
-        "hash": "947d693",
-        "message": "Update TimelineEntry.jsx",
+        "hash": "6a43f1b",
+        "message": "revert to working entries",
         "author": "deebyrne26",
-        "date": "Mon Jul 14 19:54:18 2025 -0400"
+        "date": "Mon Jul 14 19:59:44 2025 -0400"
       },
       "contributors": [
         {
           "name": "deebyrne26",
-          "commits": 108
+          "commits": 109
         }
       ],
-      "totalCommits": 108
+      "totalCommits": 109
     }
   }
 }
