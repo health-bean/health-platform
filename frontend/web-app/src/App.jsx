@@ -14,7 +14,7 @@ import PreferencesPage from './components/pages/PreferencesPage';
 import { Button, Alert } from '../../shared/components/ui';
 import useProtocols from '../../shared/hooks/useProtocols';
 import useUserPreferences from '../../shared/hooks/useUserPreferences';
-import { useSimpleApi, useJournalApi } from '../../shared/hooks/useSimpleApi';
+import { useSimpleApi, useJournalApi } from './hooks/useSimpleApi';
 import useSimpleReflectionData from '../../shared/hooks/useSimpleReflectionData';
 import useExposureTypes from '../../shared/hooks/useExposureTypes';
 import useDetoxTypes from '../../shared/hooks/useDetoxTypes';

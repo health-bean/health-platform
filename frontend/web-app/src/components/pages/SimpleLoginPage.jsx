@@ -5,23 +5,51 @@ import React, { useState } from 'react';
 import { Rocket, AlertTriangle, User, Shield } from 'lucide-react';
 import { Button, Alert, Card } from '../../../../shared/components/ui';
 import { cn } from '../../../../shared/design-system';
-import { useSimpleAuth } from '../../../../shared/components/SimpleAuthProvider';
+import { useSimpleAuth } from '../auth/SimpleAuthProvider';
 
 const SimpleLoginPage = () => {
   const [selectedUser, setSelectedUser] = useState(null);
+  const [showLoginForm, setShowLoginForm] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [loginType, setLoginType] = useState('demo'); // 'demo' or 'real'
   const { login, error, setError, demoUsers } = useSimpleAuth();
 
-  const handleDemoLogin = async (demoUser) => {
+  const handleUserSelect = (demoUser) => {
+    setSelectedUser(demoUser);
+    setEmail(demoUser.email);
+    setPassword(''); // Clear password field
+    setLoginType('demo');
+    setShowLoginForm(true);
+    setError(null);
+  };
+
+  const handleRealUserLogin = () => {
+    setSelectedUser(null);
+    setEmail('');
+    setPassword('');
+    setLoginType('real');
+    setShowLoginForm(true);
+    setError(null);
+  };
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    
+    if (!email || !password) {
+      setError('Email and password are required');
+      return;
+    }
+
     try {
       setIsLoading(true);
       setError(null);
-      setSelectedUser(demoUser.id);
       
-      const result = await login(demoUser.email, 'demo123');
+      const result = await login(email, password, loginType);
       
       if (!result.success) {
-        console.error('Login failed:', result.error);
+        setError(result.error || 'Login failed');
       }
       
     } catch (err) {
@@ -29,9 +57,122 @@ const SimpleLoginPage = () => {
       setError(err.message || 'Login failed. Please try again.');
     } finally {
       setIsLoading(false);
-      setSelectedUser(null);
     }
   };
+
+  const handleBack = () => {
+    setShowLoginForm(false);
+    setSelectedUser(null);
+    setEmail('');
+    setPassword('');
+    setError(null);
+  };
+
+  // Show login form when user is selected
+  if (showLoginForm) {
+    return (
+      <div className="bg-gray-50 min-h-screen">
+        {/* Header */}
+        <div className="bg-gradient-to-r from-primary-600 to-primary-700 text-white p-6 text-center">
+          <div className="flex items-center justify-center mb-4">
+            <Rocket className="mr-2" size={32} />
+            <h1 className="text-2xl font-bold">FILO Health</h1>
+          </div>
+          <p className="text-primary-100">Your Personal Health Journey</p>
+        </div>
+
+        {/* Login Form */}
+        <div className="p-6 max-w-md mx-auto">
+          <div className="flex items-center mb-6">
+            <button
+              onClick={handleBack}
+              className="text-blue-600 hover:text-blue-800 mr-3"
+            >
+              ← Back
+            </button>
+            <h2 className="text-xl font-semibold text-gray-900">
+              {loginType === 'demo' ? `Login as ${selectedUser?.name}` : 'Login with Cognito'}
+            </h2>
+          </div>
+
+          {error && (
+            <Alert variant="error" className="mb-4" dismissible onDismiss={() => setError(null)}>
+              {error}
+            </Alert>
+          )}
+
+          {/* User Info for Demo Login */}
+          {loginType === 'demo' && selectedUser && (
+            <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+              <div className="flex items-center space-x-3">
+                <div className="text-2xl">{selectedUser.avatar}</div>
+                <div>
+                  <p className="font-medium text-blue-900">{selectedUser.name}</p>
+                  <p className="text-sm text-blue-700">{selectedUser.protocol}</p>
+                  <p className="text-xs text-blue-600">Demo password: demo123</p>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Login Form */}
+          <form onSubmit={handleLogin} className="space-y-4">
+            <div>
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                Email
+              </label>
+              <input
+                id="email"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                placeholder="Enter email address"
+                required
+                disabled={loginType === 'demo'} // Pre-filled for demo users
+              />
+            </div>
+
+            <div>
+              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
+                Password
+              </label>
+              <input
+                id="password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                placeholder={loginType === 'demo' ? 'Enter demo123' : 'Enter your password'}
+                required
+                autoFocus
+              />
+            </div>
+
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:bg-blue-300 disabled:cursor-not-allowed"
+            >
+              {isLoading ? 'Signing in...' : 'Sign In'}
+            </button>
+          </form>
+
+          {/* Switch to Real User Login */}
+          {loginType === 'demo' && (
+            <div className="mt-6 text-center">
+              <button
+                onClick={handleRealUserLogin}
+                className="text-sm text-blue-600 hover:text-blue-800"
+              >
+                Login with real Cognito account instead
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-gray-50 min-h-screen">
@@ -84,7 +225,7 @@ const SimpleLoginPage = () => {
                 selectedUser === user.id && "border-primary-500 bg-primary-50",
                 isLoading && selectedUser !== user.id && "opacity-50 cursor-not-allowed"
               )}
-              onClick={() => !isLoading && handleDemoLogin(user)}
+              onClick={() => !isLoading && handleUserSelect(user)}
             >
               <div className="flex items-center space-x-3">
                 <div className="text-2xl">{user.avatar}</div>
@@ -109,15 +250,21 @@ const SimpleLoginPage = () => {
                   </span>
                 </div>
               </div>
-              
-              {selectedUser === user.id && isLoading && (
-                <div className="mt-3 flex items-center justify-center">
-                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-primary-600"></div>
-                  <span className="ml-2 text-sm text-primary-600">Logging in...</span>
-                </div>
-              )}
             </Card>
           ))}
+        </div>
+
+        {/* Real User Login Option */}
+        <div className="mt-6">
+          <button
+            onClick={handleRealUserLogin}
+            className="w-full p-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+          >
+            <div className="flex items-center justify-center space-x-2">
+              <User className="w-4 h-4 text-gray-600" />
+              <span className="text-sm font-medium text-gray-700">Login with Cognito Account</span>
+            </div>
+          </button>
         </div>
 
         {/* Info Section */}

@@ -1,10 +1,10 @@
-// File: frontend/shared/hooks/useSimpleApi.js
+// File: frontend/web-app/src/hooks/useSimpleApi.js
 // Simple API hook for clean auth integration
 
 import { useEffect } from 'react';
-import { simpleApiClient } from '../services/simpleApi';
-import { useSimpleAuth } from '../components/SimpleAuthProvider';
-import safeLogger from '../utils/safeLogger';
+import { simpleApiClient } from '../../../shared/services/simpleApi';
+import { useSimpleAuth } from '../components/auth/SimpleAuthProvider';
+import safeLogger from '../../../shared/utils/safeLogger';
 
 // Hook to automatically sync API client with auth state
 export const useSimpleApi = () => {
