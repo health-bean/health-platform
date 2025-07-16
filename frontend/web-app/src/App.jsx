@@ -5,6 +5,7 @@ import { Loader2 } from 'lucide-react';
 
 // Import clean auth components (keeping existing SimpleAuth)
 import { SimpleAuthProvider, useSimpleAuth } from '../../shared/components/SimpleAuthProvider';
+import { apiClient } from '../../shared/services/api';
 import SimpleLoginPage from './components/pages/SimpleLoginPage';
 import ErrorBoundary from './components/ErrorBoundary';
 import PreferencesPage from './components/pages/PreferencesPage';
@@ -15,6 +16,8 @@ import useProtocols from '../../shared/hooks/useProtocols';
 import useUserPreferences from '../../shared/hooks/useUserPreferences';
 import { useSimpleApi, useJournalApi } from '../../shared/hooks/useSimpleApi';
 import useSimpleReflectionData from '../../shared/hooks/useSimpleReflectionData';
+import useExposureTypes from '../../shared/hooks/useExposureTypes';
+import useDetoxTypes from '../../shared/hooks/useDetoxTypes';
 
 // Import local hooks
 import { useAppState } from './hooks/useAppState';
@@ -37,7 +40,15 @@ import { getProtocolDisplayText } from '../../shared/utils/entryHelpers';
 
 // Main App Component (Inside SimpleAuthProvider)
 const MainApp = () => {
-  const { isAuthenticated, user, loading: authLoading, isDemoMode } = useSimpleAuth();
+  const { isAuthenticated, user, loading: authLoading, isDemoMode, getAuthToken, getAuthHeaders } = useSimpleAuth();
+  
+  // Connect API client with auth provider
+  useEffect(() => {
+    if (getAuthToken && getAuthHeaders) {
+      apiClient.setTokenGetter(getAuthToken);
+      apiClient.setHeadersGetter(getAuthHeaders);
+    }
+  }, [getAuthToken, getAuthHeaders]);
   
   // Initialize API client
   useSimpleApi();
@@ -68,6 +79,10 @@ const MainApp = () => {
   // Timeline and entry form (only when authenticated)
   const { entries, loading: entriesLoading, addEntry, hasCriticalInsights } = useTimelineEntries(selectedDate, isAuthenticated);
   const { formData, updateFormData, toggleSelectedFood, handleQuickSelect, resetForm, buildEntryData } = useEntryForm();
+  
+  // Exposure and detox types for entry form
+  const { exposureTypes } = useExposureTypes(isAuthenticated);
+  const { detoxTypes } = useDetoxTypes(isAuthenticated);
 
   // Determine setup requirement based on authentication and preferences state
   const shouldShowSetup = useMemo(() => {

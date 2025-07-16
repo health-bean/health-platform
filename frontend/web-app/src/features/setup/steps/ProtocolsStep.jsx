@@ -1,19 +1,20 @@
 import React from 'react';
 import { Button, Checkbox, Card } from '../../../../../shared/components/ui';
 import { cn } from '../../../../../shared/design-system';
+import safeLogger from '../../../../../shared/utils/safeLogger';
 
 const ProtocolsStep = ({ setupData, updateSetupData, protocols, onNext, onBack, isLast, disabled }) => {
-  // Debug logging
-  console.log('🔧 ProtocolsStep: Received protocols:', protocols);
-  console.log('🔧 ProtocolsStep: Protocols length:', protocols?.length);
-  
   // Safety check for protocols array
   const protocolsArray = Array.isArray(protocols) ? protocols : [];
   
   // Just sort protocols alphabetically - no filtering or hardcoding
   const availableProtocols = protocolsArray.sort((a, b) => a.name.localeCompare(b.name));
   
-  console.log('🔧 ProtocolsStep: Available protocols after sort:', availableProtocols);
+  // Use safe logging instead of console.log to prevent infinite loops
+  safeLogger.debug('ProtocolsStep rendered', { 
+    protocolsCount: availableProtocols.length,
+    hasProtocols: availableProtocols.length > 0
+  });
 
   const handleProtocolChange = (protocolId, isChecked) => {
     // Special handling for "no protocol" option

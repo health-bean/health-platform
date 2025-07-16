@@ -2,17 +2,24 @@ import safeLogger from '../utils/safeLogger';
 
 class ApiConfig {
   constructor() {
-    this.baseURL = import.meta.env.VITE_API_URL;
+    this.baseURL = import.meta.env.VITE_API_BASE_URL || 'https://suhoxvn8ik.execute-api.us-east-1.amazonaws.com/dev';
     this.environment = import.meta.env.VITE_APP_ENV || 'development';
     this.authEnabled = import.meta.env.VITE_AUTH_ENABLED === 'true';
     this.isLocal = this.environment === 'development' && this.baseURL.includes('localhost');
     this.getTokenCallback = null; // Callback function to get current token
+    this.getHeadersCallback = null; // Callback function to get auth headers
   }
 
   // Method to set token getter callback from AuthProvider
   setTokenGetter(getTokenCallback) {
     this.getTokenCallback = getTokenCallback;
     safeLogger.debug('API client token getter callback set');
+  }
+
+  // Method to set headers getter callback from AuthProvider
+  setHeadersGetter(getHeadersCallback) {
+    this.getHeadersCallback = getHeadersCallback;
+    safeLogger.debug('API client headers getter callback set');
   }
 
   getHeaders() {
@@ -22,6 +29,21 @@ class ApiConfig {
 
     // Add auth headers when auth is enabled
     if (this.authEnabled) {
+      // First try to get headers from auth provider callback
+      if (this.getHeadersCallback && typeof this.getHeadersCallback === 'function') {
+        try {
+          const authHeaders = this.getHeadersCallback();
+          if (authHeaders && typeof authHeaders === 'object') {
+            Object.assign(headers, authHeaders);
+            safeLogger.debug('Auth headers added from provider callback');
+            return headers;
+          }
+        } catch (error) {
+          safeLogger.error('Error getting headers from callback', { error: error.message });
+        }
+      }
+      
+      // Fallback to token-based auth
       const token = this.getAuthToken();
       safeLogger.debug('API authentication status', { authEnabled: this.authEnabled, hasToken: !!token });
       

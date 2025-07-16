@@ -12,7 +12,7 @@ const useUserPreferences = (isAuthenticatedParam = null) => {
   const [saving, setSaving] = useState(false);
   
   // Get auth context
-  const { user, token, isAuthenticated: authIsAuthenticated, getAuthHeaders } = useSimpleAuth();
+  const { user, isAuthenticated: authIsAuthenticated, getAuthHeaders } = useSimpleAuth();
   
   // Use parameter if provided, otherwise fall back to auth context
   const isAuthenticated = isAuthenticatedParam !== null ? isAuthenticatedParam : authIsAuthenticated;
@@ -49,9 +49,7 @@ const useUserPreferences = (isAuthenticatedParam = null) => {
         setLoading(true);
         setError(null);
         
-        const response = await simpleApiClient.get('/api/v1/user/preferences', {
-          headers: getAuthHeaders()
-        });
+        const response = await simpleApiClient.get('/api/v1/user/preferences');
         
         // Only update state if component is still mounted
         if (isCancelled) return;
@@ -96,7 +94,7 @@ const useUserPreferences = (isAuthenticatedParam = null) => {
     return () => {
       isCancelled = true;
     };
-  }, [isAuthenticated, user, token, isAuthenticatedParam]);
+  }, [isAuthenticated, user, isAuthenticatedParam]);
 
   const updatePreferences = async (newPreferences) => {
 
@@ -120,9 +118,7 @@ const useUserPreferences = (isAuthenticatedParam = null) => {
       setError(null);
       
       // Save to database
-      const response = await simpleApiClient.post('/api/v1/user/preferences', updatedPreferences, {
-        headers: getAuthHeaders()
-      });
+      const response = await simpleApiClient.post('/api/v1/user/preferences', updatedPreferences);
       
       
       // Handle response
@@ -154,9 +150,7 @@ const useUserPreferences = (isAuthenticatedParam = null) => {
       setLoading(true);
       setError(null);
       
-      const response = await simpleApiClient.get('/api/v1/user/preferences', {
-        headers: getAuthHeaders()
-      });
+      const response = await simpleApiClient.get('/api/v1/user/preferences');
       
       
       // Handle response format

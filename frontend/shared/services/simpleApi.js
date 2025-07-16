@@ -5,12 +5,26 @@ import safeLogger from '../utils/safeLogger';
 
 class SimpleApiClient {
   constructor() {
-    this.baseURL = import.meta.env.VITE_API_URL;
+    this.baseURL = import.meta.env.VITE_API_BASE_URL || 'https://suhoxvn8ik.execute-api.us-east-1.amazonaws.com/dev';
     this.environment = import.meta.env.VITE_APP_ENV || 'development';
     this.userContext = null;
+    this.tokenGetter = null;
+    this.headerGetter = null;
   }
 
-  // Set user context for API calls
+  // Set token getter function (for real users)
+  setTokenGetter(tokenGetter) {
+    this.tokenGetter = tokenGetter;
+    safeLogger.debug('API token getter set');
+  }
+
+  // Set header getter function (for both real and demo users)
+  setHeaderGetter(headerGetter) {
+    this.headerGetter = headerGetter;
+    safeLogger.debug('API header getter set');
+  }
+
+  // Set user context for API calls (legacy support)
   setUserContext(userContext) {
     this.userContext = userContext;
     safeLogger.debug('API user context set', { 
@@ -22,24 +36,40 @@ class SimpleApiClient {
   // Clear user context
   clearUserContext() {
     this.userContext = null;
+    this.tokenGetter = null;
+    this.headerGetter = null;
     safeLogger.debug('API user context cleared');
   }
 
   // Get headers for API requests
-  getHeaders() {
+  getHeaders(additionalHeaders = {}) {
     const headers = {
       'Content-Type': 'application/json',
+      ...additionalHeaders
     };
 
-    // Add user context to headers for demo mode
+    // Use header getter if available (preferred method)
+    if (this.headerGetter) {
+      const authHeaders = this.headerGetter();
+      Object.assign(headers, authHeaders);
+      return headers;
+    }
+
+    // Fallback to token getter for real users
+    if (this.tokenGetter) {
+      const token = this.tokenGetter();
+      if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+      }
+    }
+
+    // Legacy: Add user context to headers for demo mode
     if (this.userContext) {
-      headers['X-Demo-User-Id'] = this.userContext.userId;
-      headers['X-Demo-Session-Id'] = this.userContext.sessionId;
-      headers['X-Demo-Mode'] = 'true';
-      
-      safeLogger.debug('API headers with demo context', { 
-        userId: this.userContext.userId 
-      });
+      headers['x-demo-mode'] = 'true';
+      headers['x-demo-user-id'] = this.userContext.userId;
+      if (this.userContext.sessionId) {
+        headers['x-demo-session-id'] = this.userContext.sessionId;
+      }
     }
 
     return headers;

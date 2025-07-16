@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { apiClient } from '../services/api.js';
+import { simpleApiClient } from '../services/simpleApi.js';
 
 const useExposureTypes = (isAuthenticated = false) => {
   const [exposureTypes, setExposureTypes] = useState([]);
@@ -16,7 +16,7 @@ const useExposureTypes = (isAuthenticated = false) => {
     setError(null);
     
     try {
-      const data = await apiClient.get('/api/v1/detox-types/search?search=');
+      const data = await simpleApiClient.get('/api/v1/detox-types/search?search=');
       setExposureTypes(data.detox_types || []);
     } catch (err) {
       console.error('Failed to fetch exposure types:', err);

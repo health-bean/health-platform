@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { apiClient } from '../services/api.js';
+import { simpleApiClient } from '../services/simpleApi.js';
 
 export const useProtocolFoods = (protocolId) => {
   const [foodsByCategory, setFoodsByCategory] = useState({});
@@ -21,7 +21,7 @@ export const useProtocolFoods = (protocolId) => {
         protocol_id: protocolId
       });
 
-      const data = await apiClient.get(`/api/v1/foods/by-protocol?${params}`);
+      const data = await simpleApiClient.get(`/api/v1/foods/by-protocol?${params}`);
       
       setFoodsByCategory(data.foods_by_category || {});
       setComplianceStats(data.compliance_stats || {});
@@ -61,7 +61,7 @@ export const useFoodSearch = () => {
     
     try {
       const params = new URLSearchParams(filters);
-      const data = await apiClient.get(`/api/v1/foods/search?${params}`);
+      const data = await simpleApiClient.get(`/api/v1/foods/search?${params}`);
       console.log('🔍 SEARCH RESULTS:', data);
       setFoods(data.foods || []);
     } catch (err) {
