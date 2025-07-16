@@ -3,7 +3,7 @@ import { Button, Card } from '../../../../shared/components/ui';
 import { cn } from '../../../../shared/design-system';
 import { Loader2, AlertTriangle, CheckCircle } from 'lucide-react';
 import useProtocols from '../../../../shared/hooks/useProtocols';
-import useUserPreferences from '../../../../shared/hooks/useUserPreferences';
+import useUserPreferences from '../../hooks/useUserPreferences';
 import useSetupWizard from './useSetupWizard';
 
 // Import step components
