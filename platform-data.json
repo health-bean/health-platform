@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generated": "2025-07-16T00:24:35.636Z",
+    "generated": "2025-07-16T00:40:46.876Z",
     "version": "1.0.0",
     "generator": "AutomatedProfessionalDocsGenerator"
   },
@@ -15,9 +15,9 @@
     "totalHooks": 14,
     "totalFiles": 93,
     "workingAPIs": 8,
-    "totalAPIs": 33,
-    "totalTables": 25,
-    "totalCommits": 118,
+    "totalAPIs": 27,
+    "totalTables": 23,
+    "totalCommits": 119,
     "contributors": 1
   },
   "discoveredInfo": {
@@ -45,10 +45,6 @@
       "tables": [
         "journal_entries",
         "timeline_entries",
-        "users",
-        "user_sessions",
-        "user_preferences",
-        "last",
         "the",
         "protocol_food_rules",
         "protocols",
@@ -56,7 +52,9 @@
         "SET",
         "user_protocols",
         "food_properties",
+        "user_preferences",
         "get_user_current_protocol",
+        "users",
         "user",
         "existing",
         "foods",
@@ -133,7 +131,7 @@
           ],
           "status": 500,
           "working": false,
-          "responseTime": 258,
+          "responseTime": 241,
           "responseData": {
             "error": "Failed to analyze correlations"
           },
@@ -148,7 +146,7 @@
           "params": [],
           "status": 404,
           "working": false,
-          "responseTime": 241,
+          "responseTime": 47,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -194,7 +192,7 @@
           "params": [],
           "status": 404,
           "working": false,
-          "responseTime": 101,
+          "responseTime": 68,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -245,7 +243,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 291,
+          "responseTime": 76,
           "responseData": {
             "foods": [
               {
@@ -296,7 +294,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 406,
+          "responseTime": 104,
           "responseData": {
             "foods": [
               {
@@ -4203,7 +4201,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 145,
+          "responseTime": 44,
           "responseData": {
             "protocols": [
               {
@@ -4377,7 +4375,7 @@
           ],
           "status": 401,
           "working": false,
-          "responseTime": 98,
+          "responseTime": 35,
           "responseData": {
             "error": "Authentication required"
           },
@@ -4397,7 +4395,7 @@
           ],
           "status": 401,
           "working": false,
-          "responseTime": 105,
+          "responseTime": 64,
           "responseData": {
             "error": "Authentication required"
           },
@@ -4417,7 +4415,7 @@
           ],
           "status": 404,
           "working": false,
-          "responseTime": 228,
+          "responseTime": 44,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -4468,7 +4466,7 @@
           ],
           "status": 404,
           "working": false,
-          "responseTime": 231,
+          "responseTime": 41,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -4506,158 +4504,6 @@
           "responseSize": 848
         },
         {
-          "path": "/api/v1/auth/login",
-          "method": "POST",
-          "category": "Other",
-          "description": "Create login",
-          "source": "backend/functions/api/index.js",
-          "params": [],
-          "status": 400,
-          "working": false,
-          "responseTime": 142,
-          "responseData": {
-            "error": "Email and password required"
-          },
-          "responseSize": 39
-        },
-        {
-          "path": "/api/v1/auth/logout",
-          "method": "GET",
-          "category": "Other",
-          "description": "Get logout",
-          "source": "backend/functions/api/index.js",
-          "params": [],
-          "status": 404,
-          "working": false,
-          "responseTime": 96,
-          "responseData": {
-            "error": "Endpoint not found",
-            "details": {
-              "path": "/api/v1/auth/logout",
-              "method": "GET",
-              "availableEndpoints": [
-                "POST /api/v1/auth/login",
-                "POST /api/v1/auth/logout",
-                "GET /api/v1/auth/verify",
-                "POST /api/v1/auth/refresh",
-                "POST /api/v1/auth/register",
-                "POST /api/v1/auth",
-                "GET /api/v1/users",
-                "POST /api/v1/users",
-                "GET /api/v1/user/protocols",
-                "GET /api/v1/user/preferences",
-                "POST /api/v1/user/preferences",
-                "GET /api/v1/correlations/insights",
-                "GET /api/v1/protocols",
-                "GET /api/v1/foods/search",
-                "GET /api/v1/foods/by-protocol",
-                "GET /api/v1/symptoms/search",
-                "GET /api/v1/supplements/search",
-                "GET /api/v1/medications/search",
-                "GET /api/v1/detox-types/search",
-                "GET /api/v1/journal/entries",
-                "POST /api/v1/journal/entries",
-                "GET /api/v1/journal/entries/:date",
-                "PUT /api/v1/journal/entries/:date",
-                "GET /api/v1/timeline/entries",
-                "POST /api/v1/timeline/entries"
-              ]
-            }
-          },
-          "responseSize": 842
-        },
-        {
-          "path": "/api/v1/auth/verify",
-          "method": "GET",
-          "category": "Other",
-          "description": "Get verify",
-          "source": "backend/functions/api/index.js",
-          "params": [],
-          "status": 401,
-          "working": false,
-          "responseTime": 275,
-          "responseData": {
-            "error": "No authorization header"
-          },
-          "responseSize": 35
-        },
-        {
-          "path": "/api/v1/auth/refresh",
-          "method": "GET",
-          "category": "Other",
-          "description": "Get refresh",
-          "source": "backend/functions/api/index.js",
-          "params": [],
-          "status": 404,
-          "working": false,
-          "responseTime": 100,
-          "responseData": {
-            "error": "Endpoint not found",
-            "details": {
-              "path": "/api/v1/auth/refresh",
-              "method": "GET",
-              "availableEndpoints": [
-                "POST /api/v1/auth/login",
-                "POST /api/v1/auth/logout",
-                "GET /api/v1/auth/verify",
-                "POST /api/v1/auth/refresh",
-                "POST /api/v1/auth/register",
-                "POST /api/v1/auth",
-                "GET /api/v1/users",
-                "POST /api/v1/users",
-                "GET /api/v1/user/protocols",
-                "GET /api/v1/user/preferences",
-                "POST /api/v1/user/preferences",
-                "GET /api/v1/correlations/insights",
-                "GET /api/v1/protocols",
-                "GET /api/v1/foods/search",
-                "GET /api/v1/foods/by-protocol",
-                "GET /api/v1/symptoms/search",
-                "GET /api/v1/supplements/search",
-                "GET /api/v1/medications/search",
-                "GET /api/v1/detox-types/search",
-                "GET /api/v1/journal/entries",
-                "POST /api/v1/journal/entries",
-                "GET /api/v1/journal/entries/:date",
-                "PUT /api/v1/journal/entries/:date",
-                "GET /api/v1/timeline/entries",
-                "POST /api/v1/timeline/entries"
-              ]
-            }
-          },
-          "responseSize": 843
-        },
-        {
-          "path": "/api/v1/auth/register",
-          "method": "POST",
-          "category": "Other",
-          "description": "Create register",
-          "source": "backend/functions/api/index.js",
-          "params": [],
-          "status": 400,
-          "working": false,
-          "responseTime": 99,
-          "responseData": {
-            "error": "Missing required fields"
-          },
-          "responseSize": 35
-        },
-        {
-          "path": "/api/v1/auth",
-          "method": "POST",
-          "category": "Other",
-          "description": "Create auth",
-          "source": "backend/functions/api/index.js",
-          "params": [],
-          "status": 400,
-          "working": false,
-          "responseTime": 234,
-          "responseData": {
-            "error": "Email and password required"
-          },
-          "responseSize": 39
-        },
-        {
           "path": "/api/v1/users",
           "method": "GET",
           "category": "Users",
@@ -4666,7 +4512,7 @@
           "params": [],
           "status": 401,
           "working": false,
-          "responseTime": 96,
+          "responseTime": 142,
           "responseData": {
             "error": "Authentication required"
           },
@@ -4686,7 +4532,7 @@
           ],
           "status": 401,
           "working": false,
-          "responseTime": 99,
+          "responseTime": 60,
           "responseData": {
             "error": "Authentication required"
           },
@@ -4706,7 +4552,7 @@
           ],
           "status": 401,
           "working": false,
-          "responseTime": 94,
+          "responseTime": 57,
           "responseData": {
             "error": "Authentication required"
           },
@@ -4726,7 +4572,7 @@
           ],
           "status": 401,
           "working": false,
-          "responseTime": 99,
+          "responseTime": 60,
           "responseData": {
             "error": "Authentication required"
           },
@@ -4746,7 +4592,7 @@
           ],
           "status": 401,
           "working": false,
-          "responseTime": 107,
+          "responseTime": 62,
           "responseData": {
             "error": "Authentication required"
           },
@@ -4766,7 +4612,7 @@
           ],
           "status": 404,
           "working": false,
-          "responseTime": 100,
+          "responseTime": 72,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -4817,7 +4663,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 103,
+          "responseTime": 45,
           "responseData": {
             "symptoms": [],
             "total": 0,
@@ -4840,7 +4686,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 240,
+          "responseTime": 44,
           "responseData": {
             "supplements": [],
             "total": 0,
@@ -4862,7 +4708,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 251,
+          "responseTime": 41,
           "responseData": {
             "medications": [],
             "total": 0,
@@ -4884,7 +4730,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 107,
+          "responseTime": 52,
           "responseData": {
             "detox_types": [],
             "total": 0,
@@ -4906,7 +4752,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 109,
+          "responseTime": 41,
           "responseData": {
             "exposures": [],
             "total": 0,
@@ -4923,7 +4769,7 @@
           "params": [],
           "status": 404,
           "working": false,
-          "responseTime": 107,
+          "responseTime": 34,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -4969,7 +4815,7 @@
           "params": [],
           "status": 500,
           "working": false,
-          "responseTime": 95,
+          "responseTime": 63,
           "responseData": {
             "error": "Failed to complete get journal entries"
           },
@@ -4984,7 +4830,7 @@
           "params": [],
           "status": 401,
           "working": false,
-          "responseTime": 102,
+          "responseTime": 39,
           "responseData": {
             "error": "User not authenticated"
           },
@@ -4999,7 +4845,7 @@
           "params": [],
           "status": 404,
           "working": false,
-          "responseTime": 97,
+          "responseTime": 42,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -5045,7 +4891,7 @@
           "params": [],
           "status": 404,
           "working": false,
-          "responseTime": 100,
+          "responseTime": 34,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -5091,7 +4937,7 @@
           "params": [],
           "status": 404,
           "working": false,
-          "responseTime": 105,
+          "responseTime": 86,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -5130,7 +4976,7 @@
         }
       ],
       "workingCount": 8,
-      "totalCount": 33,
+      "totalCount": 27,
       "categories": {
         "AI": {
           "working": 0,
@@ -5156,13 +5002,13 @@
           "working": 0,
           "total": 4
         },
-        "Other": {
-          "working": 0,
-          "total": 9
-        },
         "Health Data": {
           "working": 3,
           "total": 6
+        },
+        "Other": {
+          "working": 0,
+          "total": 3
         }
       }
     },
@@ -5720,9 +5566,9 @@
       },
       "backend": {
         "backend/functions/api": {
-          "totalFiles": 24,
+          "totalFiles": 23,
           "fileTypes": {
-            ".js": 22,
+            ".js": 21,
             ".json": 2
           },
           "components": [],
@@ -5734,12 +5580,12 @@
             }
           ],
           "utilities": [],
-          "size": "177.06 KB"
+          "size": "162.14 KB"
         },
         "backend/functions": {
-          "totalFiles": 24,
+          "totalFiles": 23,
           "fileTypes": {
-            ".js": 22,
+            ".js": 21,
             ".json": 2
           },
           "components": [],
@@ -5751,14 +5597,14 @@
             }
           ],
           "utilities": [],
-          "size": "177.06 KB"
+          "size": "162.14 KB"
         },
         "backend": {
-          "totalFiles": 31,
+          "totalFiles": 30,
           "fileTypes": {
             ".example": 1,
             ".sql": 4,
-            ".js": 23,
+            ".js": 22,
             ".json": 2,
             ".sh": 1
           },
@@ -5771,7 +5617,7 @@
             }
           ],
           "utilities": [],
-          "size": "240.32 KB"
+          "size": "225.4 KB"
         }
       },
       "shared": {},
@@ -5864,18 +5710,18 @@
       "repository": "https://github.com/deebyrne26/health-platform",
       "branch": "main",
       "lastCommit": {
-        "hash": "306116a",
-        "message": "auth fixes",
+        "hash": "353798e",
+        "message": "Cognito Demo Mode Only",
         "author": "deebyrne26",
-        "date": "Tue Jul 15 20:23:55 2025 -0400"
+        "date": "Tue Jul 15 20:40:11 2025 -0400"
       },
       "contributors": [
         {
           "name": "deebyrne26",
-          "commits": 118
+          "commits": 119
         }
       ],
-      "totalCommits": 118
+      "totalCommits": 119
     }
   }
 }
