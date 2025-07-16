@@ -13,7 +13,7 @@ import PreferencesPage from './components/pages/PreferencesPage';
 // Import shared components and hooks
 import { Button, Alert } from '../../shared/components/ui';
 import useProtocols from '../../shared/hooks/useProtocols';
-import useUserPreferences from '../../shared/hooks/useUserPreferences';
+import useUserPreferences from './hooks/useUserPreferences';
 import { useSimpleApi, useJournalApi } from './hooks/useSimpleApi';
 import useSimpleReflectionData from './hooks/useSimpleReflectionData';
 import useExposureTypes from '../../shared/hooks/useExposureTypes';
