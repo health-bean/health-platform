@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generated": "2025-07-16T04:08:12.023Z",
+    "generated": "2025-07-16T12:22:48.800Z",
     "version": "1.0.0",
     "generator": "AutomatedProfessionalDocsGenerator"
   },
@@ -17,7 +17,7 @@
     "workingAPIs": 8,
     "totalAPIs": 27,
     "totalTables": 23,
-    "totalCommits": 127,
+    "totalCommits": 128,
     "contributors": 1
   },
   "discoveredInfo": {
@@ -131,7 +131,7 @@
           ],
           "status": 500,
           "working": false,
-          "responseTime": 161,
+          "responseTime": 102,
           "responseData": {
             "error": "Failed to analyze correlations"
           },
@@ -146,7 +146,7 @@
           "params": [],
           "status": 404,
           "working": false,
-          "responseTime": 103,
+          "responseTime": 127,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -192,7 +192,7 @@
           "params": [],
           "status": 404,
           "working": false,
-          "responseTime": 113,
+          "responseTime": 107,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -243,7 +243,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 131,
+          "responseTime": 202,
           "responseData": {
             "foods": [
               {
@@ -294,7 +294,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 134,
+          "responseTime": 176,
           "responseData": {
             "foods": [
               {
@@ -4201,7 +4201,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 96,
+          "responseTime": 68,
           "responseData": {
             "protocols": [
               {
@@ -4375,7 +4375,7 @@
           ],
           "status": 401,
           "working": false,
-          "responseTime": 113,
+          "responseTime": 69,
           "responseData": {
             "error": "Authentication required"
           },
@@ -4395,7 +4395,7 @@
           ],
           "status": 401,
           "working": false,
-          "responseTime": 59,
+          "responseTime": 66,
           "responseData": {
             "error": "Authentication required"
           },
@@ -4415,7 +4415,7 @@
           ],
           "status": 404,
           "working": false,
-          "responseTime": 58,
+          "responseTime": 67,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -4466,7 +4466,7 @@
           ],
           "status": 404,
           "working": false,
-          "responseTime": 86,
+          "responseTime": 108,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -4512,7 +4512,7 @@
           "params": [],
           "status": 401,
           "working": false,
-          "responseTime": 57,
+          "responseTime": 61,
           "responseData": {
             "error": "Authentication required"
           },
@@ -4532,7 +4532,7 @@
           ],
           "status": 401,
           "working": false,
-          "responseTime": 157,
+          "responseTime": 69,
           "responseData": {
             "error": "Authentication required"
           },
@@ -4552,7 +4552,7 @@
           ],
           "status": 401,
           "working": false,
-          "responseTime": 106,
+          "responseTime": 61,
           "responseData": {
             "error": "Authentication required"
           },
@@ -4572,7 +4572,7 @@
           ],
           "status": 401,
           "working": false,
-          "responseTime": 64,
+          "responseTime": 108,
           "responseData": {
             "error": "Authentication required"
           },
@@ -4592,7 +4592,7 @@
           ],
           "status": 401,
           "working": false,
-          "responseTime": 107,
+          "responseTime": 56,
           "responseData": {
             "error": "Authentication required"
           },
@@ -4612,7 +4612,7 @@
           ],
           "status": 404,
           "working": false,
-          "responseTime": 58,
+          "responseTime": 60,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -4663,7 +4663,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 110,
+          "responseTime": 117,
           "responseData": {
             "symptoms": [],
             "total": 0,
@@ -4686,7 +4686,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 66,
+          "responseTime": 62,
           "responseData": {
             "supplements": [],
             "total": 0,
@@ -4708,7 +4708,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 59,
+          "responseTime": 64,
           "responseData": {
             "medications": [],
             "total": 0,
@@ -4730,7 +4730,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 60,
+          "responseTime": 62,
           "responseData": {
             "detox_types": [],
             "total": 0,
@@ -4752,7 +4752,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 68,
+          "responseTime": 61,
           "responseData": {
             "exposures": [],
             "total": 0,
@@ -4769,7 +4769,7 @@
           "params": [],
           "status": 404,
           "working": false,
-          "responseTime": 61,
+          "responseTime": 64,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -4815,7 +4815,7 @@
           "params": [],
           "status": 500,
           "working": false,
-          "responseTime": 59,
+          "responseTime": 63,
           "responseData": {
             "error": "Failed to complete get journal entries"
           },
@@ -4830,7 +4830,7 @@
           "params": [],
           "status": 401,
           "working": false,
-          "responseTime": 103,
+          "responseTime": 60,
           "responseData": {
             "error": "User not authenticated"
           },
@@ -4845,7 +4845,7 @@
           "params": [],
           "status": 404,
           "working": false,
-          "responseTime": 57,
+          "responseTime": 106,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -4891,7 +4891,7 @@
           "params": [],
           "status": 404,
           "working": false,
-          "responseTime": 57,
+          "responseTime": 55,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -4937,7 +4937,7 @@
           "params": [],
           "status": 404,
           "working": false,
-          "responseTime": 58,
+          "responseTime": 109,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -5109,14 +5109,14 @@
     "fileStructure": {
       "frontend": {
         "frontend/web-app": {
-          "totalFiles": 57,
+          "totalFiles": 58,
           "fileTypes": {
             ".development": 1,
             ".production": 1,
             "": 1,
             ".md": 1,
             ".json": 3,
-            ".js": 11,
+            ".js": 12,
             ".html": 1,
             ".svg": 2,
             ".css": 2,
@@ -5126,7 +5126,7 @@
             {
               "name": "App",
               "path": "frontend/web-app/src/App.jsx",
-              "size": 11461,
+              "size": 11450,
               "hooks": [
                 "useEffect",
                 "useMemo",
@@ -5190,7 +5190,7 @@
             {
               "name": "SmartMedicationSelector",
               "path": "frontend/web-app/src/components/common/SmartMedicationSelector.jsx",
-              "size": 6010,
+              "size": 5997,
               "hooks": [
                 "useState",
                 "useEffect",
@@ -5200,7 +5200,7 @@
             {
               "name": "SmartSupplementSelector",
               "path": "frontend/web-app/src/components/common/SmartSupplementSelector.jsx",
-              "size": 6012,
+              "size": 5999,
               "hooks": [
                 "useState",
                 "useEffect",
@@ -5210,7 +5210,7 @@
             {
               "name": "SmartSymptomSelector",
               "path": "frontend/web-app/src/components/common/SmartSymptomSelector.jsx",
-              "size": 6944,
+              "size": 6931,
               "hooks": [
                 "useState",
                 "useEffect",
@@ -5220,7 +5220,7 @@
             {
               "name": "UnifiedSmartSelector",
               "path": "frontend/web-app/src/components/common/UnifiedSmartSelector.jsx",
-              "size": 16263,
+              "size": 16250,
               "hooks": [
                 "useState",
                 "useEffect",
@@ -5234,7 +5234,7 @@
             {
               "name": "Header",
               "path": "frontend/web-app/src/components/layout/Header.jsx",
-              "size": 5357,
+              "size": 5335,
               "hooks": [
                 "useState",
                 "useRef",
@@ -5278,7 +5278,7 @@
             {
               "name": "PreferencesPage",
               "path": "frontend/web-app/src/components/pages/PreferencesPage.jsx",
-              "size": 18245,
+              "size": 18210,
               "hooks": [
                 "useState",
                 "useEffect",
@@ -5320,7 +5320,7 @@
             {
               "name": "CorrelationInsights",
               "path": "frontend/web-app/src/features/insights/CorrelationInsights.jsx",
-              "size": 14622,
+              "size": 14614,
               "hooks": [
                 "useState",
                 "useCorrelations",
@@ -5440,20 +5440,25 @@
               "size": 3561
             },
             {
+              "name": "useSimpleReflectionData",
+              "path": "frontend/web-app/src/hooks/useSimpleReflectionData.js",
+              "size": 6674
+            },
+            {
               "name": "useTimelineEntries",
               "path": "frontend/web-app/src/hooks/useTimelineEntries.js",
               "size": 1937
             }
           ],
           "utilities": [],
-          "size": "437.46 KB"
+          "size": "443.85 KB"
         },
         "frontend/shared": {
-          "totalFiles": 42,
+          "totalFiles": 41,
           "fileTypes": {
             "": 1,
             ".jsx": 15,
-            ".js": 24,
+            ".js": 23,
             ".json": 2
           },
           "components": [
@@ -5601,18 +5606,13 @@
               "size": 6965
             },
             {
-              "name": "useSimpleReflectionData",
-              "path": "frontend/shared/hooks/useSimpleReflectionData.js",
-              "size": 6657
-            },
-            {
               "name": "useUserPreferences",
               "path": "frontend/shared/hooks/useUserPreferences.js",
               "size": 6522
             }
           ],
           "utilities": [],
-          "size": "132.79 KB"
+          "size": "126.29 KB"
         }
       },
       "backend": {
@@ -5761,18 +5761,18 @@
       "repository": "https://github.com/deebyrne26/health-platform",
       "branch": "main",
       "lastCommit": {
-        "hash": "a8e21ac",
-        "message": "more auth fixes",
+        "hash": "82dbcd0",
+        "message": "Cleanup",
         "author": "deebyrne26",
-        "date": "Wed Jul 16 00:07:42 2025 -0400"
+        "date": "Wed Jul 16 08:21:23 2025 -0400"
       },
       "contributors": [
         {
           "name": "deebyrne26",
-          "commits": 127
+          "commits": 128
         }
       ],
-      "totalCommits": 127
+      "totalCommits": 128
     }
   }
 }
