@@ -95,18 +95,17 @@ async function getTimelineData(userId, timeframeDays) {
     client = await pool.connect();
     console.log('CORRELATIONS DEBUG: Database connection successful');
     
-    // Updated query to include both content and severity columns which exist in the schema
-    // Also added timeframe filtering based on days parameter
+    // Updated query to match the actual database schema (no content or severity columns)
+    // Added timeframe filtering based on days parameter
     const query = `
       SELECT 
+        id,
+        journal_entry_id,
+        user_id,
         entry_date,
         entry_time,
         entry_type,
-        content,
-        severity,
         structured_content,
-        protocol_compliant,
-        notes,
         created_at
       FROM timeline_entries 
       WHERE user_id = $1 
@@ -118,11 +117,11 @@ async function getTimelineData(userId, timeframeDays) {
     const result = await client.query(query, [userId]);
     console.log('CORRELATIONS DEBUG: Query successful, returned rows:', result.rows.length);
     
-    // Transform data for correlation analysis, prioritizing structured_content when available
+    // Transform data for correlation analysis, extracting content and severity from structured_content
     const transformedRows = result.rows.map(row => {
-      // Start with existing content and severity if available
-      let content = row.content || '';
-      let severity = row.severity || 5; // Default severity if not specified
+      // Initialize content and severity since they don't exist in the database schema
+      let content = '';
+      let severity = 5; // Default severity
       
       // If structured_content exists, extract more detailed information
       if (row.structured_content) {
@@ -200,7 +199,9 @@ async function getTimelineData(userId, timeframeDays) {
     
     return transformedRows;
   } finally {
-    client.release();
+    if (client) {
+      client.release();
+    }
   }
 }
 
