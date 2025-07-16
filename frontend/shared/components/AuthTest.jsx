@@ -4,6 +4,7 @@
 import React, { useState } from 'react';
 import { useSimpleAuth } from './SimpleAuthProvider.jsx';
 import { simpleApiClient } from '../services/simpleApi.js';
+import { Badge, Alert, Button } from './ui';
 import safeLogger from '../utils/safeLogger';
 
 const AuthTest = () => {
@@ -76,15 +77,15 @@ const AuthTest = () => {
           <div className="grid grid-cols-2 gap-4 text-sm">
             <div>
               <span className="font-medium">Authenticated:</span> 
-              <span className={`ml-2 px-2 py-1 rounded text-xs ${isAuthenticated ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+              <Badge variant={isAuthenticated ? "success" : "error"}>
                 {isAuthenticated ? '✅ Yes' : '❌ No'}
-              </span>
+              </Badge>
             </div>
             <div>
               <span className="font-medium">User Type:</span> 
-              <span className="ml-2 px-2 py-1 bg-blue-100 text-blue-800 rounded text-xs">
+              <Badge variant="info">
                 {isDemoMode ? '🎭 Demo' : isRealUser ? '👤 Real' : '❓ None'}
-              </span>
+              </Badge>
             </div>
             <div>
               <span className="font-medium">User ID:</span> 
@@ -103,9 +104,9 @@ const AuthTest = () => {
           )}
           
           {error && (
-            <div className="mt-3 p-3 bg-red-50 border border-red-200 rounded text-red-800">
+            <Alert variant="error" className="mt-3">
               ❌ Error: {error}
-            </div>
+            </Alert>
           )}
         </div>
 
