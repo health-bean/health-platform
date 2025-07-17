@@ -239,13 +239,13 @@ const UnifiedSmartSelector = ({
         </div>
       )}
 
-      {/* Search Results */}
+      {/* Search Results - Simplified for Mobile */}
       {!loading && items.length > 0 && (
-        <div className="space-y-2">
-          <h4 className="text-sm font-medium text-gray-700">
-            Search Results ({items.length})
+        <div>
+          <h4 className="text-sm font-medium text-gray-700 mb-1">
+            Results ({items.length})
           </h4>
-          <div className="space-y-2 max-h-64 overflow-y-auto">
+          <div className="border rounded-md overflow-hidden">
             {items.map((item) => {
               const selected = isSelected(item);
               
@@ -253,96 +253,22 @@ const UnifiedSmartSelector = ({
                 <div
                   key={item.id}
                   className={cn(
-                    "p-4 hover:bg-gray-50 transition-colors border-b border-gray-100",
-                    selected && "bg-primary-50"
+                    "flex items-center justify-between p-2 border-b last:border-b-0",
+                    selected ? "bg-primary-50" : "bg-white"
                   )}
-                  onClick={() => handleToggleItem(item)}
                 >
-                  <div className="flex items-start justify-between">
-                    <div className="flex-1">
-                      <div className="flex flex-wrap items-center gap-2 mb-2">
-                        <span className="text-lg font-medium capitalize">{item.name}</span>
-                        {item.source === 'user_history' && (
-                          <span className="px-2 py-1 rounded text-xs font-medium bg-blue-100 text-blue-700 border border-blue-200">
-                            From your history
-                          </span>
-                        )}
-                        {item.category && (
-                          <span className="px-2 py-1 rounded text-xs font-medium bg-gray-100 text-gray-600 border border-gray-200">
-                            {item.category}
-                          </span>
-                        )}
-                      </div>
-                      
-                      {/* Food-specific protocol status */}
-                      {type === 'food' && selectedProtocols.length > 0 && selectedProtocols[0] !== 'no_protocol' && (
-                        <div className="mb-2">
-                          {item.compliance_status === 'included' ? (
-                            <span className="px-2 py-1 rounded text-xs font-medium bg-green-100 text-green-800 border border-green-200">
-                              ✅ Included
-                            </span>
-                          ) : item.compliance_status === 'avoid_for_now' ? (
-                            <span className="px-2 py-1 rounded text-xs font-medium bg-red-100 text-red-800 border border-red-200">
-                              ❌ Avoid for now
-                            </span>
-                          ) : item.compliance_status === 'try_in_moderation' ? (
-                            <span className="px-2 py-1 rounded text-xs font-medium bg-yellow-100 text-yellow-800 border border-yellow-200">
-                              🟡 Try in moderation
-                            </span>
-                          ) : (
-                            <span className="px-2 py-1 rounded text-xs font-medium bg-gray-100 text-gray-800 border border-gray-200">
-                              ❓ Not specified in protocol
-                            </span>
-                          )}
-                        </div>
-                      )}
-                      
-                      {/* Food properties */}
-                      {type === 'food' && (
-                        <div className="flex flex-wrap gap-2 mb-2">
-                          {item.nightshade && (
-                            <span className="px-2 py-1 bg-red-100 text-red-800 rounded text-xs border border-red-200">🍅 Nightshade</span>
-                          )}
-                          {item.histamine && (
-                            <span className="px-2 py-1 bg-orange-100 text-orange-800 rounded text-xs border border-orange-200">
-                              Histamine: {item.histamine}
-                            </span>
-                          )}
-                          {item.oxalate && (
-                            <span className="px-2 py-1 bg-purple-100 text-purple-800 rounded text-xs border border-purple-200">
-                              Oxalate: {item.oxalate}
-                            </span>
-                          )}
-                          {item.lectin && (
-                            <span className="px-2 py-1 bg-orange-100 text-orange-800 rounded text-xs border border-orange-200">🌾 Lectin</span>
-                          )}
-                        </div>
-                      )}
-                    </div>
-                    
-                    <Button
-                      variant={selected ? "success" : "outline"}
-                      size="sm"
-                      className="ml-3 whitespace-nowrap"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        handleToggleItem(item);
-                      }}
-                    >
-                      {selected ? (
-                        <>
-                          <Check className="w-4 h-4 mr-1" />
-                          Added
-                        </>
-                      ) : (
-                        <>
-                          <Plus className="w-4 h-4 mr-1" />
-                          Add
-                        </>
-                      )}
-                    </Button>
-                  </div>
+                  <span className="font-medium truncate">{item.name}</span>
+                  <Button
+                    variant={selected ? "success" : "outline"}
+                    size="sm"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      handleToggleItem(item);
+                    }}
+                  >
+                    {selected ? "Added" : "Add"}
+                  </Button>
                 </div>
               );
             })}
