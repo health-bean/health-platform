@@ -24,31 +24,31 @@ const Navigation = ({
       )}
 
       {/* Navigation Tabs */}
-      <div className="flex flex-wrap gap-2 justify-center sm:justify-start">
+      <div className="grid grid-cols-4 gap-2">
         <Button
           variant={activeView === 'timeline' ? 'primary' : 'secondary'}
           onClick={() => onViewChange('timeline')}
           size="sm"
-          className="flex-1"
+          className="w-full"
         >
           <Activity className="w-4 h-4 mr-1" />
-          Track
+          <span className="whitespace-nowrap">Track</span>
         </Button>
         
         <Button
           variant={activeView === 'reflect' ? 'success' : 'secondary'}
           onClick={() => onViewChange('reflect')}
           size="sm"
-          className="flex-1 relative"
+          className="w-full relative"
         >
           <Brain className="w-4 h-4 mr-1" />
-          Reflect
+          <span className="whitespace-nowrap">Reflect</span>
           {hasUnsavedChanges && (
             <span className="absolute -top-1 -right-1 w-3 h-3 bg-orange-400 rounded-full border-2 border-white"></span>
           )}
         </Button>
         
-        <div className="relative flex-1">
+        <div className="relative w-full">
           <Button
             variant={activeView === 'insights' ? 'primary' : 'secondary'}
             onClick={() => onViewChange('insights')}
@@ -56,7 +56,7 @@ const Navigation = ({
             className="w-full"
           >
             <TrendingUp className="w-4 h-4 mr-1" />
-            Insights
+            <span className="whitespace-nowrap">Insights</span>
           </Button>
           {hasCriticalInsights && (
             <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center font-bold">
@@ -69,10 +69,10 @@ const Navigation = ({
           variant={activeView === 'protocol' ? 'primary' : 'secondary'}
           onClick={() => onViewChange('protocol')}
           size="sm"
-          className="flex-1"
+          className="w-full"
         >
           <Utensils className="w-4 h-4 mr-1" />
-          Foods
+          <span className="whitespace-nowrap">Foods</span>
         </Button>
       </div>
     </div>

@@ -304,7 +304,7 @@ const ReflectionView = ({
       </Button>
 
       {/* Success message */}
-      {!hasUnsavedChanges && !loading && reflectionData.bedtime && (
+      {!hasUnsavedChanges && !loading && (
         <Alert variant="success" title="Reflection Saved">
           Your reflection for {selectedDate} has been saved successfully.
         </Alert>
