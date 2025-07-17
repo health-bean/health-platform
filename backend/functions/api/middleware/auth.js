@@ -27,7 +27,7 @@ const DEMO_USERS = {
     is_active: true
   },
   'lisa-histamine': {
-    id: '6c6a346c-a0a6-41a6-a066-5440cba8bde2',
+    id: '74ae8620-d183-46ea-a17d-9da8f23f39be', // Updated to match the database ID
     email: 'lisa.histamine@test.com',
     first_name: 'Lisa',
     last_name: 'Rodriguez',
@@ -35,7 +35,7 @@ const DEMO_USERS = {
     is_active: true
   },
   'john-paleo': {
-    id: '5b5a235b-9f95-40a5-9f55-4330ba97ace3',
+    id: '3e209467-b142-4101-a399-adb3f3232dba', // Updated to match the database ID
     email: 'john.paleo@test.com',
     first_name: 'John',
     last_name: 'Williams',
@@ -43,7 +43,7 @@ const DEMO_USERS = {
     is_active: true
   },
   'emma-multi': {
-    id: '4a4a124a-8e84-3f94-8e44-3220a986bcd4',
+    id: '3923a221-97f6-4425-b863-e9b3b450ebfb', // Updated to match the database ID
     email: 'emma.multi@test.com',
     first_name: 'Emma',
     last_name: 'Davis',
