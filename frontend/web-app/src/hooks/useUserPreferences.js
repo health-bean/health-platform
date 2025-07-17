@@ -49,9 +49,7 @@ const useUserPreferences = (isAuthenticatedParam = null) => {
         setLoading(true);
         setError(null);
         
-        console.log('Loading preferences for user:', user.id);
         const response = await simpleApiClient.get('/api/v1/user/preferences');
-        console.log('Preferences API response:', response);
         
         // Only update state if component is still mounted
         if (isCancelled) return;
@@ -63,8 +61,6 @@ const useUserPreferences = (isAuthenticatedParam = null) => {
         if (response && typeof response === 'object' && response.preferences) {
           preferencesData = response.preferences;
         }
-        
-        console.log('Parsed preferences data:', preferencesData);
         
         // Validate preferences data
         if (preferencesData && typeof preferencesData === 'object' && Object.keys(preferencesData).length > 0) {
@@ -86,13 +82,8 @@ const useUserPreferences = (isAuthenticatedParam = null) => {
             setup_complete: setupComplete
           };
           
-          console.log('Merged preferences:', mergedPreferences);
-          console.log('setup_complete value:', mergedPreferences.setup_complete);
-          console.log('setup_complete type:', typeof mergedPreferences.setup_complete);
-          
           setPreferences(mergedPreferences);
         } else {
-          console.log('Using default preferences');
           setPreferences(getDefaultPreferences());
         }
       } catch (error) {
@@ -138,17 +129,12 @@ const useUserPreferences = (isAuthenticatedParam = null) => {
                                          updatedPreferences.setup_complete === 1;
     }
     
-    console.log('Saving preferences:', updatedPreferences);
-    console.log('setup_complete value:', updatedPreferences.setup_complete);
-    console.log('setup_complete type:', typeof updatedPreferences.setup_complete);
-    
     try {
       setSaving(true);
       setError(null);
       
       // Save to database
       const response = await simpleApiClient.post('/api/v1/user/preferences', updatedPreferences);
-      console.log('Save preferences response:', response);
       
       // Handle response
       let savedPreferences = updatedPreferences;
@@ -187,7 +173,6 @@ const useUserPreferences = (isAuthenticatedParam = null) => {
       setError(null);
       
       const response = await simpleApiClient.get('/api/v1/user/preferences');
-      console.log('Refresh preferences response:', response);
       
       // Handle response format
       let preferencesData = response;
@@ -214,13 +199,8 @@ const useUserPreferences = (isAuthenticatedParam = null) => {
           setup_complete: setupComplete
         };
         
-        console.log('Refreshed preferences:', mergedPreferences);
-        console.log('setup_complete value:', mergedPreferences.setup_complete);
-        console.log('setup_complete type:', typeof mergedPreferences.setup_complete);
-        
         setPreferences(mergedPreferences);
       } else {
-        console.log('Using default preferences after refresh');
         setPreferences(getDefaultPreferences());
       }
     } catch (error) {
