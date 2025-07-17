@@ -250,29 +250,25 @@ const UnifiedSmartSelector = ({
               const selected = isSelected(item);
               
               return (
-                <Card
+                <div
                   key={item.id}
-                  variant="outlined"
-                  padding="sm"
                   className={cn(
-                    "cursor-pointer transition-all duration-200 hover:shadow-sm",
-                    selected && "border-primary-300 bg-primary-50"
+                    "p-4 hover:bg-gray-50 transition-colors border-b border-gray-100",
+                    selected && "bg-primary-50"
                   )}
                   onClick={() => handleToggleItem(item)}
                 >
-                  <div className="flex items-center justify-between">
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center space-x-2">
-                        <p className="text-sm font-medium text-gray-900 truncate">
-                          {item.name}
-                        </p>
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1">
+                      <div className="flex flex-wrap items-center gap-2 mb-2">
+                        <span className="text-lg font-medium capitalize">{item.name}</span>
                         {item.source === 'user_history' && (
-                          <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-700">
+                          <span className="px-2 py-1 rounded text-xs font-medium bg-blue-100 text-blue-700 border border-blue-200">
                             From your history
                           </span>
                         )}
                         {item.category && (
-                          <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-600">
+                          <span className="px-2 py-1 rounded text-xs font-medium bg-gray-100 text-gray-600 border border-gray-200">
                             {item.category}
                           </span>
                         )}
@@ -280,24 +276,45 @@ const UnifiedSmartSelector = ({
                       
                       {/* Food-specific protocol status */}
                       {type === 'food' && selectedProtocols.length > 0 && selectedProtocols[0] !== 'no_protocol' && (
-                        <div className="mt-1">
+                        <div className="mb-2">
                           {item.compliance_status === 'included' ? (
-                            <span className="inline-flex items-center text-xs text-green-600">
-                              <Check className="w-3 h-3 mr-1" />
-                              Included
+                            <span className="px-2 py-1 rounded text-xs font-medium bg-green-100 text-green-800 border border-green-200">
+                              ✅ Included
                             </span>
                           ) : item.compliance_status === 'avoid_for_now' ? (
-                            <span className="inline-flex items-center text-xs text-red-600">
+                            <span className="px-2 py-1 rounded text-xs font-medium bg-red-100 text-red-800 border border-red-200">
                               ❌ Avoid for now
                             </span>
                           ) : item.compliance_status === 'try_in_moderation' ? (
-                            <span className="inline-flex items-center text-xs text-yellow-600">
+                            <span className="px-2 py-1 rounded text-xs font-medium bg-yellow-100 text-yellow-800 border border-yellow-200">
                               🟡 Try in moderation
                             </span>
                           ) : (
-                            <span className="inline-flex items-center text-xs text-gray-600">
+                            <span className="px-2 py-1 rounded text-xs font-medium bg-gray-100 text-gray-800 border border-gray-200">
                               ❓ Not specified in protocol
                             </span>
+                          )}
+                        </div>
+                      )}
+                      
+                      {/* Food properties */}
+                      {type === 'food' && (
+                        <div className="flex flex-wrap gap-2 mb-2">
+                          {item.nightshade && (
+                            <span className="px-2 py-1 bg-red-100 text-red-800 rounded text-xs border border-red-200">🍅 Nightshade</span>
+                          )}
+                          {item.histamine && (
+                            <span className="px-2 py-1 bg-orange-100 text-orange-800 rounded text-xs border border-orange-200">
+                              Histamine: {item.histamine}
+                            </span>
+                          )}
+                          {item.oxalate && (
+                            <span className="px-2 py-1 bg-purple-100 text-purple-800 rounded text-xs border border-purple-200">
+                              Oxalate: {item.oxalate}
+                            </span>
+                          )}
+                          {item.lectin && (
+                            <span className="px-2 py-1 bg-orange-100 text-orange-800 rounded text-xs border border-orange-200">🌾 Lectin</span>
                           )}
                         </div>
                       )}
@@ -306,17 +323,12 @@ const UnifiedSmartSelector = ({
                     <Button
                       variant={selected ? "success" : "outline"}
                       size="sm"
-                      className="ml-3"
+                      className="ml-3 whitespace-nowrap"
                       onClick={(e) => {
-                        console.log('🚨 BUTTON CLICK DETECTED!', item.name);
-                        console.log('🚨 Event:', e);
-                        console.log('🚨 Selected state:', selected);
                         e.preventDefault();
                         e.stopPropagation();
                         handleToggleItem(item);
                       }}
-                      onMouseDown={() => console.log('🚨 MOUSE DOWN on button:', item.name)}
-                      onMouseUp={() => console.log('🚨 MOUSE UP on button:', item.name)}
                     >
                       {selected ? (
                         <>
@@ -331,7 +343,7 @@ const UnifiedSmartSelector = ({
                       )}
                     </Button>
                   </div>
-                </Card>
+                </div>
               );
             })}
           </div>

@@ -109,7 +109,6 @@ const SimpleLoginPage = () => {
                 <div>
                   <p className="font-medium text-blue-900">{selectedUser.name}</p>
                   <p className="text-sm text-blue-700">{selectedUser.protocol}</p>
-                  <p className="text-xs text-blue-600">Demo password: demo123</p>
                 </div>
               </div>
             </div>
@@ -143,7 +142,7 @@ const SimpleLoginPage = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                placeholder={loginType === 'demo' ? 'Enter demo123' : 'Enter your password'}
+                placeholder="Enter password"
                 required
                 autoFocus
               />
