@@ -30,7 +30,7 @@ npm run dev
 **Requirements:**
 - Node.js >=18.0
 - npm
-- Environment variables (20 required)
+- Environment variables (21 required)
 
 **Available Scripts:**
 - `npm run docusaurus` - docusaurus
