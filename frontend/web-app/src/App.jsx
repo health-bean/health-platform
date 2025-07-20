@@ -141,6 +141,12 @@ const MainApp = () => {
           >
             Debug Auth Headers
           </button>
+          <button 
+            onClick={() => window.location.href = '/auth-debug'}
+            className="px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 ml-2"
+          >
+            Auth Debugger
+          </button>
         </div>
       </div>
     );
@@ -149,6 +155,16 @@ const MainApp = () => {
   // Special debug route
   if (window.location.pathname === '/debug') {
     return <HeaderDebugger />;
+  }
+  
+  // Special auth debug route
+  if (window.location.pathname === '/auth-debug') {
+    const AuthDebugger = React.lazy(() => import('./components/debug/AuthDebugger'));
+    return (
+      <React.Suspense fallback={<div>Loading debugger...</div>}>
+        <AuthDebugger />
+      </React.Suspense>
+    );
   }
 
   // Handle app data loading (simplified for clean auth)

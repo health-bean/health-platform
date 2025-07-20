@@ -51,7 +51,6 @@ class SimpleApiClient {
     // Use header getter if available (preferred method)
     if (this.headerGetter) {
       const authHeaders = this.headerGetter();
-      Object.assign(headers, authHeaders);
       
       // Debug log the headers being sent (without sensitive info)
       const headerKeys = Object.keys(authHeaders);
@@ -62,17 +61,17 @@ class SimpleApiClient {
         headers: headerKeys.join(', ')
       });
       
+      // Important: Add auth headers to the request
+      Object.assign(headers, authHeaders);
+      
       safeLogger.debug('API headers from getter', { 
         headerCount: headerKeys.length,
         hasAuthHeader: headerKeys.includes('Authorization'),
         hasDemoHeaders: headerKeys.includes('x-demo-mode')
       });
-      
-      return headers;
     }
-
     // Fallback to token getter for standard users
-    if (this.tokenGetter) {
+    else if (this.tokenGetter) {
       const token = this.tokenGetter();
       if (token) {
         headers['Authorization'] = `Bearer ${token}`;
@@ -82,9 +81,8 @@ class SimpleApiClient {
         console.log('🔑 No token available from token getter');
       }
     }
-
-    // Add user context to headers for demo mode
-    if (this.userContext && this.userContext.isDemo) {
+    // Legacy: Add user context to headers for demo mode
+    else if (this.userContext && this.userContext.isDemo) {
       headers['x-demo-mode'] = 'true';
       headers['x-demo-user-id'] = this.userContext.userId;
       if (this.userContext.sessionId) {

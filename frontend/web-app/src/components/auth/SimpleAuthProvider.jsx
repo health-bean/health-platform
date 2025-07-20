@@ -74,38 +74,45 @@ export const SimpleAuthProvider = ({ children }) => {
 
   // Get auth token for API calls
   const getAuthToken = React.useCallback(() => {
-    if (!isDemoMode) {
+    console.log('🔑 getAuthToken called - authMode:', authMode);
+    
+    // Only retrieve token for standard (Cognito) users
+    if (authMode === 'standard') {
       const token = sessionStorage.getItem('auth_token');
-      console.log('🔑 getAuthToken called, token exists:', !!token, token ? `length: ${token.length}` : 'no token');
+      console.log('🔑 Token from sessionStorage:', !!token, token ? `length: ${token.length}` : 'no token');
       return token;
     }
+    
+    console.log('🔑 No token needed for demo mode');
     return null; // Demo users don't use JWT tokens
-  }, [isDemoMode]);
+  }, [authMode]);
 
   // Get auth headers for API calls
   const getAuthHeaders = React.useCallback(() => {
-    if (!isDemoMode) {
-      // Standard Cognito authentication
+    // Debug the current state
+    console.log('🔑 getAuthHeaders called - authMode:', authMode, 'user:', currentUser?.id);
+    
+    // For standard Cognito users
+    if (authMode === 'standard') {
       const token = getAuthToken();
-      console.log('🔑 getAuthHeaders for standard user, token exists:', !!token);
+      console.log('🔑 Standard auth - token exists:', !!token);
       if (token) {
         console.log('🔑 Adding Authorization header with Bearer token');
         return { Authorization: `Bearer ${token}` };
-      } else {
-        console.log('🔑 No token available for Authorization header');
-        return {};
       }
-    } else if (isDemoMode && currentUser) {
-      // Demo mode headers
+    } 
+    // For demo users
+    else if (authMode === 'demo' && currentUser) {
       console.log('🔑 Adding demo headers for user:', currentUser.id);
       return {
         'x-demo-mode': 'true',
         'x-demo-user-id': currentUser.id
       };
     }
-    console.log('🔑 No auth headers added - not authenticated');
+    
+    console.log('🔑 No auth headers added - not authenticated properly');
     return {};
-  }, [isDemoMode, currentUser, getAuthToken]);
+  }, [authMode, currentUser, getAuthToken]);
 
   // Get current user context for API calls
   const getUserContext = React.useCallback(() => {

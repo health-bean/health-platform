@@ -1,0 +1,60 @@
+  // Get headers for API requests
+  getHeaders(additionalHeaders = {}) {
+    const headers = {
+      'Content-Type': 'application/json',
+      ...additionalHeaders
+    };
+
+    // Use header getter if available (preferred method)
+    if (this.headerGetter) {
+      const authHeaders = this.headerGetter();
+      
+      // Debug log the headers being sent (without sensitive info)
+      const headerKeys = Object.keys(authHeaders);
+      console.log('🔑 API headers from getter:', { 
+        headerCount: headerKeys.length,
+        hasAuthHeader: headerKeys.includes('Authorization'),
+        hasDemoHeaders: headerKeys.includes('x-demo-mode'),
+        headers: headerKeys.join(', ')
+      });
+      
+      // Important: Add auth headers to the request
+      Object.assign(headers, authHeaders);
+      
+      safeLogger.debug('API headers from getter', { 
+        headerCount: headerKeys.length,
+        hasAuthHeader: headerKeys.includes('Authorization'),
+        hasDemoHeaders: headerKeys.includes('x-demo-mode')
+      });
+    }
+    // Fallback to token getter for standard users
+    else if (this.tokenGetter) {
+      const token = this.tokenGetter();
+      if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+        console.log('🔑 API headers from token getter:', { hasToken: !!token, tokenLength: token.length });
+        safeLogger.debug('API headers from token', { hasToken: !!token });
+      } else {
+        console.log('🔑 No token available from token getter');
+      }
+    }
+    // Legacy: Add user context to headers for demo mode
+    else if (this.userContext && this.userContext.isDemo) {
+      headers['x-demo-mode'] = 'true';
+      headers['x-demo-user-id'] = this.userContext.userId;
+      if (this.userContext.sessionId) {
+        headers['x-demo-session-id'] = this.userContext.sessionId;
+      }
+      console.log('🔑 API headers from user context:', { 
+        userId: this.userContext.userId,
+        isDemo: this.userContext.isDemo,
+        headers: Object.keys(headers).join(', ')
+      });
+      safeLogger.debug('API headers from user context', { 
+        userId: this.userContext.userId,
+        isDemo: this.userContext.isDemo
+      });
+    }
+
+    return headers;
+  }
