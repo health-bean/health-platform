@@ -12,19 +12,19 @@ class SimpleApiClient {
     this.headerGetter = null;
   }
 
-  // Set token getter function (for real users)
+  // Set token getter function (for standard users)
   setTokenGetter(tokenGetter) {
     this.tokenGetter = tokenGetter;
-    safeLogger.debug('API token getter set');
+    safeLogger.debug('API token getter callback set');
   }
 
-  // Set header getter function (for both real and demo users)
+  // Set header getter function (for both standard and demo users)
   setHeaderGetter(headerGetter) {
     this.headerGetter = headerGetter;
     safeLogger.debug('API header getter set');
   }
 
-  // Set user context for API calls (legacy support)
+  // Set user context for API calls
   setUserContext(userContext) {
     this.userContext = userContext;
     safeLogger.debug('API user context set', { 
@@ -71,7 +71,7 @@ class SimpleApiClient {
       return headers;
     }
 
-    // Fallback to token getter for real users
+    // Fallback to token getter for standard users
     if (this.tokenGetter) {
       const token = this.tokenGetter();
       if (token) {
@@ -83,7 +83,7 @@ class SimpleApiClient {
       }
     }
 
-    // Legacy: Add user context to headers for demo mode
+    // Add user context to headers for demo mode
     if (this.userContext && this.userContext.isDemo) {
       headers['x-demo-mode'] = 'true';
       headers['x-demo-user-id'] = this.userContext.userId;

@@ -3,8 +3,8 @@ const { pool } = require('../database/connection');
 const { errorResponse } = require('../utils/responses');
 
 // Cognito configuration
-const COGNITO_USER_POOL_ID = 'us-east-1_vr1pPiP6N'; // Updated to match frontend
-const COGNITO_CLIENT_ID = '5luhu590qnjdgi7579k1mqoct9'; // Updated to match frontend
+const COGNITO_USER_POOL_ID = 'us-east-1_vr1pPiP6N';
+const COGNITO_CLIENT_ID = '5luhu590qnjdgi7579k1mqoct9';
 const COGNITO_REGION = 'us-east-1';
 const COGNITO_ISSUER = `https://cognito-idp.${COGNITO_REGION}.amazonaws.com/${COGNITO_USER_POOL_ID}`;
 
@@ -19,7 +19,7 @@ const DEMO_USERS = {
     is_active: true
   },
   'mike-fodmap': {
-    id: 'bb5c54ee-0304-4e7b-8ad4-b464f5b1e37f', // Updated to match the database ID
+    id: 'bb5c54ee-0304-4e7b-8ad4-b464f5b1e37f',
     email: 'mike.fodmap@test.com',
     first_name: 'Mike',
     last_name: 'Chen',
@@ -27,7 +27,7 @@ const DEMO_USERS = {
     is_active: true
   },
   'lisa-histamine': {
-    id: '74ae8620-d183-46ea-a17d-9da8f23f39be', // Updated to match the database ID
+    id: '74ae8620-d183-46ea-a17d-9da8f23f39be',
     email: 'lisa.histamine@test.com',
     first_name: 'Lisa',
     last_name: 'Rodriguez',
@@ -35,7 +35,7 @@ const DEMO_USERS = {
     is_active: true
   },
   'john-paleo': {
-    id: '3e209467-b142-4101-a399-adb3f3232dba', // Updated to match the database ID
+    id: '3e209467-b142-4101-a399-adb3f3232dba',
     email: 'john.paleo@test.com',
     first_name: 'John',
     last_name: 'Williams',
@@ -43,7 +43,7 @@ const DEMO_USERS = {
     is_active: true
   },
   'emma-multi': {
-    id: '3923a221-97f6-4425-b863-e9b3b450ebfb', // Updated to match the database ID
+    id: '3923a221-97f6-4425-b863-e9b3b450ebfb',
     email: 'emma.multi@test.com',
     first_name: 'Emma',
     last_name: 'Davis',
@@ -221,7 +221,7 @@ const getCurrentUser = async (event) => {
       return null;
     }
     
-    // Priority 1: Check for Cognito JWT token
+    // Priority 1: Check for Cognito JWT token (standard authentication)
     const authHeader = event.headers.Authorization || event.headers.authorization;
     if (authHeader && authHeader.startsWith('Bearer ')) {
       console.log('AUTH MIDDLEWARE: Found Authorization header, attempting Cognito verification');
@@ -245,13 +245,13 @@ const getCurrentUser = async (event) => {
             user_type: dbUser.user_type,
             is_active: dbUser.is_active,
             cognitoSub: cognitoUser.sub,
-            isCognito: true
+            authMode: 'standard'
           };
         }
       }
       
       console.log('AUTH MIDDLEWARE: Cognito verification failed');
-      // Don't return null here - continue to check for demo user
+      // Continue to check for demo user
     }
     
     // Priority 2: Check for demo mode (handle all case variations)
@@ -282,6 +282,7 @@ const getCurrentUser = async (event) => {
           user_type: 'demo',
           is_active: true,
           sessionId: demoSessionId,
+          authMode: 'demo',
           isDemo: true
         };
       }
@@ -296,11 +297,12 @@ const getCurrentUser = async (event) => {
           lastName: demoUser.last_name,
           userType: demoUser.user_type,
           sessionId: demoSessionId,
+          authMode: 'demo',
           isDemo: true
         };
       } else {
         console.log('AUTH MIDDLEWARE: Demo user not found:', demoUserId);
-        // Don't return null here - check for demo_user in query params
+        // Check for demo_user in query params
       }
     }
     
@@ -323,6 +325,7 @@ const getCurrentUser = async (event) => {
           last_name: 'User',
           user_type: 'demo',
           is_active: true,
+          authMode: 'demo',
           isDemo: true
         };
       }
@@ -336,6 +339,7 @@ const getCurrentUser = async (event) => {
           firstName: demoUser.first_name,
           lastName: demoUser.last_name,
           userType: demoUser.user_type,
+          authMode: 'demo',
           isDemo: true
         };
       } else {

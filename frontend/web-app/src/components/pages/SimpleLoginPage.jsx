@@ -13,23 +13,23 @@ const SimpleLoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [loginType, setLoginType] = useState('demo'); // 'demo' or 'real'
+  const [loginMode, setLoginMode] = useState('standard'); // 'standard' or 'demo'
   const { login, error, setError, demoUsers } = useSimpleAuth();
 
   const handleUserSelect = (demoUser) => {
     setSelectedUser(demoUser);
     setEmail(demoUser.email);
     setPassword(''); // Clear password field
-    setLoginType('demo');
+    setLoginMode('demo');
     setShowLoginForm(true);
     setError(null);
   };
 
-  const handleRealUserLogin = () => {
+  const handleStandardLogin = () => {
     setSelectedUser(null);
     setEmail('');
     setPassword('');
-    setLoginType('real');
+    setLoginMode('standard');
     setShowLoginForm(true);
     setError(null);
   };
@@ -46,7 +46,7 @@ const SimpleLoginPage = () => {
       setIsLoading(true);
       setError(null);
       
-      const result = await login(email, password, loginType);
+      const result = await login(email, password, loginMode);
       
       if (!result.success) {
         setError(result.error || 'Login failed');
@@ -91,7 +91,7 @@ const SimpleLoginPage = () => {
               ← Back
             </button>
             <h2 className="text-xl font-semibold text-gray-900">
-              {loginType === 'demo' ? `Login as ${selectedUser?.name}` : 'Login with Cognito'}
+              {loginMode === 'demo' ? `Login as ${selectedUser?.name}` : 'Login with Cognito'}
             </h2>
           </div>
 
@@ -102,7 +102,7 @@ const SimpleLoginPage = () => {
           )}
 
           {/* User Info for Demo Login */}
-          {loginType === 'demo' && selectedUser && (
+          {loginMode === 'demo' && selectedUser && (
             <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
               <div className="flex items-center space-x-3">
                 <div className="text-2xl">{selectedUser.avatar}</div>
@@ -128,7 +128,7 @@ const SimpleLoginPage = () => {
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 placeholder="Enter email address"
                 required
-                disabled={loginType === 'demo'} // Pre-filled for demo users
+                disabled={loginMode === 'demo'} // Pre-filled for demo users
               />
             </div>
 
@@ -157,17 +157,24 @@ const SimpleLoginPage = () => {
             </button>
           </form>
 
-          {/* Switch to Real User Login */}
-          {loginType === 'demo' && (
-            <div className="mt-6 text-center">
+          {/* Switch between login modes */}
+          <div className="mt-6 text-center">
+            {loginMode === 'demo' ? (
               <button
-                onClick={handleRealUserLogin}
+                onClick={handleStandardLogin}
                 className="text-sm text-blue-600 hover:text-blue-800"
               >
-                Login with real Cognito account instead
+                Login with Cognito account instead
               </button>
-            </div>
-          )}
+            ) : (
+              <button
+                onClick={() => setShowLoginForm(false)}
+                className="text-sm text-blue-600 hover:text-blue-800"
+              >
+                Use a demo account instead
+              </button>
+            )}
+          </div>
         </div>
       </div>
     );
@@ -188,7 +195,7 @@ const SimpleLoginPage = () => {
       {/* Content */}
       <div className="p-6 max-w-md mx-auto">
         <h2 className="text-xl font-semibold text-gray-900 mb-4 text-center">
-          Choose Demo Account
+          Login Options
         </h2>
 
         {error && (
@@ -196,6 +203,22 @@ const SimpleLoginPage = () => {
             {error}
           </Alert>
         )}
+
+        {/* Standard Login Option */}
+        <div className="mb-6">
+          <button
+            onClick={handleStandardLogin}
+            className="w-full p-4 border border-blue-300 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors"
+          >
+            <div className="flex items-center justify-center space-x-2">
+              <User className="w-5 h-5 text-blue-600" />
+              <span className="text-md font-medium text-blue-700">Login with Cognito Account</span>
+            </div>
+          </button>
+          <p className="text-xs text-center mt-2 text-gray-500">
+            Standard authentication for registered users
+          </p>
+        </div>
 
         {/* Privacy Notice */}
         <Alert variant="info" className="mb-6">
@@ -210,6 +233,11 @@ const SimpleLoginPage = () => {
             </div>
           </div>
         </Alert>
+
+        {/* Demo Users Section */}
+        <h3 className="text-md font-semibold text-gray-700 mb-3">
+          Or try a demo account:
+        </h3>
 
         {/* Demo Users */}
         <div className="space-y-3">
@@ -251,19 +279,6 @@ const SimpleLoginPage = () => {
               </div>
             </Card>
           ))}
-        </div>
-
-        {/* Real User Login Option */}
-        <div className="mt-6">
-          <button
-            onClick={handleRealUserLogin}
-            className="w-full p-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
-          >
-            <div className="flex items-center justify-center space-x-2">
-              <User className="w-4 h-4 text-gray-600" />
-              <span className="text-sm font-medium text-gray-700">Login with Cognito Account</span>
-            </div>
-          </button>
         </div>
 
         {/* Info Section */}
