@@ -158,21 +158,7 @@ const handleNotFound = (path, method) => {
         path: path,
         method: method,
         availableEndpoints: [
-            // Auth endpoints
-            'POST /api/v1/auth/login',
-            'POST /api/v1/auth/logout', 
-            'GET /api/v1/auth/verify',
-            'POST /api/v1/auth/refresh',
-            'POST /api/v1/auth/register',
-            'POST /api/v1/auth', // Legacy
-            // User endpoints
-            'GET /api/v1/users',
-            'POST /api/v1/users',
-            'GET /api/v1/user/protocols',
-            'GET /api/v1/user/preferences',
-            'POST /api/v1/user/preferences',
-            // Other endpoints
-            'GET /api/v1/correlations/insights',
+            // Public endpoints (no auth required)
             'GET /api/v1/protocols',
             'GET /api/v1/foods/search',
             'GET /api/v1/foods/by-protocol',
@@ -180,12 +166,17 @@ const handleNotFound = (path, method) => {
             'GET /api/v1/supplements/search',
             'GET /api/v1/medications/search',
             'GET /api/v1/detox-types/search',
-            'GET /api/v1/journal/entries',
-            'POST /api/v1/journal/entries',
-            'GET /api/v1/journal/entries/:date',
-            'PUT /api/v1/journal/entries/:date',
+            'GET /api/v1/exposures/search',
+            // Auth-protected endpoints
+            'GET /api/v1/users',
+            'GET /api/v1/user/preferences',
+            'GET /api/v1/user/protocols',
+            'GET /api/v1/users/current-protocol',
+            'GET /api/v1/users/protocol-history',
+            'GET /api/v1/correlations/insights',
             'GET /api/v1/timeline/entries',
-            'POST /api/v1/timeline/entries'
+            'POST /api/v1/timeline/entries',
+            'GET /api/v1/test-auth'
         ]
     });
 };

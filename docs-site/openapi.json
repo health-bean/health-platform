@@ -19,6 +19,259 @@
     }
   ],
   "paths": {
+    "/api/v1/protocols": {
+      "get": {
+        "summary": "Get all available protocols",
+        "description": "Retrieves all health protocols available in the system",
+        "tags": ["Protocols"],
+        "responses": {
+          "200": {
+            "description": "Protocols retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {"$ref": "#/components/schemas/Protocol"}
+                }
+              }
+            }
+          },
+          "500": {"description": "Internal server error"}
+        }
+      }
+    },
+    "/api/v1/foods/search": {
+      "get": {
+        "summary": "Search for foods",
+        "description": "Search for foods with optional protocol compliance filtering",
+        "tags": ["Search"],
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": true,
+            "description": "Search query for food names",
+            "schema": {"type": "string"},
+            "example": "apple"
+          },
+          {
+            "name": "protocol",
+            "in": "query",
+            "required": false,
+            "description": "Filter by protocol compliance",
+            "schema": {"type": "string"},
+            "example": "aip-core"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Food search results",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {"$ref": "#/components/schemas/Food"}
+                }
+              }
+            }
+          },
+          "400": {"description": "Bad request - Missing search query"},
+          "500": {"description": "Internal server error"}
+        }
+      }
+    },
+    "/api/v1/foods/by-protocol": {
+      "get": {
+        "summary": "Get foods by protocol",
+        "description": "Retrieves foods that are compliant with a specific protocol",
+        "tags": ["Search"],
+        "parameters": [
+          {
+            "name": "protocol",
+            "in": "query",
+            "required": true,
+            "description": "Protocol identifier",
+            "schema": {"type": "string"},
+            "example": "aip-core"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Protocol-compliant foods",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {"$ref": "#/components/schemas/Food"}
+                }
+              }
+            }
+          },
+          "400": {"description": "Bad request - Missing protocol parameter"},
+          "500": {"description": "Internal server error"}
+        }
+      }
+    },
+    "/api/v1/symptoms/search": {
+      "get": {
+        "summary": "Search for symptoms",
+        "description": "Search for symptoms by name or description",
+        "tags": ["Search"],
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": true,
+            "description": "Search query for symptom names",
+            "schema": {"type": "string"},
+            "example": "headache"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Symptom search results",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {"$ref": "#/components/schemas/Symptom"}
+                }
+              }
+            }
+          },
+          "400": {"description": "Bad request"},
+          "500": {"description": "Internal server error"}
+        }
+      }
+    },
+    "/api/v1/supplements/search": {
+      "get": {
+        "summary": "Search for supplements",
+        "description": "Search for supplements by name or category",
+        "tags": ["Search"],
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": true,
+            "description": "Search query for supplement names",
+            "schema": {"type": "string"},
+            "example": "vitamin"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Supplement search results",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {"$ref": "#/components/schemas/Supplement"}
+                }
+              }
+            }
+          },
+          "400": {"description": "Bad request"},
+          "500": {"description": "Internal server error"}
+        }
+      }
+    },
+    "/api/v1/medications/search": {
+      "get": {
+        "summary": "Search for medications",
+        "description": "Search for medications by name or category",
+        "tags": ["Search"],
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": true,
+            "description": "Search query for medication names",
+            "schema": {"type": "string"},
+            "example": "ibuprofen"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Medication search results",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {"$ref": "#/components/schemas/Medication"}
+                }
+              }
+            }
+          },
+          "400": {"description": "Bad request"},
+          "500": {"description": "Internal server error"}
+        }
+      }
+    },
+    "/api/v1/detox-types/search": {
+      "get": {
+        "summary": "Search for detox types",
+        "description": "Search for detox methods and types",
+        "tags": ["Search"],
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": true,
+            "description": "Search query for detox types",
+            "schema": {"type": "string"},
+            "example": "sauna"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detox type search results",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {"$ref": "#/components/schemas/DetoxType"}
+                }
+              }
+            }
+          },
+          "400": {"description": "Bad request"},
+          "500": {"description": "Internal server error"}
+        }
+      }
+    },
+    "/api/v1/exposures/search": {
+      "get": {
+        "summary": "Search for exposure types",
+        "description": "Search for environmental exposures and triggers",
+        "tags": ["Search"],
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": true,
+            "description": "Search query for exposure types",
+            "schema": {"type": "string"},
+            "example": "mold"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Exposure type search results",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {"$ref": "#/components/schemas/ExposureType"}
+                }
+              }
+            }
+          },
+          "400": {"description": "Bad request"},
+          "500": {"description": "Internal server error"}
+        }
+      }
+    },
     "/api/v1/users": {
       "get": {
         "summary": "Get current user information",
@@ -35,33 +288,6 @@
             }
           },
           "401": {"description": "Unauthorized - Invalid or missing authentication token"},
-          "500": {"description": "Internal server error"}
-        }
-      },
-      "post": {
-        "summary": "Update user information",
-        "description": "Updates the authenticated user's profile information",
-        "tags": ["User Management"],
-        "security": [{"BearerAuth": []}],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {"$ref": "#/components/schemas/UserUpdate"}
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "User updated successfully",
-            "content": {
-              "application/json": {
-                "schema": {"$ref": "#/components/schemas/User"}
-              }
-            }
-          },
-          "400": {"description": "Bad request - Invalid user data"},
-          "401": {"description": "Unauthorized"},
           "500": {"description": "Internal server error"}
         }
       }

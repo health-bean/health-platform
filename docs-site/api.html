@@ -618,13 +618,94 @@
 
             <!-- Endpoint Categories -->
             <div class="endpoint-categories">
-                <!-- User Endpoints -->
+                <!-- Public Endpoints -->
                 <div class="category">
-                    <h3 class="category-title" onclick="toggleCategory('user')">
-                        👤 User Management
+                    <h3 class="category-title" onclick="toggleCategory('public')">
+                        🌐 Public Endpoints
                         <span class="toggle-icon">▼</span>
                     </h3>
-                    <div class="category-content" id="user-endpoints">
+                    <div class="category-content" id="public-endpoints">
+                        <div class="endpoint" data-method="GET" data-path="/api/v1/protocols">
+                            <div class="endpoint-header">
+                                <span class="method get">GET</span>
+                                <span class="path">/api/v1/protocols</span>
+                                <span class="description">Get all available protocols</span>
+                                <button class="try-btn" onclick="tryEndpoint('GET', '/api/v1/protocols')">Try it</button>
+                            </div>
+                        </div>
+                        
+                        <div class="endpoint" data-method="GET" data-path="/api/v1/foods/search">
+                            <div class="endpoint-header">
+                                <span class="method get">GET</span>
+                                <span class="path">/api/v1/foods/search</span>
+                                <span class="description">Search for foods</span>
+                                <button class="try-btn" onclick="tryEndpoint('GET', '/api/v1/foods/search', {q: 'apple'})">Try it</button>
+                            </div>
+                        </div>
+                        
+                        <div class="endpoint" data-method="GET" data-path="/api/v1/foods/by-protocol">
+                            <div class="endpoint-header">
+                                <span class="method get">GET</span>
+                                <span class="path">/api/v1/foods/by-protocol</span>
+                                <span class="description">Get foods by protocol</span>
+                                <button class="try-btn" onclick="tryEndpoint('GET', '/api/v1/foods/by-protocol', {protocol: 'aip-core'})">Try it</button>
+                            </div>
+                        </div>
+                        
+                        <div class="endpoint" data-method="GET" data-path="/api/v1/symptoms/search">
+                            <div class="endpoint-header">
+                                <span class="method get">GET</span>
+                                <span class="path">/api/v1/symptoms/search</span>
+                                <span class="description">Search for symptoms</span>
+                                <button class="try-btn" onclick="tryEndpoint('GET', '/api/v1/symptoms/search', {q: 'headache'})">Try it</button>
+                            </div>
+                        </div>
+                        
+                        <div class="endpoint" data-method="GET" data-path="/api/v1/supplements/search">
+                            <div class="endpoint-header">
+                                <span class="method get">GET</span>
+                                <span class="path">/api/v1/supplements/search</span>
+                                <span class="description">Search for supplements</span>
+                                <button class="try-btn" onclick="tryEndpoint('GET', '/api/v1/supplements/search', {q: 'vitamin'})">Try it</button>
+                            </div>
+                        </div>
+                        
+                        <div class="endpoint" data-method="GET" data-path="/api/v1/medications/search">
+                            <div class="endpoint-header">
+                                <span class="method get">GET</span>
+                                <span class="path">/api/v1/medications/search</span>
+                                <span class="description">Search for medications</span>
+                                <button class="try-btn" onclick="tryEndpoint('GET', '/api/v1/medications/search', {q: 'ibuprofen'})">Try it</button>
+                            </div>
+                        </div>
+                        
+                        <div class="endpoint" data-method="GET" data-path="/api/v1/detox-types/search">
+                            <div class="endpoint-header">
+                                <span class="method get">GET</span>
+                                <span class="path">/api/v1/detox-types/search</span>
+                                <span class="description">Search for detox types</span>
+                                <button class="try-btn" onclick="tryEndpoint('GET', '/api/v1/detox-types/search', {q: 'sauna'})">Try it</button>
+                            </div>
+                        </div>
+                        
+                        <div class="endpoint" data-method="GET" data-path="/api/v1/exposures/search">
+                            <div class="endpoint-header">
+                                <span class="method get">GET</span>
+                                <span class="path">/api/v1/exposures/search</span>
+                                <span class="description">Search for exposures</span>
+                                <button class="try-btn" onclick="tryEndpoint('GET', '/api/v1/exposures/search', {q: 'mold'})">Try it</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Auth-Protected Endpoints -->
+                <div class="category">
+                    <h3 class="category-title" onclick="toggleCategory('protected')">
+                        🔒 Auth-Protected Endpoints
+                        <span class="toggle-icon">▼</span>
+                    </h3>
+                    <div class="category-content" id="protected-endpoints">
                         <div class="endpoint" data-method="GET" data-path="/api/v1/users">
                             <div class="endpoint-header">
                                 <span class="method get">GET</span>
@@ -651,70 +732,34 @@
                                 <button class="try-btn" onclick="tryEndpoint('GET', '/api/v1/user/protocols')">Try it</button>
                             </div>
                         </div>
-                    </div>
-                </div>
-
-                <!-- Protocol Endpoints -->
-                <div class="category">
-                    <h3 class="category-title" onclick="toggleCategory('protocols')">
-                        📋 Protocols
-                        <span class="toggle-icon">▼</span>
-                    </h3>
-                    <div class="category-content" id="protocols-endpoints">
-                        <div class="endpoint" data-method="GET" data-path="/api/v1/protocols">
+                        
+                        <div class="endpoint" data-method="GET" data-path="/api/v1/users/current-protocol">
                             <div class="endpoint-header">
                                 <span class="method get">GET</span>
-                                <span class="path">/api/v1/protocols</span>
-                                <span class="description">Get all available protocols</span>
-                                <button class="try-btn" onclick="tryEndpoint('GET', '/api/v1/protocols')">Try it</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Search Endpoints -->
-                <div class="category">
-                    <h3 class="category-title" onclick="toggleCategory('search')">
-                        🔍 Search
-                        <span class="toggle-icon">▼</span>
-                    </h3>
-                    <div class="category-content" id="search-endpoints">
-                        <div class="endpoint" data-method="GET" data-path="/api/v1/foods/search">
-                            <div class="endpoint-header">
-                                <span class="method get">GET</span>
-                                <span class="path">/api/v1/foods/search</span>
-                                <span class="description">Search for foods</span>
-                                <button class="try-btn" onclick="tryEndpoint('GET', '/api/v1/foods/search', {q: 'apple'})">Try it</button>
+                                <span class="path">/api/v1/users/current-protocol</span>
+                                <span class="description">Get current protocol</span>
+                                <button class="try-btn" onclick="tryEndpoint('GET', '/api/v1/users/current-protocol')">Try it</button>
                             </div>
                         </div>
                         
-                        <div class="endpoint" data-method="GET" data-path="/api/v1/symptoms/search">
+                        <div class="endpoint" data-method="GET" data-path="/api/v1/users/protocol-history">
                             <div class="endpoint-header">
                                 <span class="method get">GET</span>
-                                <span class="path">/api/v1/symptoms/search</span>
-                                <span class="description">Search for symptoms</span>
-                                <button class="try-btn" onclick="tryEndpoint('GET', '/api/v1/symptoms/search', {q: 'headache'})">Try it</button>
+                                <span class="path">/api/v1/users/protocol-history</span>
+                                <span class="description">Get protocol history</span>
+                                <button class="try-btn" onclick="tryEndpoint('GET', '/api/v1/users/protocol-history')">Try it</button>
                             </div>
                         </div>
                         
-                        <div class="endpoint" data-method="GET" data-path="/api/v1/supplements/search">
+                        <div class="endpoint" data-method="GET" data-path="/api/v1/correlations/insights">
                             <div class="endpoint-header">
                                 <span class="method get">GET</span>
-                                <span class="path">/api/v1/supplements/search</span>
-                                <span class="description">Search for supplements</span>
-                                <button class="try-btn" onclick="tryEndpoint('GET', '/api/v1/supplements/search', {q: 'vitamin'})">Try it</button>
+                                <span class="path">/api/v1/correlations/insights</span>
+                                <span class="description">Get correlation insights</span>
+                                <button class="try-btn" onclick="tryEndpoint('GET', '/api/v1/correlations/insights')">Try it</button>
                             </div>
                         </div>
-                    </div>
-                </div>
-
-                <!-- Timeline Endpoints -->
-                <div class="category">
-                    <h3 class="category-title" onclick="toggleCategory('timeline')">
-                        📅 Timeline
-                        <span class="toggle-icon">▼</span>
-                    </h3>
-                    <div class="category-content" id="timeline-endpoints">
+                        
                         <div class="endpoint" data-method="GET" data-path="/api/v1/timeline/entries">
                             <div class="endpoint-header">
                                 <span class="method get">GET</span>
@@ -723,22 +768,22 @@
                                 <button class="try-btn" onclick="tryEndpoint('GET', '/api/v1/timeline/entries')">Try it</button>
                             </div>
                         </div>
-                    </div>
-                </div>
-
-                <!-- Insights Endpoints -->
-                <div class="category">
-                    <h3 class="category-title" onclick="toggleCategory('insights')">
-                        💡 Insights
-                        <span class="toggle-icon">▼</span>
-                    </h3>
-                    <div class="category-content" id="insights-endpoints">
-                        <div class="endpoint" data-method="GET" data-path="/api/v1/correlations/insights">
+                        
+                        <div class="endpoint" data-method="POST" data-path="/api/v1/timeline/entries">
+                            <div class="endpoint-header">
+                                <span class="method post">POST</span>
+                                <span class="path">/api/v1/timeline/entries</span>
+                                <span class="description">Create timeline entry</span>
+                                <button class="try-btn" onclick="tryEndpoint('POST', '/api/v1/timeline/entries')">Try it</button>
+                            </div>
+                        </div>
+                        
+                        <div class="endpoint" data-method="GET" data-path="/api/v1/test-auth">
                             <div class="endpoint-header">
                                 <span class="method get">GET</span>
-                                <span class="path">/api/v1/correlations/insights</span>
-                                <span class="description">Get correlation insights</span>
-                                <button class="try-btn" onclick="tryEndpoint('GET', '/api/v1/correlations/insights')">Try it</button>
+                                <span class="path">/api/v1/test-auth</span>
+                                <span class="description">Test authentication</span>
+                                <button class="try-btn" onclick="tryEndpoint('GET', '/api/v1/test-auth')">Try it</button>
                             </div>
                         </div>
                     </div>
