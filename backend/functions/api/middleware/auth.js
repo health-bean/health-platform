@@ -114,6 +114,16 @@ const getOrCreateUserFromCognito = async (cognitoUser) => {
   try {
     client = await pool.connect();
     
+    // Debug the Cognito user object to see what attributes are available
+    console.log('AUTH MIDDLEWARE: Cognito user attributes:', JSON.stringify({
+      sub: cognitoUser.sub,
+      email: cognitoUser.email,
+      email_verified: cognitoUser.email_verified,
+      'cognito:email': cognitoUser['cognito:email'],
+      identities: cognitoUser.identities,
+      hasEmail: !!cognitoUser.email
+    }));
+    
     // First, try to find user by Cognito sub
     let userQuery = `
       SELECT id, email, first_name, last_name, user_type, is_active, cognito_sub
@@ -128,29 +138,38 @@ const getOrCreateUserFromCognito = async (cognitoUser) => {
       return result.rows[0];
     }
     
+    // Extract email from Cognito token - try multiple possible locations
+    const userEmail = cognitoUser.email || cognitoUser['cognito:email'];
+    
+    // Email is REQUIRED for standard users - if not found, authentication must fail
+    if (!userEmail) {
+      console.error('AUTH MIDDLEWARE: No email found in Cognito token for user:', cognitoUser.sub);
+      throw new Error('Email is required for user registration but was not found in Cognito token');
+    }
+    
+    console.log('AUTH MIDDLEWARE: Extracted email:', userEmail);
+    
     // If not found by cognito_sub, try to find by email
-    if (cognitoUser.email) {
-      userQuery = `
-        SELECT id, email, first_name, last_name, user_type, is_active, cognito_sub
-        FROM users 
-        WHERE email = $1 AND is_active = true
+    userQuery = `
+      SELECT id, email, first_name, last_name, user_type, is_active, cognito_sub
+      FROM users 
+      WHERE email = $1 AND is_active = true
+    `;
+    
+    result = await client.query(userQuery, [userEmail]);
+    
+    if (result.rows.length > 0) {
+      // Update existing user with Cognito sub
+      const updateQuery = `
+        UPDATE users 
+        SET cognito_sub = $1, updated_at = CURRENT_TIMESTAMP
+        WHERE id = $2
+        RETURNING id, email, first_name, last_name, user_type, is_active, cognito_sub
       `;
       
-      result = await client.query(userQuery, [cognitoUser.email]);
-      
-      if (result.rows.length > 0) {
-        // Update existing user with Cognito sub
-        const updateQuery = `
-          UPDATE users 
-          SET cognito_sub = $1, updated_at = CURRENT_TIMESTAMP
-          WHERE id = $2
-          RETURNING id, email, first_name, last_name, user_type, is_active, cognito_sub
-        `;
-        
-        const updateResult = await client.query(updateQuery, [cognitoUser.sub, result.rows[0].id]);
-        console.log('AUTH MIDDLEWARE: Updated existing user with Cognito sub');
-        return updateResult.rows[0];
-      }
+      const updateResult = await client.query(updateQuery, [cognitoUser.sub, result.rows[0].id]);
+      console.log('AUTH MIDDLEWARE: Updated existing user with Cognito sub');
+      return updateResult.rows[0];
     }
     
     // Create new user from Cognito data
@@ -179,11 +198,20 @@ const getOrCreateUserFromCognito = async (cognitoUser) => {
       RETURNING id, email, first_name, last_name, user_type, is_active, cognito_sub
     `;
     
-    const firstName = cognitoUser.given_name || cognitoUser.name?.split(' ')[0] || 'User';
-    const lastName = cognitoUser.family_name || cognitoUser.name?.split(' ').slice(1).join(' ') || '';
+    const firstName = cognitoUser.given_name || 
+                     cognitoUser['custom:given_name'] || 
+                     cognitoUser.name?.split(' ')[0] || 
+                     'User';
+                     
+    const lastName = cognitoUser.family_name || 
+                    cognitoUser['custom:family_name'] || 
+                    cognitoUser.name?.split(' ').slice(1).join(' ') || 
+                    '';
+    
+    console.log('AUTH MIDDLEWARE: Creating new user with email:', userEmail);
     
     const insertResult = await client.query(insertQuery, [
-      cognitoUser.email,
+      userEmail,
       firstName,
       lastName,
       cognitoUser.sub
@@ -194,7 +222,7 @@ const getOrCreateUserFromCognito = async (cognitoUser) => {
     
   } catch (error) {
     console.error('Error getting/creating user from Cognito:', error);
-    return null;
+    throw error; // Rethrow to see the full error in logs
   } finally {
     if (client) {
       client.release();
@@ -229,24 +257,32 @@ const getCurrentUser = async (event) => {
       
       const cognitoUser = await verifyCognitoToken(token);
       if (cognitoUser) {
-        console.log('AUTH MIDDLEWARE: Cognito user verified:', cognitoUser.email || cognitoUser.sub);
+        console.log('AUTH MIDDLEWARE: Cognito user verified:', cognitoUser.sub);
         
-        // Get or create user in database
-        const dbUser = await getOrCreateUserFromCognito(cognitoUser);
-        if (dbUser) {
-          return {
-            id: dbUser.id,
-            email: dbUser.email,
-            firstName: dbUser.first_name,
-            lastName: dbUser.last_name,
-            userType: dbUser.user_type,
-            first_name: dbUser.first_name,
-            last_name: dbUser.last_name,
-            user_type: dbUser.user_type,
-            is_active: dbUser.is_active,
-            cognitoSub: cognitoUser.sub,
-            authMode: 'standard'
-          };
+        try {
+          // Get or create user in database
+          const dbUser = await getOrCreateUserFromCognito(cognitoUser);
+          if (dbUser) {
+            console.log('AUTH MIDDLEWARE: Successfully retrieved/created database user:', dbUser.id);
+            return {
+              id: dbUser.id,
+              email: dbUser.email,
+              firstName: dbUser.first_name,
+              lastName: dbUser.last_name,
+              userType: dbUser.user_type,
+              first_name: dbUser.first_name,
+              last_name: dbUser.last_name,
+              user_type: dbUser.user_type,
+              is_active: dbUser.is_active,
+              cognitoSub: cognitoUser.sub,
+              authMode: 'standard'
+            };
+          } else {
+            console.log('AUTH MIDDLEWARE: Failed to get/create database user');
+          }
+        } catch (dbError) {
+          console.error('AUTH MIDDLEWARE: Database error during user creation/retrieval:', dbError);
+          // Continue to check for demo user
         }
       }
       
