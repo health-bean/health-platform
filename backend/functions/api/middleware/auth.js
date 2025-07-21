@@ -186,6 +186,7 @@ const getOrCreateUserFromCognito = async (cognitoUser) => {
         first_name, 
         last_name, 
         user_type, 
+        role,
         is_active, 
         cognito_sub,
         created_at,
@@ -196,12 +197,13 @@ const getOrCreateUserFromCognito = async (cognitoUser) => {
         $2,
         $3,
         'patient',
+        'patient',
         true,
         $4,
         CURRENT_TIMESTAMP,
         CURRENT_TIMESTAMP
       )
-      RETURNING id, email, first_name, last_name, user_type, is_active, cognito_sub
+      RETURNING id, email, first_name, last_name, user_type, role, is_active, cognito_sub
     `;
     
     const firstName = cognitoUser.given_name || 
