@@ -79,6 +79,9 @@ const verifyCognitoToken = async (token) => {
     console.log('AUTH MIDDLEWARE: Expected issuer:', COGNITO_ISSUER);
     console.log('AUTH MIDDLEWARE: Token audience/client:', decoded.aud || decoded.client_id);
     console.log('AUTH MIDDLEWARE: Expected client ID:', COGNITO_CLIENT_ID);
+    
+    // Debug: Log all token contents to see what's available
+    console.log('AUTH MIDDLEWARE: Full token payload:', JSON.stringify(decoded, null, 2));
 
     // Verify token issuer
     if (decoded.iss !== COGNITO_ISSUER) {

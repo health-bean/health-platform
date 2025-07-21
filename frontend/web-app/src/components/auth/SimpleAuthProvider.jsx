@@ -142,9 +142,9 @@ export const SimpleAuthProvider = ({ children }) => {
             const session = await fetchAuthSession();
             console.log('🔑 Session obtained during initialization:', !!session);
             console.log('🔑 Session tokens:', !!session.tokens);
-            console.log('🔑 Access token:', !!session.tokens?.accessToken);
+            console.log('🔑 ID token:', !!session.tokens?.idToken);
             
-            const token = session.tokens?.accessToken?.toString();
+            const token = session.tokens?.idToken?.toString();
             console.log('🔑 Token extracted during initialization:', !!token, token ? `length: ${token.length}` : 'no token');
             
             if (token) {
@@ -257,9 +257,9 @@ export const SimpleAuthProvider = ({ children }) => {
         
         console.log('🔑 Session obtained:', !!session);
         console.log('🔑 Session tokens:', !!session.tokens);
-        console.log('🔑 Access token:', !!session.tokens?.accessToken);
+        console.log('🔑 ID token:', !!session.tokens?.idToken);
         
-        const token = session.tokens?.accessToken?.toString();
+        const token = session.tokens?.idToken?.toString();
         
         console.log('🔑 Token extracted:', !!token, token ? `length: ${token.length}` : 'no token');
         
