@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generated": "2025-07-23T22:26:44.634Z",
+    "generated": "2025-07-23T22:40:38.250Z",
     "version": "1.0.0",
     "generator": "AutomatedProfessionalDocsGenerator"
   },
@@ -17,7 +17,7 @@
     "workingAPIs": 9,
     "totalAPIs": 29,
     "totalTables": 30,
-    "totalCommits": 187,
+    "totalCommits": 188,
     "contributors": 1
   },
   "discoveredInfo": {
@@ -138,7 +138,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 883,
+          "responseTime": 349,
           "responseData": {
             "foods": [
               {
@@ -261,7 +261,7 @@
           ],
           "status": 401,
           "working": false,
-          "responseTime": 157,
+          "responseTime": 107,
           "responseData": {
             "error": "Authentication required"
           },
@@ -276,7 +276,7 @@
           "params": [],
           "status": 404,
           "working": false,
-          "responseTime": 86,
+          "responseTime": 113,
           "responseData": {
             "error": "Route not found: GET /api/v1/detox-types"
           },
@@ -291,7 +291,7 @@
           "params": [],
           "status": 404,
           "working": false,
-          "responseTime": 114,
+          "responseTime": 238,
           "responseData": {
             "error": "Route not found: GET /api/v1/exposure-types"
           },
@@ -311,7 +311,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 144,
+          "responseTime": 178,
           "responseData": {
             "foods": [],
             "foods_by_category": {},
@@ -360,7 +360,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 64,
+          "responseTime": 241,
           "responseData": {
             "protocols": [
               {
@@ -534,7 +534,7 @@
           ],
           "status": 500,
           "working": false,
-          "responseTime": 113,
+          "responseTime": 106,
           "responseData": {
             "error": "Database operation failed"
           },
@@ -554,7 +554,7 @@
           ],
           "status": 500,
           "working": false,
-          "responseTime": 130,
+          "responseTime": 240,
           "responseData": {
             "error": "Database operation failed"
           },
@@ -574,7 +574,7 @@
           ],
           "status": 404,
           "working": false,
-          "responseTime": 111,
+          "responseTime": 101,
           "responseData": {
             "error": "Route not found: GET /api/v1/users/preferences"
           },
@@ -594,7 +594,7 @@
           ],
           "status": 404,
           "working": false,
-          "responseTime": 63,
+          "responseTime": 107,
           "responseData": {
             "error": "Route not found: PUT /api/v1/users/preferences"
           },
@@ -609,7 +609,7 @@
           "params": [],
           "status": 500,
           "working": false,
-          "responseTime": 113,
+          "responseTime": 101,
           "responseData": {
             "error": "Authentication test failed"
           },
@@ -624,7 +624,7 @@
           "params": [],
           "status": 401,
           "working": false,
-          "responseTime": 58,
+          "responseTime": 107,
           "responseData": {
             "error": "Authentication required"
           },
@@ -644,7 +644,7 @@
           ],
           "status": 401,
           "working": false,
-          "responseTime": 65,
+          "responseTime": 102,
           "responseData": {
             "error": "Authentication required"
           },
@@ -664,7 +664,7 @@
           ],
           "status": 401,
           "working": false,
-          "responseTime": 62,
+          "responseTime": 104,
           "responseData": {
             "error": "Authentication required"
           },
@@ -684,7 +684,7 @@
           ],
           "status": 401,
           "working": false,
-          "responseTime": 110,
+          "responseTime": 240,
           "responseData": {
             "error": "Authentication required"
           },
@@ -704,7 +704,7 @@
           ],
           "status": 401,
           "working": false,
-          "responseTime": 61,
+          "responseTime": 234,
           "responseData": {
             "error": "Authentication required"
           },
@@ -724,7 +724,7 @@
           ],
           "status": 404,
           "working": false,
-          "responseTime": 68,
+          "responseTime": 101,
           "responseData": {
             "error": "Route not found: GET /api/v1/user/change-protocol"
           },
@@ -739,7 +739,7 @@
           "params": [],
           "status": 404,
           "working": false,
-          "responseTime": 68,
+          "responseTime": 107,
           "responseData": {
             "error": "Route not found: GET /api/v1/journal/entries"
           },
@@ -754,10 +754,10 @@
           "params": [],
           "status": 200,
           "working": true,
-          "responseTime": 64,
+          "responseTime": 103,
           "responseData": {
             "message": "Database connection successful",
-            "time": "2025-07-23T22:26:43.851Z"
+            "time": "2025-07-23T22:40:36.500Z"
           },
           "responseSize": 78
         },
@@ -770,7 +770,7 @@
           "params": [],
           "status": 500,
           "working": false,
-          "responseTime": 61,
+          "responseTime": 243,
           "responseData": {
             "error": "Internal server error"
           },
@@ -790,7 +790,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 66,
+          "responseTime": 103,
           "responseData": {
             "symptoms": [],
             "total": 0,
@@ -813,7 +813,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 136,
+          "responseTime": 101,
           "responseData": {
             "supplements": [],
             "total": 0,
@@ -835,7 +835,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 62,
+          "responseTime": 101,
           "responseData": {
             "medications": [],
             "total": 0,
@@ -857,7 +857,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 71,
+          "responseTime": 386,
           "responseData": {
             "detox_types": [],
             "total": 0,
@@ -879,7 +879,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 106,
+          "responseTime": 105,
           "responseData": {
             "exposures": [],
             "total": 0,
@@ -896,7 +896,7 @@
           "params": [],
           "status": 404,
           "working": false,
-          "responseTime": 62,
+          "responseTime": 209,
           "responseData": {
             "error": "Route not found: GET /api/v1/admin/seed-demo-data"
           },
@@ -911,7 +911,7 @@
           "params": [],
           "status": 404,
           "working": false,
-          "responseTime": 64,
+          "responseTime": 239,
           "responseData": {
             "error": "Route not found: GET /api/v1/symptoms"
           },
@@ -926,7 +926,7 @@
           "params": [],
           "status": 404,
           "working": false,
-          "responseTime": 60,
+          "responseTime": 102,
           "responseData": {
             "error": "Route not found: GET /api/v1/supplements"
           },
@@ -941,7 +941,7 @@
           "params": [],
           "status": 404,
           "working": false,
-          "responseTime": 56,
+          "responseTime": 100,
           "responseData": {
             "error": "Route not found: GET /api/v1/medications"
           },
@@ -1641,9 +1641,10 @@
       },
       "backend": {
         "backend/functions/api": {
-          "totalFiles": 29,
+          "totalFiles": 30,
           "fileTypes": {
             ".js": 27,
+            ".zip": 1,
             ".json": 2
           },
           "components": [],
@@ -1655,12 +1656,13 @@
             }
           ],
           "utilities": [],
-          "size": "212.86 KB"
+          "size": "644.73 KB"
         },
         "backend/functions": {
-          "totalFiles": 29,
+          "totalFiles": 30,
           "fileTypes": {
             ".js": 27,
+            ".zip": 1,
             ".json": 2
           },
           "components": [],
@@ -1672,14 +1674,15 @@
             }
           ],
           "utilities": [],
-          "size": "212.86 KB"
+          "size": "644.73 KB"
         },
         "backend": {
-          "totalFiles": 38,
+          "totalFiles": 39,
           "fileTypes": {
             ".example": 1,
             ".js": 29,
             ".sql": 5,
+            ".zip": 1,
             ".json": 2,
             ".sh": 1
           },
@@ -1692,7 +1695,7 @@
             }
           ],
           "utilities": [],
-          "size": "279.46 KB"
+          "size": "711.33 KB"
         }
       },
       "shared": {},
@@ -1785,18 +1788,18 @@
       "repository": "https://github.com/deebyrne26/health-platform",
       "branch": "main",
       "lastCommit": {
-        "hash": "cd505e4",
-        "message": "Index.js CORS issue revert",
+        "hash": "37f9ac7",
+        "message": "github actions change",
         "author": "deebyrne26",
-        "date": "Wed Jul 23 18:25:15 2025 -0400"
+        "date": "Wed Jul 23 18:39:06 2025 -0400"
       },
       "contributors": [
         {
           "name": "deebyrne26",
-          "commits": 187
+          "commits": 188
         }
       ],
-      "totalCommits": 187
+      "totalCommits": 188
     }
   }
 }
