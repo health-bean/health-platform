@@ -32,11 +32,11 @@ const handleSearchFoods = async (queryParams, event) => {
         let query;
         let values;
         
-        // FIXED: Use the correct food_search_view with proper column names
+        // FIXED: Use the correct food_search_view with DISTINCT to avoid duplicates
         if (protocol_id) {
             // Include protocol compliance when protocol_id is provided
             query = `
-                SELECT 
+                SELECT DISTINCT
                     fsv.simplified_food_id as id,
                     fsv.display_name as name,
                     fsv.category_name as category,
@@ -61,7 +61,7 @@ const handleSearchFoods = async (queryParams, event) => {
         } else {
             // Basic search without protocol compliance
             query = `
-                SELECT 
+                SELECT DISTINCT
                     fsv.simplified_food_id as id,
                     fsv.display_name as name,
                     fsv.category_name as category,
@@ -149,9 +149,9 @@ const handleGetProtocolFoods = async (queryParams, event) => {
         const rulesCheck = await client.query('SELECT COUNT(*) as count FROM protocol_food_rules WHERE protocol_id = $1', [protocol_id]);
         console.log('Protocol food rules count:', rulesCheck.rows[0].count);
         
-        // Use the correct views for protocol foods
+        // Use the correct views for protocol foods with DISTINCT to avoid duplicates
         const query = `
-            SELECT 
+            SELECT DISTINCT
                 fsv.simplified_food_id as id,
                 fsv.display_name as name,
                 fsv.category_name as category,

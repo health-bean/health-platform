@@ -65,7 +65,7 @@ const handleSearchDetoxTypes = async (queryParams, event) => {
                 description
             FROM detox_types
             WHERE (name ILIKE $1 
-               OR description ILIKE $1)
+               OR COALESCE(description, '') ILIKE $1)
             AND is_active = true
             ORDER BY 
                 CASE 

@@ -67,7 +67,7 @@ const handleSearchMedications = async (queryParams, event) => {
             FROM medications_database
             WHERE (name ILIKE $1 
                OR $2 = ANY(synonyms)
-               OR description ILIKE $1)
+               OR COALESCE(description, '') ILIKE $1)
             AND is_active = true
             ORDER BY 
                 CASE 

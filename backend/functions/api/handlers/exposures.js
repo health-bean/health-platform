@@ -54,57 +54,32 @@ const handleSearchExposures = async (queryParams, event) => {
             }));
         }
         
-        // Then get from exposure_types database (if it exists, otherwise create common exposures)
-        const dbQuery = `
-            SELECT 
-                id,
-                name,
-                category,
-                description
-            FROM exposure_types
-            WHERE (name ILIKE $1 
-               OR description ILIKE $1)
-            AND is_active = true
-            ORDER BY 
-                CASE 
-                    WHEN name ILIKE $2 THEN 1
-                    ELSE 2
-                END,
-                name ASC
-            LIMIT $3
-        `;
+        // Use common exposures since exposure_types table doesn't exist
+        const commonExposures = [
+            { id: 1, name: 'pollen', category: 'Environmental', description: 'Tree, grass, or weed pollen' },
+            { id: 2, name: 'dust', category: 'Environmental', description: 'House dust or dust mites' },
+            { id: 3, name: 'mold', category: 'Environmental', description: 'Indoor or outdoor mold exposure' },
+            { id: 4, name: 'pet_dander', category: 'Environmental', description: 'Cat, dog, or other pet dander' },
+            { id: 5, name: 'smoke', category: 'Environmental', description: 'Cigarette, wildfire, or other smoke' },
+            { id: 6, name: 'perfume', category: 'Chemical', description: 'Perfume, cologne, or fragrances' },
+            { id: 7, name: 'cleaning_products', category: 'Chemical', description: 'Household cleaning chemicals' },
+            { id: 8, name: 'paint_fumes', category: 'Chemical', description: 'Paint or solvent fumes' },
+            { id: 9, name: 'air_pollution', category: 'Environmental', description: 'Outdoor air pollution or smog' },
+            { id: 10, name: 'latex', category: 'Material', description: 'Latex gloves or products' },
+            { id: 11, name: 'chemicals', category: 'Chemical', description: 'General chemical exposure' },
+            { id: 12, name: 'pesticides', category: 'Chemical', description: 'Pesticide or herbicide exposure' },
+            { id: 13, name: 'food_additives', category: 'Food', description: 'Artificial colors, preservatives, or additives' },
+            { id: 14, name: 'stress', category: 'Emotional', description: 'Emotional or psychological stress' },
+            { id: 15, name: 'weather_changes', category: 'Environmental', description: 'Barometric pressure or weather changes' }
+        ];
         
-        const searchPattern = `%${search}%`;
-        const exactMatch = `${search}%`;
         const remainingLimit = limit - exposures.length;
-        const values = [searchPattern, exactMatch, remainingLimit];
-        
-        let dbResult;
-        try {
-            dbResult = await client.query(dbQuery, values);
-        } catch (error) {
-            // If exposure_types table doesn't exist, create common exposures
-            console.log('exposure_types table not found, using common exposures');
-            const commonExposures = [
-                { id: 1, name: 'pollen', category: 'Environmental', description: 'Tree, grass, or weed pollen' },
-                { id: 2, name: 'dust', category: 'Environmental', description: 'House dust or dust mites' },
-                { id: 3, name: 'mold', category: 'Environmental', description: 'Indoor or outdoor mold exposure' },
-                { id: 4, name: 'pet_dander', category: 'Environmental', description: 'Cat, dog, or other pet dander' },
-                { id: 5, name: 'smoke', category: 'Environmental', description: 'Cigarette, wildfire, or other smoke' },
-                { id: 6, name: 'perfume', category: 'Chemical', description: 'Perfume, cologne, or fragrances' },
-                { id: 7, name: 'cleaning_products', category: 'Chemical', description: 'Household cleaning chemicals' },
-                { id: 8, name: 'paint_fumes', category: 'Chemical', description: 'Paint or solvent fumes' },
-                { id: 9, name: 'air_pollution', category: 'Environmental', description: 'Outdoor air pollution or smog' },
-                { id: 10, name: 'latex', category: 'Material', description: 'Latex gloves or products' }
-            ];
-            
-            dbResult = {
-                rows: commonExposures.filter(exposure => 
-                    exposure.name.toLowerCase().includes(search.toLowerCase()) ||
-                    exposure.description.toLowerCase().includes(search.toLowerCase())
-                ).slice(0, remainingLimit)
-            };
-        }
+        const dbResult = {
+            rows: commonExposures.filter(exposure => 
+                exposure.name.toLowerCase().includes(search.toLowerCase()) ||
+                exposure.description.toLowerCase().includes(search.toLowerCase())
+            ).slice(0, remainingLimit)
+        };
         
         // Add database results, avoiding duplicates
         const userExposureNames = new Set(exposures.map(e => e.name.toLowerCase()));
