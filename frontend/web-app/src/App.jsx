@@ -3,7 +3,7 @@
 import React, { useEffect, useMemo } from 'react';
 import { Loader2 } from 'lucide-react';
 
-import HeaderDebugger from './components/debug/HeaderDebugger';// Import clean auth components (keeping existing SimpleAuth)
+// Import clean auth components
 import { AuthProvider, useAuth } from './contexts/AuthProvider';
 import { apiClient } from '../../shared/services/api';
 import LoginPage from './components/pages/LoginPage';
@@ -108,16 +108,13 @@ const MainApp = () => {
     }
   }, [isAuthenticated, isReady, preferences?.setup_complete]);
 
-  // Comprehensive loading state management
-  const isAppLoading = isAuthenticated && (!isReady || preferencesLoading);
-  
   // Handle auth loading
   if (authLoading) {
     return (
       <div className="max-w-md mx-auto bg-white min-h-screen flex items-center justify-center">
         <div className="text-center">
           <Loader2 size={32} className="animate-spin mx-auto mb-4 text-blue-600" />
-          <p className="text-gray-600">Initializing...</p>
+          <p className="text-gray-600">Loading...</p>
         </div>
       </div>
     );
@@ -128,20 +125,7 @@ const MainApp = () => {
     return <LoginPage />;
   }
 
-  // Special debug route
-  if (window.location.pathname === '/debug') {
-    return <HeaderDebugger />;
-  }
-  
-  // Special auth debug route
-  if (window.location.pathname === '/auth-debug') {
-    const AuthDebugger = React.lazy(() => import('./components/debug/AuthDebugger'));
-    return (
-      <React.Suspense fallback={<div>Loading debugger...</div>}>
-        <AuthDebugger />
-      </React.Suspense>
-    );
-  }
+  // Production app - no debug routes
 
   // Handle app data loading (simplified for clean auth)
   if (authLoading || preferencesLoading) {
@@ -201,7 +185,7 @@ const MainApp = () => {
       resetForm();
       handleAddEntryToggle();
     } catch (error) {
-      console.error('Failed to add entry:', error);
+      // Handle error silently or show user-friendly message
     }
   };
 

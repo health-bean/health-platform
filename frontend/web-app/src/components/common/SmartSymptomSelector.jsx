@@ -35,7 +35,7 @@ const SmartSymptomSelector = ({
         const data = await apiClient.get(endpoint);
         setSymptoms(data.symptoms || []);
       } catch (err) {
-        console.error('Failed to load symptoms:', err);
+        // Handle error silently
         setSymptoms([]);
       } finally {
         setLoading(false);

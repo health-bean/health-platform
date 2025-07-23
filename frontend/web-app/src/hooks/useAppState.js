@@ -32,7 +32,6 @@ export const useAppState = () => {
         try {
           await onComplete();
         } catch (error) {
-          console.warn('Setup completion callback failed, but continuing:', error);
           // Don't throw - we want to complete setup even if refresh fails
         }
       }
@@ -41,7 +40,6 @@ export const useAppState = () => {
       setShowSetup(false);
       setActiveView('timeline');
     } catch (error) {
-      console.error('Setup completion failed:', error);
       // Still hide setup wizard to prevent infinite loop
       setShowSetup(false);
       setActiveView('timeline');

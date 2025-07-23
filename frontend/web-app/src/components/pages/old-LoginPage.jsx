@@ -22,10 +22,10 @@ const LoginPage = () => {
     try {
       const result = await login(email, password);
       if (!result.success) {
-        console.error('Login failed:', result.error);
+        // Handle login error
       }
     } catch (err) {
-      console.error('Login error:', err);
+      // Handle login error
       setError(err.message || 'Login failed. Please try again.');
     } finally {
       setIsLoading(false);
@@ -40,13 +40,13 @@ const LoginPage = () => {
     setError(null);
 
     try {
-      const result = await login(demoUser.email, 'demo123');
+      const result = await login(demoUser.email, demoUser.password);
       if (!result.success) {
-        console.error('Demo login failed:', result.error);
+        // Handle demo login error
         setError(result.error);
       }
     } catch (err) {
-      console.error('Demo login error:', err);
+      // Handle demo login error
       setError(err.message || 'Demo login failed. Please try again.');
     } finally {
       setIsLoading(false);
@@ -206,7 +206,7 @@ const SignupPage = ({ onBackToLogin }) => {
         }
       }
     } catch (err) {
-      console.error('Signup error:', err);
+      // Handle signup error
     } finally {
       setIsLoading(false);
     }

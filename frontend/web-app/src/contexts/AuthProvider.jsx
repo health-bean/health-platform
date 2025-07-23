@@ -1,239 +1,70 @@
-// File: frontend/web-app/src/contexts/AuthProvider.jsx
-// Authentication provider with AWS Amplify + Demo mode support
-
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { signIn, signUp, confirmSignUp as amplifyConfirmSignUp, resendSignUpCode, signOut, getCurrentUser, fetchAuthSession } from 'aws-amplify/auth';
 
-// Amplify is already configured in amplifyInit.js
-console.log('🔧 AuthProvider loaded - using centralized Amplify config');
-
-// Create Auth Context
 const AuthContext = createContext(null);
 
-// Demo user profiles for prototype (same as before)
-const DEMO_USERS = [
-  {
-    id: 'sarah-aip',
-    email: 'sarah.aip@test.com',
-    name: 'Sarah Johnson',
-    avatar: '👩‍💼',
-    protocol: 'AIP (Autoimmune Protocol)',
-    entries: '1,052 entries',
-    joinDate: '2023-03-15'
-  },
-  {
-    id: 'mike-fodmap',
-    email: 'mike.fodmap@test.com',
-    name: 'Mike Chen',
-    avatar: '👨‍💻',
-    protocol: 'Low FODMAP',
-    entries: '1,215 entries',
-    joinDate: '2023-01-20'
-  },
-  {
-    id: 'lisa-histamine',
-    email: 'lisa.histamine@test.com',
-    name: 'Lisa Rodriguez',
-    avatar: '👩‍🔬',
-    protocol: 'Low Histamine',
-    entries: '933 entries',
-    joinDate: '2023-05-10'
-  },
-  {
-    id: 'john-paleo',
-    email: 'john.paleo@test.com',
-    name: 'John Williams',
-    avatar: '👨‍🍳',
-    protocol: 'Paleo AIP',
-    entries: '970 entries',
-    joinDate: '2023-02-28'
-  },
-  {
-    id: 'emma-multi',
-    email: 'emma.multi@test.com',
-    name: 'Emma Davis',
-    avatar: '👩‍⚕️',
-    protocol: 'Multiple Protocols',
-    entries: '1,071 entries',
-    joinDate: '2023-04-05'
-  }
-];
-
-// Simple logger for debugging
-const logger = {
-  info: (msg, data) => console.log(`[AUTH] ${msg}`, data || ''),
-  error: (msg, data) => console.error(`[AUTH] ${msg}`, data || ''),
-  debug: (msg, data) => console.log(`[AUTH DEBUG] ${msg}`, data || '')
-};
-
-// Enhanced Auth Provider Component
 export const AuthProvider = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState(null);
+  const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [authToken, setAuthToken] = useState(null);
 
-  // Authentication state
-  const isAuthenticated = !!currentUser;
-  const isDemoMode = currentUser?.isDemo || false;
-
-  // Initialize auth state on mount
+  // Check if user is already logged in on mount
   useEffect(() => {
     checkAuthState();
   }, []);
 
-  // Check current authentication state
   const checkAuthState = async () => {
     try {
-      setLoading(true);
-      
-      // Try to get current Cognito user
       const cognitoUser = await getCurrentUser();
       if (cognitoUser) {
-        // Get auth session for token
         const session = await fetchAuthSession();
         const token = session.tokens?.idToken?.toString();
         
-        const user = {
+        setUser({
           id: cognitoUser.userId,
           email: cognitoUser.signInDetails?.loginId || 'unknown@cognito.com',
           name: cognitoUser.username,
-          cognitoUser: cognitoUser,
-          isDemo: false,
-          sessionId: `cognito_${Date.now()}`,
-          loginTime: new Date().toISOString()
-        };
-        
-        setCurrentUser(user);
-        setAuthToken(token);
-        
-        logger.info('Cognito user session restored', { 
-          userId: user.id,
-          email: user.email 
+          token
         });
       }
     } catch (error) {
-      // No current user - this is normal for logged out state
-      logger.debug('No current Cognito session', { error: error.message });
+      // No current user - normal for logged out state
     } finally {
       setLoading(false);
     }
   };
 
-  // Generate simple session ID for demo users
-  const generateSessionId = () => {
-    return `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-  };
-
-  // Enhanced login - supports both Cognito and demo
-  const login = async (email, password = 'demo123') => {
+  const login = async (email, password) => {
     try {
-      setLoading(true);
-      setError(null);
+      const result = await signIn({ username: email, password });
       
-      logger.info('Login attempt', { email, isDemo: password === 'demo123' });
-      
-      // Check if this is a demo user
-      const demoUser = DEMO_USERS.find(user => 
-        user.email.toLowerCase() === email.toLowerCase()
-      );
-      
-      if (demoUser && password === 'demo123') {
-        // Demo login
-        const sessionUser = {
-          ...demoUser,
-          sessionId: generateSessionId(),
-          loginTime: new Date().toISOString(),
-          isDemo: true
+      if (result.isSignedIn) {
+        const cognitoUser = await getCurrentUser();
+        const session = await fetchAuthSession();
+        const token = session.tokens?.idToken?.toString();
+        
+        const userData = {
+          id: cognitoUser.userId,
+          email: email,
+          name: cognitoUser.username,
+          token
         };
         
-        setCurrentUser(sessionUser);
-        setAuthToken(null); // No token for demo users
-        
-        logger.info('Demo login successful', { 
-          userId: sessionUser.id,
-          name: sessionUser.name,
-          sessionId: sessionUser.sessionId
-        });
-        
-        return { success: true, user: sessionUser };
-      }
-      
-      // Real Cognito login
-      try {
-        const cognitoResult = await signIn({
-          username: email,
-          password: password
-        });
-        
-        if (cognitoResult.isSignedIn) {
-          // Get user details and token
-          const cognitoUser = await getCurrentUser();
-          const session = await fetchAuthSession();
-          const token = session.tokens?.idToken?.toString();
-          
-          const user = {
-            id: cognitoUser.userId,
-            email: email,
-            name: cognitoUser.username,
-            cognitoUser: cognitoUser,
-            isDemo: false,
-            sessionId: `cognito_${Date.now()}`,
-            loginTime: new Date().toISOString()
-          };
-          
-          setCurrentUser(user);
-          setAuthToken(token);
-          
-          logger.info('Cognito login successful', { 
-            userId: user.id,
-            email: user.email 
-          });
-          
-          return { success: true, user: user };
-        } else {
-          // Check if user needs confirmation
-          if (cognitoResult.nextStep?.signInStep === 'CONFIRM_SIGN_UP') {
-            throw new Error('CONFIRMATION_REQUIRED');
-          }
-          throw new Error('Sign in not completed');
+        setUser(userData);
+        return { success: true, user: userData };
+      } else {
+        // Check if user needs confirmation
+        if (result.nextStep?.signInStep === 'CONFIRM_SIGN_UP') {
+          return { success: false, error: 'CONFIRMATION_REQUIRED' };
         }
-      } catch (cognitoError) {
-        // If Cognito fails and it's not a demo user, show error
-        if (!demoUser) {
-          throw new Error(`Authentication failed: ${cognitoError.message}`);
-        }
-        // If it was a demo user with wrong password
-        throw new Error('Invalid password. Use "demo123" for demo accounts or your real password for Cognito accounts.');
+        return { success: false, error: 'Sign in not completed' };
       }
-      
     } catch (error) {
-      logger.error('Login failed', { error: error.message, email });
-      setError(error.message);
       return { success: false, error: error.message };
-    } finally {
-      setLoading(false);
     }
   };
 
-  // Enhanced signup - only for real users (demo users are predefined)
   const signup = async (email, password, firstName, lastName) => {
     try {
-      setLoading(true);
-      setError(null);
-      
-      logger.info('Signup attempt', { email });
-      
-      // Check if this is a demo email
-      const isDemoEmail = DEMO_USERS.some(user => 
-        user.email.toLowerCase() === email.toLowerCase()
-      );
-      
-      if (isDemoEmail) {
-        throw new Error('This email is reserved for demo users. Please use the demo login or choose a different email.');
-      }
-      
-      // Real Cognito signup
       const result = await signUp({
         username: email,
         password: password,
@@ -246,167 +77,77 @@ export const AuthProvider = ({ children }) => {
         }
       });
       
-      logger.info('Cognito signup successful', { 
-        email,
-        userId: result.userId,
-        nextStep: result.nextStep?.signUpStep 
-      });
-      
       return { 
         success: true, 
-        result: result,
         needsConfirmation: result.nextStep?.signUpStep === 'CONFIRM_SIGN_UP'
       };
-      
     } catch (error) {
-      logger.error('Signup failed', { error: error.message, email });
-      setError(error.message);
       return { success: false, error: error.message };
-    } finally {
-      setLoading(false);
     }
   };
 
-  // Confirm signup with verification code
   const confirmSignUp = async (email, code) => {
     try {
-      setLoading(true);
-      setError(null);
-      
-      const result = await amplifyConfirmSignUp({
+      await amplifyConfirmSignUp({
         username: email,
         confirmationCode: code
       });
-      
-      logger.info('Signup confirmation successful', { email });
-      
-      return { success: true, result };
-      
+      return { success: true };
     } catch (error) {
-      logger.error('Signup confirmation failed', { error: error.message, email, code });
-      setError(error.message);
       return { success: false, error: error.message };
-    } finally {
-      setLoading(false);
     }
   };
 
-  // Resend confirmation code
   const resendConfirmationCode = async (email) => {
     try {
-      setLoading(true);
-      setError(null);
-      
-      await resendSignUpCode({
-        username: email
-      });
-      
-      logger.info('Confirmation code resent', { email });
-      
+      await resendSignUpCode({ username: email });
       return { success: true };
-      
     } catch (error) {
-      logger.error('Failed to resend confirmation code', { error: error.message, email });
-      setError(error.message);
       return { success: false, error: error.message };
-    } finally {
-      setLoading(false);
     }
   };
 
-  // Enhanced logout - handles both Cognito and demo
   const logout = async () => {
     try {
-      logger.info('Logout attempt', { 
-        userId: currentUser?.id,
-        isDemo: currentUser?.isDemo 
-      });
-      
-      if (currentUser && !currentUser.isDemo) {
-        // Sign out from Cognito
-        await signOut();
-      }
-      
-      // Clear local state for both demo and real users
-      setCurrentUser(null);
-      setAuthToken(null);
-      setError(null);
-      
-      logger.info('Logout successful');
-      
+      await signOut();
     } catch (error) {
-      logger.error('Logout error', { error: error.message });
-      // Clear state anyway
-      setCurrentUser(null);
-      setAuthToken(null);
+      // Ignore errors
     }
+    setUser(null);
   };
 
-  // Get current user context for API calls
+  // Helper methods for API integration
   const getUserContext = () => {
-    if (!currentUser) return null;
-    
+    if (!user) return null;
     return {
-      userId: currentUser.id,
-      email: currentUser.email,
-      sessionId: currentUser.sessionId,
-      isDemo: currentUser.isDemo,
-      token: authToken
+      userId: user.id,
+      email: user.email,
+      token: user.token,
+      isDemo: false // This is real auth, not demo
     };
   };
 
-  // Token and header getters for API client
   const getAuthToken = () => {
-    console.log('🔑 getAuthToken called - token exists:', !!authToken, authToken ? `length: ${authToken.length}` : 'no token');
-    return authToken;
+    return user?.token || null;
   };
 
   const getAuthHeaders = () => {
-    // Debug the current state
-    console.log('🔑 getAuthHeaders called - user:', currentUser?.id, 'isDemo:', currentUser?.isDemo);
-    
-    // For standard Cognito users
-    if (authToken) {
-      console.log('🔑 Standard auth - token exists:', !!authToken, authToken ? `length: ${authToken.length}` : 'no token');
-      return { 'Authorization': `Bearer ${authToken}` };
-    } 
-    // For demo users
-    else if (currentUser?.isDemo) {
-      console.log('🔑 Adding demo headers for user:', currentUser.id);
-      return {
-        'x-demo-mode': 'true',
-        'x-demo-user-id': currentUser.id
-      };
-    }
-    
-    console.log('🔑 No auth headers added - not authenticated properly');
-    return {};
+    const token = getAuthToken();
+    return token ? { Authorization: `Bearer ${token}` } : {};
   };
 
-  // Enhanced auth context value
   const value = {
-    // State
-    user: currentUser,
+    user,
     loading,
-    error,
-    isAuthenticated,
-    isDemoMode,
-    authToken,
-    
-    // Actions
+    isAuthenticated: !!user,
     login,
     signup,
     confirmSignUp,
     resendConfirmationCode,
     logout,
     getUserContext,
-    setError,
-    checkAuthState,
     getAuthToken,
-    getAuthHeaders,
-    
-    // Demo users for UI
-    demoUsers: DEMO_USERS
+    getAuthHeaders
   };
 
   return (
@@ -416,7 +157,6 @@ export const AuthProvider = ({ children }) => {
   );
 };
 
-// Custom hook to use auth context
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {
@@ -424,6 +164,3 @@ export const useAuth = () => {
   }
   return context;
 };
-
-// Export context for advanced usage
-export { AuthContext };

@@ -86,17 +86,14 @@ const UnifiedSmartSelector = ({
 
     if (type === 'food') {
       // Use the working food search hook for foods
-      console.log('🔍 UnifiedSmartSelector: Using working food search pattern');
+      // Use the working food search hook for foods
       
       const timer = setTimeout(() => {
         const protocolId = selectedProtocols.length > 0 && selectedProtocols[0] !== 'no_protocol' 
           ? selectedProtocols[0] 
           : null;
           
-        console.log('🔍 UnifiedSmartSelector: Calling searchFoods with:', {
-          search: searchTerm,
-          protocol_id: protocolId
-        });
+        // Call searchFoods with search term and protocol
         
         searchFoods({ 
           search: searchTerm, 
@@ -141,7 +138,7 @@ const UnifiedSmartSelector = ({
       
       setItems(data[itemsKey] || []);
     } catch (err) {
-      console.error(`Failed to load ${type}s:`, err);
+      // Handle error silently and show empty results
       setItems([]);
     } finally {
       setLoading(false);
@@ -153,23 +150,14 @@ const UnifiedSmartSelector = ({
   };
 
   const handleToggleItem = (item) => {
-    console.log('🔧 UnifiedSmartSelector: handleToggleItem called with:', item);
-    console.log('🔧 UnifiedSmartSelector: Current selectedItems:', selectedItems);
-    console.log('🔧 UnifiedSmartSelector: onItemsChange function:', typeof onItemsChange);
-    
     if (isSelected(item)) {
       // Remove item
-      console.log('🔧 UnifiedSmartSelector: Removing item');
       const newItems = selectedItems.filter(selectedItem => selectedItem.name !== item.name);
-      console.log('🔧 UnifiedSmartSelector: New items after removal:', newItems);
       onItemsChange(newItems);
     } else {
       // Add item with structured data
-      console.log('🔧 UnifiedSmartSelector: Adding item');
       const newItem = createStructuredItem(item);
-      console.log('🔧 UnifiedSmartSelector: Created structured item:', newItem);
       const newItems = [...selectedItems, newItem];
-      console.log('🔧 UnifiedSmartSelector: New items after addition:', newItems);
       onItemsChange(newItems);
     }
     setSearchTerm(''); // Clear search after adding

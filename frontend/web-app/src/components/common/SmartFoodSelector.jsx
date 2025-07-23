@@ -29,7 +29,7 @@ const SmartFoodSelector = ({ selectedItems, onToggleItem, selectedProtocols = []
         const data = await response.json();
         setFoods(data.foods || []);
       } catch (err) {
-        console.error('Failed to load foods:', err);
+        // Handle error silently
         setFoods([]);
       } finally {
         setLoading(false);

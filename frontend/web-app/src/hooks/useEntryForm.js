@@ -13,11 +13,8 @@ export const useEntryForm = () => {
   });
 
   const updateFormData = (updates) => {
-    console.log('🔧 useEntryForm: Updating form data:', updates);
-    
     // Clear selectedItems when type changes to prevent cross-contamination
     if (updates.type && updates.type !== formData.type) {
-      console.log('🔧 useEntryForm: Type changed, clearing selectedItems');
       setFormData(prev => ({ 
         ...prev, 
         ...updates, 
@@ -55,14 +52,10 @@ export const useEntryForm = () => {
   };
 
   const buildEntryData = (selectedDate) => {
-    console.log('🔧 useEntryForm: Building entry data:', formData);
-    
     // Use new selectedItems structure if available, fallback to legacy selectedFoods
     const items = formData.selectedItems && formData.selectedItems.length > 0 
       ? formData.selectedItems 
       : formData.selectedFoods;
-    
-    console.log('🔧 useEntryForm: Using items:', items);
     
     // Create display content from items
     const displayContent = items.map(item => {

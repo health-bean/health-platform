@@ -34,7 +34,7 @@ const SmartMedicationSelector = ({
         const data = await apiClient.get(endpoint);
         setMedications(data.medications || []);
       } catch (err) {
-        console.error('Failed to load medications:', err);
+        // Handle error silently
         setMedications([]);
       } finally {
         setLoading(false);

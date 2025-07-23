@@ -177,3 +177,5 @@ docs/.docusaurus/
 # Migration and utility scripts
 scripts/
 frontend/shared/.DS_Store
+*.sql
+/db

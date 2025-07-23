@@ -34,7 +34,7 @@ const SmartSupplementSelector = ({
         const data = await apiClient.get(endpoint);
         setSupplements(data.supplements || []);
       } catch (err) {
-        console.error('Failed to load supplements:', err);
+        // Handle error silently
         setSupplements([]);
       } finally {
         setLoading(false);
