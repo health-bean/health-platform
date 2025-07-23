@@ -36,20 +36,26 @@ const handleSearchFoods = async (queryParams, event) => {
             // Include protocol compliance when protocol_id is provided
             query = `
                 SELECT 
-                    fp.id,
-                    fp.name,
-                    fp.category,
-                    fp.nightshade,
-                    fp.histamine,
-                    fp.oxalate,
-                    fp.lectin,
-                    fp.fodmap,
-                    fp.salicylate,
+                    sfv.id,
+                    sfv.display_name as name,
+                    sfv.category_name as category,
+                    sfv.subcategory_name,
+                    sfv.is_nightshade as nightshade,
+                    sfv.histamine,
+                    sfv.oxalate,
+                    sfv.lectin,
+                    sfv.fodmap,
+                    sfv.salicylate,
+                    sfv.is_organic,
+                    sfv.is_grass_fed,
+                    sfv.is_free_range,
+                    sfv.is_wild_caught,
+                    sfv.preparation_state,
                     COALESCE(pfr.status, 'unknown') as protocol_status
-                FROM food_properties fp
-                LEFT JOIN protocol_food_rules pfr ON fp.id = pfr.food_id AND pfr.protocol_id = $2
-                WHERE fp.name ILIKE $1
-                ORDER BY fp.name ASC
+                FROM simplified_foods_view sfv
+                LEFT JOIN protocol_food_rules pfr ON sfv.primary_usda_food_id = pfr.food_id AND pfr.protocol_id = $2
+                WHERE sfv.display_name ILIKE $1
+                ORDER BY sfv.is_common DESC, sfv.display_order ASC, sfv.display_name ASC
                 LIMIT 10
             `;
             values = [searchPattern, protocol_id];
@@ -57,19 +63,25 @@ const handleSearchFoods = async (queryParams, event) => {
             // Basic search without protocol compliance
             query = `
                 SELECT 
-                    fp.id,
-                    fp.name,
-                    fp.category,
-                    fp.nightshade,
-                    fp.histamine,
-                    fp.oxalate,
-                    fp.lectin,
-                    fp.fodmap,
-                    fp.salicylate,
+                    sfv.id,
+                    sfv.display_name as name,
+                    sfv.category_name as category,
+                    sfv.subcategory_name,
+                    sfv.is_nightshade as nightshade,
+                    sfv.histamine,
+                    sfv.oxalate,
+                    sfv.lectin,
+                    sfv.fodmap,
+                    sfv.salicylate,
+                    sfv.is_organic,
+                    sfv.is_grass_fed,
+                    sfv.is_free_range,
+                    sfv.is_wild_caught,
+                    sfv.preparation_state,
                     'unknown' as protocol_status
-                FROM food_properties fp
-                WHERE fp.name ILIKE $1
-                ORDER BY fp.name ASC
+                FROM simplified_foods_view sfv
+                WHERE sfv.display_name ILIKE $1
+                ORDER BY sfv.is_common DESC, sfv.display_order ASC, sfv.display_name ASC
                 LIMIT 10
             `;
             values = [searchPattern];
@@ -84,6 +96,7 @@ const handleSearchFoods = async (queryParams, event) => {
             id: row.id,
             name: row.name,
             category: row.category || 'unknown',
+            subcategory: row.subcategory_name,
             source: 'database',
             compliance_status: row.protocol_status || 'unknown',
             protocol_status: row.protocol_status || 'unknown',
@@ -92,7 +105,12 @@ const handleSearchFoods = async (queryParams, event) => {
             oxalate: row.oxalate,
             lectin: row.lectin,
             fodmap: row.fodmap,
-            salicylate: row.salicylate
+            salicylate: row.salicylate,
+            is_organic: row.is_organic,
+            is_grass_fed: row.is_grass_fed,
+            is_free_range: row.is_free_range,
+            is_wild_caught: row.is_wild_caught,
+            preparation_state: row.preparation_state
         }));
         
         client.release();
@@ -125,23 +143,29 @@ const handleGetProtocolFoods = async (queryParams, event) => {
         
         const query = `
             SELECT 
-                fp.id,
-                fp.name,
-                fp.category,
-                fp.nightshade,
-                fp.histamine,
-                fp.oxalate,
-                fp.lectin,
-                fp.fodmap,
-                fp.salicylate,
+                sfv.id,
+                sfv.display_name as name,
+                sfv.category_name as category,
+                sfv.subcategory_name,
+                sfv.is_nightshade as nightshade,
+                sfv.histamine,
+                sfv.oxalate,
+                sfv.lectin,
+                sfv.fodmap,
+                sfv.salicylate,
+                sfv.is_organic,
+                sfv.is_grass_fed,
+                sfv.is_free_range,
+                sfv.is_wild_caught,
+                sfv.preparation_state,
                 p.protocol_type,
                 p.category as protocol_category,
                 COALESCE(pfr.status, 'unknown') as protocol_status,
                 pfr.phase as protocol_phase,
                 pfr.notes as protocol_notes
-            FROM food_properties fp
+            FROM simplified_foods_view sfv
             JOIN protocols p ON p.id = $1
-            LEFT JOIN protocol_food_rules pfr ON fp.id = pfr.food_id AND pfr.protocol_id = $1
+            LEFT JOIN protocol_food_rules pfr ON sfv.primary_usda_food_id = pfr.food_id AND pfr.protocol_id = $1
             WHERE pfr.protocol_id = $1
             ORDER BY 
                 CASE 
@@ -149,8 +173,9 @@ const handleGetProtocolFoods = async (queryParams, event) => {
                     WHEN pfr.status = 'avoid_for_now' THEN 2
                     ELSE 3
                 END,
-                fp.category ASC,
-                fp.name ASC
+                sfv.category_name ASC,
+                sfv.subcategory_name ASC,
+                sfv.display_name ASC
         `;
         
         console.log('Executing query:', query);
