@@ -553,7 +553,7 @@ async function getFoodProperties() {
         fodmap, 
         salicylate,
         category
-      FROM food_properties
+      FROM foods
     `;
     
     const result = await client.query(query);

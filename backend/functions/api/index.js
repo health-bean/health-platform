@@ -148,6 +148,37 @@ exports.handler = async (event) => {
         else if (path === '/api/v1/foods/search' && method === 'GET') {
             response = await handleSearchFoods(queryParams, event);
         }
+        else if (path === '/api/v1/foods/test' && method === 'GET') {
+            // Test endpoint to debug database issues
+            try {
+                const { pool } = require('./database/connection');
+                const client = await pool.connect();
+                
+                // Test basic query
+                const result = await client.query('SELECT COUNT(*) as count FROM food_search_view LIMIT 1');
+                client.release();
+                
+                response = {
+                    statusCode: 200,
+                    headers: corsHeaders,
+                    body: JSON.stringify({
+                        success: true,
+                        message: 'Database connection successful',
+                        count: result.rows[0].count
+                    })
+                };
+            } catch (error) {
+                response = {
+                    statusCode: 500,
+                    headers: corsHeaders,
+                    body: JSON.stringify({
+                        error: 'Database test failed',
+                        message: error.message,
+                        stack: error.stack
+                    })
+                };
+            }
+        }
         else if (path === '/api/v1/foods/by-protocol' && method === 'GET') {
             console.log("Protocol foods route hit!");
             response = await handleGetProtocolFoods(queryParams, event);

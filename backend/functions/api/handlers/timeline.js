@@ -295,7 +295,7 @@ const checkProtocolCompliance = async (selectedFoods, userId, client) => {
             SELECT COUNT(*) as avoid_count
             FROM protocol_food_rules pfr
             JOIN user_protocols up ON pfr.protocol_id = up.protocol_id
-            JOIN food_properties fp ON pfr.food_id = fp.id
+            JOIN foods fp ON pfr.food_id = fp.id
             WHERE up.user_id = $1 
             AND up.active = true
             AND fp.name = ANY($2)

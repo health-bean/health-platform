@@ -32,24 +32,29 @@ const handleSearchFoods = async (queryParams, event) => {
         let query;
         let values;
         
+        // FIXED: Use the correct food_search_view with proper column names
         if (protocol_id) {
             // Include protocol compliance when protocol_id is provided
             query = `
                 SELECT 
-                    fp.id,
-                    fp.name,
-                    fp.category,
-                    fp.nightshade,
-                    fp.histamine,
-                    fp.oxalate,
-                    fp.lectin,
-                    fp.fodmap,
-                    fp.salicylate,
-                    COALESCE(pfr.status, 'unknown') as protocol_status
-                FROM food_properties fp
-                LEFT JOIN protocol_food_rules pfr ON fp.id = pfr.food_id AND pfr.protocol_id = $2
-                WHERE fp.name ILIKE $1
-                ORDER BY fp.name ASC
+                    fsv.simplified_food_id as id,
+                    fsv.display_name as name,
+                    fsv.category_name as category,
+                    fsv.subcategory_name,
+                    COALESCE(fsv.nightshade, false) as nightshade,
+                    COALESCE(fsv.histamine, 'unknown') as histamine,
+                    COALESCE(fsv.oxalate, 'unknown') as oxalate,
+                    COALESCE(fsv.lectin, 'unknown') as lectin,
+                    COALESCE(fsv.fodmap, 'unknown') as fodmap,
+                    COALESCE(fsv.salicylate, 'unknown') as salicylate,
+                    COALESCE(fsv.is_organic, false) as is_organic,
+                    COALESCE(fsv.preparation_state, 'unknown') as preparation_state,
+                    COALESCE(pfv.protocol_status, 'unknown') as protocol_status
+                FROM food_search_view fsv
+                LEFT JOIN protocol_foods_view pfv ON fsv.simplified_food_id = pfv.simplified_food_id 
+                    AND pfv.protocol_id = $2
+                WHERE fsv.display_name ILIKE $1
+                ORDER BY fsv.display_name ASC
                 LIMIT 10
             `;
             values = [searchPattern, protocol_id];
@@ -57,25 +62,30 @@ const handleSearchFoods = async (queryParams, event) => {
             // Basic search without protocol compliance
             query = `
                 SELECT 
-                    fp.id,
-                    fp.name,
-                    fp.category,
-                    fp.nightshade,
-                    fp.histamine,
-                    fp.oxalate,
-                    fp.lectin,
-                    fp.fodmap,
-                    fp.salicylate,
+                    fsv.simplified_food_id as id,
+                    fsv.display_name as name,
+                    fsv.category_name as category,
+                    fsv.subcategory_name,
+                    COALESCE(fsv.nightshade, false) as nightshade,
+                    COALESCE(fsv.histamine, 'unknown') as histamine,
+                    COALESCE(fsv.oxalate, 'unknown') as oxalate,
+                    COALESCE(fsv.lectin, 'unknown') as lectin,
+                    COALESCE(fsv.fodmap, 'unknown') as fodmap,
+                    COALESCE(fsv.salicylate, 'unknown') as salicylate,
+                    COALESCE(fsv.is_organic, false) as is_organic,
+                    COALESCE(fsv.preparation_state, 'unknown') as preparation_state,
                     'unknown' as protocol_status
-                FROM food_properties fp
-                WHERE fp.name ILIKE $1
-                ORDER BY fp.name ASC
+                FROM food_search_view fsv
+                WHERE fsv.display_name ILIKE $1
+                ORDER BY fsv.display_name ASC
                 LIMIT 10
             `;
             values = [searchPattern];
         }
         
         console.log('🔍 FOODS: Executing query with protocol_id:', protocol_id);
+        console.log('🔍 FOODS: Query:', query);
+        console.log('🔍 FOODS: Values:', values);
         
         const result = await client.query(query, values);
         console.log('🔍 FOODS: Query returned:', result.rows.length, 'results');
@@ -84,6 +94,7 @@ const handleSearchFoods = async (queryParams, event) => {
             id: row.id,
             name: row.name,
             category: row.category || 'unknown',
+            subcategory: row.subcategory_name,
             source: 'database',
             compliance_status: row.protocol_status || 'unknown',
             protocol_status: row.protocol_status || 'unknown',
@@ -92,7 +103,9 @@ const handleSearchFoods = async (queryParams, event) => {
             oxalate: row.oxalate,
             lectin: row.lectin,
             fodmap: row.fodmap,
-            salicylate: row.salicylate
+            salicylate: row.salicylate,
+            is_organic: row.is_organic,
+            preparation_state: row.preparation_state
         }));
         
         client.release();
@@ -123,37 +136,53 @@ const handleGetProtocolFoods = async (queryParams, event) => {
         
         const client = await pool.connect();
         
+        // First, let's check if the protocol exists
+        const protocolCheck = await client.query('SELECT id, name FROM protocols WHERE id = $1', [protocol_id]);
+        console.log('Protocol check:', protocolCheck.rows);
+        
+        if (protocolCheck.rows.length === 0) {
+            client.release();
+            return errorResponse('Protocol not found', 404);
+        }
+        
+        // Check if there are any protocol food rules
+        const rulesCheck = await client.query('SELECT COUNT(*) as count FROM protocol_food_rules WHERE protocol_id = $1', [protocol_id]);
+        console.log('Protocol food rules count:', rulesCheck.rows[0].count);
+        
+        // Use the correct views for protocol foods
         const query = `
             SELECT 
-                fp.id,
-                fp.name,
-                fp.category,
-                fp.nightshade,
-                fp.histamine,
-                fp.oxalate,
-                fp.lectin,
-                fp.fodmap,
-                fp.salicylate,
-                p.protocol_type,
-                p.category as protocol_category,
-                COALESCE(pfr.status, 'unknown') as protocol_status,
-                pfr.phase as protocol_phase,
-                pfr.notes as protocol_notes
-            FROM food_properties fp
-            JOIN protocols p ON p.id = $1
-            LEFT JOIN protocol_food_rules pfr ON fp.id = pfr.food_id AND pfr.protocol_id = $1
-            WHERE pfr.protocol_id = $1
+                fsv.simplified_food_id as id,
+                fsv.display_name as name,
+                fsv.category_name as category,
+                fsv.subcategory_name,
+                COALESCE(fsv.nightshade, false) as nightshade,
+                COALESCE(fsv.histamine, 'unknown') as histamine,
+                COALESCE(fsv.oxalate, 'unknown') as oxalate,
+                COALESCE(fsv.lectin, 'unknown') as lectin,
+                COALESCE(fsv.fodmap, 'unknown') as fodmap,
+                COALESCE(fsv.salicylate, 'unknown') as salicylate,
+                COALESCE(fsv.is_organic, false) as is_organic,
+                COALESCE(fsv.preparation_state, 'unknown') as preparation_state,
+                COALESCE(pfv.protocol_status, 'unknown') as protocol_status,
+                pfv.protocol_phase,
+                pfv.protocol_notes
+            FROM food_search_view fsv
+            LEFT JOIN protocol_foods_view pfv ON fsv.simplified_food_id = pfv.simplified_food_id 
+                AND pfv.protocol_id = $1
             ORDER BY 
                 CASE 
-                    WHEN pfr.status = 'included' THEN 1
-                    WHEN pfr.status = 'avoid_for_now' THEN 2
-                    ELSE 3
+                    WHEN pfv.protocol_status = 'included' THEN 1
+                    WHEN pfv.protocol_status = 'avoid_for_now' THEN 2
+                    WHEN pfv.protocol_status = 'try_in_moderation' THEN 3
+                    ELSE 4
                 END,
-                fp.category ASC,
-                fp.name ASC
+                fsv.category_name ASC,
+                fsv.display_name ASC
+            LIMIT 100
         `;
         
-        console.log('Executing query:', query);
+        console.log('Executing simplified query');
         const result = await client.query(query, [protocol_id]);
         console.log('Query returned:', result.rows.length, 'rows');
         
@@ -179,6 +208,11 @@ const handleGetProtocolFoods = async (queryParams, event) => {
             
             // Add compliance_status field that frontend expects
             food.compliance_status = status;
+            
+            // Add additional fields from the new views
+            food.subcategory = food.subcategory_name;
+            food.is_organic = food.is_organic;
+            food.preparation_state = food.preparation_state;
             
             // Add to FLAT category structure (what old frontend expects)
             if (!foodsByCategory[category]) {
