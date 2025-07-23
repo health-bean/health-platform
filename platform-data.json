@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generated": "2025-07-23T22:42:18.818Z",
+    "generated": "2025-07-23T23:10:11.741Z",
     "version": "1.0.0",
     "generator": "AutomatedProfessionalDocsGenerator"
   },
@@ -14,10 +14,10 @@
     "totalComponents": 55,
     "totalHooks": 13,
     "totalFiles": 107,
-    "workingAPIs": 0,
-    "totalAPIs": 10,
-    "totalTables": 31,
-    "totalCommits": 189,
+    "workingAPIs": 9,
+    "totalAPIs": 29,
+    "totalTables": 30,
+    "totalCommits": 190,
     "contributors": 1
   },
   "discoveredInfo": {
@@ -65,7 +65,6 @@
         "query",
         "users",
         "user",
-        "information_schema",
         "reflections",
         "correlations",
         "exposure_types",
@@ -137,13 +136,116 @@
               "value": "chicken"
             }
           ],
-          "status": 502,
-          "working": false,
-          "responseTime": 409,
+          "status": 200,
+          "working": true,
+          "responseTime": 916,
           "responseData": {
-            "message": "Internal server error"
+            "foods": [
+              {
+                "id": "68aada34-c3c7-434e-bd67-f35625ff5026",
+                "name": "Chicken Breast",
+                "category": "Proteins",
+                "subcategory": "Animal Proteins",
+                "source": "database",
+                "compliance_status": "unknown",
+                "protocol_status": "unknown",
+                "nightshade": false,
+                "histamine": "unknown",
+                "oxalate": "unknown",
+                "lectin": "unknown",
+                "fodmap": "unknown",
+                "salicylate": "unknown",
+                "amines": "unknown",
+                "glutamates": "unknown",
+                "sulfites": "unknown",
+                "goitrogens": "unknown",
+                "purines": "unknown",
+                "phytoestrogens": "unknown",
+                "phytates": "unknown",
+                "tyramine": "unknown",
+                "is_organic": false,
+                "preparation_state": "raw"
+              },
+              {
+                "id": "219aa6fb-d3e7-4961-ae1e-41a56792a60b",
+                "name": "Chicken Drumstick",
+                "category": "Proteins",
+                "subcategory": "Animal Proteins",
+                "source": "database",
+                "compliance_status": "unknown",
+                "protocol_status": "unknown",
+                "nightshade": false,
+                "histamine": "unknown",
+                "oxalate": "unknown",
+                "lectin": "unknown",
+                "fodmap": "unknown",
+                "salicylate": "unknown",
+                "amines": "unknown",
+                "glutamates": "unknown",
+                "sulfites": "unknown",
+                "goitrogens": "unknown",
+                "purines": "unknown",
+                "phytoestrogens": "unknown",
+                "phytates": "unknown",
+                "tyramine": "unknown",
+                "is_organic": false,
+                "preparation_state": "raw"
+              },
+              {
+                "id": "c2e7bf62-159e-4555-a034-c24e205c3e51",
+                "name": "Chicken Thigh",
+                "category": "Proteins",
+                "subcategory": "Animal Proteins",
+                "source": "database",
+                "compliance_status": "unknown",
+                "protocol_status": "unknown",
+                "nightshade": false,
+                "histamine": "unknown",
+                "oxalate": "unknown",
+                "lectin": "unknown",
+                "fodmap": "unknown",
+                "salicylate": "unknown",
+                "amines": "unknown",
+                "glutamates": "unknown",
+                "sulfites": "unknown",
+                "goitrogens": "unknown",
+                "purines": "unknown",
+                "phytoestrogens": "unknown",
+                "phytates": "unknown",
+                "tyramine": "unknown",
+                "is_organic": false,
+                "preparation_state": "raw"
+              },
+              {
+                "id": "7dd19d64-8f16-4d4a-b24f-531cc0dd2ec8",
+                "name": "Chicken Wing",
+                "category": "Proteins",
+                "subcategory": "Animal Proteins",
+                "source": "database",
+                "compliance_status": "unknown",
+                "protocol_status": "unknown",
+                "nightshade": false,
+                "histamine": "unknown",
+                "oxalate": "unknown",
+                "lectin": "unknown",
+                "fodmap": "unknown",
+                "salicylate": "unknown",
+                "amines": "unknown",
+                "glutamates": "unknown",
+                "sulfites": "unknown",
+                "goitrogens": "unknown",
+                "purines": "unknown",
+                "phytoestrogens": "unknown",
+                "phytates": "unknown",
+                "tyramine": "unknown",
+                "is_organic": false,
+                "preparation_state": "raw"
+              }
+            ],
+            "total": 4,
+            "search_term": "chicken"
           },
-          "responseSize": 36
+          "responseSize": 2221
         },
         {
           "path": "/api/v1/correlations/insights",
@@ -157,13 +259,13 @@
               "value": "8e8a568a-c2f8-43a8-abf2-4e54408dbdc0"
             }
           ],
-          "status": 502,
+          "status": 401,
           "working": false,
-          "responseTime": 301,
+          "responseTime": 94,
           "responseData": {
-            "message": "Internal server error"
+            "error": "Authentication required"
           },
-          "responseSize": 36
+          "responseSize": 35
         },
         {
           "path": "/api/v1/detox-types",
@@ -172,13 +274,13 @@
           "description": "Get detox-types",
           "source": "backend/functions/api/handlers/detox.js",
           "params": [],
-          "status": 502,
+          "status": 404,
           "working": false,
-          "responseTime": 359,
+          "responseTime": 63,
           "responseData": {
-            "message": "Internal server error"
+            "error": "Route not found: GET /api/v1/detox-types"
           },
-          "responseSize": 36
+          "responseSize": 52
         },
         {
           "path": "/api/v1/exposure-types",
@@ -187,13 +289,13 @@
           "description": "Get exposure-types",
           "source": "backend/functions/api/handlers/exposures.js",
           "params": [],
-          "status": 502,
+          "status": 404,
           "working": false,
-          "responseTime": 339,
+          "responseTime": 82,
           "responseData": {
-            "message": "Internal server error"
+            "error": "Route not found: GET /api/v1/exposure-types"
           },
-          "responseSize": 36
+          "responseSize": 55
         },
         {
           "path": "/api/v1/foods/by-protocol",
@@ -207,13 +309,42 @@
               "value": "1495844a-19de-404c-a288-7660eda0cbe1"
             }
           ],
-          "status": 502,
-          "working": false,
-          "responseTime": 322,
+          "status": 200,
+          "working": true,
+          "responseTime": 75,
           "responseData": {
-            "message": "Internal server error"
+            "foods": [],
+            "foods_by_category": {},
+            "foods_by_status": {
+              "allowed": [],
+              "avoid": [],
+              "reintroduction": [],
+              "unknown": []
+            },
+            "foods_by_status_category": {
+              "included": {},
+              "avoid_for_now": {},
+              "try_in_moderation": {},
+              "unknown": {}
+            },
+            "compliance_stats": {
+              "total": 0,
+              "allowed": 0,
+              "avoid": 0,
+              "reintroduction": 0,
+              "unknown": 0
+            },
+            "total_foods": 0,
+            "summary": {
+              "total": 0,
+              "allowed": 0,
+              "avoid": 0,
+              "reintroduction": 0,
+              "unknown": 0
+            },
+            "protocol_id": "1495844a-19de-404c-a288-7660eda0cbe1"
           },
-          "responseSize": 36
+          "responseSize": 438
         },
         {
           "path": "/api/v1/protocols",
@@ -227,13 +358,167 @@
               "value": "1495844a-19de-404c-a288-7660eda0cbe1"
             }
           ],
-          "status": 502,
-          "working": false,
-          "responseTime": 310,
+          "status": 200,
+          "working": true,
+          "responseTime": 73,
           "responseData": {
-            "message": "Internal server error"
+            "protocols": [
+              {
+                "id": "1495844a-19de-404c-a288-7660eda0cbe1",
+                "name": "AIP",
+                "description": "The Autoimmune Protocol (AIP) is an elimination diet designed to help identify food sensitivities and reduce inflammation in people with autoimmune conditions.",
+                "category": null,
+                "phases": [
+                  {
+                    "name": "Elimination",
+                    "description": "Remove all potentially inflammatory foods",
+                    "duration_weeks": 6
+                  },
+                  {
+                    "name": "Reintroduction",
+                    "description": "Systematically reintroduce foods one at a time",
+                    "duration_weeks": 12
+                  }
+                ],
+                "official": true,
+                "version": "1.0"
+              },
+              {
+                "id": "7c728266-7c7e-4389-a9b6-7c5280f2edd2",
+                "name": "Keto",
+                "description": "A ketogenic diet is high in fats, moderate in protein, and very low in carbohydrates to induce ketosis.",
+                "category": "metabolic",
+                "phases": [
+                  {
+                    "name": "Induction",
+                    "description": "Restrict carbs to <20g/day",
+                    "duration_weeks": 2
+                  },
+                  {
+                    "name": "Maintenance",
+                    "description": "Maintain ketosis with 20-50g carbs/day",
+                    "duration_weeks": "ongoing"
+                  }
+                ],
+                "official": true,
+                "version": "1.0"
+              },
+              {
+                "id": "a80be547-6db1-4722-a5a4-60930143a2d9",
+                "name": "Low FODMAP",
+                "description": "The Low FODMAP diet restricts fermentable carbohydrates that can trigger IBS symptoms, developed by Monash University.",
+                "category": "low_fodmap",
+                "phases": [
+                  {
+                    "name": "Elimination",
+                    "description": "Eliminate high FODMAP foods",
+                    "duration_weeks": "2-6"
+                  },
+                  {
+                    "name": "Reintroduction",
+                    "description": "Test individual FODMAP groups",
+                    "duration_weeks": "8-12"
+                  },
+                  {
+                    "name": "Personalization",
+                    "description": "Create personalized long-term diet",
+                    "duration_weeks": "ongoing"
+                  }
+                ],
+                "official": false,
+                "version": "1.0"
+              },
+              {
+                "id": "51ca7a24-4691-4629-8ee5-c20876e68c29",
+                "name": "Low Histamine",
+                "description": "A low histamine diet eliminates foods high in histamine or that trigger histamine release, helping manage histamine intolerance symptoms.",
+                "category": "low_histamine",
+                "phases": [
+                  {
+                    "name": "Elimination",
+                    "description": "Eliminate high histamine foods",
+                    "duration_weeks": "2-6"
+                  },
+                  {
+                    "name": "Reintroduction",
+                    "description": "Test medium histamine foods one at a time",
+                    "duration_weeks": "4-8"
+                  }
+                ],
+                "official": false,
+                "version": "1.0"
+              },
+              {
+                "id": "fd2c2435-48ea-4d5d-9d04-6fe5b8ac3b0c",
+                "name": "Low Lectin",
+                "description": "A low lectin diet eliminates foods high in lectins, which some believe can cause inflammation and digestive issues.",
+                "category": "low_lectin",
+                "phases": null,
+                "official": false,
+                "version": "1.0"
+              },
+              {
+                "id": "12f1d4f1-f56a-48a3-b936-41026014656b",
+                "name": "Low Oxalate",
+                "description": "A low oxalate diet restricts foods high in oxalates to prevent kidney stones and manage oxalate sensitivity.",
+                "category": "low_oxalate",
+                "phases": null,
+                "official": false,
+                "version": "1.0"
+              },
+              {
+                "id": "40b6955c-fd3b-4aba-846b-03caa7119ff9",
+                "name": "No Nightshades",
+                "description": "A nightshade-free diet eliminates vegetables from the nightshade family, which can trigger inflammation in sensitive individuals.",
+                "category": "no_nightshades",
+                "phases": null,
+                "official": false,
+                "version": "1.0"
+              },
+              {
+                "id": "46de08fb-03bf-4032-b507-122bb934ecb9",
+                "name": "Paleo",
+                "description": "The Paleo diet emphasizes whole foods that were available to Paleolithic humans, excluding processed foods, grains, and legumes.",
+                "category": "paleo",
+                "phases": [
+                  {
+                    "name": "Strict",
+                    "description": "Eliminate all non-Paleo foods",
+                    "duration_weeks": 4
+                  },
+                  {
+                    "name": "Modified",
+                    "description": "Allow some flexibility with certain foods",
+                    "duration_weeks": "ongoing"
+                  }
+                ],
+                "official": false,
+                "version": "1.0"
+              },
+              {
+                "id": "5cd8f8c7-3cbb-4405-ab88-a253ff7c907b",
+                "name": "Whole30",
+                "description": "Whole30 is a 30-day elimination diet that removes sugar, alcohol, grains, legumes, and dairy to reset eating habits.",
+                "category": "whole30",
+                "phases": [
+                  {
+                    "name": "Elimination",
+                    "description": "Strict 30-day elimination",
+                    "duration_weeks": 4
+                  },
+                  {
+                    "name": "Reintroduction",
+                    "description": "Systematic reintroduction of eliminated foods",
+                    "duration_weeks": 2
+                  }
+                ],
+                "official": false,
+                "version": "1.0"
+              }
+            ],
+            "total": 9
           },
-          "responseSize": 36
+          "responseSize": 3749
         },
         {
           "path": "/api/v1/timeline/entries",
@@ -247,13 +532,13 @@
               "value": "2024-07-06"
             }
           ],
-          "status": 502,
+          "status": 500,
           "working": false,
-          "responseTime": 304,
+          "responseTime": 52,
           "responseData": {
-            "message": "Internal server error"
+            "error": "Database operation failed"
           },
-          "responseSize": 36
+          "responseSize": 37
         },
         {
           "path": "/api/v1/timeline/entries",
@@ -267,13 +552,13 @@
               "value": "2024-07-06"
             }
           ],
-          "status": 502,
+          "status": 500,
           "working": false,
-          "responseTime": 369,
+          "responseTime": 76,
           "responseData": {
-            "message": "Internal server error"
+            "error": "Database operation failed"
           },
-          "responseSize": 36
+          "responseSize": 37
         },
         {
           "path": "/api/v1/users/preferences",
@@ -287,13 +572,13 @@
               "value": "8e8a568a-c2f8-43a8-abf2-4e54408dbdc0"
             }
           ],
-          "status": 502,
+          "status": 404,
           "working": false,
-          "responseTime": 315,
+          "responseTime": 118,
           "responseData": {
-            "message": "Internal server error"
+            "error": "Route not found: GET /api/v1/users/preferences"
           },
-          "responseSize": 36
+          "responseSize": 58
         },
         {
           "path": "/api/v1/users/preferences",
@@ -307,33 +592,380 @@
               "value": "8e8a568a-c2f8-43a8-abf2-4e54408dbdc0"
             }
           ],
-          "status": 502,
+          "status": 404,
           "working": false,
-          "responseTime": 304,
+          "responseTime": 56,
           "responseData": {
-            "message": "Internal server error"
+            "error": "Route not found: PUT /api/v1/users/preferences"
           },
-          "responseSize": 36
+          "responseSize": 58
+        },
+        {
+          "path": "/api/v1/test-auth",
+          "method": "GET",
+          "category": "Other",
+          "description": "Get test-auth",
+          "source": "backend/functions/api/index.js",
+          "params": [],
+          "status": 500,
+          "working": false,
+          "responseTime": 52,
+          "responseData": {
+            "error": "Authentication test failed"
+          },
+          "responseSize": 38
+        },
+        {
+          "path": "/api/v1/user",
+          "method": "GET",
+          "category": "Users",
+          "description": "Get user",
+          "source": "backend/functions/api/index.js",
+          "params": [],
+          "status": 401,
+          "working": false,
+          "responseTime": 57,
+          "responseData": {
+            "error": "Authentication required"
+          },
+          "responseSize": 35
+        },
+        {
+          "path": "/api/v1/user/protocols",
+          "method": "GET",
+          "category": "Protocols",
+          "description": "Get protocols",
+          "source": "backend/functions/api/index.js",
+          "params": [
+            {
+              "name": "protocol_id",
+              "value": "1495844a-19de-404c-a288-7660eda0cbe1"
+            }
+          ],
+          "status": 401,
+          "working": false,
+          "responseTime": 84,
+          "responseData": {
+            "error": "Authentication required"
+          },
+          "responseSize": 35
+        },
+        {
+          "path": "/api/v1/user/preferences",
+          "method": "GET",
+          "category": "Users",
+          "description": "Get preferences",
+          "source": "backend/functions/api/index.js",
+          "params": [
+            {
+              "name": "userId",
+              "value": "8e8a568a-c2f8-43a8-abf2-4e54408dbdc0"
+            }
+          ],
+          "status": 401,
+          "working": false,
+          "responseTime": 91,
+          "responseData": {
+            "error": "Authentication required"
+          },
+          "responseSize": 35
+        },
+        {
+          "path": "/api/v1/user/current-protocol",
+          "method": "GET",
+          "category": "Protocols",
+          "description": "Get current-protocol",
+          "source": "backend/functions/api/index.js",
+          "params": [
+            {
+              "name": "protocol_id",
+              "value": "1495844a-19de-404c-a288-7660eda0cbe1"
+            }
+          ],
+          "status": 401,
+          "working": false,
+          "responseTime": 52,
+          "responseData": {
+            "error": "Authentication required"
+          },
+          "responseSize": 35
+        },
+        {
+          "path": "/api/v1/user/protocol-history",
+          "method": "GET",
+          "category": "Protocols",
+          "description": "Get protocol-history",
+          "source": "backend/functions/api/index.js",
+          "params": [
+            {
+              "name": "protocol_id",
+              "value": "1495844a-19de-404c-a288-7660eda0cbe1"
+            }
+          ],
+          "status": 401,
+          "working": false,
+          "responseTime": 50,
+          "responseData": {
+            "error": "Authentication required"
+          },
+          "responseSize": 35
+        },
+        {
+          "path": "/api/v1/user/change-protocol",
+          "method": "GET",
+          "category": "Protocols",
+          "description": "Get change-protocol",
+          "source": "backend/functions/api/index.js",
+          "params": [
+            {
+              "name": "protocol_id",
+              "value": "1495844a-19de-404c-a288-7660eda0cbe1"
+            }
+          ],
+          "status": 404,
+          "working": false,
+          "responseTime": 48,
+          "responseData": {
+            "error": "Route not found: GET /api/v1/user/change-protocol"
+          },
+          "responseSize": 61
+        },
+        {
+          "path": "/api/v1/journal/entries",
+          "method": "GET",
+          "category": "Other",
+          "description": "Get entries",
+          "source": "backend/functions/api/index.js",
+          "params": [],
+          "status": 404,
+          "working": false,
+          "responseTime": 113,
+          "responseData": {
+            "error": "Route not found: GET /api/v1/journal/entries"
+          },
+          "responseSize": 56
+        },
+        {
+          "path": "/api/v1/foods/test",
+          "method": "GET",
+          "category": "Foods",
+          "description": "Get test",
+          "source": "backend/functions/api/index.js",
+          "params": [],
+          "status": 200,
+          "working": true,
+          "responseTime": 49,
+          "responseData": {
+            "message": "Database connection successful",
+            "time": "2025-07-23T23:10:11.130Z"
+          },
+          "responseSize": 78
+        },
+        {
+          "path": "/api/v1/foods",
+          "method": "POST",
+          "category": "Foods",
+          "description": "Create foods",
+          "source": "backend/functions/api/index.js",
+          "params": [],
+          "status": 500,
+          "working": false,
+          "responseTime": 48,
+          "responseData": {
+            "error": "Internal server error"
+          },
+          "responseSize": 33
+        },
+        {
+          "path": "/api/v1/symptoms/search",
+          "method": "GET",
+          "category": "Health Data",
+          "description": "Get search",
+          "source": "backend/functions/api/index.js",
+          "params": [
+            {
+              "name": "search",
+              "value": "chicken"
+            }
+          ],
+          "status": 200,
+          "working": true,
+          "responseTime": 45,
+          "responseData": {
+            "symptoms": [],
+            "total": 0,
+            "search_term": "chicken",
+            "user_history_included": false
+          },
+          "responseSize": 79
+        },
+        {
+          "path": "/api/v1/supplements/search",
+          "method": "GET",
+          "category": "Health Data",
+          "description": "Get search",
+          "source": "backend/functions/api/index.js",
+          "params": [
+            {
+              "name": "search",
+              "value": "chicken"
+            }
+          ],
+          "status": 200,
+          "working": true,
+          "responseTime": 55,
+          "responseData": {
+            "supplements": [],
+            "total": 0,
+            "search_term": "chicken"
+          },
+          "responseSize": 52
+        },
+        {
+          "path": "/api/v1/medications/search",
+          "method": "GET",
+          "category": "Health Data",
+          "description": "Get search",
+          "source": "backend/functions/api/index.js",
+          "params": [
+            {
+              "name": "search",
+              "value": "chicken"
+            }
+          ],
+          "status": 200,
+          "working": true,
+          "responseTime": 53,
+          "responseData": {
+            "medications": [],
+            "total": 0,
+            "search_term": "chicken"
+          },
+          "responseSize": 52
+        },
+        {
+          "path": "/api/v1/detox-types/search",
+          "method": "GET",
+          "category": "Lookup Data",
+          "description": "Get search",
+          "source": "backend/functions/api/index.js",
+          "params": [
+            {
+              "name": "search",
+              "value": "chicken"
+            }
+          ],
+          "status": 200,
+          "working": true,
+          "responseTime": 59,
+          "responseData": {
+            "detox_types": [],
+            "total": 0,
+            "search_term": "chicken"
+          },
+          "responseSize": 52
+        },
+        {
+          "path": "/api/v1/exposures/search",
+          "method": "GET",
+          "category": "Lookup Data",
+          "description": "Get search",
+          "source": "backend/functions/api/index.js",
+          "params": [
+            {
+              "name": "search",
+              "value": "chicken"
+            }
+          ],
+          "status": 200,
+          "working": true,
+          "responseTime": 60,
+          "responseData": {
+            "exposures": [],
+            "total": 0,
+            "search_term": "chicken"
+          },
+          "responseSize": 50
+        },
+        {
+          "path": "/api/v1/admin/seed-demo-data",
+          "method": "GET",
+          "category": "Other",
+          "description": "Get seed-demo-data",
+          "source": "backend/functions/api/index.js",
+          "params": [],
+          "status": 404,
+          "working": false,
+          "responseTime": 115,
+          "responseData": {
+            "error": "Route not found: GET /api/v1/admin/seed-demo-data"
+          },
+          "responseSize": 61
+        },
+        {
+          "path": "/api/v1/symptoms",
+          "method": "GET",
+          "category": "Health Data",
+          "description": "Get symptoms",
+          "source": "backend/functions/api/index.js",
+          "params": [],
+          "status": 404,
+          "working": false,
+          "responseTime": 48,
+          "responseData": {
+            "error": "Route not found: GET /api/v1/symptoms"
+          },
+          "responseSize": 49
+        },
+        {
+          "path": "/api/v1/supplements",
+          "method": "GET",
+          "category": "Health Data",
+          "description": "Get supplements",
+          "source": "backend/functions/api/index.js",
+          "params": [],
+          "status": 404,
+          "working": false,
+          "responseTime": 56,
+          "responseData": {
+            "error": "Route not found: GET /api/v1/supplements"
+          },
+          "responseSize": 52
+        },
+        {
+          "path": "/api/v1/medications",
+          "method": "GET",
+          "category": "Health Data",
+          "description": "Get medications",
+          "source": "backend/functions/api/index.js",
+          "params": [],
+          "status": 404,
+          "working": false,
+          "responseTime": 43,
+          "responseData": {
+            "error": "Route not found: GET /api/v1/medications"
+          },
+          "responseSize": 52
         }
       ],
-      "workingCount": 0,
-      "totalCount": 10,
+      "workingCount": 9,
+      "totalCount": 29,
       "categories": {
         "Foods": {
-          "working": 0,
-          "total": 1
+          "working": 2,
+          "total": 3
         },
         "AI": {
           "working": 0,
           "total": 1
         },
         "Lookup Data": {
-          "working": 0,
-          "total": 2
+          "working": 2,
+          "total": 4
         },
         "Protocols": {
-          "working": 0,
-          "total": 2
+          "working": 2,
+          "total": 6
         },
         "Timeline": {
           "working": 0,
@@ -341,7 +973,15 @@
         },
         "Users": {
           "working": 0,
-          "total": 2
+          "total": 4
+        },
+        "Other": {
+          "working": 0,
+          "total": 3
+        },
+        "Health Data": {
+          "working": 3,
+          "total": 6
         }
       }
     },
@@ -1016,7 +1656,7 @@
             }
           ],
           "utilities": [],
-          "size": "636.17 KB"
+          "size": "644.4 KB"
         },
         "backend/functions": {
           "totalFiles": 30,
@@ -1034,7 +1674,7 @@
             }
           ],
           "utilities": [],
-          "size": "636.17 KB"
+          "size": "644.4 KB"
         },
         "backend": {
           "totalFiles": 39,
@@ -1055,7 +1695,7 @@
             }
           ],
           "utilities": [],
-          "size": "702.77 KB"
+          "size": "711 KB"
         }
       },
       "shared": {},
@@ -1148,18 +1788,18 @@
       "repository": "https://github.com/deebyrne26/health-platform",
       "branch": "main",
       "lastCommit": {
-        "hash": "0513e7d",
-        "message": "Update index.js",
+        "hash": "0324137",
+        "message": "CORS - revert index.js",
         "author": "deebyrne26",
-        "date": "Wed Jul 23 18:40:46 2025 -0400"
+        "date": "Wed Jul 23 19:08:28 2025 -0400"
       },
       "contributors": [
         {
           "name": "deebyrne26",
-          "commits": 189
+          "commits": 190
         }
       ],
-      "totalCommits": 189
+      "totalCommits": 190
     }
   }
 }
