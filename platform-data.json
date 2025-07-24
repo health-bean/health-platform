@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generated": "2025-07-24T01:30:36.141Z",
+    "generated": "2025-07-24T01:58:16.555Z",
     "version": "1.0.0",
     "generator": "AutomatedProfessionalDocsGenerator"
   },
@@ -15,9 +15,9 @@
     "totalHooks": 13,
     "totalFiles": 107,
     "workingAPIs": 0,
-    "totalAPIs": 28,
-    "totalTables": 30,
-    "totalCommits": 197,
+    "totalAPIs": 29,
+    "totalTables": 24,
+    "totalCommits": 183,
     "contributors": 1
   },
   "discoveredInfo": {
@@ -46,25 +46,19 @@
         "journal_entries",
         "timeline_entries",
         "the",
-        "food_protocol_relationships",
-        "like",
-        "protocol_simplified_food_rules",
-        "food_specialized_properties_simplified",
-        "simplified_foods",
-        "protocols",
-        "SET",
-        "const",
-        "existing",
-        "journal",
-        "timeline_items",
-        "user_dietary_protocols",
+        "protocol_food_rules",
+        "food_simplification_mappings",
         "foods",
+        "journal",
+        "existing",
+        "user_protocols",
         "user_preferences",
         "get_user_current_protocol",
-        "dietary_protocols",
-        "query",
+        "protocols",
         "users",
         "user",
+        "SET",
+        "food_search_view",
         "reflections",
         "correlations",
         "exposure_types",
@@ -136,13 +130,13 @@
               "value": "chicken"
             }
           ],
-          "status": 502,
+          "status": 500,
           "working": false,
-          "responseTime": 1021,
+          "responseTime": 5191,
           "responseData": {
-            "message": "Internal server error"
+            "error": "Failed to complete search foods"
           },
-          "responseSize": 36
+          "responseSize": 43
         },
         {
           "path": "/api/v1/correlations/insights",
@@ -156,13 +150,13 @@
               "value": "8e8a568a-c2f8-43a8-abf2-4e54408dbdc0"
             }
           ],
-          "status": 502,
+          "status": 401,
           "working": false,
-          "responseTime": 363,
+          "responseTime": 181,
           "responseData": {
-            "message": "Internal server error"
+            "error": "Authentication required"
           },
-          "responseSize": 36
+          "responseSize": 35
         },
         {
           "path": "/api/v1/detox-types",
@@ -171,13 +165,36 @@
           "description": "Get detox-types",
           "source": "backend/functions/api/handlers/detox.js",
           "params": [],
-          "status": 502,
+          "status": 404,
           "working": false,
-          "responseTime": 378,
+          "responseTime": 130,
           "responseData": {
-            "message": "Internal server error"
+            "error": "Endpoint not found",
+            "details": {
+              "path": "/api/v1/detox-types",
+              "method": "GET",
+              "availableEndpoints": [
+                "GET /api/v1/protocols",
+                "GET /api/v1/foods/search",
+                "GET /api/v1/foods/by-protocol",
+                "GET /api/v1/symptoms/search",
+                "GET /api/v1/supplements/search",
+                "GET /api/v1/medications/search",
+                "GET /api/v1/detox-types/search",
+                "GET /api/v1/exposures/search",
+                "GET /api/v1/users",
+                "GET /api/v1/user/preferences",
+                "GET /api/v1/user/protocols",
+                "GET /api/v1/users/current-protocol",
+                "GET /api/v1/users/protocol-history",
+                "GET /api/v1/correlations/insights",
+                "GET /api/v1/timeline/entries",
+                "POST /api/v1/timeline/entries",
+                "GET /api/v1/test-auth"
+              ]
+            }
           },
-          "responseSize": 36
+          "responseSize": 629
         },
         {
           "path": "/api/v1/exposure-types",
@@ -186,33 +203,56 @@
           "description": "Get exposure-types",
           "source": "backend/functions/api/handlers/exposures.js",
           "params": [],
-          "status": 502,
+          "status": 404,
           "working": false,
-          "responseTime": 390,
+          "responseTime": 291,
           "responseData": {
-            "message": "Internal server error"
+            "error": "Endpoint not found",
+            "details": {
+              "path": "/api/v1/exposure-types",
+              "method": "GET",
+              "availableEndpoints": [
+                "GET /api/v1/protocols",
+                "GET /api/v1/foods/search",
+                "GET /api/v1/foods/by-protocol",
+                "GET /api/v1/symptoms/search",
+                "GET /api/v1/supplements/search",
+                "GET /api/v1/medications/search",
+                "GET /api/v1/detox-types/search",
+                "GET /api/v1/exposures/search",
+                "GET /api/v1/users",
+                "GET /api/v1/user/preferences",
+                "GET /api/v1/user/protocols",
+                "GET /api/v1/users/current-protocol",
+                "GET /api/v1/users/protocol-history",
+                "GET /api/v1/correlations/insights",
+                "GET /api/v1/timeline/entries",
+                "POST /api/v1/timeline/entries",
+                "GET /api/v1/test-auth"
+              ]
+            }
           },
-          "responseSize": 36
+          "responseSize": 632
         },
         {
           "path": "/api/v1/foods/by-protocol",
           "method": "GET",
           "category": "Protocols",
           "description": "Get by-protocol",
-          "source": "backend/functions/api/handlers/foods_updated.js",
+          "source": "backend/functions/api/handlers/foods_with_materialized_view.js",
           "params": [
             {
               "name": "protocol_id",
               "value": "1495844a-19de-404c-a288-7660eda0cbe1"
             }
           ],
-          "status": 502,
+          "status": 500,
           "working": false,
-          "responseTime": 376,
+          "responseTime": 5375,
           "responseData": {
-            "message": "Internal server error"
+            "error": "Failed to complete fetch protocol foods"
           },
-          "responseSize": 36
+          "responseSize": 51
         },
         {
           "path": "/api/v1/protocols",
@@ -226,13 +266,13 @@
               "value": "1495844a-19de-404c-a288-7660eda0cbe1"
             }
           ],
-          "status": 502,
+          "status": 500,
           "working": false,
-          "responseTime": 376,
+          "responseTime": 5293,
           "responseData": {
-            "message": "Internal server error"
+            "error": "Failed to complete fetch protocols"
           },
-          "responseSize": 36
+          "responseSize": 46
         },
         {
           "path": "/api/v1/timeline/entries",
@@ -246,13 +286,13 @@
               "value": "2024-07-06"
             }
           ],
-          "status": 502,
+          "status": 401,
           "working": false,
-          "responseTime": 384,
+          "responseTime": 151,
           "responseData": {
-            "message": "Internal server error"
+            "error": "Authentication required"
           },
-          "responseSize": 36
+          "responseSize": 35
         },
         {
           "path": "/api/v1/timeline/entries",
@@ -266,13 +306,13 @@
               "value": "2024-07-06"
             }
           ],
-          "status": 502,
+          "status": 401,
           "working": false,
-          "responseTime": 388,
+          "responseTime": 132,
           "responseData": {
-            "message": "Internal server error"
+            "error": "Authentication required"
           },
-          "responseSize": 36
+          "responseSize": 35
         },
         {
           "path": "/api/v1/users/preferences",
@@ -286,13 +326,36 @@
               "value": "8e8a568a-c2f8-43a8-abf2-4e54408dbdc0"
             }
           ],
-          "status": 502,
+          "status": 404,
           "working": false,
-          "responseTime": 414,
+          "responseTime": 290,
           "responseData": {
-            "message": "Internal server error"
+            "error": "Endpoint not found",
+            "details": {
+              "path": "/api/v1/users/preferences",
+              "method": "GET",
+              "availableEndpoints": [
+                "GET /api/v1/protocols",
+                "GET /api/v1/foods/search",
+                "GET /api/v1/foods/by-protocol",
+                "GET /api/v1/symptoms/search",
+                "GET /api/v1/supplements/search",
+                "GET /api/v1/medications/search",
+                "GET /api/v1/detox-types/search",
+                "GET /api/v1/exposures/search",
+                "GET /api/v1/users",
+                "GET /api/v1/user/preferences",
+                "GET /api/v1/user/protocols",
+                "GET /api/v1/users/current-protocol",
+                "GET /api/v1/users/protocol-history",
+                "GET /api/v1/correlations/insights",
+                "GET /api/v1/timeline/entries",
+                "POST /api/v1/timeline/entries",
+                "GET /api/v1/test-auth"
+              ]
+            }
           },
-          "responseSize": 36
+          "responseSize": 635
         },
         {
           "path": "/api/v1/users/preferences",
@@ -306,43 +369,51 @@
               "value": "8e8a568a-c2f8-43a8-abf2-4e54408dbdc0"
             }
           ],
-          "status": 502,
+          "status": 404,
           "working": false,
-          "responseTime": 369,
+          "responseTime": 143,
           "responseData": {
-            "message": "Internal server error"
+            "error": "Endpoint not found",
+            "details": {
+              "path": "/api/v1/users/preferences",
+              "method": "PUT",
+              "availableEndpoints": [
+                "GET /api/v1/protocols",
+                "GET /api/v1/foods/search",
+                "GET /api/v1/foods/by-protocol",
+                "GET /api/v1/symptoms/search",
+                "GET /api/v1/supplements/search",
+                "GET /api/v1/medications/search",
+                "GET /api/v1/detox-types/search",
+                "GET /api/v1/exposures/search",
+                "GET /api/v1/users",
+                "GET /api/v1/user/preferences",
+                "GET /api/v1/user/protocols",
+                "GET /api/v1/users/current-protocol",
+                "GET /api/v1/users/protocol-history",
+                "GET /api/v1/correlations/insights",
+                "GET /api/v1/timeline/entries",
+                "POST /api/v1/timeline/entries",
+                "GET /api/v1/test-auth"
+              ]
+            }
           },
-          "responseSize": 36
+          "responseSize": 635
         },
         {
-          "path": "/api/v1/test-auth",
-          "method": "GET",
-          "category": "Other",
-          "description": "Get test-auth",
-          "source": "backend/functions/api/index.js",
-          "params": [],
-          "status": 502,
-          "working": false,
-          "responseTime": 379,
-          "responseData": {
-            "message": "Internal server error"
-          },
-          "responseSize": 36
-        },
-        {
-          "path": "/api/v1/user",
+          "path": "/api/v1/users",
           "method": "GET",
           "category": "Users",
-          "description": "Get user",
+          "description": "Get users",
           "source": "backend/functions/api/index.js",
           "params": [],
-          "status": 502,
+          "status": 401,
           "working": false,
-          "responseTime": 404,
+          "responseTime": 288,
           "responseData": {
-            "message": "Internal server error"
+            "error": "Authentication required"
           },
-          "responseSize": 36
+          "responseSize": 35
         },
         {
           "path": "/api/v1/user/protocols",
@@ -356,13 +427,13 @@
               "value": "1495844a-19de-404c-a288-7660eda0cbe1"
             }
           ],
-          "status": 502,
+          "status": 401,
           "working": false,
-          "responseTime": 382,
+          "responseTime": 292,
           "responseData": {
-            "message": "Internal server error"
+            "error": "Authentication required"
           },
-          "responseSize": 36
+          "responseSize": 35
         },
         {
           "path": "/api/v1/user/preferences",
@@ -376,16 +447,16 @@
               "value": "8e8a568a-c2f8-43a8-abf2-4e54408dbdc0"
             }
           ],
-          "status": 502,
+          "status": 401,
           "working": false,
-          "responseTime": 370,
+          "responseTime": 297,
           "responseData": {
-            "message": "Internal server error"
+            "error": "Authentication required"
           },
-          "responseSize": 36
+          "responseSize": 35
         },
         {
-          "path": "/api/v1/user/current-protocol",
+          "path": "/api/v1/users/current-protocol",
           "method": "GET",
           "category": "Protocols",
           "description": "Get current-protocol",
@@ -396,16 +467,16 @@
               "value": "1495844a-19de-404c-a288-7660eda0cbe1"
             }
           ],
-          "status": 502,
+          "status": 401,
           "working": false,
-          "responseTime": 388,
+          "responseTime": 147,
           "responseData": {
-            "message": "Internal server error"
+            "error": "Authentication required"
           },
-          "responseSize": 36
+          "responseSize": 35
         },
         {
-          "path": "/api/v1/user/protocol-history",
+          "path": "/api/v1/users/protocol-history",
           "method": "GET",
           "category": "Protocols",
           "description": "Get protocol-history",
@@ -416,16 +487,16 @@
               "value": "1495844a-19de-404c-a288-7660eda0cbe1"
             }
           ],
-          "status": 502,
+          "status": 401,
           "working": false,
-          "responseTime": 373,
+          "responseTime": 282,
           "responseData": {
-            "message": "Internal server error"
+            "error": "Authentication required"
           },
-          "responseSize": 36
+          "responseSize": 35
         },
         {
-          "path": "/api/v1/user/change-protocol",
+          "path": "/api/v1/users/change-protocol",
           "method": "GET",
           "category": "Protocols",
           "description": "Get change-protocol",
@@ -436,28 +507,36 @@
               "value": "1495844a-19de-404c-a288-7660eda0cbe1"
             }
           ],
-          "status": 502,
+          "status": 404,
           "working": false,
-          "responseTime": 366,
+          "responseTime": 295,
           "responseData": {
-            "message": "Internal server error"
+            "error": "Endpoint not found",
+            "details": {
+              "path": "/api/v1/users/change-protocol",
+              "method": "GET",
+              "availableEndpoints": [
+                "GET /api/v1/protocols",
+                "GET /api/v1/foods/search",
+                "GET /api/v1/foods/by-protocol",
+                "GET /api/v1/symptoms/search",
+                "GET /api/v1/supplements/search",
+                "GET /api/v1/medications/search",
+                "GET /api/v1/detox-types/search",
+                "GET /api/v1/exposures/search",
+                "GET /api/v1/users",
+                "GET /api/v1/user/preferences",
+                "GET /api/v1/user/protocols",
+                "GET /api/v1/users/current-protocol",
+                "GET /api/v1/users/protocol-history",
+                "GET /api/v1/correlations/insights",
+                "GET /api/v1/timeline/entries",
+                "POST /api/v1/timeline/entries",
+                "GET /api/v1/test-auth"
+              ]
+            }
           },
-          "responseSize": 36
-        },
-        {
-          "path": "/api/v1/journal/entries",
-          "method": "GET",
-          "category": "Other",
-          "description": "Get entries",
-          "source": "backend/functions/api/index.js",
-          "params": [],
-          "status": 502,
-          "working": false,
-          "responseTime": 366,
-          "responseData": {
-            "message": "Internal server error"
-          },
-          "responseSize": 36
+          "responseSize": 639
         },
         {
           "path": "/api/v1/foods/test",
@@ -466,13 +545,13 @@
           "description": "Get test",
           "source": "backend/functions/api/index.js",
           "params": [],
-          "status": 502,
+          "status": 500,
           "working": false,
-          "responseTime": 376,
+          "responseTime": 5292,
           "responseData": {
-            "message": "Internal server error"
+            "error": "Internal server error: corsHeaders is not defined"
           },
-          "responseSize": 36
+          "responseSize": 61
         },
         {
           "path": "/api/v1/symptoms/search",
@@ -486,13 +565,13 @@
               "value": "chicken"
             }
           ],
-          "status": 502,
+          "status": 500,
           "working": false,
-          "responseTime": 381,
+          "responseTime": 5294,
           "responseData": {
-            "message": "Internal server error"
+            "error": "Failed to complete search symptoms"
           },
-          "responseSize": 36
+          "responseSize": 46
         },
         {
           "path": "/api/v1/supplements/search",
@@ -506,13 +585,13 @@
               "value": "chicken"
             }
           ],
-          "status": 502,
+          "status": 500,
           "working": false,
-          "responseTime": 372,
+          "responseTime": 5373,
           "responseData": {
-            "message": "Internal server error"
+            "error": "Failed to complete search supplements"
           },
-          "responseSize": 36
+          "responseSize": 49
         },
         {
           "path": "/api/v1/medications/search",
@@ -526,13 +605,13 @@
               "value": "chicken"
             }
           ],
-          "status": 502,
+          "status": 500,
           "working": false,
-          "responseTime": 385,
+          "responseTime": 5141,
           "responseData": {
-            "message": "Internal server error"
+            "error": "Failed to complete search medications"
           },
-          "responseSize": 36
+          "responseSize": 49
         },
         {
           "path": "/api/v1/detox-types/search",
@@ -546,13 +625,13 @@
               "value": "chicken"
             }
           ],
-          "status": 502,
+          "status": 500,
           "working": false,
-          "responseTime": 378,
+          "responseTime": 5299,
           "responseData": {
-            "message": "Internal server error"
+            "error": "Failed to complete search detox types"
           },
-          "responseSize": 36
+          "responseSize": 49
         },
         {
           "path": "/api/v1/exposures/search",
@@ -566,13 +645,13 @@
               "value": "chicken"
             }
           ],
-          "status": 502,
+          "status": 500,
           "working": false,
-          "responseTime": 384,
+          "responseTime": 5143,
           "responseData": {
-            "message": "Internal server error"
+            "error": "Failed to complete search exposures"
           },
-          "responseSize": 36
+          "responseSize": 47
         },
         {
           "path": "/api/v1/admin/seed-demo-data",
@@ -581,13 +660,81 @@
           "description": "Get seed-demo-data",
           "source": "backend/functions/api/index.js",
           "params": [],
-          "status": 502,
+          "status": 404,
           "working": false,
-          "responseTime": 375,
+          "responseTime": 135,
           "responseData": {
-            "message": "Internal server error"
+            "error": "Endpoint not found",
+            "details": {
+              "path": "/api/v1/admin/seed-demo-data",
+              "method": "GET",
+              "availableEndpoints": [
+                "GET /api/v1/protocols",
+                "GET /api/v1/foods/search",
+                "GET /api/v1/foods/by-protocol",
+                "GET /api/v1/symptoms/search",
+                "GET /api/v1/supplements/search",
+                "GET /api/v1/medications/search",
+                "GET /api/v1/detox-types/search",
+                "GET /api/v1/exposures/search",
+                "GET /api/v1/users",
+                "GET /api/v1/user/preferences",
+                "GET /api/v1/user/protocols",
+                "GET /api/v1/users/current-protocol",
+                "GET /api/v1/users/protocol-history",
+                "GET /api/v1/correlations/insights",
+                "GET /api/v1/timeline/entries",
+                "POST /api/v1/timeline/entries",
+                "GET /api/v1/test-auth"
+              ]
+            }
           },
-          "responseSize": 36
+          "responseSize": 638
+        },
+        {
+          "path": "/api/v1/journal/entries",
+          "method": "GET",
+          "category": "Other",
+          "description": "Get entries",
+          "source": "backend/functions/api/index.js",
+          "params": [],
+          "status": 500,
+          "working": false,
+          "responseTime": 5295,
+          "responseData": {
+            "error": "Failed to complete get journal entries"
+          },
+          "responseSize": 50
+        },
+        {
+          "path": "/api/v1/journal/entries/",
+          "method": "GET",
+          "category": "Other",
+          "description": "Get resource",
+          "source": "backend/functions/api/index.js",
+          "params": [],
+          "status": 500,
+          "working": false,
+          "responseTime": 5288,
+          "responseData": {
+            "error": "Failed to complete get journal entry"
+          },
+          "responseSize": 48
+        },
+        {
+          "path": "/api/v1/test-auth",
+          "method": "GET",
+          "category": "Other",
+          "description": "Get test-auth",
+          "source": "backend/functions/api/index.js",
+          "params": [],
+          "status": 401,
+          "working": false,
+          "responseTime": 196,
+          "responseData": {
+            "error": "Authentication required"
+          },
+          "responseSize": 35
         },
         {
           "path": "/api/v1/symptoms",
@@ -596,13 +743,36 @@
           "description": "Get symptoms",
           "source": "backend/functions/api/index.js",
           "params": [],
-          "status": 502,
+          "status": 404,
           "working": false,
-          "responseTime": 390,
+          "responseTime": 295,
           "responseData": {
-            "message": "Internal server error"
+            "error": "Endpoint not found",
+            "details": {
+              "path": "/api/v1/symptoms",
+              "method": "GET",
+              "availableEndpoints": [
+                "GET /api/v1/protocols",
+                "GET /api/v1/foods/search",
+                "GET /api/v1/foods/by-protocol",
+                "GET /api/v1/symptoms/search",
+                "GET /api/v1/supplements/search",
+                "GET /api/v1/medications/search",
+                "GET /api/v1/detox-types/search",
+                "GET /api/v1/exposures/search",
+                "GET /api/v1/users",
+                "GET /api/v1/user/preferences",
+                "GET /api/v1/user/protocols",
+                "GET /api/v1/users/current-protocol",
+                "GET /api/v1/users/protocol-history",
+                "GET /api/v1/correlations/insights",
+                "GET /api/v1/timeline/entries",
+                "POST /api/v1/timeline/entries",
+                "GET /api/v1/test-auth"
+              ]
+            }
           },
-          "responseSize": 36
+          "responseSize": 626
         },
         {
           "path": "/api/v1/supplements",
@@ -611,13 +781,36 @@
           "description": "Get supplements",
           "source": "backend/functions/api/index.js",
           "params": [],
-          "status": 502,
+          "status": 404,
           "working": false,
-          "responseTime": 391,
+          "responseTime": 283,
           "responseData": {
-            "message": "Internal server error"
+            "error": "Endpoint not found",
+            "details": {
+              "path": "/api/v1/supplements",
+              "method": "GET",
+              "availableEndpoints": [
+                "GET /api/v1/protocols",
+                "GET /api/v1/foods/search",
+                "GET /api/v1/foods/by-protocol",
+                "GET /api/v1/symptoms/search",
+                "GET /api/v1/supplements/search",
+                "GET /api/v1/medications/search",
+                "GET /api/v1/detox-types/search",
+                "GET /api/v1/exposures/search",
+                "GET /api/v1/users",
+                "GET /api/v1/user/preferences",
+                "GET /api/v1/user/protocols",
+                "GET /api/v1/users/current-protocol",
+                "GET /api/v1/users/protocol-history",
+                "GET /api/v1/correlations/insights",
+                "GET /api/v1/timeline/entries",
+                "POST /api/v1/timeline/entries",
+                "GET /api/v1/test-auth"
+              ]
+            }
           },
-          "responseSize": 36
+          "responseSize": 629
         },
         {
           "path": "/api/v1/medications",
@@ -626,17 +819,40 @@
           "description": "Get medications",
           "source": "backend/functions/api/index.js",
           "params": [],
-          "status": 502,
+          "status": 404,
           "working": false,
-          "responseTime": 377,
+          "responseTime": 290,
           "responseData": {
-            "message": "Internal server error"
+            "error": "Endpoint not found",
+            "details": {
+              "path": "/api/v1/medications",
+              "method": "GET",
+              "availableEndpoints": [
+                "GET /api/v1/protocols",
+                "GET /api/v1/foods/search",
+                "GET /api/v1/foods/by-protocol",
+                "GET /api/v1/symptoms/search",
+                "GET /api/v1/supplements/search",
+                "GET /api/v1/medications/search",
+                "GET /api/v1/detox-types/search",
+                "GET /api/v1/exposures/search",
+                "GET /api/v1/users",
+                "GET /api/v1/user/preferences",
+                "GET /api/v1/user/protocols",
+                "GET /api/v1/users/current-protocol",
+                "GET /api/v1/users/protocol-history",
+                "GET /api/v1/correlations/insights",
+                "GET /api/v1/timeline/entries",
+                "POST /api/v1/timeline/entries",
+                "GET /api/v1/test-auth"
+              ]
+            }
           },
-          "responseSize": 36
+          "responseSize": 629
         }
       ],
       "workingCount": 0,
-      "totalCount": 28,
+      "totalCount": 29,
       "categories": {
         "Foods": {
           "working": 0,
@@ -662,13 +878,13 @@
           "working": 0,
           "total": 4
         },
-        "Other": {
-          "working": 0,
-          "total": 3
-        },
         "Health Data": {
           "working": 0,
           "total": 6
+        },
+        "Other": {
+          "working": 0,
+          "total": 4
         }
       }
     },
@@ -1328,10 +1544,9 @@
       },
       "backend": {
         "backend/functions/api": {
-          "totalFiles": 30,
+          "totalFiles": 28,
           "fileTypes": {
-            ".js": 27,
-            ".zip": 1,
+            ".js": 26,
             ".json": 2
           },
           "components": [],
@@ -1339,17 +1554,16 @@
             {
               "name": "users",
               "path": "backend/functions/api/handlers/users.js",
-              "size": 15111
+              "size": 14005
             }
           ],
           "utilities": [],
-          "size": "634.99 KB"
+          "size": "196.91 KB"
         },
         "backend/functions": {
-          "totalFiles": 30,
+          "totalFiles": 28,
           "fileTypes": {
-            ".js": 27,
-            ".zip": 1,
+            ".js": 26,
             ".json": 2
           },
           "components": [],
@@ -1357,19 +1571,18 @@
             {
               "name": "users",
               "path": "backend/functions/api/handlers/users.js",
-              "size": 15111
+              "size": 14005
             }
           ],
           "utilities": [],
-          "size": "634.99 KB"
+          "size": "196.91 KB"
         },
         "backend": {
-          "totalFiles": 39,
+          "totalFiles": 37,
           "fileTypes": {
             ".example": 1,
-            ".js": 29,
+            ".js": 28,
             ".sql": 5,
-            ".zip": 1,
             ".json": 2,
             ".sh": 1
           },
@@ -1378,11 +1591,11 @@
             {
               "name": "users",
               "path": "backend/functions/api/handlers/users.js",
-              "size": 15111
+              "size": 14005
             }
           ],
           "utilities": [],
-          "size": "701.59 KB"
+          "size": "263.51 KB"
         }
       },
       "shared": {},
@@ -1475,18 +1688,18 @@
       "repository": "https://github.com/deebyrne26/health-platform",
       "branch": "main",
       "lastCommit": {
-        "hash": "6ccf717",
-        "message": "lambda cors fun",
+        "hash": "7fb9475",
+        "message": "Materialized Views",
         "author": "deebyrne26",
-        "date": "Wed Jul 23 21:28:44 2025 -0400"
+        "date": "Wed Jul 23 16:43:53 2025 -0400"
       },
       "contributors": [
         {
           "name": "deebyrne26",
-          "commits": 197
+          "commits": 183
         }
       ],
-      "totalCommits": 197
+      "totalCommits": 183
     }
   }
 }

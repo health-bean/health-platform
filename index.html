@@ -272,15 +272,15 @@
                         <div class="stat-label">Components</div>
                     </div>
                     <div class="stat-card api">
-                        <div class="stat-number">0/28</div>
+                        <div class="stat-number">0/29</div>
                         <div class="stat-label">API Endpoints</div>
                     </div>
                     <div class="stat-card db">
-                        <div class="stat-number">30</div>
+                        <div class="stat-number">24</div>
                         <div class="stat-label">Database Tables</div>
                     </div>
                     <div class="stat-card git">
-                        <div class="stat-number">197</div>
+                        <div class="stat-number">183</div>
                         <div class="stat-label">Git Commits</div>
                     </div>
                 </div>
@@ -342,7 +342,7 @@
                     <div>
                         <h3>API Status</h3>
                         <p><strong>Base URL:</strong> <code>https://suhoxvn8ik.execute-api.us-east-1.amazonaws.com/dev</code></p>
-                        <p><strong>Working Endpoints:</strong> 0/28</p>
+                        <p><strong>Working Endpoints:</strong> 0/29</p>
                         <p><strong>Categories:</strong> 8</p>
                     </div>
                     <div>
@@ -388,13 +388,13 @@ curl "https://suhoxvn8ik.execute-api.us-east-1.amazonaws.com/dev/api/v1/protocol
                     </div>
                     
                     <div class="stat-card api">
-                        <div class="stat-number">0/3</div>
-                        <div class="stat-label">Other APIs</div>
+                        <div class="stat-number">0/6</div>
+                        <div class="stat-label">Health Data APIs</div>
                     </div>
                     
                     <div class="stat-card api">
-                        <div class="stat-number">0/6</div>
-                        <div class="stat-label">Health Data APIs</div>
+                        <div class="stat-number">0/4</div>
+                        <div class="stat-label">Other APIs</div>
                     </div>
                     
                 </div>
@@ -408,308 +408,319 @@ curl "https://suhoxvn8ik.execute-api.us-east-1.amazonaws.com/dev/api/v1/protocol
                         <div class="endpoint-header">
                             <span class="method get">GET</span>
                             <span class="path">/api/v1/foods/search</span>
-                            <span class="status error">❌ 502</span>
+                            <span class="status error">❌ 500</span>
                         </div>
                         <div class="endpoint-description">Get search</div>
                         <div class="endpoint-params">Params: search=chicken</div>
-                        <div class="endpoint-time">Response: 1021ms</div>
+                        <div class="endpoint-time">Response: 5191ms</div>
                     </div>
                     
                     <div class="endpoint-card failed">
                         <div class="endpoint-header">
                             <span class="method get">GET</span>
                             <span class="path">/api/v1/correlations/insights</span>
-                            <span class="status error">❌ 502</span>
+                            <span class="status error">❌ 401</span>
                         </div>
                         <div class="endpoint-description">Get insights</div>
                         <div class="endpoint-params">Params: userId=8e8a568a-c2f8-43a8-abf2-4e54408dbdc0</div>
-                        <div class="endpoint-time">Response: 363ms</div>
+                        <div class="endpoint-time">Response: 181ms</div>
                     </div>
                     
                     <div class="endpoint-card failed">
                         <div class="endpoint-header">
                             <span class="method get">GET</span>
                             <span class="path">/api/v1/detox-types</span>
-                            <span class="status error">❌ 502</span>
+                            <span class="status error">❌ 404</span>
                         </div>
                         <div class="endpoint-description">Get detox-types</div>
                         <div class="endpoint-params">Params: </div>
-                        <div class="endpoint-time">Response: 378ms</div>
+                        <div class="endpoint-time">Response: 130ms</div>
                     </div>
                     
                     <div class="endpoint-card failed">
                         <div class="endpoint-header">
                             <span class="method get">GET</span>
                             <span class="path">/api/v1/exposure-types</span>
-                            <span class="status error">❌ 502</span>
+                            <span class="status error">❌ 404</span>
                         </div>
                         <div class="endpoint-description">Get exposure-types</div>
                         <div class="endpoint-params">Params: </div>
-                        <div class="endpoint-time">Response: 390ms</div>
+                        <div class="endpoint-time">Response: 291ms</div>
                     </div>
                     
                     <div class="endpoint-card failed">
                         <div class="endpoint-header">
                             <span class="method get">GET</span>
                             <span class="path">/api/v1/foods/by-protocol</span>
-                            <span class="status error">❌ 502</span>
+                            <span class="status error">❌ 500</span>
                         </div>
                         <div class="endpoint-description">Get by-protocol</div>
                         <div class="endpoint-params">Params: protocol_id=1495844a-19de-404c-a288-7660eda0cbe1</div>
-                        <div class="endpoint-time">Response: 376ms</div>
+                        <div class="endpoint-time">Response: 5375ms</div>
                     </div>
                     
                     <div class="endpoint-card failed">
                         <div class="endpoint-header">
                             <span class="method get">GET</span>
                             <span class="path">/api/v1/protocols</span>
-                            <span class="status error">❌ 502</span>
+                            <span class="status error">❌ 500</span>
                         </div>
                         <div class="endpoint-description">Get protocols</div>
                         <div class="endpoint-params">Params: protocol_id=1495844a-19de-404c-a288-7660eda0cbe1</div>
-                        <div class="endpoint-time">Response: 376ms</div>
+                        <div class="endpoint-time">Response: 5293ms</div>
                     </div>
                     
                     <div class="endpoint-card failed">
                         <div class="endpoint-header">
                             <span class="method get">GET</span>
                             <span class="path">/api/v1/timeline/entries</span>
-                            <span class="status error">❌ 502</span>
+                            <span class="status error">❌ 401</span>
                         </div>
                         <div class="endpoint-description">Get entries</div>
                         <div class="endpoint-params">Params: date=2024-07-06</div>
-                        <div class="endpoint-time">Response: 384ms</div>
+                        <div class="endpoint-time">Response: 151ms</div>
                     </div>
                     
                     <div class="endpoint-card failed">
                         <div class="endpoint-header">
                             <span class="method post">POST</span>
                             <span class="path">/api/v1/timeline/entries</span>
-                            <span class="status error">❌ 502</span>
+                            <span class="status error">❌ 401</span>
                         </div>
                         <div class="endpoint-description">Create entries</div>
                         <div class="endpoint-params">Params: date=2024-07-06</div>
-                        <div class="endpoint-time">Response: 388ms</div>
+                        <div class="endpoint-time">Response: 132ms</div>
                     </div>
                     
                     <div class="endpoint-card failed">
                         <div class="endpoint-header">
                             <span class="method get">GET</span>
                             <span class="path">/api/v1/users/preferences</span>
-                            <span class="status error">❌ 502</span>
+                            <span class="status error">❌ 404</span>
                         </div>
                         <div class="endpoint-description">Get preferences</div>
                         <div class="endpoint-params">Params: userId=8e8a568a-c2f8-43a8-abf2-4e54408dbdc0</div>
-                        <div class="endpoint-time">Response: 414ms</div>
+                        <div class="endpoint-time">Response: 290ms</div>
                     </div>
                     
                     <div class="endpoint-card failed">
                         <div class="endpoint-header">
                             <span class="method put">PUT</span>
                             <span class="path">/api/v1/users/preferences</span>
-                            <span class="status error">❌ 502</span>
+                            <span class="status error">❌ 404</span>
                         </div>
                         <div class="endpoint-description">Update preferences</div>
                         <div class="endpoint-params">Params: userId=8e8a568a-c2f8-43a8-abf2-4e54408dbdc0</div>
-                        <div class="endpoint-time">Response: 369ms</div>
+                        <div class="endpoint-time">Response: 143ms</div>
                     </div>
                     
                     <div class="endpoint-card failed">
                         <div class="endpoint-header">
                             <span class="method get">GET</span>
-                            <span class="path">/api/v1/test-auth</span>
-                            <span class="status error">❌ 502</span>
+                            <span class="path">/api/v1/users</span>
+                            <span class="status error">❌ 401</span>
                         </div>
-                        <div class="endpoint-description">Get test-auth</div>
+                        <div class="endpoint-description">Get users</div>
                         <div class="endpoint-params">Params: </div>
-                        <div class="endpoint-time">Response: 379ms</div>
-                    </div>
-                    
-                    <div class="endpoint-card failed">
-                        <div class="endpoint-header">
-                            <span class="method get">GET</span>
-                            <span class="path">/api/v1/user</span>
-                            <span class="status error">❌ 502</span>
-                        </div>
-                        <div class="endpoint-description">Get user</div>
-                        <div class="endpoint-params">Params: </div>
-                        <div class="endpoint-time">Response: 404ms</div>
+                        <div class="endpoint-time">Response: 288ms</div>
                     </div>
                     
                     <div class="endpoint-card failed">
                         <div class="endpoint-header">
                             <span class="method get">GET</span>
                             <span class="path">/api/v1/user/protocols</span>
-                            <span class="status error">❌ 502</span>
+                            <span class="status error">❌ 401</span>
                         </div>
                         <div class="endpoint-description">Get protocols</div>
                         <div class="endpoint-params">Params: protocol_id=1495844a-19de-404c-a288-7660eda0cbe1</div>
-                        <div class="endpoint-time">Response: 382ms</div>
+                        <div class="endpoint-time">Response: 292ms</div>
                     </div>
                     
                     <div class="endpoint-card failed">
                         <div class="endpoint-header">
                             <span class="method get">GET</span>
                             <span class="path">/api/v1/user/preferences</span>
-                            <span class="status error">❌ 502</span>
+                            <span class="status error">❌ 401</span>
                         </div>
                         <div class="endpoint-description">Get preferences</div>
                         <div class="endpoint-params">Params: userId=8e8a568a-c2f8-43a8-abf2-4e54408dbdc0</div>
-                        <div class="endpoint-time">Response: 370ms</div>
+                        <div class="endpoint-time">Response: 297ms</div>
                     </div>
                     
                     <div class="endpoint-card failed">
                         <div class="endpoint-header">
                             <span class="method get">GET</span>
-                            <span class="path">/api/v1/user/current-protocol</span>
-                            <span class="status error">❌ 502</span>
+                            <span class="path">/api/v1/users/current-protocol</span>
+                            <span class="status error">❌ 401</span>
                         </div>
                         <div class="endpoint-description">Get current-protocol</div>
                         <div class="endpoint-params">Params: protocol_id=1495844a-19de-404c-a288-7660eda0cbe1</div>
-                        <div class="endpoint-time">Response: 388ms</div>
+                        <div class="endpoint-time">Response: 147ms</div>
                     </div>
                     
                     <div class="endpoint-card failed">
                         <div class="endpoint-header">
                             <span class="method get">GET</span>
-                            <span class="path">/api/v1/user/protocol-history</span>
-                            <span class="status error">❌ 502</span>
+                            <span class="path">/api/v1/users/protocol-history</span>
+                            <span class="status error">❌ 401</span>
                         </div>
                         <div class="endpoint-description">Get protocol-history</div>
                         <div class="endpoint-params">Params: protocol_id=1495844a-19de-404c-a288-7660eda0cbe1</div>
-                        <div class="endpoint-time">Response: 373ms</div>
+                        <div class="endpoint-time">Response: 282ms</div>
                     </div>
                     
                     <div class="endpoint-card failed">
                         <div class="endpoint-header">
                             <span class="method get">GET</span>
-                            <span class="path">/api/v1/user/change-protocol</span>
-                            <span class="status error">❌ 502</span>
+                            <span class="path">/api/v1/users/change-protocol</span>
+                            <span class="status error">❌ 404</span>
                         </div>
                         <div class="endpoint-description">Get change-protocol</div>
                         <div class="endpoint-params">Params: protocol_id=1495844a-19de-404c-a288-7660eda0cbe1</div>
-                        <div class="endpoint-time">Response: 366ms</div>
-                    </div>
-                    
-                    <div class="endpoint-card failed">
-                        <div class="endpoint-header">
-                            <span class="method get">GET</span>
-                            <span class="path">/api/v1/journal/entries</span>
-                            <span class="status error">❌ 502</span>
-                        </div>
-                        <div class="endpoint-description">Get entries</div>
-                        <div class="endpoint-params">Params: </div>
-                        <div class="endpoint-time">Response: 366ms</div>
+                        <div class="endpoint-time">Response: 295ms</div>
                     </div>
                     
                     <div class="endpoint-card failed">
                         <div class="endpoint-header">
                             <span class="method get">GET</span>
                             <span class="path">/api/v1/foods/test</span>
-                            <span class="status error">❌ 502</span>
+                            <span class="status error">❌ 500</span>
                         </div>
                         <div class="endpoint-description">Get test</div>
                         <div class="endpoint-params">Params: </div>
-                        <div class="endpoint-time">Response: 376ms</div>
+                        <div class="endpoint-time">Response: 5292ms</div>
                     </div>
                     
                     <div class="endpoint-card failed">
                         <div class="endpoint-header">
                             <span class="method get">GET</span>
                             <span class="path">/api/v1/symptoms/search</span>
-                            <span class="status error">❌ 502</span>
+                            <span class="status error">❌ 500</span>
                         </div>
                         <div class="endpoint-description">Get search</div>
                         <div class="endpoint-params">Params: search=chicken</div>
-                        <div class="endpoint-time">Response: 381ms</div>
+                        <div class="endpoint-time">Response: 5294ms</div>
                     </div>
                     
                     <div class="endpoint-card failed">
                         <div class="endpoint-header">
                             <span class="method get">GET</span>
                             <span class="path">/api/v1/supplements/search</span>
-                            <span class="status error">❌ 502</span>
+                            <span class="status error">❌ 500</span>
                         </div>
                         <div class="endpoint-description">Get search</div>
                         <div class="endpoint-params">Params: search=chicken</div>
-                        <div class="endpoint-time">Response: 372ms</div>
+                        <div class="endpoint-time">Response: 5373ms</div>
                     </div>
                     
                     <div class="endpoint-card failed">
                         <div class="endpoint-header">
                             <span class="method get">GET</span>
                             <span class="path">/api/v1/medications/search</span>
-                            <span class="status error">❌ 502</span>
+                            <span class="status error">❌ 500</span>
                         </div>
                         <div class="endpoint-description">Get search</div>
                         <div class="endpoint-params">Params: search=chicken</div>
-                        <div class="endpoint-time">Response: 385ms</div>
+                        <div class="endpoint-time">Response: 5141ms</div>
                     </div>
                     
                     <div class="endpoint-card failed">
                         <div class="endpoint-header">
                             <span class="method get">GET</span>
                             <span class="path">/api/v1/detox-types/search</span>
-                            <span class="status error">❌ 502</span>
+                            <span class="status error">❌ 500</span>
                         </div>
                         <div class="endpoint-description">Get search</div>
                         <div class="endpoint-params">Params: search=chicken</div>
-                        <div class="endpoint-time">Response: 378ms</div>
+                        <div class="endpoint-time">Response: 5299ms</div>
                     </div>
                     
                     <div class="endpoint-card failed">
                         <div class="endpoint-header">
                             <span class="method get">GET</span>
                             <span class="path">/api/v1/exposures/search</span>
-                            <span class="status error">❌ 502</span>
+                            <span class="status error">❌ 500</span>
                         </div>
                         <div class="endpoint-description">Get search</div>
                         <div class="endpoint-params">Params: search=chicken</div>
-                        <div class="endpoint-time">Response: 384ms</div>
+                        <div class="endpoint-time">Response: 5143ms</div>
                     </div>
                     
                     <div class="endpoint-card failed">
                         <div class="endpoint-header">
                             <span class="method get">GET</span>
                             <span class="path">/api/v1/admin/seed-demo-data</span>
-                            <span class="status error">❌ 502</span>
+                            <span class="status error">❌ 404</span>
                         </div>
                         <div class="endpoint-description">Get seed-demo-data</div>
                         <div class="endpoint-params">Params: </div>
-                        <div class="endpoint-time">Response: 375ms</div>
+                        <div class="endpoint-time">Response: 135ms</div>
+                    </div>
+                    
+                    <div class="endpoint-card failed">
+                        <div class="endpoint-header">
+                            <span class="method get">GET</span>
+                            <span class="path">/api/v1/journal/entries</span>
+                            <span class="status error">❌ 500</span>
+                        </div>
+                        <div class="endpoint-description">Get entries</div>
+                        <div class="endpoint-params">Params: </div>
+                        <div class="endpoint-time">Response: 5295ms</div>
+                    </div>
+                    
+                    <div class="endpoint-card failed">
+                        <div class="endpoint-header">
+                            <span class="method get">GET</span>
+                            <span class="path">/api/v1/journal/entries/</span>
+                            <span class="status error">❌ 500</span>
+                        </div>
+                        <div class="endpoint-description">Get resource</div>
+                        <div class="endpoint-params">Params: </div>
+                        <div class="endpoint-time">Response: 5288ms</div>
+                    </div>
+                    
+                    <div class="endpoint-card failed">
+                        <div class="endpoint-header">
+                            <span class="method get">GET</span>
+                            <span class="path">/api/v1/test-auth</span>
+                            <span class="status error">❌ 401</span>
+                        </div>
+                        <div class="endpoint-description">Get test-auth</div>
+                        <div class="endpoint-params">Params: </div>
+                        <div class="endpoint-time">Response: 196ms</div>
                     </div>
                     
                     <div class="endpoint-card failed">
                         <div class="endpoint-header">
                             <span class="method get">GET</span>
                             <span class="path">/api/v1/symptoms</span>
-                            <span class="status error">❌ 502</span>
+                            <span class="status error">❌ 404</span>
                         </div>
                         <div class="endpoint-description">Get symptoms</div>
                         <div class="endpoint-params">Params: </div>
-                        <div class="endpoint-time">Response: 390ms</div>
+                        <div class="endpoint-time">Response: 295ms</div>
                     </div>
                     
                     <div class="endpoint-card failed">
                         <div class="endpoint-header">
                             <span class="method get">GET</span>
                             <span class="path">/api/v1/supplements</span>
-                            <span class="status error">❌ 502</span>
+                            <span class="status error">❌ 404</span>
                         </div>
                         <div class="endpoint-description">Get supplements</div>
                         <div class="endpoint-params">Params: </div>
-                        <div class="endpoint-time">Response: 391ms</div>
+                        <div class="endpoint-time">Response: 283ms</div>
                     </div>
                     
                     <div class="endpoint-card failed">
                         <div class="endpoint-header">
                             <span class="method get">GET</span>
                             <span class="path">/api/v1/medications</span>
-                            <span class="status error">❌ 502</span>
+                            <span class="status error">❌ 404</span>
                         </div>
                         <div class="endpoint-description">Get medications</div>
                         <div class="endpoint-params">Params: </div>
-                        <div class="endpoint-time">Response: 377ms</div>
+                        <div class="endpoint-time">Response: 290ms</div>
                     </div>
                     
                 </div>
@@ -724,7 +735,7 @@ curl "https://suhoxvn8ik.execute-api.us-east-1.amazonaws.com/dev/api/v1/protocol
                     <div>
                         <h3>Database Info</h3>
                         <p><strong>Type:</strong> Unknown</p>
-                        <p><strong>Tables:</strong> 30</p>
+                        <p><strong>Tables:</strong> 24</p>
                         <p><strong>Relationships:</strong> 7</p>
                         
                         
@@ -757,47 +768,17 @@ curl "https://suhoxvn8ik.execute-api.us-east-1.amazonaws.com/dev/api/v1/protocol
                     </div>
                     
                     <div class="table-card">
-                        <h4>food_protocol_relationships</h4>
+                        <h4>protocol_food_rules</h4>
                         <div class="table-type">Table</div>
                     </div>
                     
                     <div class="table-card">
-                        <h4>like</h4>
+                        <h4>food_simplification_mappings</h4>
                         <div class="table-type">Table</div>
                     </div>
                     
                     <div class="table-card">
-                        <h4>protocol_simplified_food_rules</h4>
-                        <div class="table-type">Table</div>
-                    </div>
-                    
-                    <div class="table-card">
-                        <h4>food_specialized_properties_simplified</h4>
-                        <div class="table-type">Table</div>
-                    </div>
-                    
-                    <div class="table-card">
-                        <h4>simplified_foods</h4>
-                        <div class="table-type">Table</div>
-                    </div>
-                    
-                    <div class="table-card">
-                        <h4>protocols</h4>
-                        <div class="table-type">Table</div>
-                    </div>
-                    
-                    <div class="table-card">
-                        <h4>SET</h4>
-                        <div class="table-type">Table</div>
-                    </div>
-                    
-                    <div class="table-card">
-                        <h4>const</h4>
-                        <div class="table-type">Table</div>
-                    </div>
-                    
-                    <div class="table-card">
-                        <h4>existing</h4>
+                        <h4>foods</h4>
                         <div class="table-type">Table</div>
                     </div>
                     
@@ -807,17 +788,12 @@ curl "https://suhoxvn8ik.execute-api.us-east-1.amazonaws.com/dev/api/v1/protocol
                     </div>
                     
                     <div class="table-card">
-                        <h4>timeline_items</h4>
+                        <h4>existing</h4>
                         <div class="table-type">Table</div>
                     </div>
                     
                     <div class="table-card">
-                        <h4>user_dietary_protocols</h4>
-                        <div class="table-type">Table</div>
-                    </div>
-                    
-                    <div class="table-card">
-                        <h4>foods</h4>
+                        <h4>user_protocols</h4>
                         <div class="table-type">Table</div>
                     </div>
                     
@@ -832,12 +808,7 @@ curl "https://suhoxvn8ik.execute-api.us-east-1.amazonaws.com/dev/api/v1/protocol
                     </div>
                     
                     <div class="table-card">
-                        <h4>dietary_protocols</h4>
-                        <div class="table-type">Table</div>
-                    </div>
-                    
-                    <div class="table-card">
-                        <h4>query</h4>
+                        <h4>protocols</h4>
                         <div class="table-type">Table</div>
                     </div>
                     
@@ -848,6 +819,16 @@ curl "https://suhoxvn8ik.execute-api.us-east-1.amazonaws.com/dev/api/v1/protocol
                     
                     <div class="table-card">
                         <h4>user</h4>
+                        <div class="table-type">Table</div>
+                    </div>
+                    
+                    <div class="table-card">
+                        <h4>SET</h4>
+                        <div class="table-type">Table</div>
+                    </div>
+                    
+                    <div class="table-card">
+                        <h4>food_search_view</h4>
                         <div class="table-type">Table</div>
                     </div>
                     
@@ -1048,7 +1029,7 @@ npm run dev</div>
     <footer style="background: #2d3748; color: white; padding: 2rem 0; text-align: center; margin-top: 3rem;">
         <div class="container">
             <p>Generated automatically on 7/24/2025 • 
-               Last updated: Wed Jul 23 21:28:44 2025 -0400</p>
+               Last updated: Wed Jul 23 16:43:53 2025 -0400</p>
         </div>
     </footer>
 </body>
