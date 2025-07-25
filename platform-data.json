@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generated": "2025-07-25T01:28:35.518Z",
+    "generated": "2025-07-25T02:53:52.288Z",
     "version": "1.0.0",
     "generator": "AutomatedProfessionalDocsGenerator"
   },
@@ -17,7 +17,7 @@
     "workingAPIs": 5,
     "totalAPIs": 29,
     "totalTables": 26,
-    "totalCommits": 194,
+    "totalCommits": 195,
     "contributors": 1
   },
   "discoveredInfo": {
@@ -132,10 +132,13 @@
               "value": "chicken"
             }
           ],
-          "status": 408,
+          "status": 500,
           "working": false,
-          "error": "Request timeout (15s)",
-          "responseTime": 15074
+          "responseTime": 970,
+          "responseData": {
+            "error": "Failed to complete search foods"
+          },
+          "responseSize": 43
         },
         {
           "path": "/api/v1/correlations/insights",
@@ -151,7 +154,7 @@
           ],
           "status": 401,
           "working": false,
-          "responseTime": 273,
+          "responseTime": 279,
           "responseData": {
             "error": "Authentication required"
           },
@@ -166,7 +169,7 @@
           "params": [],
           "status": 404,
           "working": false,
-          "responseTime": 262,
+          "responseTime": 328,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -204,7 +207,7 @@
           "params": [],
           "status": 404,
           "working": false,
-          "responseTime": 126,
+          "responseTime": 153,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -248,7 +251,7 @@
           "status": 408,
           "working": false,
           "error": "Request timeout (15s)",
-          "responseTime": 15030
+          "responseTime": 15074
         },
         {
           "path": "/api/v1/protocols",
@@ -265,7 +268,7 @@
           "status": 408,
           "working": false,
           "error": "Request timeout (15s)",
-          "responseTime": 15067
+          "responseTime": 15024
         },
         {
           "path": "/api/v1/timeline/entries",
@@ -281,7 +284,7 @@
           ],
           "status": 401,
           "working": false,
-          "responseTime": 261,
+          "responseTime": 273,
           "responseData": {
             "error": "Authentication required"
           },
@@ -301,7 +304,7 @@
           ],
           "status": 401,
           "working": false,
-          "responseTime": 256,
+          "responseTime": 129,
           "responseData": {
             "error": "Authentication required"
           },
@@ -321,7 +324,7 @@
           ],
           "status": 404,
           "working": false,
-          "responseTime": 299,
+          "responseTime": 135,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -364,7 +367,7 @@
           ],
           "status": 404,
           "working": false,
-          "responseTime": 260,
+          "responseTime": 127,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -402,7 +405,7 @@
           "params": [],
           "status": 401,
           "working": false,
-          "responseTime": 270,
+          "responseTime": 271,
           "responseData": {
             "error": "Authentication required"
           },
@@ -422,7 +425,7 @@
           ],
           "status": 401,
           "working": false,
-          "responseTime": 258,
+          "responseTime": 301,
           "responseData": {
             "error": "Authentication required"
           },
@@ -442,7 +445,7 @@
           ],
           "status": 401,
           "working": false,
-          "responseTime": 132,
+          "responseTime": 252,
           "responseData": {
             "error": "Authentication required"
           },
@@ -502,7 +505,7 @@
           ],
           "status": 404,
           "working": false,
-          "responseTime": 260,
+          "responseTime": 128,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -541,7 +544,7 @@
           "status": 408,
           "working": false,
           "error": "Request timeout (15s)",
-          "responseTime": 15027
+          "responseTime": 15031
         },
         {
           "path": "/api/v1/symptoms/search",
@@ -557,7 +560,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 272,
+          "responseTime": 357,
           "responseData": {
             "symptoms": [],
             "total": 0,
@@ -580,7 +583,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 307,
+          "responseTime": 267,
           "responseData": {
             "supplements": [],
             "total": 0,
@@ -602,7 +605,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 343,
+          "responseTime": 263,
           "responseData": {
             "medications": [],
             "total": 0,
@@ -624,7 +627,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 260,
+          "responseTime": 173,
           "responseData": {
             "detox_types": [],
             "total": 0,
@@ -646,7 +649,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 258,
+          "responseTime": 125,
           "responseData": {
             "exposures": [],
             "total": 0,
@@ -663,7 +666,7 @@
           "params": [],
           "status": 404,
           "working": false,
-          "responseTime": 125,
+          "responseTime": 259,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -701,7 +704,7 @@
           "params": [],
           "status": 500,
           "working": false,
-          "responseTime": 262,
+          "responseTime": 135,
           "responseData": {
             "error": "Failed to complete get journal entries"
           },
@@ -716,7 +719,7 @@
           "params": [],
           "status": 401,
           "working": false,
-          "responseTime": 255,
+          "responseTime": 137,
           "responseData": {
             "error": "User not authenticated"
           },
@@ -731,7 +734,7 @@
           "params": [],
           "status": 401,
           "working": false,
-          "responseTime": 256,
+          "responseTime": 272,
           "responseData": {
             "error": "Authentication required"
           },
@@ -746,7 +749,7 @@
           "params": [],
           "status": 404,
           "working": false,
-          "responseTime": 258,
+          "responseTime": 125,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -784,7 +787,7 @@
           "params": [],
           "status": 404,
           "working": false,
-          "responseTime": 254,
+          "responseTime": 256,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -822,7 +825,7 @@
           "params": [],
           "status": 404,
           "working": false,
-          "responseTime": 255,
+          "responseTime": 259,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -1559,7 +1562,7 @@
             }
           ],
           "utilities": [],
-          "size": "209.51 KB"
+          "size": "209.04 KB"
         },
         "backend/functions": {
           "totalFiles": 28,
@@ -1576,7 +1579,7 @@
             }
           ],
           "utilities": [],
-          "size": "209.51 KB"
+          "size": "209.04 KB"
         },
         "backend": {
           "totalFiles": 38,
@@ -1596,7 +1599,7 @@
             }
           ],
           "utilities": [],
-          "size": "276.82 KB"
+          "size": "276.35 KB"
         }
       },
       "shared": {},
@@ -1689,18 +1692,18 @@
       "repository": "https://github.com/deebyrne26/health-platform",
       "branch": "main",
       "lastCommit": {
-        "hash": "f0dc2cb",
-        "message": "Foods.js",
+        "hash": "f6a1d54",
+        "message": "foods.js",
         "author": "deebyrne26",
-        "date": "Thu Jul 24 19:18:39 2025 -0400"
+        "date": "Thu Jul 24 22:51:30 2025 -0400"
       },
       "contributors": [
         {
           "name": "deebyrne26",
-          "commits": 194
+          "commits": 195
         }
       ],
-      "totalCommits": 194
+      "totalCommits": 195
     }
   }
 }
