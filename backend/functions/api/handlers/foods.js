@@ -150,8 +150,12 @@ const handleSearchFoodsUltraFast = async (queryParams, event) => {
  * Simple protocol foods handler - optimized version
  */
 const handleGetProtocolFoods = async (queryParams, event) => {
+    const startTime = Date.now();
     let client;
+    
     try {
+        console.log('🚀 PROTOCOL FOODS: Starting protocol foods query...');
+        
         client = await pool.connect();
         
         const user = await getCurrentUser(event);
@@ -159,39 +163,69 @@ const handleGetProtocolFoods = async (queryParams, event) => {
             return errorResponse('Authentication required', 401);
         }
         
+        const protocolId = queryParams.protocol_id;
         const limit = Math.min(parseInt(queryParams.limit) || 50, 100);
         
-        // Simple query for protocol foods
+        console.log('🚀 PROTOCOL FOODS: Query params:', { protocolId, limit });
+        
+        if (!protocolId) {
+            return errorResponse('protocol_id parameter is required', 400);
+        }
+        
+        // Simple query for protocol foods using the specific protocol_id
         const query = `
             SELECT 
                 food_id as id,
                 display_name as name,
                 category_name as category,
+                subcategory_name as subcategory,
                 dietary_protocol_name as protocol_name,
-                protocol_status
+                protocol_status,
+                protocol_phase,
+                nightshade,
+                histamine,
+                oxalate,
+                lectin,
+                fodmap
             FROM mat_protocol_foods
-            WHERE dietary_protocol_id IN (
-                SELECT dietary_protocol_id 
-                FROM user_dietary_protocols 
-                WHERE user_id = $1 AND is_active = true
-            )
-            ORDER BY display_name ASC
+            WHERE dietary_protocol_id = $1
+            ORDER BY 
+                CASE protocol_status
+                    WHEN 'allowed' THEN 1
+                    WHEN 'caution' THEN 2
+                    WHEN 'avoid' THEN 3
+                    ELSE 4
+                END,
+                display_name ASC
             LIMIT $2
         `;
         
-        const result = await client.query(query, [user.id, limit]);
+        const queryStart = Date.now();
+        const result = await client.query(query, [protocolId, limit]);
+        console.log(`🚀 PROTOCOL FOODS: Query took ${Date.now() - queryStart}ms, found ${result.rows.length} results`);
+        
+        const totalTime = Date.now() - startTime;
+        console.log(`🚀 PROTOCOL FOODS: Total request time: ${totalTime}ms`);
         
         return successResponse({
             foods: result.rows,
-            total: result.rows.length
+            total: result.rows.length,
+            protocol_id: protocolId,
+            performance: {
+                total_time_ms: totalTime,
+                query_time_ms: Date.now() - queryStart
+            }
         });
         
     } catch (error) {
-        console.error('Error in handleGetProtocolFoods:', error);
+        const totalTime = Date.now() - startTime;
+        console.error(`🚀 PROTOCOL FOODS: Error after ${totalTime}ms:`, error);
         const appError = handleDatabaseError(error, 'fetch protocol foods');
         return errorResponse(appError.message, appError.statusCode);
     } finally {
-        if (client) client.release();
+        if (client) {
+            client.release();
+        }
     }
 };
 
