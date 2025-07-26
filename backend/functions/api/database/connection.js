@@ -1,6 +1,6 @@
 const { Pool } = require('pg');
 
-// Secure database connection configuration
+// OPTIMIZED database connection configuration for Lambda performance
 const pool = new Pool({
     host: process.env.DB_HOST,
     port: process.env.DB_PORT || 5432,
@@ -9,51 +9,50 @@ const pool = new Pool({
     password: process.env.DB_PASSWORD,
     ssl: process.env.NODE_ENV === 'production' ? {
         rejectUnauthorized: true,
-        // In production, you'd add the RDS CA certificate here
-        // ca: fs.readFileSync('rds-ca-2019-root.pem')
     } : {
-        // Development: More lenient SSL for easier setup
         rejectUnauthorized: false
     },
-    // Connection pool settings optimized for Lambda with longer timeouts
-    max: 1, // Single connection per Lambda instance
+    
+    // OPTIMIZED CONNECTION POOL SETTINGS
+    max: parseInt(process.env.DB_MAX_CONNECTIONS) || 3, // Allow more connections
     min: 0, // No minimum connections
-    idleTimeoutMillis: 30000, // Keep connections alive longer
-    connectionTimeoutMillis: 15000, // Longer connection timeout
-    acquireTimeoutMillis: 15000, // Longer timeout for acquiring connections
-    statement_timeout: 30000, // 30 second query timeout
-    query_timeout: 30000, // 30 second query timeout
+    idleTimeoutMillis: parseInt(process.env.DB_IDLE_TIMEOUT) || 5000, // Shorter idle timeout
+    connectionTimeoutMillis: parseInt(process.env.DB_CONNECTION_TIMEOUT) || 10000, // Shorter connection timeout
+    acquireTimeoutMillis: 8000, // Shorter acquire timeout
+    statement_timeout: 15000, // Shorter query timeout
+    query_timeout: 15000, // Shorter query timeout
+    
+    // Additional performance settings
+    keepAlive: true,
+    keepAliveInitialDelayMillis: 0,
 });
 
-// Handle connection errors gracefully
+// Simplified error handling
 pool.on('error', (err) => {
-    console.error('Unexpected error on idle client', err);
-    // Don't exit process in Lambda - just log the error
-    console.error('Pool error occurred, continuing...');
+    console.error('Database pool error:', err.message);
 });
 
-// Handle connection events for debugging
+// Performance monitoring
 pool.on('connect', (client) => {
-    console.log('Database client connected');
+    console.log('✅ Database client connected');
 });
 
 pool.on('acquire', (client) => {
-    console.log('Database client acquired from pool');
+    console.log('📥 Database client acquired');
 });
 
 pool.on('remove', (client) => {
-    console.log('Database client removed from pool');
+    console.log('📤 Database client removed');
 });
 
-// Graceful shutdown function for Lambda
+// Fast cleanup function
 const closePool = async () => {
     try {
         await pool.end();
-        console.log('Database pool closed successfully');
+        console.log('Database pool closed');
     } catch (err) {
-        console.error('Error closing database pool:', err);
+        console.error('Error closing pool:', err.message);
     }
 };
 
-// Export both pool and cleanup function
 module.exports = { pool, closePool };
