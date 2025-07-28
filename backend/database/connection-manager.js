@@ -5,7 +5,6 @@
  */
 
 const { Pool } = require('pg');
-const path = require('path');
 
 class DatabaseConnectionManager {
     constructor() {
@@ -36,8 +35,7 @@ class DatabaseConnectionManager {
     }
 
     loadEnvironmentConfig() {
-        // In VPC Lambda, environment variables should already be loaded
-        // But let's add some debugging to see what's available
+        // In VPC Lambda, environment variables are already loaded by AWS
         if (this.environment === 'vpc-lambda') {
             console.log('🔍 VPC Lambda environment variables check:');
             console.log('AWS_LAMBDA_FUNCTION_NAME:', process.env.AWS_LAMBDA_FUNCTION_NAME ? 'SET' : 'MISSING');
@@ -49,39 +47,9 @@ class DatabaseConnectionManager {
             return;
         }
 
-        // For local development, try to load .env.local first
-        if (this.environment === 'local') {
-            try {
-                // Try to require dotenv, but handle gracefully if not available
-                const dotenv = require('dotenv');
-                dotenv.config({ 
-                    path: path.join(__dirname, '../../.env.local')
-                });
-                console.log('📍 Loaded .env.local configuration');
-            } catch (error) {
-                // Fallback to regular .env
-                try {
-                    const dotenv = require('dotenv');
-                    dotenv.config({ 
-                        path: path.join(__dirname, '../../.env')
-                    });
-                    console.log('📍 Loaded .env configuration');
-                } catch (envError) {
-                    console.warn('⚠️ Could not load environment file (dotenv might not be available):', envError.message);
-                }
-            }
-        } else {
-            // Production - load regular .env if available, but don't fail if dotenv is missing
-            try {
-                const dotenv = require('dotenv');
-                dotenv.config({ 
-                    path: path.join(__dirname, '../../.env')
-                });
-                console.log('📍 Loaded .env configuration for production');
-            } catch (error) {
-                console.warn('⚠️ Could not load .env file (this is normal in Lambda - environment variables should be set directly):', error.message);
-            }
-        }
+        // For local and production environments, environment variables should already be loaded
+        // by the application startup process (not the connection manager's responsibility)
+        console.log(`📍 Using environment variables for ${this.environment} environment`);
     }
 
     initializeConnection() {
