@@ -1,14 +1,29 @@
 /**
- * Backend Database Connection - Now using Smart Connection Manager
- * Automatically detects environment (local vs production) and configures accordingly
+ * Database connection configuration
  */
+const { Pool } = require('pg');
+const path = require('path');
+require('dotenv').config({ path: path.join(__dirname, '../.env') });
 
-const { pool, query, healthCheck, getConnectionInfo } = require('./connection-manager');
+// Create a connection pool
+const pool = new Pool({
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
+    database: process.env.DB_NAME,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    ssl: {
+        rejectUnauthorized: false
+    }
+});
 
-// Export the same interface for backward compatibility
-module.exports = {
-    pool,
-    query,
-    healthCheck,
-    getConnectionInfo
-};
+// Test the connection
+pool.query('SELECT NOW()', (err, res) => {
+    if (err) {
+        console.error('Database connection error:', err);
+    } else {
+        console.log('Database connected successfully at:', res.rows[0].now);
+    }
+});
+
+module.exports = { pool };
