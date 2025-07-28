@@ -3,7 +3,7 @@
  * Automatically detects VPC Lambda environment and optimizes accordingly
  */
 
-const { pool, query, healthCheck, getConnectionInfo } = require('../../database/connection-manager');
+const { pool, query, healthCheck, getConnectionInfo } = require('./connection-manager');
 
 // Set up the same event handlers as the original file
 pool.on('error', (err) => {
