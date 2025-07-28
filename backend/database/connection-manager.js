@@ -15,9 +15,10 @@ class DatabaseConnectionManager {
     }
 
     detectEnvironment() {
-        // Check if running in AWS Lambda
+        // Check if running in AWS Lambda within VPC
         if (process.env.AWS_LAMBDA_FUNCTION_NAME) {
-            return 'lambda';
+            // VPC Lambda functions have different networking requirements
+            return 'vpc-lambda';
         }
         
         // Check if explicitly set to local
@@ -35,10 +36,11 @@ class DatabaseConnectionManager {
     }
 
     loadEnvironmentConfig() {
-        // In Lambda, environment variables should already be loaded
+        // In VPC Lambda, environment variables should already be loaded
         // But let's add some debugging to see what's available
-        if (this.environment === 'lambda') {
-            console.log('🔍 Lambda environment variables check:');
+        if (this.environment === 'vpc-lambda') {
+            console.log('🔍 VPC Lambda environment variables check:');
+            console.log('AWS_LAMBDA_FUNCTION_NAME:', process.env.AWS_LAMBDA_FUNCTION_NAME ? 'SET' : 'MISSING');
             console.log('DB_HOST:', process.env.DB_HOST ? 'SET' : 'MISSING');
             console.log('DB_PORT:', process.env.DB_PORT ? 'SET' : 'MISSING');
             console.log('DB_NAME:', process.env.DB_NAME ? 'SET' : 'MISSING');
@@ -88,13 +90,13 @@ class DatabaseConnectionManager {
             
             this.pool = new Pool(config);
             
-            // Test connection on initialization (but don't fail in Lambda)
-            if (this.environment !== 'lambda') {
+            // For Lambda, test connection but don't block initialization
+            if (this.environment !== 'vpc-lambda') {
                 this.testConnection();
             } else {
-                // For Lambda, test connection but don't block initialization
+                // For VPC Lambda, test connection but don't block initialization
                 this.testConnection().catch(error => {
-                    console.warn('⚠️ Lambda connection test failed (will retry on first query):', error.message);
+                    console.warn('⚠️ VPC Lambda connection test failed (will retry on first query):', error.message);
                 });
             }
             
@@ -103,10 +105,10 @@ class DatabaseConnectionManager {
             
         } catch (error) {
             console.error('❌ Failed to initialize database connection:', error);
-            if (this.environment !== 'lambda') {
+            if (this.environment !== 'vpc-lambda') {
                 throw error; // Fail fast in non-Lambda environments
             } else {
-                console.warn('⚠️ Lambda connection initialization failed, will retry on first query');
+                console.warn('⚠️ VPC Lambda connection initialization failed, will retry on first query');
             }
         }
     }
@@ -141,14 +143,16 @@ class DatabaseConnectionManager {
                 host: process.env.DB_HOST || 'localhost',
                 port: parseInt(process.env.DB_PORT) || 5433, // Default local port
             };
-        } else if (this.environment === 'lambda') {
+        } else if (this.environment === 'vpc-lambda') {
             return {
                 ...baseConfig,
                 ssl: {
-                    rejectUnauthorized: false // Required for RDS
+                    rejectUnauthorized: false // Required for RDS within VPC
                 },
-                max: 1, // Lambda functions should use minimal connections
+                max: 1, // VPC Lambda functions should use minimal connections
                 idleTimeoutMillis: 1000, // Short idle timeout for Lambda
+                connectionTimeoutMillis: 5000, // Shorter timeout for VPC
+                acquireTimeoutMillis: 3000, // Shorter acquire timeout
             };
         } else {
             // Production/remote
