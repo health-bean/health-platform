@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  postgres-dev:
+    image: postgres:14
+    container_name: health-platform-dev-db
+    environment:
+      POSTGRES_DB: health_platform_dev
+      POSTGRES_USER: healthadmin
+      POSTGRES_PASSWORD: devpassword123
+      POSTGRES_HOST_AUTH_METHOD: trust
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_dev_data:/var/lib/postgresql/data
+      - ./db/init:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U healthadmin -d health_platform_dev"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_dev_data:
+    driver: local

@@ -78,6 +78,24 @@ web_modules/
 .env.test.local
 .env.production.local
 .env.local
+.env.staging
+
+# But templates in config folder are OK to commit
+!config/.env*.template
+
+# Docker volumes and data (for local development)
+docker/volumes/
+docker/data/
+postgres-data/
+
+# Database dumps (might contain PHI - NEVER COMMIT)
+*.sql.dump
+*.db.backup
+database-exports/
+
+# Local development logs
+*.local.log
+dev-*.log
 
 # parcel-bundler cache (https://parceljs.org/)
 .cache
@@ -185,3 +203,4 @@ scripts/
 frontend/shared/.DS_Store
 *.sql
 /db
+/backend/functions/api/backups

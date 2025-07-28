@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Health Platform - Documentation Hub</title>
+    <title>FILO Health Platform - Technical Documentation</title>
     <style>
         * {
             margin: 0;
@@ -15,416 +15,1174 @@
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             line-height: 1.6;
-            color: #1a202c;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
+            color: #333;
+            background: #f8fafc;
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 2rem;
+            padding: 0 20px;
         }
 
+        /* Header */
         .header {
-            text-align: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            margin-bottom: 3rem;
+            padding: 3rem 0;
+            text-align: center;
         }
 
         .header h1 {
-            font-size: 3rem;
+            font-size: 2.5rem;
             margin-bottom: 0.5rem;
-            font-weight: 700;
         }
 
         .header p {
             font-size: 1.2rem;
             opacity: 0.9;
-            margin-bottom: 2rem;
         }
 
-        .live-status {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            padding: 0.75rem 1.5rem;
-            border-radius: 25px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .status-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: #48bb78;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-
-            0%,
-            100% {
-                opacity: 1;
-            }
-
-            50% {
-                opacity: 0.5;
-            }
-        }
-
-        .main-content {
+        /* Navigation */
+        .nav {
             background: white;
-            border-radius: 16px;
-            padding: 2rem;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-        }
-
-        .nav-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 3rem;
-        }
-
-        .nav-card {
-            border: 2px solid #e2e8f0;
-            border-radius: 12px;
-            padding: 2rem;
-            text-align: center;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .nav-card:hover {
-            border-color: #667eea;
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
-            transform: translateY(-4px);
-        }
-
-        .nav-card::before {
-            content: '';
-            position: absolute;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
             top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #667eea, #764ba2);
-            transform: scaleX(0);
-            transition: transform 0.3s ease;
+            z-index: 100;
         }
 
-        .nav-card:hover::before {
-            transform: scaleX(1);
+        .nav ul {
+            display: flex;
+            list-style: none;
+            justify-content: center;
+            padding: 1rem 0;
         }
 
-        .nav-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            display: block;
-        }
-
-        .nav-card h3 {
-            color: #2d3748;
-            margin-bottom: 0.5rem;
-            font-size: 1.25rem;
-        }
-
-        .nav-card p {
-            color: #718096;
-            margin-bottom: 1.5rem;
-        }
-
-        .nav-card .audience {
-            display: inline-block;
-            padding: 0.25rem 0.75rem;
-            background: #edf2f7;
+        .nav a {
+            text-decoration: none;
             color: #4a5568;
-            border-radius: 15px;
-            font-size: 0.8rem;
-            font-weight: 500;
+            padding: 0.5rem 1rem;
+            margin: 0 0.5rem;
+            border-radius: 5px;
+            transition: all 0.3s;
         }
 
-        .status-dashboard {
-            background: #f7fafc;
-            border-radius: 12px;
+        .nav a:hover {
+            background: #edf2f7;
+            color: #667eea;
+        }
+
+        /* Main Content */
+        .main {
+            padding: 3rem 0;
+        }
+
+        .section {
+            background: white;
+            margin-bottom: 2rem;
             padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .section h2 {
+            color: #2d3748;
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 0.5rem;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
             margin-bottom: 2rem;
         }
 
-        .status-dashboard h2 {
-            color: #2d3748;
-            margin-bottom: 1.5rem;
+        .stat-card {
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .stat-card.api {
+            background: linear-gradient(135deg, #4299e1 0%, #3182ce 100%);
+        }
+
+        .stat-card.db {
+            background: linear-gradient(135deg, #ed8936 0%, #dd6b20 100%);
+        }
+
+        .stat-card.git {
+            background: linear-gradient(135deg, #9f7aea 0%, #805ad5 100%);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        /* Two Column Layout */
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        /* Lists */
+        .feature-list {
+            list-style: none;
+        }
+
+        .feature-list li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #e2e8f0;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
         }
 
-        .status-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
+        .feature-list li:before {
+            content: '✅';
+            margin-right: 0.5rem;
         }
 
-        .status-item {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 8px;
+        /* Code Blocks */
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: 'Monaco', 'Menlo', monospace;
+        }
+
+        /* API Endpoints */
+        .api-endpoints {
+            margin-top: 1rem;
+        }
+
+        .endpoint-card {
+            background: #f8f9fa;
+            border: 1px solid #e2e8f0;
+            border-radius: 5px;
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            transition: all 0.3s;
+        }
+
+        .endpoint-card:hover {
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .endpoint-card.working {
             border-left: 4px solid #48bb78;
         }
 
-        .status-item.warning {
-            border-left-color: #ed8936;
+        .endpoint-card.failed {
+            border-left: 4px solid #f56565;
         }
 
-        .status-item.error {
-            border-left-color: #f56565;
+        .endpoint-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 0.5rem;
         }
 
-        .status-value {
-            font-size: 1.5rem;
+        .method {
+            padding: 0.25rem 0.5rem;
+            border-radius: 3px;
+            font-size: 0.75rem;
             font-weight: bold;
-            color: #2d3748;
-            display: block;
+            text-transform: uppercase;
         }
 
-        .status-label {
+        .method.get {
+            background: #48bb78;
+            color: white;
+        }
+
+        .method.post {
+            background: #4299e1;
+            color: white;
+        }
+
+        .method.put {
+            background: #ed8936;
+            color: white;
+        }
+
+        .method.delete {
+            background: #f56565;
+            color: white;
+        }
+
+        .path {
+            font-family: 'Monaco', 'Menlo', monospace;
+            background: #edf2f7;
+            padding: 0.25rem 0.5rem;
+            border-radius: 3px;
+            flex-grow: 1;
+        }
+
+        .status.success {
+            color: #48bb78;
+        }
+
+        .status.error {
+            color: #f56565;
+        }
+
+        .endpoint-description {
             color: #718096;
             font-size: 0.9rem;
         }
 
-        .quick-links {
+        .endpoint-params {
+            color: #4a5568;
+            font-size: 0.8rem;
+            margin-top: 0.25rem;
+        }
+
+        .endpoint-time {
+            color: #4a5568;
+            font-size: 0.8rem;
+            margin-top: 0.25rem;
+        }
+
+        /* Database Tables */
+        .table-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .table-card {
+            background: #f8f9fa;
+            border: 1px solid #e2e8f0;
+            border-radius: 5px;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .table-card h4 {
+            margin-bottom: 0.5rem;
+            color: #2d3748;
+        }
+
+        .table-type {
+            color: #718096;
+            font-size: 0.8rem;
+        }
+
+        /* Relationships */
+        .relationships {
+            margin-top: 1rem;
+        }
+
+        .relationship-card {
+            background: #f8f9fa;
+            border: 1px solid #e2e8f0;
+            border-radius: 5px;
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .from-table,
+        .to-table {
+            background: #4299e1;
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 3px;
+            font-size: 0.9rem;
+        }
+
+        .relationship-type {
+            color: #718096;
+            font-style: italic;
+            font-size: 0.9rem;
+        }
+
+        .foreign-key {
+            color: #4a5568;
+            font-size: 0.8rem;
+            margin-left: auto;
+        }
+
+        /* Links */
+        .links {
             display: flex;
             gap: 1rem;
-            flex-wrap: wrap;
-            justify-content: center;
-            margin-top: 2rem;
+            margin-top: 1rem;
         }
 
-        .quick-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.75rem 1.5rem;
+        .link-btn {
             background: #667eea;
             color: white;
+            padding: 0.75rem 1.5rem;
             text-decoration: none;
-            border-radius: 8px;
-            font-weight: 500;
-            transition: all 0.3s ease;
+            border-radius: 5px;
+            transition: all 0.3s;
         }
 
-        .quick-link:hover {
+        .link-btn:hover {
             background: #5a67d8;
-            transform: translateY(-2px);
         }
 
-        .quick-link.secondary {
-            background: #e2e8f0;
-            color: #4a5568;
-        }
-
-        .quick-link.secondary:hover {
-            background: #cbd5e0;
-        }
-
-        .footer {
-            text-align: center;
-            margin-top: 3rem;
-            color: white;
-            opacity: 0.8;
-        }
-
-        .timestamp {
-            font-size: 0.8rem;
-            color: #718096;
-            margin-top: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.25rem;
-            justify-content: center;
-        }
-
-        .timestamp.fresh {
-            color: #22543d;
-        }
-
-        .section-timestamp {
-            font-size: 0.75rem;
-            color: #a0aec0;
-            margin-top: 0.5rem;
-            text-align: center;
-        }
-
+        /* Responsive */
         @media (max-width: 768px) {
-            .header h1 {
-                font-size: 2rem;
-            }
-
-            .container {
-                padding: 1rem;
-            }
-
-            .main-content {
-                padding: 1.5rem;
-            }
-
-            .nav-grid {
+            .two-col {
                 grid-template-columns: 1fr;
+            }
+
+            .nav ul {
+                flex-direction: column;
+                text-align: center;
             }
         }
     </style>
 </head>
 
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>Health Platform</h1>
-            <p>Protocol Management & Healing Platform Documentation</p>
-            <div class="live-status">
-                <div class="status-dot"></div>
-                <span>System Online</span>
-            </div>
+    <header class="header">
+        <div class="container">
+            <h1>🚀 FILO Health Platform</h1>
+            <p>AI-Powered Health Tracking & Correlation Discovery</p>
         </div>
+    </header>
 
-        <div class="main-content">
-            <!-- Role-based Navigation -->
-            <div class="nav-grid">
-                <div class="nav-card"
-                    onclick="window.open('https://deebyrne26.github.io/health-platform/docs/', '_blank')">
-                    <span class="nav-icon">🔧</span>
-                    <h3>For Developers</h3>
-                    <p>Complete technical documentation, setup guides, and API references</p>
-                    <span class="audience">Technical Team</span>
-                </div>
-
-                <div class="nav-card" onclick="window.open('./dashboard.html', '_blank')">
-                    <span class="nav-icon">📊</span>
-                    <h3>For Stakeholders</h3>
-                    <p>Live project metrics, deployment status, and system health</p>
-                    <span class="audience">Management</span>
-                </div>
-
-                <div class="nav-card" onclick="window.open('./api.html', '_blank')">
-                    <span class="nav-icon">🌐</span>
-                    <h3>For API Consumers</h3>
-                    <p>Interactive API explorer, Swagger docs, and integration guides</p>
-                    <span class="audience">Integrators</span>
-                </div>
-            </div>
-
-            <!-- Live Status Dashboard -->
-            <div class="status-dashboard">
-                <h2>
-                    <span>📈</span>
-                    Live System Status
-                </h2>
-                <div class="status-grid">
-                    <div class="status-item">
-                        <span class="status-value">✅ Online</span>
-                        <span class="status-label">Frontend App</span>
-                        <div class="section-timestamp" id="frontendTimestamp">Updated: Loading...</div>
-                    </div>
-                    <div class="status-item warning">
-                        <span class="status-value">5/14</span>
-                        <span class="status-label">API Endpoints</span>
-                        <div class="section-timestamp" id="apiStatusTimestamp">Updated: Loading...</div>
-                    </div>
-                    <div class="status-item">
-                        <span class="status-value">2 hours ago</span>
-                        <span class="status-label">Last Deploy</span>
-                        <div class="section-timestamp" id="deployTimestamp">Updated: Loading...</div>
-                    </div>
-                    <div class="status-item">
-                        <span class="status-value">99.2%</span>
-                        <span class="status-label">Uptime</span>
-                        <div class="section-timestamp" id="uptimeTimestamp">Updated: Loading...</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Quick Access Links -->
-            <div class="quick-links">
-                <a href="https://main.d45x824boqj7y.amplifyapp.com" class="quick-link" target="_blank">
-                    🚀 Live Application
-                </a>
-                <a href="https://github.com/deebyrne26/health-platform" class="quick-link secondary" target="_blank">
-                    📁 Source Code
-                </a>
-                <a href="https://suhoxvn8ik.execute-api.us-east-1.amazonaws.com/dev" class="quick-link secondary"
-                    target="_blank">
-                    🔌 API Gateway
-                </a>
-            </div>
+    <nav class="nav">
+        <div class="container">
+            <ul>
+                <li><a href="#overview">Overview</a></li>
+                <li><a href="#architecture">Architecture</a></li>
+                <li><a href="#api">API Documentation</a></li>
+                <li><a href="#database">Database</a></li>
+                <li><a href="#development">Development</a></li>
+                <li><a href="#deployment">Deployment</a></li>
+            </ul>
         </div>
+    </nav>
 
-        <div class="footer">
-            <p>Last updated: <span id="lastUpdated"></span> | Auto-generated documentation system</p>
+    <main class="main">
+        <div class="container">
+            <!-- Overview Section -->
+            <section id="overview" class="section">
+                <h2>📊 Platform Overview</h2>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">55</div>
+                        <div class="stat-label">Components</div>
+                    </div>
+                    <div class="stat-card api">
+                        <div class="stat-number">18/29</div>
+                        <div class="stat-label">API Endpoints</div>
+                    </div>
+                    <div class="stat-card db">
+                        <div class="stat-number">48</div>
+                        <div class="stat-label">Database Tables</div>
+                        <div class="section-timestamp">VPC Secured • 2 Materialized Views</div>
+                    </div>
+                    <div class="stat-card git">
+                        <div class="stat-number">200</div>
+                        <div class="stat-label">Git Commits</div>
+                    </div>
+                </div>
+
+                <div class="two-col">
+                    <div>
+                        <h3>🎯 Key Features</h3>
+                        <ul class="feature-list">
+                            <li>AI-powered health correlation discovery</li>
+                            <li>Real-time food & symptom tracking</li>
+                            <li>Protocol-based nutrition guidance</li>
+                            <li>Daily reflection & mood tracking</li>
+                            <li>Comprehensive health insights</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3>🔗 Live Links</h3>
+                        <div class="links">
+                            <a href="https://main.d45x824boqj7y.amplifyapp.com" class="link-btn">Live App</a>
+                            <a href="https://suhoxvn8ik.execute-api.us-east-1.amazonaws.com/dev"
+                                class="link-btn">API</a>
+                            <a href="https://github.com/deebyrne26/health-platform" class="link-btn">GitHub</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Architecture Section -->
+            <section id="architecture" class="section">
+                <h2>🏗️ Architecture</h2>
+
+                <div class="two-col">
+                    <div>
+                        <h3>Frontend Stack</h3>
+                        <ul class="feature-list">
+                            <li>React 18 with Hooks</li>
+                            <li>Vite for fast development</li>
+                            <li>Tailwind CSS for styling</li>
+                            <li>Lucide React icons</li>
+                            <li>AWS Amplify deployment</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3>Backend Stack</h3>
+                        <ul class="feature-list">
+                            <li>AWS Lambda (Node.js)</li>
+                            <li>PostgreSQL database</li>
+                            <li>RESTful API design</li>
+                            <li>CORS-enabled endpoints</li>
+                            <li>Serverless architecture</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- API Documentation -->
+                <section id="api" class="section">
+                    <h2>🌐 API Documentation</h2>
+
+                    <div class="two-col">
+                        <div>
+                            <h3>API Status</h3>
+                            <p><strong>Base URL:</strong>
+                                <code>https://suhoxvn8ik.execute-api.us-east-1.amazonaws.com/dev</code></p>
+                            <p><strong>Working Endpoints:</strong> 18/29</p>
+                            <p><strong>Categories:</strong> 8</p>
+                        </div>
+                        <div>
+                            <h3>Example Request</h3>
+                            <div class="code-block">
+                                curl "https://suhoxvn8ik.execute-api.us-east-1.amazonaws.com/dev/api/v1/protocols" \
+                                -H "Content-Type: application/json"</div>
+                        </div>
+                    </div>
+
+
+                    <h3>📍 Endpoint Categories</h3>
+                    <div class="stats-grid">
+
+                        <div class="stat-card api">
+                            <div class="stat-number">1/2</div>
+                            <div class="stat-label">Foods APIs</div>
+                        </div>
+
+                        <div class="stat-card api">
+                            <div class="stat-number">0/1</div>
+                            <div class="stat-label">AI APIs</div>
+                        </div>
+
+                        <div class="stat-card api">
+                            <div class="stat-number">2/4</div>
+                            <div class="stat-label">Lookup Data APIs</div>
+                        </div>
+
+                        <div class="stat-card api">
+                            <div class="stat-number">1/6</div>
+                            <div class="stat-label">Protocols APIs</div>
+                        </div>
+
+                        <div class="stat-card api">
+                            <div class="stat-number">0/2</div>
+                            <div class="stat-label">Timeline APIs</div>
+                        </div>
+
+                        <div class="stat-card api">
+                            <div class="stat-number">0/4</div>
+                            <div class="stat-label">Users APIs</div>
+                        </div>
+
+                        <div class="stat-card api">
+                            <div class="stat-number">3/6</div>
+                            <div class="stat-label">Health Data APIs</div>
+                        </div>
+
+                        <div class="stat-card api">
+                            <div class="stat-number">0/4</div>
+                            <div class="stat-label">Other APIs</div>
+                        </div>
+
+                    </div>
+
+
+
+                    <h3>📋 Available Endpoints</h3>
+                    <div class="api-endpoints">
+
+                        <div class="endpoint-card working">
+                            <div class="endpoint-header">
+                                <span class="method get">GET</span>
+                                <span class="path">/api/v1/foods/search</span>
+                                <span class="status success">✅ 200</span>
+                            </div>
+                            <div class="endpoint-description">Get search</div>
+                            <div class="endpoint-params">Params: search=chicken</div>
+                            <div class="endpoint-time">Response: 223ms</div>
+                        </div>
+
+                        <div class="endpoint-card failed">
+                            <div class="endpoint-header">
+                                <span class="method get">GET</span>
+                                <span class="path">/api/v1/correlations/insights</span>
+                                <span class="status error">❌ 401</span>
+                            </div>
+                            <div class="endpoint-description">Get insights</div>
+                            <div class="endpoint-params">Params: userId=8e8a568a-c2f8-43a8-abf2-4e54408dbdc0</div>
+                            <div class="endpoint-time">Response: 49ms</div>
+                        </div>
+
+                        <div class="endpoint-card failed">
+                            <div class="endpoint-header">
+                                <span class="method get">GET</span>
+                                <span class="path">/api/v1/detox-types</span>
+                                <span class="status error">❌ 404</span>
+                            </div>
+                            <div class="endpoint-description">Get detox-types</div>
+                            <div class="endpoint-params">Params: </div>
+                            <div class="endpoint-time">Response: 53ms</div>
+                        </div>
+
+                        <div class="endpoint-card failed">
+                            <div class="endpoint-header">
+                                <span class="method get">GET</span>
+                                <span class="path">/api/v1/exposure-types</span>
+                                <span class="status error">❌ 404</span>
+                            </div>
+                            <div class="endpoint-description">Get exposure-types</div>
+                            <div class="endpoint-params">Params: </div>
+                            <div class="endpoint-time">Response: 47ms</div>
+                        </div>
+
+                        <div class="endpoint-card failed">
+                            <div class="endpoint-header">
+                                <span class="method get">GET</span>
+                                <span class="path">/api/v1/foods/by-protocol</span>
+                                <span class="status error">❌ 401</span>
+                            </div>
+                            <div class="endpoint-description">Get by-protocol</div>
+                            <div class="endpoint-params">Params: protocol_id=1495844a-19de-404c-a288-7660eda0cbe1</div>
+                            <div class="endpoint-time">Response: 50ms</div>
+                        </div>
+
+                        <div class="endpoint-card working">
+                            <div class="endpoint-header">
+                                <span class="method get">GET</span>
+                                <span class="path">/api/v1/protocols</span>
+                                <span class="status success">✅ 200</span>
+                            </div>
+                            <div class="endpoint-description">Get protocols</div>
+                            <div class="endpoint-params">Params: protocol_id=1495844a-19de-404c-a288-7660eda0cbe1</div>
+                            <div class="endpoint-time">Response: 49ms</div>
+                        </div>
+
+                        <div class="endpoint-card failed">
+                            <div class="endpoint-header">
+                                <span class="method get">GET</span>
+                                <span class="path">/api/v1/timeline/entries</span>
+                                <span class="status error">❌ 401</span>
+                            </div>
+                            <div class="endpoint-description">Get entries</div>
+                            <div class="endpoint-params">Params: date=2024-07-06</div>
+                            <div class="endpoint-time">Response: 61ms</div>
+                        </div>
+
+                        <div class="endpoint-card failed">
+                            <div class="endpoint-header">
+                                <span class="method post">POST</span>
+                                <span class="path">/api/v1/timeline/entries</span>
+                                <span class="status error">❌ 401</span>
+                            </div>
+                            <div class="endpoint-description">Create entries</div>
+                            <div class="endpoint-params">Params: date=2024-07-06</div>
+                            <div class="endpoint-time">Response: 46ms</div>
+                        </div>
+
+                        <div class="endpoint-card failed">
+                            <div class="endpoint-header">
+                                <span class="method get">GET</span>
+                                <span class="path">/api/v1/users/preferences</span>
+                                <span class="status error">❌ 404</span>
+                            </div>
+                            <div class="endpoint-description">Get preferences</div>
+                            <div class="endpoint-params">Params: userId=8e8a568a-c2f8-43a8-abf2-4e54408dbdc0</div>
+                            <div class="endpoint-time">Response: 55ms</div>
+                        </div>
+
+                        <div class="endpoint-card failed">
+                            <div class="endpoint-header">
+                                <span class="method put">PUT</span>
+                                <span class="path">/api/v1/users/preferences</span>
+                                <span class="status error">❌ 404</span>
+                            </div>
+                            <div class="endpoint-description">Update preferences</div>
+                            <div class="endpoint-params">Params: userId=8e8a568a-c2f8-43a8-abf2-4e54408dbdc0</div>
+                            <div class="endpoint-time">Response: 48ms</div>
+                        </div>
+
+                        <div class="endpoint-card failed">
+                            <div class="endpoint-header">
+                                <span class="method get">GET</span>
+                                <span class="path">/api/v1/users</span>
+                                <span class="status error">❌ 401</span>
+                            </div>
+                            <div class="endpoint-description">Get users</div>
+                            <div class="endpoint-params">Params: </div>
+                            <div class="endpoint-time">Response: 45ms</div>
+                        </div>
+
+                        <div class="endpoint-card failed">
+                            <div class="endpoint-header">
+                                <span class="method get">GET</span>
+                                <span class="path">/api/v1/user/protocols</span>
+                                <span class="status error">❌ 401</span>
+                            </div>
+                            <div class="endpoint-description">Get protocols</div>
+                            <div class="endpoint-params">Params: protocol_id=1495844a-19de-404c-a288-7660eda0cbe1</div>
+                            <div class="endpoint-time">Response: 42ms</div>
+                        </div>
+
+                        <div class="endpoint-card failed">
+                            <div class="endpoint-header">
+                                <span class="method get">GET</span>
+                                <span class="path">/api/v1/user/preferences</span>
+                                <span class="status error">❌ 401</span>
+                            </div>
+                            <div class="endpoint-description">Get preferences</div>
+                            <div class="endpoint-params">Params: userId=8e8a568a-c2f8-43a8-abf2-4e54408dbdc0</div>
+                            <div class="endpoint-time">Response: 46ms</div>
+                        </div>
+
+                        <div class="endpoint-card failed">
+                            <div class="endpoint-header">
+                                <span class="method get">GET</span>
+                                <span class="path">/api/v1/users/current-protocol</span>
+                                <span class="status error">❌ 401</span>
+                            </div>
+                            <div class="endpoint-description">Get current-protocol</div>
+                            <div class="endpoint-params">Params: protocol_id=1495844a-19de-404c-a288-7660eda0cbe1</div>
+                            <div class="endpoint-time">Response: 46ms</div>
+                        </div>
+
+                        <div class="endpoint-card failed">
+                            <div class="endpoint-header">
+                                <span class="method get">GET</span>
+                                <span class="path">/api/v1/users/protocol-history</span>
+                                <span class="status error">❌ 401</span>
+                            </div>
+                            <div class="endpoint-description">Get protocol-history</div>
+                            <div class="endpoint-params">Params: protocol_id=1495844a-19de-404c-a288-7660eda0cbe1</div>
+                            <div class="endpoint-time">Response: 46ms</div>
+                        </div>
+
+                        <div class="endpoint-card failed">
+                            <div class="endpoint-header">
+                                <span class="method get">GET</span>
+                                <span class="path">/api/v1/users/change-protocol</span>
+                                <span class="status error">❌ 404</span>
+                            </div>
+                            <div class="endpoint-description">Get change-protocol</div>
+                            <div class="endpoint-params">Params: protocol_id=1495844a-19de-404c-a288-7660eda0cbe1</div>
+                            <div class="endpoint-time">Response: 40ms</div>
+                        </div>
+
+                        <div class="endpoint-card failed">
+                            <div class="endpoint-header">
+                                <span class="method get">GET</span>
+                                <span class="path">/api/v1/foods/test</span>
+                                <span class="status error">❌ 500</span>
+                            </div>
+                            <div class="endpoint-description">Get test</div>
+                            <div class="endpoint-params">Params: </div>
+                            <div class="endpoint-time">Response: 49ms</div>
+                        </div>
+
+                        <div class="endpoint-card working">
+                            <div class="endpoint-header">
+                                <span class="method get">GET</span>
+                                <span class="path">/api/v1/symptoms/search</span>
+                                <span class="status success">✅ 200</span>
+                            </div>
+                            <div class="endpoint-description">Get search</div>
+                            <div class="endpoint-params">Params: search=chicken</div>
+                            <div class="endpoint-time">Response: 96ms</div>
+                        </div>
+
+                        <div class="endpoint-card working">
+                            <div class="endpoint-header">
+                                <span class="method get">GET</span>
+                                <span class="path">/api/v1/supplements/search</span>
+                                <span class="status success">✅ 200</span>
+                            </div>
+                            <div class="endpoint-description">Get search</div>
+                            <div class="endpoint-params">Params: search=chicken</div>
+                            <div class="endpoint-time">Response: 42ms</div>
+                        </div>
+
+                        <div class="endpoint-card working">
+                            <div class="endpoint-header">
+                                <span class="method get">GET</span>
+                                <span class="path">/api/v1/medications/search</span>
+                                <span class="status success">✅ 200</span>
+                            </div>
+                            <div class="endpoint-description">Get search</div>
+                            <div class="endpoint-params">Params: search=chicken</div>
+                            <div class="endpoint-time">Response: 43ms</div>
+                        </div>
+
+                        <div class="endpoint-card working">
+                            <div class="endpoint-header">
+                                <span class="method get">GET</span>
+                                <span class="path">/api/v1/detox-types/search</span>
+                                <span class="status success">✅ 200</span>
+                            </div>
+                            <div class="endpoint-description">Get search</div>
+                            <div class="endpoint-params">Params: search=chicken</div>
+                            <div class="endpoint-time">Response: 46ms</div>
+                        </div>
+
+                        <div class="endpoint-card working">
+                            <div class="endpoint-header">
+                                <span class="method get">GET</span>
+                                <span class="path">/api/v1/exposures/search</span>
+                                <span class="status success">✅ 200</span>
+                            </div>
+                            <div class="endpoint-description">Get search</div>
+                            <div class="endpoint-params">Params: search=chicken</div>
+                            <div class="endpoint-time">Response: 44ms</div>
+                        </div>
+
+                        <div class="endpoint-card failed">
+                            <div class="endpoint-header">
+                                <span class="method get">GET</span>
+                                <span class="path">/api/v1/admin/seed-demo-data</span>
+                                <span class="status error">❌ 404</span>
+                            </div>
+                            <div class="endpoint-description">Get seed-demo-data</div>
+                            <div class="endpoint-params">Params: </div>
+                            <div class="endpoint-time">Response: 55ms</div>
+                        </div>
+
+                        <div class="endpoint-card failed">
+                            <div class="endpoint-header">
+                                <span class="method get">GET</span>
+                                <span class="path">/api/v1/journal/entries</span>
+                                <span class="status error">❌ 500</span>
+                            </div>
+                            <div class="endpoint-description">Get entries</div>
+                            <div class="endpoint-params">Params: </div>
+                            <div class="endpoint-time">Response: 45ms</div>
+                        </div>
+
+                        <div class="endpoint-card failed">
+                            <div class="endpoint-header">
+                                <span class="method get">GET</span>
+                                <span class="path">/api/v1/journal/entries/</span>
+                                <span class="status error">❌ 401</span>
+                            </div>
+                            <div class="endpoint-description">Get resource</div>
+                            <div class="endpoint-params">Params: </div>
+                            <div class="endpoint-time">Response: 44ms</div>
+                        </div>
+
+                        <div class="endpoint-card failed">
+                            <div class="endpoint-header">
+                                <span class="method get">GET</span>
+                                <span class="path">/api/v1/test-auth</span>
+                                <span class="status error">❌ 401</span>
+                            </div>
+                            <div class="endpoint-description">Get test-auth</div>
+                            <div class="endpoint-params">Params: </div>
+                            <div class="endpoint-time">Response: 44ms</div>
+                        </div>
+
+                        <div class="endpoint-card failed">
+                            <div class="endpoint-header">
+                                <span class="method get">GET</span>
+                                <span class="path">/api/v1/symptoms</span>
+                                <span class="status error">❌ 404</span>
+                            </div>
+                            <div class="endpoint-description">Get symptoms</div>
+                            <div class="endpoint-params">Params: </div>
+                            <div class="endpoint-time">Response: 45ms</div>
+                        </div>
+
+                        <div class="endpoint-card failed">
+                            <div class="endpoint-header">
+                                <span class="method get">GET</span>
+                                <span class="path">/api/v1/supplements</span>
+                                <span class="status error">❌ 404</span>
+                            </div>
+                            <div class="endpoint-description">Get supplements</div>
+                            <div class="endpoint-params">Params: </div>
+                            <div class="endpoint-time">Response: 39ms</div>
+                        </div>
+
+                        <div class="endpoint-card failed">
+                            <div class="endpoint-header">
+                                <span class="method get">GET</span>
+                                <span class="path">/api/v1/medications</span>
+                                <span class="status error">❌ 404</span>
+                            </div>
+                            <div class="endpoint-description">Get medications</div>
+                            <div class="endpoint-params">Params: </div>
+                            <div class="endpoint-time">Response: 44ms</div>
+                        </div>
+
+                    </div>
+
+                </section>
+
+                <!-- Database Section -->
+                <section id="database" class="section">
+                    <h2>🗄️ Database</h2>
+
+                    <div class="two-col">
+                        <div>
+                            <h3>Database Info</h3>
+                            <p><strong>Type:</strong> Unknown</p>
+                            <p><strong>Tables:</strong> 29</p>
+                            <p><strong>Relationships:</strong> 7</p>
+
+
+                        </div>
+                        <div>
+                            <h3>Connection Details</h3>
+
+
+                            <p><strong>Environment:</strong> Via DATABASE_URL</p>
+                        </div>
+                    </div>
+
+
+                    <h3>📊 Database Tables</h3>
+                    <div class="table-grid">
+
+                        <div class="table-card">
+                            <h4>protocol_foods</h4>
+                            <div class="table-type">Table</div>
+                        </div>
+
+                        <div class="table-card">
+                            <h4>all_foods</h4>
+                            <div class="table-type">Table</div>
+                        </div>
+
+                        <div class="table-card">
+                            <h4>dietary_protocols</h4>
+                            <div class="table-type">Table</div>
+                        </div>
+
+                        <div class="table-card">
+                            <h4>mat_protocol_foods</h4>
+                            <div class="table-type">Table</div>
+                        </div>
+
+                        <div class="table-card">
+                            <h4>journal_entries</h4>
+                            <div class="table-type">Table</div>
+                        </div>
+
+                        <div class="table-card">
+                            <h4>timeline_entries</h4>
+                            <div class="table-type">Table</div>
+                        </div>
+
+                        <div class="table-card">
+                            <h4>the</h4>
+                            <div class="table-type">Table</div>
+                        </div>
+
+                        <div class="table-card">
+                            <h4>journal</h4>
+                            <div class="table-type">Table</div>
+                        </div>
+
+                        <div class="table-card">
+                            <h4>existing</h4>
+                            <div class="table-type">Table</div>
+                        </div>
+
+                        <div class="table-card">
+                            <h4>user_dietary_protocols</h4>
+                            <div class="table-type">Table</div>
+                        </div>
+
+                        <div class="table-card">
+                            <h4>user</h4>
+                            <div class="table-type">Table</div>
+                        </div>
+
+                        <div class="table-card">
+                            <h4>SET</h4>
+                            <div class="table-type">Table</div>
+                        </div>
+
+                        <div class="table-card">
+                            <h4>foods</h4>
+                            <div class="table-type">Table</div>
+                        </div>
+
+                        <div class="table-card">
+                            <h4>user_preferences</h4>
+                            <div class="table-type">Table</div>
+                        </div>
+
+                        <div class="table-card">
+                            <h4>get_user_current_protocol</h4>
+                            <div class="table-type">Table</div>
+                        </div>
+
+                        <div class="table-card">
+                            <h4>users</h4>
+                            <div class="table-type">Table</div>
+                        </div>
+
+                        <div class="table-card">
+                            <h4>food_search_view</h4>
+                            <div class="table-type">Table</div>
+                        </div>
+
+                        <div class="table-card">
+                            <h4>food_properties</h4>
+                            <div class="table-type">Table</div>
+                        </div>
+
+                        <div class="table-card">
+                            <h4>food_nutritional_data</h4>
+                            <div class="table-type">Table</div>
+                        </div>
+
+                        <div class="table-card">
+                            <h4>usda_data_versions</h4>
+                            <div class="table-type">Table</div>
+                        </div>
+
+                        <div class="table-card">
+                            <h4>protocol_food_rules</h4>
+                            <div class="table-type">Table</div>
+                        </div>
+
+                        <div class="table-card">
+                            <h4>protocols</h4>
+                            <div class="table-type">Table</div>
+                        </div>
+
+                        <div class="table-card">
+                            <h4>reflections</h4>
+                            <div class="table-type">Table</div>
+                        </div>
+
+                        <div class="table-card">
+                            <h4>correlations</h4>
+                            <div class="table-type">Table</div>
+                        </div>
+
+                        <div class="table-card">
+                            <h4>exposure_types</h4>
+                            <div class="table-type">Table</div>
+                        </div>
+
+                        <div class="table-card">
+                            <h4>detox_types</h4>
+                            <div class="table-type">Table</div>
+                        </div>
+
+                        <div class="table-card">
+                            <h4>symptoms</h4>
+                            <div class="table-type">Table</div>
+                        </div>
+
+                        <div class="table-card">
+                            <h4>supplements</h4>
+                            <div class="table-type">Table</div>
+                        </div>
+
+                        <div class="table-card">
+                            <h4>medications</h4>
+                            <div class="table-type">Table</div>
+                        </div>
+
+                    </div>
+
+
+
+                    <h3>🔗 Table Relationships</h3>
+                    <div class="relationships">
+
+                        <div class="relationship-card">
+                            <span class="from-table">timeline_entries</span>
+                            <span class="relationship-type">many-to-one</span>
+                            <span class="to-table">users</span>
+                            <div class="foreign-key">via user_id</div>
+                        </div>
+
+                        <div class="relationship-card">
+                            <span class="from-table">reflections</span>
+                            <span class="relationship-type">many-to-one</span>
+                            <span class="to-table">users</span>
+                            <div class="foreign-key">via user_id</div>
+                        </div>
+
+                        <div class="relationship-card">
+                            <span class="from-table">correlations</span>
+                            <span class="relationship-type">many-to-one</span>
+                            <span class="to-table">users</span>
+                            <div class="foreign-key">via user_id</div>
+                        </div>
+
+                        <div class="relationship-card">
+                            <span class="from-table">user_preferences</span>
+                            <span class="relationship-type">one-to-one</span>
+                            <span class="to-table">users</span>
+                            <div class="foreign-key">via user_id</div>
+                        </div>
+
+                        <div class="relationship-card">
+                            <span class="from-table">protocol_foods</span>
+                            <span class="relationship-type">many-to-one</span>
+                            <span class="to-table">protocols</span>
+                            <div class="foreign-key">via protocol_id</div>
+                        </div>
+
+                        <div class="relationship-card">
+                            <span class="from-table">protocol_foods</span>
+                            <span class="relationship-type">many-to-one</span>
+                            <span class="to-table">foods</span>
+                            <div class="foreign-key">via food_id</div>
+                        </div>
+
+                        <div class="relationship-card">
+                            <span class="from-table">timeline_entries</span>
+                            <span class="relationship-type">many-to-many</span>
+                            <span class="to-table">foods</span>
+
+                        </div>
+
+                    </div>
+
+
+                    <h3>🔧 Database Schema</h3>
+                    <div class="code-block">
+                        -- Core Tables
+                        CREATE TABLE users (id, email, name, created_at);
+                        CREATE TABLE protocols (id, name, description, type);
+                        CREATE TABLE foods (id, name, category, histamine_level);
+                        CREATE TABLE timeline_entries (id, user_id, entry_type, content, entry_time);
+                        CREATE TABLE reflections (id, user_id, date, energy_level, mood_level);
+                        CREATE TABLE correlations (id, user_id, trigger, effect, confidence);
+
+                        -- Lookup Tables
+                        CREATE TABLE exposure_types (id, name, category);
+                        CREATE TABLE detox_types (id, name, category);
+
+                        -- Junction Tables
+                        CREATE TABLE protocol_foods (protocol_id, food_id, status);
+                        CREATE TABLE user_preferences (user_id, protocols, quick_foods);</div>
+                </section>
+
+                <!-- Development Section -->
+                <section id="development" class="section">
+                    <h2>🔧 Development Setup</h2>
+
+                    <div class="two-col">
+                        <div>
+                            <h3>Requirements</h3>
+                            <p><strong>Node.js:</strong> >=18.0</p>
+                            <p><strong>Package Manager:</strong> npm</p>
+                            <p><strong>Environment Variables:</strong> 25</p>
+                        </div>
+                        <div>
+                            <h3>Quick Start</h3>
+                            <div class="code-block">
+                                git clone &lt;repository&gt;
+                                cd health-platform
+                                npm install
+                                cp .env.example .env
+                                npm run dev</div>
+                        </div>
+                    </div>
+
+                    <h3>📋 Setup Steps</h3>
+                    <ol>
+
+                        <li><strong>Clone Repository:</strong> Clone the repository to your local machine
+                            <div class="code-block">git clone <repository-url></div>
+                        </li>
+
+                        <li><strong>Install Node.js:</strong> Install the required Node.js version
+                            <div class="code-block">Use Node.js >=18.0</div>
+                        </li>
+
+                        <li><strong>Install Dependencies:</strong> Install all project dependencies
+                            <div class="code-block">npm install</div>
+                        </li>
+
+                        <li><strong>Setup Environment Variables:</strong> Configure: DB_HOST, DB_PORT, DB_NAME...
+                            <div class="code-block">Copy .env.example to .env and fill in values</div>
+                        </li>
+
+                        <li><strong>Start Development Server:</strong> Start the development server
+                            <div class="code-block">npm run dev</div>
+                        </li>
+
+                    </ol>
+                </section>
+
+                <!-- Deployment Section -->
+                <section id="deployment" class="section">
+                    <h2>🚀 Deployment</h2>
+
+                    <div class="two-col">
+                        <div>
+                            <h3>Frontend Deployment</h3>
+                            <p><strong>Service:</strong> AWS Amplify</p>
+                            <p><strong>URL:</strong> <a
+                                    href="https://main.d45x824boqj7y.amplifyapp.com">https://main.d45x824boqj7y.amplifyapp.com</a>
+                            </p>
+                        </div>
+                        <div>
+                            <h3>Backend Deployment</h3>
+                            <p><strong>Service:</strong> AWS Lambda</p>
+                            <p><strong>API URL:</strong> <a
+                                    href="https://suhoxvn8ik.execute-api.us-east-1.amazonaws.com/dev">https://suhoxvn8ik.execute-api.us-east-1.amazonaws.com/dev</a>
+                            </p>
+                        </div>
+                    </div>
+
+                    <h3>🔄 CI/CD Pipeline</h3>
+                    <ul class="feature-list">
+                        <li>GitHub Actions for automated deployment</li>
+                        <li>Lambda function updates on code changes</li>
+                        <li>Amplify builds on frontend changes</li>
+                        <li>Automated documentation generation</li>
+                    </ul>
+                </section>
         </div>
-    </div>
+    </main>
 
-    <script>
-        // Function to set timestamps for each status section
-        function setStatusTimestamps() {
-            const now = new Date();
-
-            // Frontend status updated recently (fresh)
-            const frontendTime = new Date(now - 5 * 60 * 1000); // 5 minutes ago
-            document.getElementById('frontendTimestamp').textContent = `Updated: ${frontendTime.toLocaleString()}`;
-
-            // API status updated 1 hour ago (moderate)
-            const apiTime = new Date(now - 1 * 60 * 60 * 1000); // 1 hour ago
-            document.getElementById('apiStatusTimestamp').textContent = `Updated: ${apiTime.toLocaleString()}`;
-
-            // Deploy status updated 2 hours ago (as shown in the value)
-            const deployTime = new Date(now - 2 * 60 * 60 * 1000); // 2 hours ago
-            document.getElementById('deployTimestamp').textContent = `Updated: ${deployTime.toLocaleString()}`;
-
-            // Uptime updated recently (fresh)
-            const uptimeTime = new Date(now - 3 * 60 * 1000); // 3 minutes ago
-            document.getElementById('uptimeTimestamp').textContent = `Updated: ${uptimeTime.toLocaleString()}`;
-        }
-
-        // Initialize timestamps
-        setStatusTimestamps();
-
-        // Set last updated time
-        document.getElementById('lastUpdated').textContent = new Date().toLocaleDateString();
-
-        // Add click handlers for navigation cards
-        document.querySelectorAll('.nav-card').forEach(card => {
-            card.addEventListener('click', function () {
-                // Click handler is already in onclick attribute
-            });
-        });
-
-        // Add some visual feedback
-        document.querySelectorAll('.quick-link').forEach(link => {
-            link.addEventListener('mouseenter', function () {
-                this.style.transform = 'translateY(-2px) scale(1.02)';
-            });
-
-            link.addEventListener('mouseleave', function () {
-                this.style.transform = 'translateY(0) scale(1)';
-            });
-        });
-
-        // Update timestamps periodically to show live updates
-        setInterval(() => {
-            const now = new Date();
-
-            // Update frontend and uptime timestamps to show they're actively monitored
-            document.getElementById('frontendTimestamp').textContent = `Updated: ${now.toLocaleString()}`;
-            document.getElementById('uptimeTimestamp').textContent = `Updated: ${now.toLocaleString()}`;
-
-            // Update main last updated time
-            document.getElementById('lastUpdated').textContent = now.toLocaleDateString();
-        }, 60000); // Update every minute
-    </script>
+    <footer style="background: #2d3748; color: white; padding: 2rem 0; text-align: center; margin-top: 3rem;">
+        <div class="container">
+            <p>Generated automatically on 7/27/2025 •
+                Last updated: Sun Jul 27 20:50:25 2025 -0400</p>
+        </div>
+    </footer>
 </body>
 
 </html>
