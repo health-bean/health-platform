@@ -33,7 +33,12 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const login = async (email, password) => {
+  const login = async (email, password, options = {}) => {
+    // Handle demo user login
+    if (options.isDemoUser && options.demoUserId) {
+      return loginDemoUser(options.demoUserId);
+    }
+
     try {
       const result = await signIn({ username: email, password });
       
@@ -58,6 +63,49 @@ export const AuthProvider = ({ children }) => {
         }
         return { success: false, error: 'Sign in not completed' };
       }
+    } catch (error) {
+      return { success: false, error: error.message };
+    }
+  };
+
+  const loginDemoUser = async (demoUserId) => {
+    try {
+      // Demo users mapping
+      const demoUsers = {
+        'sarah-aip': {
+          id: '8e8a568a-c2f8-43a8-abf2-4e54408dbdc0',
+          email: 'sarah.aip@test.com',
+          name: 'Sarah Johnson',
+          firstName: 'Sarah',
+          lastName: 'Johnson',
+          userType: 'demo',
+          demoKey: 'sarah-aip'
+        },
+        'mike-fodmap': {
+          id: 'bb5c54ee-0304-4e7b-8ad4-b464f5b1e37f',
+          email: 'mike.fodmap@test.com',
+          name: 'Mike Chen',
+          firstName: 'Mike',
+          lastName: 'Chen',
+          userType: 'demo',
+          demoKey: 'mike-fodmap'
+        }
+      };
+
+      const demoUser = demoUsers[demoUserId];
+      if (!demoUser) {
+        return { success: false, error: 'Demo user not found' };
+      }
+
+      // Set demo user data
+      const userData = {
+        ...demoUser,
+        token: `demo-token-${demoUserId}`,
+        isDemo: true
+      };
+
+      setUser(userData);
+      return { success: true, user: userData };
     } catch (error) {
       return { success: false, error: error.message };
     }
@@ -123,7 +171,7 @@ export const AuthProvider = ({ children }) => {
       userId: user.id,
       email: user.email,
       token: user.token,
-      isDemo: false // This is real auth, not demo
+      isDemo: user.isDemo || false
     };
   };
 
@@ -133,13 +181,22 @@ export const AuthProvider = ({ children }) => {
 
   const getAuthHeaders = () => {
     const token = getAuthToken();
-    return token ? { Authorization: `Bearer ${token}` } : {};
+    const headers = token ? { Authorization: `Bearer ${token}` } : {};
+    
+    // Add demo user headers if this is a demo user
+    if (user?.isDemo) {
+      headers['X-Demo-Mode'] = 'true';
+      headers['X-Demo-User-Id'] = user.demoKey; // Use the demo key like 'sarah-aip'
+    }
+    
+    return headers;
   };
 
   const value = {
     user,
     loading,
     isAuthenticated: !!user,
+    isDemoMode: user?.isDemo || false,
     login,
     signup,
     confirmSignUp,

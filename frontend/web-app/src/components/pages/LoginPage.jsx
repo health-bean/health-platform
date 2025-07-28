@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Rocket, Mail, Lock, Eye, EyeOff } from 'lucide-react';
-import { Button, Alert, Input, FormField } from '../../../../shared/components/ui';
+import { Rocket, Mail, Lock, Eye, EyeOff, User } from 'lucide-react';
+import { Button, Alert, Input, FormField, Card } from '../../../../shared/components/ui';
 import { useAuth } from '../../contexts/AuthProvider';
 
 const LoginPage = () => {
@@ -19,6 +19,24 @@ const LoginPage = () => {
   const [message, setMessage] = useState('');
 
   const { login, signup, confirmSignUp, resendConfirmationCode } = useAuth();
+
+  const handleDemoLogin = async (userId) => {
+    setIsLoading(true);
+    setMessage('');
+    
+    try {
+      // For demo users, we'll use a special login method or simulate login
+      // The backend already handles demo users via query params
+      const result = await login(`${userId}@test.com`, 'demo-password', { isDemoUser: true, demoUserId: userId });
+      if (!result.success) {
+        setMessage(result.error || 'Demo login failed');
+      }
+    } catch (err) {
+      setMessage('Demo login failed. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const handleInputChange = (field, value) => {
     setFormData(prev => ({ ...prev, [field]: value }));
@@ -335,8 +353,67 @@ const LoginPage = () => {
             {view === 'signup' && (isLoading ? 'Creating account...' : 'Create Account')}
           </Button>
         </form>
+
+        {/* Demo Users Section - Only show on signin */}
+        {view === 'signin' && (
+          <div className="mt-8">
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-gray-300" />
+              </div>
+              <div className="relative flex justify-center text-sm">
+                <span className="px-2 bg-gray-50 text-gray-500">Or try a demo account</span>
+              </div>
+            </div>
+
+            <div className="mt-6 space-y-3">
+              <DemoUserCard
+                name="Sarah (AIP Protocol)"
+                description="Following Autoimmune Protocol with 3 months of data"
+                userId="sarah-aip"
+                onLogin={handleDemoLogin}
+                isLoading={isLoading}
+              />
+              <DemoUserCard
+                name="Mike (Low FODMAP)"
+                description="Managing IBS with Low FODMAP diet, 4 months of tracking"
+                userId="mike-fodmap"
+                onLogin={handleDemoLogin}
+                isLoading={isLoading}
+              />
+            </div>
+          </div>
+        )}
       </div>
     </div>
+  );
+};
+
+// Demo User Card Component
+const DemoUserCard = ({ name, description, userId, onLogin, isLoading }) => {
+  return (
+    <Card variant="outlined" className="border-gray-200 hover:border-blue-300 transition-colors">
+      <div className="p-4">
+        <div className="flex items-center justify-between">
+          <div className="flex-1">
+            <div className="flex items-center space-x-2 mb-1">
+              <User className="h-4 w-4 text-blue-600" />
+              <h4 className="font-medium text-gray-900">{name}</h4>
+            </div>
+            <p className="text-sm text-gray-600">{description}</p>
+          </div>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => onLogin(userId)}
+            disabled={isLoading}
+            className="ml-4"
+          >
+            {isLoading ? 'Loading...' : 'Try Demo'}
+          </Button>
+        </div>
+      </div>
+    </Card>
   );
 };
 
