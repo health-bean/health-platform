@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generated": "2025-07-28T01:58:45.583Z",
+    "generated": "2025-07-28T02:02:52.719Z",
     "version": "1.0.0",
     "generator": "AutomatedProfessionalDocsGenerator"
   },
@@ -17,7 +17,7 @@
     "workingAPIs": 0,
     "totalAPIs": 29,
     "totalTables": 23,
-    "totalCommits": 203,
+    "totalCommits": 204,
     "contributors": 1
   },
   "discoveredInfo": {
@@ -146,7 +146,7 @@
           ],
           "status": 502,
           "working": false,
-          "responseTime": 1029,
+          "responseTime": 589,
           "responseData": {
             "message": "Internal server error"
           },
@@ -166,7 +166,7 @@
           ],
           "status": 502,
           "working": false,
-          "responseTime": 580,
+          "responseTime": 639,
           "responseData": {
             "message": "Internal server error"
           },
@@ -181,7 +181,7 @@
           "params": [],
           "status": 502,
           "working": false,
-          "responseTime": 638,
+          "responseTime": 560,
           "responseData": {
             "message": "Internal server error"
           },
@@ -196,7 +196,7 @@
           "params": [],
           "status": 502,
           "working": false,
-          "responseTime": 560,
+          "responseTime": 559,
           "responseData": {
             "message": "Internal server error"
           },
@@ -216,7 +216,7 @@
           ],
           "status": 502,
           "working": false,
-          "responseTime": 519,
+          "responseTime": 500,
           "responseData": {
             "message": "Internal server error"
           },
@@ -236,7 +236,7 @@
           ],
           "status": 502,
           "working": false,
-          "responseTime": 521,
+          "responseTime": 665,
           "responseData": {
             "message": "Internal server error"
           },
@@ -256,7 +256,7 @@
           ],
           "status": 502,
           "working": false,
-          "responseTime": 582,
+          "responseTime": 559,
           "responseData": {
             "message": "Internal server error"
           },
@@ -276,7 +276,7 @@
           ],
           "status": 502,
           "working": false,
-          "responseTime": 515,
+          "responseTime": 497,
           "responseData": {
             "message": "Internal server error"
           },
@@ -296,7 +296,7 @@
           ],
           "status": 502,
           "working": false,
-          "responseTime": 504,
+          "responseTime": 501,
           "responseData": {
             "message": "Internal server error"
           },
@@ -316,7 +316,7 @@
           ],
           "status": 502,
           "working": false,
-          "responseTime": 517,
+          "responseTime": 677,
           "responseData": {
             "message": "Internal server error"
           },
@@ -331,7 +331,7 @@
           "params": [],
           "status": 502,
           "working": false,
-          "responseTime": 522,
+          "responseTime": 502,
           "responseData": {
             "message": "Internal server error"
           },
@@ -351,7 +351,7 @@
           ],
           "status": 502,
           "working": false,
-          "responseTime": 519,
+          "responseTime": 518,
           "responseData": {
             "message": "Internal server error"
           },
@@ -391,7 +391,7 @@
           ],
           "status": 502,
           "working": false,
-          "responseTime": 519,
+          "responseTime": 501,
           "responseData": {
             "message": "Internal server error"
           },
@@ -411,7 +411,7 @@
           ],
           "status": 502,
           "working": false,
-          "responseTime": 600,
+          "responseTime": 575,
           "responseData": {
             "message": "Internal server error"
           },
@@ -431,7 +431,7 @@
           ],
           "status": 502,
           "working": false,
-          "responseTime": 523,
+          "responseTime": 542,
           "responseData": {
             "message": "Internal server error"
           },
@@ -446,7 +446,7 @@
           "params": [],
           "status": 502,
           "working": false,
-          "responseTime": 518,
+          "responseTime": 668,
           "responseData": {
             "message": "Internal server error"
           },
@@ -466,7 +466,7 @@
           ],
           "status": 502,
           "working": false,
-          "responseTime": 558,
+          "responseTime": 510,
           "responseData": {
             "message": "Internal server error"
           },
@@ -486,7 +486,7 @@
           ],
           "status": 502,
           "working": false,
-          "responseTime": 501,
+          "responseTime": 521,
           "responseData": {
             "message": "Internal server error"
           },
@@ -506,7 +506,7 @@
           ],
           "status": 502,
           "working": false,
-          "responseTime": 519,
+          "responseTime": 520,
           "responseData": {
             "message": "Internal server error"
           },
@@ -526,7 +526,7 @@
           ],
           "status": 502,
           "working": false,
-          "responseTime": 522,
+          "responseTime": 519,
           "responseData": {
             "message": "Internal server error"
           },
@@ -546,7 +546,7 @@
           ],
           "status": 502,
           "working": false,
-          "responseTime": 517,
+          "responseTime": 500,
           "responseData": {
             "message": "Internal server error"
           },
@@ -561,7 +561,7 @@
           "params": [],
           "status": 502,
           "working": false,
-          "responseTime": 502,
+          "responseTime": 640,
           "responseData": {
             "message": "Internal server error"
           },
@@ -576,7 +576,7 @@
           "params": [],
           "status": 502,
           "working": false,
-          "responseTime": 516,
+          "responseTime": 481,
           "responseData": {
             "message": "Internal server error"
           },
@@ -591,7 +591,7 @@
           "params": [],
           "status": 502,
           "working": false,
-          "responseTime": 521,
+          "responseTime": 499,
           "responseData": {
             "message": "Internal server error"
           },
@@ -606,7 +606,7 @@
           "params": [],
           "status": 502,
           "working": false,
-          "responseTime": 559,
+          "responseTime": 663,
           "responseData": {
             "message": "Internal server error"
           },
@@ -621,7 +621,7 @@
           "params": [],
           "status": 502,
           "working": false,
-          "responseTime": 522,
+          "responseTime": 496,
           "responseData": {
             "message": "Internal server error"
           },
@@ -636,7 +636,7 @@
           "params": [],
           "status": 502,
           "working": false,
-          "responseTime": 518,
+          "responseTime": 489,
           "responseData": {
             "message": "Internal server error"
           },
@@ -651,7 +651,7 @@
           "params": [],
           "status": 502,
           "working": false,
-          "responseTime": 500,
+          "responseTime": 513,
           "responseData": {
             "message": "Internal server error"
           },
@@ -1408,7 +1408,7 @@
             }
           ],
           "utilities": [],
-          "size": "222.56 KB"
+          "size": "222.92 KB"
         }
       },
       "shared": {},
@@ -1504,18 +1504,18 @@
       "repository": "https://github.com/deebyrne26/health-platform",
       "branch": "main",
       "lastCommit": {
-        "hash": "a91d4af",
-        "message": "ConnectIon Manager VPC updates",
+        "hash": "41a9b17",
+        "message": "Fix: Single source of truth for connection manager",
         "author": "deebyrne26",
-        "date": "Sun Jul 27 21:53:05 2025 -0400"
+        "date": "Sun Jul 27 21:59:52 2025 -0400"
       },
       "contributors": [
         {
           "name": "deebyrne26",
-          "commits": 203
+          "commits": 204
         }
       ],
-      "totalCommits": 203
+      "totalCommits": 204
     }
   }
 }
