@@ -368,8 +368,8 @@ const LoginPage = () => {
 
             <div className="mt-6 space-y-3">
               <DemoUserCard
-                name="Sarah (AIP Protocol)"
-                description="Following Autoimmune Protocol with 3 months of data"
+                name="Sarah (Low Lectin Protocol)"
+                description=""
                 userId="sarah-aip"
                 onLogin={handleDemoLogin}
                 isLoading={isLoading}
