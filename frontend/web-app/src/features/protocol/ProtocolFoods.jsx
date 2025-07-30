@@ -54,6 +54,7 @@ const ProtocolFoods = ({ protocolId }) => {
 
   // Group foods by category for browsing view
   const foodsByCategory = React.useMemo(() => {
+    console.log('🔍 Grouping foods:', { isSearching, foodsLength: foods.length, foods: foods.slice(0, 3) });
     if (isSearching || !foods.length) return {};
     
     const grouped = {};
@@ -65,6 +66,7 @@ const ProtocolFoods = ({ protocolId }) => {
       grouped[category].push(food);
     });
     
+    console.log('🔍 Grouped foods by category:', Object.keys(grouped));
     return grouped;
   }, [foods, isSearching]);
 
