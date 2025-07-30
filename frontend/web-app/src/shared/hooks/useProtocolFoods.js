@@ -178,7 +178,11 @@ const mapProtocolStatusToCompliance = (protocolStatus) => {
       return 'avoid_for_now';
     case 'moderation':
       return 'try_in_moderation';
+    case null:
+    case undefined:
+    case 'unknown':
+      return 'not_classified';
     default:
-      return 'unknown';
+      return 'not_classified';
   }
 };

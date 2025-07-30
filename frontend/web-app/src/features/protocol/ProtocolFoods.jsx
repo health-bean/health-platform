@@ -53,6 +53,7 @@ const ProtocolFoods = ({ protocolId }) => {
       case 'included': return 'bg-green-100 text-green-800 border-green-200';
       case 'avoid_for_now': return 'bg-red-100 text-red-800 border-red-200';
       case 'try_in_moderation': return 'bg-yellow-100 text-yellow-800 border-yellow-200';
+      case 'not_classified': return 'bg-gray-100 text-gray-800 border-gray-200';
       default: return 'bg-gray-100 text-gray-800 border-gray-200';
     }
   };
@@ -62,16 +63,18 @@ const ProtocolFoods = ({ protocolId }) => {
       case 'included': return '✅';
       case 'avoid_for_now': return '❌';
       case 'try_in_moderation': return '🟡';
+      case 'not_classified': return '❓';
       default: return '❓';
     }
   };
 
   const getComplianceLabel = (status) => {
     switch (status) {
-      case 'included': return 'Included';
-      case 'avoid_for_now': return 'Avoid for now';
-      case 'try_in_moderation': return 'Try in moderation';
-      default: return 'Not specified';
+      case 'included': return 'Allowed';
+      case 'avoid_for_now': return 'Avoid';
+      case 'try_in_moderation': return 'Use Caution';
+      case 'not_classified': return 'Not Classified';
+      default: return 'Unknown';
     }
   };
 
@@ -205,11 +208,36 @@ const ProtocolFoods = ({ protocolId }) => {
     </div>
   );
 
+  // Show "select protocol" message if no protocol is selected
+  if (!hasValidProtocol && !searchTerm.trim()) {
+    return (
+      <div className="text-center p-12">
+        <div className="text-gray-400 mb-6">
+          <Filter className="w-16 h-16 mx-auto" />
+        </div>
+        <div className="space-y-4">
+          <h3 className="text-xl font-semibold text-gray-900">Select a Protocol</h3>
+          <p className="text-gray-600 max-w-md mx-auto">
+            Choose a dietary protocol to see personalized food recommendations and guidance.
+          </p>
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mt-6">
+            <div className="flex items-start space-x-2">
+              <div className="text-blue-600 text-lg">💡</div>
+              <div className="text-sm text-blue-800">
+                <div className="font-medium">Getting Started</div>
+                <div className="text-blue-700 mt-1">
+                  Use the protocol dropdown above to select your dietary approach, then return here to explore allowed foods and search for specific items.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   // Show loading only if we have a protocol and it's loading
   if (hasValidProtocol && loading) {
-    return (
-      <div className="flex items-center justify-center p-8">
-        <div className="flex items-center space-x-3">
           <Loader2 className="w-6 h-6 animate-spin text-blue-500" />
           <span className="text-lg text-gray-600">Loading protocol foods...</span>
         </div>

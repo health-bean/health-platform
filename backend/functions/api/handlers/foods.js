@@ -147,7 +147,7 @@ const handleSearchFoodsUltraFast = async (queryParams, event) => {
 };
 
 /**
- * Simple protocol foods handler - optimized version
+ * Smart protocol foods handler - supports both default view and search
  */
 const handleGetProtocolFoods = async (queryParams, event) => {
     const startTime = Date.now();
@@ -164,44 +164,106 @@ const handleGetProtocolFoods = async (queryParams, event) => {
         }
         
         const protocolId = queryParams.protocol_id;
+        const search = queryParams.search?.trim() || '';
         const limit = Math.min(parseInt(queryParams.limit) || 50, 100);
         
-        console.log('🚀 PROTOCOL FOODS: Query params:', { protocolId, limit });
+        console.log('🚀 PROTOCOL FOODS: Query params:', { protocolId, search, limit });
         
         if (!protocolId) {
             return errorResponse('protocol_id parameter is required', 400);
         }
         
-        // Simple query for protocol foods using the specific protocol_id
-        const query = `
-            SELECT 
-                food_id as id,
-                display_name as name,
-                category_name as category,
-                subcategory_name as subcategory,
-                dietary_protocol_name as protocol_name,
-                protocol_status,
-                protocol_phase,
-                nightshade,
-                histamine,
-                oxalate,
-                lectin,
-                fodmap
-            FROM mat_protocol_foods
-            WHERE dietary_protocol_id = $1
-            ORDER BY 
-                CASE protocol_status
-                    WHEN 'allowed' THEN 1
-                    WHEN 'caution' THEN 2
-                    WHEN 'avoid' THEN 3
-                    ELSE 4
-                END,
-                display_name ASC
-            LIMIT $2
-        `;
+        let query, params;
+        
+        if (search) {
+            // Search mode: Return ALL matching foods with explicit status
+            console.log('🔍 SEARCH MODE: Returning all matching foods with status');
+            const searchPattern = `%${search}%`;
+            query = `
+                SELECT 
+                    food_id as id,
+                    display_name as name,
+                    category_name as category,
+                    subcategory_name as subcategory,
+                    dietary_protocol_name as protocol_name,
+                    protocol_status,
+                    protocol_phase,
+                    nightshade,
+                    histamine,
+                    oxalate,
+                    lectin,
+                    fodmap
+                FROM mat_protocol_foods
+                WHERE dietary_protocol_id = $1 
+                AND display_name ILIKE $2
+                ORDER BY 
+                    CASE 
+                        WHEN display_name ILIKE $3 THEN 1
+                        WHEN display_name ILIKE $4 THEN 2
+                        ELSE 3
+                    END,
+                    CASE protocol_status
+                        WHEN 'allowed' THEN 1
+                        WHEN 'moderation' THEN 2
+                        WHEN 'avoid' THEN 3
+                        ELSE 4
+                    END,
+                    display_name ASC
+                LIMIT $5
+            `;
+            const exactMatch = search;
+            const startsWithMatch = `${search}%`;
+            params = [protocolId, searchPattern, exactMatch, startsWithMatch, limit];
+        } else {
+            // Default mode: Return only allowed and moderation foods
+            console.log('📋 DEFAULT MODE: Returning only allowed/moderation foods');
+            query = `
+                SELECT 
+                    food_id as id,
+                    display_name as name,
+                    category_name as category,
+                    subcategory_name as subcategory,
+                    dietary_protocol_name as protocol_name,
+                    protocol_status,
+                    protocol_phase,
+                    nightshade,
+                    histamine,
+                    oxalate,
+                    lectin,
+                    fodmap
+                FROM mat_protocol_foods
+                WHERE dietary_protocol_id = $1
+                AND protocol_status IN ('allowed', 'moderation')
+                ORDER BY 
+                    CASE protocol_status
+                        WHEN 'allowed' THEN 1
+                        WHEN 'moderation' THEN 2
+                        ELSE 3
+                    END,
+                    display_name ASC
+                LIMIT $2
+            `;
+            params = [protocolId, limit];
+        }
         
         const queryStart = Date.now();
-        const result = await client.query(query, [protocolId, limit]);
+        const result = await client.query(query, params);
+        console.log(`🚀 PROTOCOL FOODS: Query took ${Date.now() - queryStart}ms, found ${result.rows.length} results`);
+        
+        const totalTime = Date.now() - startTime;
+        console.log(`🚀 PROTOCOL FOODS: Total request time: ${totalTime}ms`);
+        
+        return successResponse({
+            foods: result.rows,
+            total: result.rows.length,
+            protocol_id: protocolId,
+            search_term: search || null,
+            mode: search ? 'search' : 'default',
+            performance: {
+                total_time_ms: totalTime,
+                query_time_ms: Date.now() - queryStart
+            }
+        });
         console.log(`🚀 PROTOCOL FOODS: Query took ${Date.now() - queryStart}ms, found ${result.rows.length} results`);
         
         const totalTime = Date.now() - startTime;
