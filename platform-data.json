@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generated": "2025-07-29T22:47:50.760Z",
+    "generated": "2025-07-30T00:25:23.328Z",
     "version": "1.0.0",
     "generator": "AutomatedProfessionalDocsGenerator"
   },
@@ -14,10 +14,10 @@
     "totalComponents": 55,
     "totalHooks": 14,
     "totalFiles": 108,
-    "workingAPIs": 17,
+    "workingAPIs": 0,
     "totalAPIs": 28,
     "totalTables": 23,
-    "totalCommits": 215,
+    "totalCommits": 216,
     "contributors": 1
   },
   "discoveredInfo": {
@@ -144,181 +144,13 @@
               "value": "chicken"
             }
           ],
-          "status": 200,
-          "working": true,
-          "responseTime": 889,
+          "status": 502,
+          "working": false,
+          "responseTime": 1849,
           "responseData": {
-            "foods": [
-              {
-                "id": "68aada34-c3c7-434e-bd67-f35625ff5026",
-                "name": "Chicken Breast",
-                "category": "Proteins",
-                "subcategory": "Animal Proteins",
-                "preparation_state": "raw",
-                "is_organic": false
-              },
-              {
-                "id": "28ed2ee8-40c9-41ce-a562-dcbabf677d67",
-                "name": "Chicken Breast (Baked)",
-                "category": "Proteins",
-                "subcategory": "Animal Proteins",
-                "preparation_state": "cooked",
-                "is_organic": false
-              },
-              {
-                "id": "b6dcfe71-aede-49ee-9c9a-73e404b96147",
-                "name": "Chicken Breast, Boneless",
-                "category": "Proteins",
-                "subcategory": "Animal Proteins",
-                "preparation_state": "raw",
-                "is_organic": false
-              },
-              {
-                "id": "6f683ba4-3708-4427-adb4-2dfd6b492cf8",
-                "name": "Chicken Breast, Boneless",
-                "category": "Proteins",
-                "subcategory": "Animal Proteins",
-                "preparation_state": "raw",
-                "is_organic": false
-              },
-              {
-                "id": "9945ddd8-3fe0-4d27-a537-b3e2655b6172",
-                "name": "Chicken Breast, Boneless Skinless",
-                "category": "Proteins",
-                "subcategory": "Animal Proteins",
-                "preparation_state": "raw",
-                "is_organic": false
-              },
-              {
-                "id": "2db18c2c-5820-4193-ab9d-f270f8e2562e",
-                "name": "Chicken Breast (Grilled)",
-                "category": "Proteins",
-                "subcategory": "Animal Proteins",
-                "preparation_state": "cooked",
-                "is_organic": false
-              },
-              {
-                "id": "07da5e73-2d2a-47a1-906e-b028efcf4385",
-                "name": "Chicken Breast (Grilled, Organic)",
-                "category": "Proteins",
-                "subcategory": "Animal Proteins",
-                "preparation_state": "cooked",
-                "is_organic": true
-              },
-              {
-                "id": "5cc008b3-c7b3-4fb2-b288-e4e0caf1a0bf",
-                "name": "Chicken Breast, with Skin",
-                "category": "Proteins",
-                "subcategory": "Animal Proteins",
-                "preparation_state": "raw",
-                "is_organic": false
-              },
-              {
-                "id": "219aa6fb-d3e7-4961-ae1e-41a56792a60b",
-                "name": "Chicken Drumstick",
-                "category": "Proteins",
-                "subcategory": "Animal Proteins",
-                "preparation_state": "raw",
-                "is_organic": false
-              },
-              {
-                "id": "8f862649-560d-4ff0-897a-b2ee940d96d9",
-                "name": "Chicken Drumstick (Grilled)",
-                "category": "Proteins",
-                "subcategory": "Animal Proteins",
-                "preparation_state": "cooked",
-                "is_organic": false
-              },
-              {
-                "id": "671b80e2-cc88-4713-8cd3-7a24862b3fce",
-                "name": "Chicken Eggs, Whole",
-                "category": "Dairy & Alternatives",
-                "subcategory": "Fresh Dairy",
-                "preparation_state": "fresh",
-                "is_organic": false
-              },
-              {
-                "id": "6c5cee43-18e8-4a37-ae1a-6551cc40b33c",
-                "name": "Chicken Eggs, Whole",
-                "category": "Dairy & Alternatives",
-                "subcategory": "Fresh Dairy",
-                "preparation_state": "fresh",
-                "is_organic": false
-              },
-              {
-                "id": "b3c7e1ce-6f4b-46f4-b448-d10bed0a275d",
-                "name": "Chicken Eggs, Whole",
-                "category": "Dairy & Alternatives",
-                "subcategory": "Fresh Dairy",
-                "preparation_state": "fresh",
-                "is_organic": false
-              },
-              {
-                "id": "6692c3d7-c2ee-4946-9132-95370217ba7e",
-                "name": "Chicken Eggs, Whole",
-                "category": "Dairy & Alternatives",
-                "subcategory": "Fresh Dairy",
-                "preparation_state": "fresh",
-                "is_organic": false
-              },
-              {
-                "id": "c2e7bf62-159e-4555-a034-c24e205c3e51",
-                "name": "Chicken Thigh",
-                "category": "Proteins",
-                "subcategory": "Animal Proteins",
-                "preparation_state": "raw",
-                "is_organic": false
-              },
-              {
-                "id": "2d97fa63-5483-4e33-bad1-554b1b67b7c0",
-                "name": "Chicken Thigh, Boneless",
-                "category": "Proteins",
-                "subcategory": "Animal Proteins",
-                "preparation_state": "raw",
-                "is_organic": false
-              },
-              {
-                "id": "dd177a66-6b2a-43da-80a4-80b7f229a1b4",
-                "name": "Chicken Thigh, Boneless Skinless",
-                "category": "Proteins",
-                "subcategory": "Animal Proteins",
-                "preparation_state": "raw",
-                "is_organic": false
-              },
-              {
-                "id": "18b61900-06e6-405e-981d-569eb764f4b2",
-                "name": "Chicken Thigh (Roasted)",
-                "category": "Proteins",
-                "subcategory": "Animal Proteins",
-                "preparation_state": "cooked",
-                "is_organic": false
-              },
-              {
-                "id": "47f8603a-af14-404d-a83f-eb62b94afea2",
-                "name": "Chicken Thigh (Roasted, Free-range)",
-                "category": "Proteins",
-                "subcategory": "Animal Proteins",
-                "preparation_state": "cooked",
-                "is_organic": false
-              },
-              {
-                "id": "a4ac0049-67a1-4796-bf68-7c2f2c762492",
-                "name": "Chicken Thigh, with Skin",
-                "category": "Proteins",
-                "subcategory": "Animal Proteins",
-                "preparation_state": "raw",
-                "is_organic": false
-              }
-            ],
-            "total": 20,
-            "search_term": "chicken",
-            "performance": {
-              "total_time_ms": 131,
-              "query_time_ms": 9,
-              "connection_time_ms": 131
-            }
+            "message": "Internal server error"
           },
-          "responseSize": 3751
+          "responseSize": 36
         },
         {
           "path": "/api/v1/correlations/insights",
@@ -332,13 +164,13 @@
               "value": "8e8a568a-c2f8-43a8-abf2-4e54408dbdc0"
             }
           ],
-          "status": 401,
+          "status": 502,
           "working": false,
-          "responseTime": 48,
+          "responseTime": 1358,
           "responseData": {
-            "error": "Authentication required"
+            "message": "Internal server error"
           },
-          "responseSize": 35
+          "responseSize": 36
         },
         {
           "path": "/api/v1/detox-types",
@@ -347,35 +179,13 @@
           "description": "Get detox-types",
           "source": "backend/functions/api/handlers/detox.js",
           "params": [],
-          "status": 404,
+          "status": 502,
           "working": false,
-          "responseTime": 93,
+          "responseTime": 1098,
           "responseData": {
-            "error": "Endpoint not found",
-            "details": {
-              "path": "/api/v1/detox-types",
-              "method": "GET",
-              "availableEndpoints": [
-                "GET /api/v1/protocols",
-                "GET /api/v1/foods/search",
-                "GET /api/v1/foods/by-protocol",
-                "GET /api/v1/symptoms/search",
-                "GET /api/v1/supplements/search",
-                "GET /api/v1/medications/search",
-                "GET /api/v1/detox-types/search",
-                "GET /api/v1/exposures/search",
-                "GET /api/v1/users",
-                "GET /api/v1/user/preferences",
-                "GET /api/v1/user/protocols",
-                "GET /api/v1/users/current-protocol",
-                "GET /api/v1/users/protocol-history",
-                "GET /api/v1/correlations/insights",
-                "GET /api/v1/timeline/entries",
-                "POST /api/v1/timeline/entries"
-              ]
-            }
+            "message": "Internal server error"
           },
-          "responseSize": 605
+          "responseSize": 36
         },
         {
           "path": "/api/v1/exposure-types",
@@ -384,35 +194,13 @@
           "description": "Get exposure-types",
           "source": "backend/functions/api/handlers/exposures.js",
           "params": [],
-          "status": 404,
+          "status": 502,
           "working": false,
-          "responseTime": 109,
+          "responseTime": 1343,
           "responseData": {
-            "error": "Endpoint not found",
-            "details": {
-              "path": "/api/v1/exposure-types",
-              "method": "GET",
-              "availableEndpoints": [
-                "GET /api/v1/protocols",
-                "GET /api/v1/foods/search",
-                "GET /api/v1/foods/by-protocol",
-                "GET /api/v1/symptoms/search",
-                "GET /api/v1/supplements/search",
-                "GET /api/v1/medications/search",
-                "GET /api/v1/detox-types/search",
-                "GET /api/v1/exposures/search",
-                "GET /api/v1/users",
-                "GET /api/v1/user/preferences",
-                "GET /api/v1/user/protocols",
-                "GET /api/v1/users/current-protocol",
-                "GET /api/v1/users/protocol-history",
-                "GET /api/v1/correlations/insights",
-                "GET /api/v1/timeline/entries",
-                "POST /api/v1/timeline/entries"
-              ]
-            }
+            "message": "Internal server error"
           },
-          "responseSize": 608
+          "responseSize": 36
         },
         {
           "path": "/api/v1/foods/by-protocol",
@@ -426,13 +214,13 @@
               "value": "1495844a-19de-404c-a288-7660eda0cbe1"
             }
           ],
-          "status": 401,
+          "status": 502,
           "working": false,
-          "responseTime": 121,
+          "responseTime": 1058,
           "responseData": {
-            "error": "Authentication required"
+            "message": "Internal server error"
           },
-          "responseSize": 35
+          "responseSize": 36
         },
         {
           "path": "/api/v1/protocols",
@@ -446,194 +234,13 @@
               "value": "1495844a-19de-404c-a288-7660eda0cbe1"
             }
           ],
-          "status": 200,
-          "working": true,
-          "responseTime": 153,
+          "status": 502,
+          "working": false,
+          "responseTime": 1101,
           "responseData": {
-            "protocols": [
-              {
-                "id": "1495844a-19de-404c-a288-7660eda0cbe1",
-                "name": "AIP",
-                "description": "The Autoimmune Protocol (AIP) is an elimination diet designed to help identify food sensitivities and reduce inflammation in people with autoimmune conditions.",
-                "category": null,
-                "phases": [
-                  {
-                    "name": "Elimination",
-                    "description": "Remove all potentially inflammatory foods",
-                    "duration_weeks": 6
-                  },
-                  {
-                    "name": "Reintroduction",
-                    "description": "Systematically reintroduce foods one at a time",
-                    "duration_weeks": 12
-                  }
-                ],
-                "is_global": true,
-                "official": true,
-                "version": "1.0",
-                "protocol_type": "rule_based",
-                "created_at": "2025-06-22T20:04:35.754Z"
-              },
-              {
-                "id": "7c728266-7c7e-4389-a9b6-7c5280f2edd2",
-                "name": "Keto",
-                "description": "A ketogenic diet is high in fats, moderate in protein, and very low in carbohydrates to induce ketosis.",
-                "category": "metabolic",
-                "phases": [
-                  {
-                    "name": "Induction",
-                    "description": "Restrict carbs to <20g/day",
-                    "duration_weeks": 2
-                  },
-                  {
-                    "name": "Maintenance",
-                    "description": "Maintain ketosis with 20-50g carbs/day",
-                    "duration_weeks": "ongoing"
-                  }
-                ],
-                "is_global": true,
-                "official": true,
-                "version": "1.0",
-                "protocol_type": "rule_based",
-                "created_at": "2025-07-06T19:08:31.345Z"
-              },
-              {
-                "id": "a80be547-6db1-4722-a5a4-60930143a2d9",
-                "name": "Low FODMAP",
-                "description": "The Low FODMAP diet restricts fermentable carbohydrates that can trigger IBS symptoms, developed by Monash University.",
-                "category": "low_fodmap",
-                "phases": [
-                  {
-                    "name": "Elimination",
-                    "description": "Eliminate high FODMAP foods",
-                    "duration_weeks": "2-6"
-                  },
-                  {
-                    "name": "Reintroduction",
-                    "description": "Test individual FODMAP groups",
-                    "duration_weeks": "8-12"
-                  },
-                  {
-                    "name": "Personalization",
-                    "description": "Create personalized long-term diet",
-                    "duration_weeks": "ongoing"
-                  }
-                ],
-                "is_global": true,
-                "official": false,
-                "version": "1.0",
-                "protocol_type": "rule_based",
-                "created_at": "2025-06-23T18:39:01.593Z"
-              },
-              {
-                "id": "51ca7a24-4691-4629-8ee5-c20876e68c29",
-                "name": "Low Histamine",
-                "description": "A low histamine diet eliminates foods high in histamine or that trigger histamine release, helping manage histamine intolerance symptoms.",
-                "category": "low_histamine",
-                "phases": [
-                  {
-                    "name": "Elimination",
-                    "description": "Eliminate high histamine foods",
-                    "duration_weeks": "2-6"
-                  },
-                  {
-                    "name": "Reintroduction",
-                    "description": "Test medium histamine foods one at a time",
-                    "duration_weeks": "4-8"
-                  }
-                ],
-                "is_global": true,
-                "official": false,
-                "version": "1.0",
-                "protocol_type": "property_based",
-                "created_at": "2025-06-23T18:39:01.593Z"
-              },
-              {
-                "id": "83e35884-2161-4681-adf4-952bc2bd1cde",
-                "name": "Low Lectin Protocol",
-                "description": "A dietary protocol that avoids high-lectin foods while allowing lectin-free and low-lectin options. Focuses on wild-caught seafood, grass-fed meats, specific oils, and carefully selected plant foods.",
-                "category": "elimination",
-                "phases": null,
-                "is_global": true,
-                "official": true,
-                "version": "1.0",
-                "protocol_type": "rule_based",
-                "created_at": "2025-07-29T21:27:10.614Z"
-              },
-              {
-                "id": "12f1d4f1-f56a-48a3-b936-41026014656b",
-                "name": "Low Oxalate",
-                "description": "A low oxalate diet restricts foods high in oxalates to prevent kidney stones and manage oxalate sensitivity.",
-                "category": "low_oxalate",
-                "phases": null,
-                "is_global": true,
-                "official": false,
-                "version": "1.0",
-                "protocol_type": "property_based",
-                "created_at": "2025-06-23T18:39:01.593Z"
-              },
-              {
-                "id": "40b6955c-fd3b-4aba-846b-03caa7119ff9",
-                "name": "No Nightshades",
-                "description": "A nightshade-free diet eliminates vegetables from the nightshade family, which can trigger inflammation in sensitive individuals.",
-                "category": "no_nightshades",
-                "phases": null,
-                "is_global": true,
-                "official": false,
-                "version": "1.0",
-                "protocol_type": "rule_based",
-                "created_at": "2025-06-23T18:39:01.593Z"
-              },
-              {
-                "id": "46de08fb-03bf-4032-b507-122bb934ecb9",
-                "name": "Paleo",
-                "description": "The Paleo diet emphasizes whole foods that were available to Paleolithic humans, excluding processed foods, grains, and legumes.",
-                "category": "paleo",
-                "phases": [
-                  {
-                    "name": "Strict",
-                    "description": "Eliminate all non-Paleo foods",
-                    "duration_weeks": 4
-                  },
-                  {
-                    "name": "Modified",
-                    "description": "Allow some flexibility with certain foods",
-                    "duration_weeks": "ongoing"
-                  }
-                ],
-                "is_global": true,
-                "official": false,
-                "version": "1.0",
-                "protocol_type": "rule_based",
-                "created_at": "2025-06-23T18:39:01.593Z"
-              },
-              {
-                "id": "5cd8f8c7-3cbb-4405-ab88-a253ff7c907b",
-                "name": "Whole30",
-                "description": "Whole30 is a 30-day elimination diet that removes sugar, alcohol, grains, legumes, and dairy to reset eating habits.",
-                "category": "whole30",
-                "phases": [
-                  {
-                    "name": "Elimination",
-                    "description": "Strict 30-day elimination",
-                    "duration_weeks": 4
-                  },
-                  {
-                    "name": "Reintroduction",
-                    "description": "Systematic reintroduction of eliminated foods",
-                    "duration_weeks": 2
-                  }
-                ],
-                "is_global": true,
-                "official": false,
-                "version": "1.0",
-                "protocol_type": "rule_based",
-                "created_at": "2025-06-23T18:39:01.593Z"
-              }
-            ],
-            "total": 9
+            "message": "Internal server error"
           },
-          "responseSize": 4624
+          "responseSize": 36
         },
         {
           "path": "/api/v1/timeline/entries",
@@ -647,13 +254,13 @@
               "value": "2024-07-06"
             }
           ],
-          "status": 401,
+          "status": 502,
           "working": false,
-          "responseTime": 47,
+          "responseTime": 1061,
           "responseData": {
-            "error": "Authentication required"
+            "message": "Internal server error"
           },
-          "responseSize": 35
+          "responseSize": 36
         },
         {
           "path": "/api/v1/timeline/entries",
@@ -667,13 +274,13 @@
               "value": "2024-07-06"
             }
           ],
-          "status": 401,
+          "status": 502,
           "working": false,
-          "responseTime": 137,
+          "responseTime": 1358,
           "responseData": {
-            "error": "Authentication required"
+            "message": "Internal server error"
           },
-          "responseSize": 35
+          "responseSize": 36
         },
         {
           "path": "/api/v1/users/preferences",
@@ -687,35 +294,13 @@
               "value": "8e8a568a-c2f8-43a8-abf2-4e54408dbdc0"
             }
           ],
-          "status": 404,
+          "status": 502,
           "working": false,
-          "responseTime": 41,
+          "responseTime": 1162,
           "responseData": {
-            "error": "Endpoint not found",
-            "details": {
-              "path": "/api/v1/users/preferences",
-              "method": "GET",
-              "availableEndpoints": [
-                "GET /api/v1/protocols",
-                "GET /api/v1/foods/search",
-                "GET /api/v1/foods/by-protocol",
-                "GET /api/v1/symptoms/search",
-                "GET /api/v1/supplements/search",
-                "GET /api/v1/medications/search",
-                "GET /api/v1/detox-types/search",
-                "GET /api/v1/exposures/search",
-                "GET /api/v1/users",
-                "GET /api/v1/user/preferences",
-                "GET /api/v1/user/protocols",
-                "GET /api/v1/users/current-protocol",
-                "GET /api/v1/users/protocol-history",
-                "GET /api/v1/correlations/insights",
-                "GET /api/v1/timeline/entries",
-                "POST /api/v1/timeline/entries"
-              ]
-            }
+            "message": "Internal server error"
           },
-          "responseSize": 611
+          "responseSize": 36
         },
         {
           "path": "/api/v1/users/preferences",
@@ -729,35 +314,13 @@
               "value": "8e8a568a-c2f8-43a8-abf2-4e54408dbdc0"
             }
           ],
-          "status": 404,
+          "status": 502,
           "working": false,
-          "responseTime": 113,
+          "responseTime": 1076,
           "responseData": {
-            "error": "Endpoint not found",
-            "details": {
-              "path": "/api/v1/users/preferences",
-              "method": "PUT",
-              "availableEndpoints": [
-                "GET /api/v1/protocols",
-                "GET /api/v1/foods/search",
-                "GET /api/v1/foods/by-protocol",
-                "GET /api/v1/symptoms/search",
-                "GET /api/v1/supplements/search",
-                "GET /api/v1/medications/search",
-                "GET /api/v1/detox-types/search",
-                "GET /api/v1/exposures/search",
-                "GET /api/v1/users",
-                "GET /api/v1/user/preferences",
-                "GET /api/v1/user/protocols",
-                "GET /api/v1/users/current-protocol",
-                "GET /api/v1/users/protocol-history",
-                "GET /api/v1/correlations/insights",
-                "GET /api/v1/timeline/entries",
-                "POST /api/v1/timeline/entries"
-              ]
-            }
+            "message": "Internal server error"
           },
-          "responseSize": 611
+          "responseSize": 36
         },
         {
           "path": "/api/v1/users",
@@ -766,13 +329,13 @@
           "description": "Get users",
           "source": "backend/functions/api/index.js",
           "params": [],
-          "status": 401,
+          "status": 502,
           "working": false,
-          "responseTime": 68,
+          "responseTime": 1062,
           "responseData": {
-            "error": "Authentication required"
+            "message": "Internal server error"
           },
-          "responseSize": 35
+          "responseSize": 36
         },
         {
           "path": "/api/v1/user/protocols",
@@ -786,13 +349,13 @@
               "value": "1495844a-19de-404c-a288-7660eda0cbe1"
             }
           ],
-          "status": 401,
+          "status": 502,
           "working": false,
-          "responseTime": 51,
+          "responseTime": 1059,
           "responseData": {
-            "error": "Authentication required"
+            "message": "Internal server error"
           },
-          "responseSize": 35
+          "responseSize": 36
         },
         {
           "path": "/api/v1/user/preferences",
@@ -806,13 +369,13 @@
               "value": "8e8a568a-c2f8-43a8-abf2-4e54408dbdc0"
             }
           ],
-          "status": 401,
+          "status": 502,
           "working": false,
-          "responseTime": 52,
+          "responseTime": 1060,
           "responseData": {
-            "error": "Authentication required"
+            "message": "Internal server error"
           },
-          "responseSize": 35
+          "responseSize": 36
         },
         {
           "path": "/api/v1/users/current-protocol",
@@ -826,13 +389,13 @@
               "value": "1495844a-19de-404c-a288-7660eda0cbe1"
             }
           ],
-          "status": 401,
+          "status": 502,
           "working": false,
-          "responseTime": 46,
+          "responseTime": 1085,
           "responseData": {
-            "error": "Authentication required"
+            "message": "Internal server error"
           },
-          "responseSize": 35
+          "responseSize": 36
         },
         {
           "path": "/api/v1/users/protocol-history",
@@ -846,13 +409,13 @@
               "value": "1495844a-19de-404c-a288-7660eda0cbe1"
             }
           ],
-          "status": 401,
+          "status": 502,
           "working": false,
-          "responseTime": 48,
+          "responseTime": 1076,
           "responseData": {
-            "error": "Authentication required"
+            "message": "Internal server error"
           },
-          "responseSize": 35
+          "responseSize": 36
         },
         {
           "path": "/api/v1/users/change-protocol",
@@ -866,35 +429,13 @@
               "value": "1495844a-19de-404c-a288-7660eda0cbe1"
             }
           ],
-          "status": 404,
+          "status": 502,
           "working": false,
-          "responseTime": 54,
+          "responseTime": 1338,
           "responseData": {
-            "error": "Endpoint not found",
-            "details": {
-              "path": "/api/v1/users/change-protocol",
-              "method": "GET",
-              "availableEndpoints": [
-                "GET /api/v1/protocols",
-                "GET /api/v1/foods/search",
-                "GET /api/v1/foods/by-protocol",
-                "GET /api/v1/symptoms/search",
-                "GET /api/v1/supplements/search",
-                "GET /api/v1/medications/search",
-                "GET /api/v1/detox-types/search",
-                "GET /api/v1/exposures/search",
-                "GET /api/v1/users",
-                "GET /api/v1/user/preferences",
-                "GET /api/v1/user/protocols",
-                "GET /api/v1/users/current-protocol",
-                "GET /api/v1/users/protocol-history",
-                "GET /api/v1/correlations/insights",
-                "GET /api/v1/timeline/entries",
-                "POST /api/v1/timeline/entries"
-              ]
-            }
+            "message": "Internal server error"
           },
-          "responseSize": 615
+          "responseSize": 36
         },
         {
           "path": "/api/v1/foods/test",
@@ -903,13 +444,13 @@
           "description": "Get test",
           "source": "backend/functions/api/index.js",
           "params": [],
-          "status": 500,
+          "status": 502,
           "working": false,
-          "responseTime": 54,
+          "responseTime": 1060,
           "responseData": {
-            "error": "Internal server error: corsHeaders is not defined"
+            "message": "Internal server error"
           },
-          "responseSize": 61
+          "responseSize": 36
         },
         {
           "path": "/api/v1/symptoms/search",
@@ -923,16 +464,13 @@
               "value": "chicken"
             }
           ],
-          "status": 200,
-          "working": true,
-          "responseTime": 94,
+          "status": 502,
+          "working": false,
+          "responseTime": 1120,
           "responseData": {
-            "symptoms": [],
-            "total": 0,
-            "search_term": "chicken",
-            "user_history_included": false
+            "message": "Internal server error"
           },
-          "responseSize": 79
+          "responseSize": 36
         },
         {
           "path": "/api/v1/supplements/search",
@@ -946,15 +484,13 @@
               "value": "chicken"
             }
           ],
-          "status": 200,
-          "working": true,
-          "responseTime": 47,
+          "status": 502,
+          "working": false,
+          "responseTime": 1164,
           "responseData": {
-            "supplements": [],
-            "total": 0,
-            "search_term": "chicken"
+            "message": "Internal server error"
           },
-          "responseSize": 52
+          "responseSize": 36
         },
         {
           "path": "/api/v1/medications/search",
@@ -968,15 +504,13 @@
               "value": "chicken"
             }
           ],
-          "status": 200,
-          "working": true,
-          "responseTime": 50,
+          "status": 502,
+          "working": false,
+          "responseTime": 1057,
           "responseData": {
-            "medications": [],
-            "total": 0,
-            "search_term": "chicken"
+            "message": "Internal server error"
           },
-          "responseSize": 52
+          "responseSize": 36
         },
         {
           "path": "/api/v1/detox-types/search",
@@ -990,15 +524,13 @@
               "value": "chicken"
             }
           ],
-          "status": 200,
-          "working": true,
-          "responseTime": 83,
+          "status": 502,
+          "working": false,
+          "responseTime": 1058,
           "responseData": {
-            "detox_types": [],
-            "total": 0,
-            "search_term": "chicken"
+            "message": "Internal server error"
           },
-          "responseSize": 52
+          "responseSize": 36
         },
         {
           "path": "/api/v1/exposures/search",
@@ -1012,15 +544,13 @@
               "value": "chicken"
             }
           ],
-          "status": 200,
-          "working": true,
-          "responseTime": 106,
+          "status": 502,
+          "working": false,
+          "responseTime": 1121,
           "responseData": {
-            "exposures": [],
-            "total": 0,
-            "search_term": "chicken"
+            "message": "Internal server error"
           },
-          "responseSize": 50
+          "responseSize": 36
         },
         {
           "path": "/api/v1/admin/seed-demo-data",
@@ -1029,35 +559,13 @@
           "description": "Get seed-demo-data",
           "source": "backend/functions/api/index.js",
           "params": [],
-          "status": 404,
+          "status": 502,
           "working": false,
-          "responseTime": 36,
+          "responseTime": 1078,
           "responseData": {
-            "error": "Endpoint not found",
-            "details": {
-              "path": "/api/v1/admin/seed-demo-data",
-              "method": "GET",
-              "availableEndpoints": [
-                "GET /api/v1/protocols",
-                "GET /api/v1/foods/search",
-                "GET /api/v1/foods/by-protocol",
-                "GET /api/v1/symptoms/search",
-                "GET /api/v1/supplements/search",
-                "GET /api/v1/medications/search",
-                "GET /api/v1/detox-types/search",
-                "GET /api/v1/exposures/search",
-                "GET /api/v1/users",
-                "GET /api/v1/user/preferences",
-                "GET /api/v1/user/protocols",
-                "GET /api/v1/users/current-protocol",
-                "GET /api/v1/users/protocol-history",
-                "GET /api/v1/correlations/insights",
-                "GET /api/v1/timeline/entries",
-                "POST /api/v1/timeline/entries"
-              ]
-            }
+            "message": "Internal server error"
           },
-          "responseSize": 614
+          "responseSize": 36
         },
         {
           "path": "/api/v1/journal/entries",
@@ -1066,13 +574,13 @@
           "description": "Get entries",
           "source": "backend/functions/api/index.js",
           "params": [],
-          "status": 500,
+          "status": 502,
           "working": false,
-          "responseTime": 49,
+          "responseTime": 1061,
           "responseData": {
-            "error": "Failed to complete get journal entries"
+            "message": "Internal server error"
           },
-          "responseSize": 50
+          "responseSize": 36
         },
         {
           "path": "/api/v1/journal/entries/",
@@ -1081,13 +589,13 @@
           "description": "Get resource",
           "source": "backend/functions/api/index.js",
           "params": [],
-          "status": 401,
+          "status": 502,
           "working": false,
-          "responseTime": 46,
+          "responseTime": 1081,
           "responseData": {
-            "error": "User not authenticated"
+            "message": "Internal server error"
           },
-          "responseSize": 34
+          "responseSize": 36
         },
         {
           "path": "/api/v1/symptoms",
@@ -1096,35 +604,13 @@
           "description": "Get symptoms",
           "source": "backend/functions/api/index.js",
           "params": [],
-          "status": 404,
+          "status": 502,
           "working": false,
-          "responseTime": 57,
+          "responseTime": 1079,
           "responseData": {
-            "error": "Endpoint not found",
-            "details": {
-              "path": "/api/v1/symptoms",
-              "method": "GET",
-              "availableEndpoints": [
-                "GET /api/v1/protocols",
-                "GET /api/v1/foods/search",
-                "GET /api/v1/foods/by-protocol",
-                "GET /api/v1/symptoms/search",
-                "GET /api/v1/supplements/search",
-                "GET /api/v1/medications/search",
-                "GET /api/v1/detox-types/search",
-                "GET /api/v1/exposures/search",
-                "GET /api/v1/users",
-                "GET /api/v1/user/preferences",
-                "GET /api/v1/user/protocols",
-                "GET /api/v1/users/current-protocol",
-                "GET /api/v1/users/protocol-history",
-                "GET /api/v1/correlations/insights",
-                "GET /api/v1/timeline/entries",
-                "POST /api/v1/timeline/entries"
-              ]
-            }
+            "message": "Internal server error"
           },
-          "responseSize": 602
+          "responseSize": 36
         },
         {
           "path": "/api/v1/supplements",
@@ -1133,35 +619,13 @@
           "description": "Get supplements",
           "source": "backend/functions/api/index.js",
           "params": [],
-          "status": 404,
+          "status": 502,
           "working": false,
-          "responseTime": 42,
+          "responseTime": 1079,
           "responseData": {
-            "error": "Endpoint not found",
-            "details": {
-              "path": "/api/v1/supplements",
-              "method": "GET",
-              "availableEndpoints": [
-                "GET /api/v1/protocols",
-                "GET /api/v1/foods/search",
-                "GET /api/v1/foods/by-protocol",
-                "GET /api/v1/symptoms/search",
-                "GET /api/v1/supplements/search",
-                "GET /api/v1/medications/search",
-                "GET /api/v1/detox-types/search",
-                "GET /api/v1/exposures/search",
-                "GET /api/v1/users",
-                "GET /api/v1/user/preferences",
-                "GET /api/v1/user/protocols",
-                "GET /api/v1/users/current-protocol",
-                "GET /api/v1/users/protocol-history",
-                "GET /api/v1/correlations/insights",
-                "GET /api/v1/timeline/entries",
-                "POST /api/v1/timeline/entries"
-              ]
-            }
+            "message": "Internal server error"
           },
-          "responseSize": 605
+          "responseSize": 36
         },
         {
           "path": "/api/v1/medications",
@@ -1170,42 +634,20 @@
           "description": "Get medications",
           "source": "backend/functions/api/index.js",
           "params": [],
-          "status": 404,
+          "status": 502,
           "working": false,
-          "responseTime": 37,
+          "responseTime": 1061,
           "responseData": {
-            "error": "Endpoint not found",
-            "details": {
-              "path": "/api/v1/medications",
-              "method": "GET",
-              "availableEndpoints": [
-                "GET /api/v1/protocols",
-                "GET /api/v1/foods/search",
-                "GET /api/v1/foods/by-protocol",
-                "GET /api/v1/symptoms/search",
-                "GET /api/v1/supplements/search",
-                "GET /api/v1/medications/search",
-                "GET /api/v1/detox-types/search",
-                "GET /api/v1/exposures/search",
-                "GET /api/v1/users",
-                "GET /api/v1/user/preferences",
-                "GET /api/v1/user/protocols",
-                "GET /api/v1/users/current-protocol",
-                "GET /api/v1/users/protocol-history",
-                "GET /api/v1/correlations/insights",
-                "GET /api/v1/timeline/entries",
-                "POST /api/v1/timeline/entries"
-              ]
-            }
+            "message": "Internal server error"
           },
-          "responseSize": 605
+          "responseSize": 36
         }
       ],
-      "workingCount": 17,
+      "workingCount": 0,
       "totalCount": 28,
       "categories": {
         "Foods": {
-          "working": 1,
+          "working": 0,
           "total": 2
         },
         "AI": {
@@ -1213,11 +655,11 @@
           "total": 1
         },
         "Lookup Data": {
-          "working": 2,
+          "working": 0,
           "total": 4
         },
         "Protocols": {
-          "working": 1,
+          "working": 0,
           "total": 6
         },
         "Timeline": {
@@ -1229,7 +671,7 @@
           "total": 4
         },
         "Health Data": {
-          "working": 3,
+          "working": 0,
           "total": 6
         },
         "Other": {
@@ -1638,7 +1080,7 @@
             {
               "name": "ProtocolFoods",
               "path": "frontend/web-app/src/features/protocol/ProtocolFoods.jsx",
-              "size": 19679,
+              "size": 20924,
               "hooks": [
                 "useState",
                 "useProtocolFoods",
@@ -1765,11 +1207,11 @@
             {
               "name": "useProtocolFoods",
               "path": "frontend/web-app/src/shared/hooks/useProtocolFoods.js",
-              "size": 5304
+              "size": 5397
             }
           ],
           "utilities": [],
-          "size": "678.15 KB"
+          "size": "679.45 KB"
         },
         "frontend/shared": {
           "totalFiles": 36,
@@ -1919,7 +1361,7 @@
             }
           ],
           "utilities": [],
-          "size": "181.69 KB"
+          "size": "184.24 KB"
         },
         "backend/functions": {
           "totalFiles": 24,
@@ -1936,7 +1378,7 @@
             }
           ],
           "utilities": [],
-          "size": "181.69 KB"
+          "size": "184.24 KB"
         },
         "backend": {
           "totalFiles": 33,
@@ -1956,7 +1398,7 @@
             }
           ],
           "utilities": [],
-          "size": "212.81 KB"
+          "size": "215.36 KB"
         }
       },
       "shared": {},
@@ -2052,18 +1494,18 @@
       "repository": "https://github.com/deebyrne26/health-platform",
       "branch": "main",
       "lastCommit": {
-        "hash": "23cb6d2",
-        "message": "Protocol Updates",
+        "hash": "9b9c893",
+        "message": "Food protocol search updates",
         "author": "deebyrne26",
-        "date": "Tue Jul 29 18:46:06 2025 -0400"
+        "date": "Tue Jul 29 20:23:09 2025 -0400"
       },
       "contributors": [
         {
           "name": "deebyrne26",
-          "commits": 215
+          "commits": 216
         }
       ],
-      "totalCommits": 215
+      "totalCommits": 216
     }
   }
 }
