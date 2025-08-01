@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Search, Plus, Check, Loader2, X, AlertCircle, Pill, Droplets } from 'lucide-react';
+import { Search, Plus, Check, Loader2, X } from 'lucide-react';
 import { Input, Button, Card } from '../../../../shared/components/ui';
 import { cn } from '../../../../shared/design-system';
 
-// Import the unified search hook for all types
+// Import the unified search hook and configuration
 import { useUnifiedSearch } from '../../../../shared/hooks/useUnifiedSearch';
+import { getSelectorConfig } from '../../../../shared/config/selectorTypes';
 
 const UnifiedSmartSelector = ({ 
   type, // 'food', 'symptom', 'supplement', 'medication', 'exposure', 'detox'
@@ -34,53 +35,8 @@ const UnifiedSmartSelector = ({
     prioritizeUserHistory
   });
 
-  // Type-specific configuration
-  const typeConfig = {
-    food: {
-      placeholder: 'Add your foods...',
-      emptyState: 'Start typing to add foods',
-      endpoint: '/api/v1/foods/search',
-      icon: '🍎',
-      color: 'blue'
-    },
-    symptom: {
-      placeholder: 'Add your symptoms...',
-      emptyState: 'Start typing to add symptoms',
-      endpoint: '/api/v1/symptoms/search',
-      icon: AlertCircle,
-      color: 'orange'
-    },
-    supplement: {
-      placeholder: 'Add your supplements...',
-      emptyState: 'Start typing to add supplements',
-      endpoint: '/api/v1/supplements/search',
-      icon: Pill,
-      color: 'green'
-    },
-    medication: {
-      placeholder: 'Add your medications...',
-      emptyState: 'Start typing to add medications',
-      endpoint: '/api/v1/medications/search',
-      icon: Pill,
-      color: 'red'
-    },
-    exposure: {
-      placeholder: 'Add your exposures...',
-      emptyState: 'Start typing to add environmental exposures',
-      endpoint: '/api/v1/exposures/search', // Will need to create this
-      icon: '🌿',
-      color: 'yellow'
-    },
-    detox: {
-      placeholder: 'Add your detox activities...',
-      emptyState: 'Start typing to add detox activities',
-      endpoint: '/api/v1/detox-types/search',
-      icon: Droplets,
-      color: 'purple'
-    }
-  };
-
-  const config = typeConfig[type] || typeConfig.food;
+  // Get unified configuration for this selector type
+  const config = getSelectorConfig(type);
 
   // Handle search for all item types using unified hook
   useEffect(() => {
@@ -223,11 +179,7 @@ const UnifiedSmartSelector = ({
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-2">
-                    {typeof IconComponent === 'string' ? (
-                      <span className="text-lg">{IconComponent}</span>
-                    ) : (
-                      <IconComponent size={16} className={`text-${config.color}-500`} />
-                    )}
+                    <IconComponent size={16} className={config.colorClass} />
                     <span className="font-medium">{item.name}</span>
                     {item.source === 'user_history' && (
                       <span className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded">

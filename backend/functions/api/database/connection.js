@@ -7,10 +7,9 @@ const pool = new Pool({
     database: process.env.DB_NAME,
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
-    ssl: process.env.NODE_ENV === 'production' ? {
-        rejectUnauthorized: true,
-    } : {
-        rejectUnauthorized: false
+    ssl: {
+        rejectUnauthorized: false, // Allow self-signed certificates for RDS
+        require: true // Still require SSL connection
     },
     
     // OPTIMIZED CONNECTION POOL SETTINGS

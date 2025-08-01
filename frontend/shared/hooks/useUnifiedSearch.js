@@ -7,8 +7,9 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { apiClient } from '../services/api.js';
 
-// Import the specialized food search hook
+// Import the specialized food search hook and unified configuration
 import { useFoodSearch } from './useFoodSearchUnified.js';
+import { getSelectorConfig } from '../config/selectorTypes.js';
 
 /**
  * Unified search hook that handles all search types
@@ -38,35 +39,8 @@ export const useUnifiedSearch = (options = {}) => {
   // Refs for debouncing
   const debounceTimeoutRef = useRef(null);
 
-  // Type-specific configuration
-  const typeConfig = {
-    food: {
-      endpoint: '/api/v1/foods/search',
-      responseKey: 'foods'
-    },
-    symptom: {
-      endpoint: '/api/v1/symptoms/search',
-      responseKey: 'symptoms'
-    },
-    supplement: {
-      endpoint: '/api/v1/supplements/search',
-      responseKey: 'supplements'
-    },
-    medication: {
-      endpoint: '/api/v1/medications/search',
-      responseKey: 'medications'
-    },
-    exposure: {
-      endpoint: '/api/v1/exposures/search',
-      responseKey: 'exposures'
-    },
-    detox: {
-      endpoint: '/api/v1/detox-types/search',
-      responseKey: 'detox_types'
-    }
-  };
-
-  const config = typeConfig[type] || typeConfig.symptom;
+  // Get unified configuration for this type
+  const config = getSelectorConfig(type);
 
   // Generic search function for non-food types
   const searchItems = useCallback(async (searchTermInput) => {
