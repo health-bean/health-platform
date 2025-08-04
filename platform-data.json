@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generated": "2025-08-01T20:42:55.843Z",
+    "generated": "2025-08-04T23:07:20.515Z",
     "version": "1.0.0",
     "generator": "AutomatedProfessionalDocsGenerator"
   },
@@ -11,13 +11,13 @@
     "status": "Active Development"
   },
   "statistics": {
-    "totalComponents": 55,
+    "totalComponents": 60,
     "totalHooks": 15,
-    "totalFiles": 110,
+    "totalFiles": 117,
     "workingAPIs": 17,
     "totalAPIs": 28,
     "totalTables": 24,
-    "totalCommits": 235,
+    "totalCommits": 236,
     "contributors": 1
   },
   "discoveredInfo": {
@@ -147,7 +147,7 @@
           ],
           "status": 500,
           "working": false,
-          "responseTime": 860,
+          "responseTime": 1061,
           "responseData": {
             "error": "Failed to complete unified food search"
           },
@@ -167,7 +167,7 @@
           ],
           "status": 401,
           "working": false,
-          "responseTime": 48,
+          "responseTime": 135,
           "responseData": {
             "error": "Authentication required"
           },
@@ -182,7 +182,7 @@
           "params": [],
           "status": 404,
           "working": false,
-          "responseTime": 29,
+          "responseTime": 130,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -218,7 +218,7 @@
           "params": [],
           "status": 404,
           "working": false,
-          "responseTime": 46,
+          "responseTime": 261,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -259,7 +259,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 44,
+          "responseTime": 124,
           "responseData": {
             "protocols": [
               {
@@ -460,7 +460,7 @@
           ],
           "status": 401,
           "working": false,
-          "responseTime": 30,
+          "responseTime": 244,
           "responseData": {
             "error": "Authentication required"
           },
@@ -480,7 +480,7 @@
           ],
           "status": 401,
           "working": false,
-          "responseTime": 36,
+          "responseTime": 256,
           "responseData": {
             "error": "Authentication required"
           },
@@ -500,7 +500,7 @@
           ],
           "status": 404,
           "working": false,
-          "responseTime": 52,
+          "responseTime": 253,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -541,7 +541,7 @@
           ],
           "status": 404,
           "working": false,
-          "responseTime": 28,
+          "responseTime": 263,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -577,7 +577,7 @@
           "params": [],
           "status": 401,
           "working": false,
-          "responseTime": 32,
+          "responseTime": 244,
           "responseData": {
             "error": "Authentication required"
           },
@@ -597,7 +597,7 @@
           ],
           "status": 401,
           "working": false,
-          "responseTime": 28,
+          "responseTime": 253,
           "responseData": {
             "error": "Authentication required"
           },
@@ -617,7 +617,7 @@
           ],
           "status": 401,
           "working": false,
-          "responseTime": 27,
+          "responseTime": 111,
           "responseData": {
             "error": "Authentication required"
           },
@@ -637,7 +637,7 @@
           ],
           "status": 401,
           "working": false,
-          "responseTime": 42,
+          "responseTime": 259,
           "responseData": {
             "error": "Authentication required"
           },
@@ -657,7 +657,7 @@
           ],
           "status": 401,
           "working": false,
-          "responseTime": 27,
+          "responseTime": 280,
           "responseData": {
             "error": "Authentication required"
           },
@@ -677,7 +677,7 @@
           ],
           "status": 404,
           "working": false,
-          "responseTime": 30,
+          "responseTime": 257,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -713,12 +713,12 @@
           "params": [],
           "status": 200,
           "working": true,
-          "responseTime": 29,
+          "responseTime": 113,
           "responseData": {
             "success": true,
             "message": "Database connection successful",
             "count": "351",
-            "timestamp": "2025-08-01T20:42:55.454Z"
+            "timestamp": "2025-08-04T23:07:17.690Z"
           },
           "responseSize": 112
         },
@@ -731,7 +731,7 @@
           "params": [],
           "status": 200,
           "working": true,
-          "responseTime": 26,
+          "responseTime": 257,
           "responseData": {
             "cache_stats": {
               "size": 0,
@@ -742,7 +742,7 @@
               "hitCount": 0
             },
             "sample_entries": [],
-            "timestamp": "2025-08-01T20:42:55.480Z"
+            "timestamp": "2025-08-04T23:07:17.945Z"
           },
           "responseSize": 157
         },
@@ -760,7 +760,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 34,
+          "responseTime": 117,
           "responseData": {
             "symptoms": [],
             "total": 0,
@@ -783,7 +783,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 63,
+          "responseTime": 257,
           "responseData": {
             "supplements": [],
             "total": 0,
@@ -805,7 +805,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 33,
+          "responseTime": 260,
           "responseData": {
             "medications": [],
             "total": 0,
@@ -827,7 +827,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 30,
+          "responseTime": 261,
           "responseData": {
             "detox_types": [],
             "total": 0,
@@ -849,7 +849,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 30,
+          "responseTime": 255,
           "responseData": {
             "exposures": [],
             "total": 0,
@@ -866,7 +866,7 @@
           "params": [],
           "status": 404,
           "working": false,
-          "responseTime": 25,
+          "responseTime": 108,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -902,7 +902,7 @@
           "params": [],
           "status": 500,
           "working": false,
-          "responseTime": 25,
+          "responseTime": 252,
           "responseData": {
             "error": "Failed to complete get journal entries"
           },
@@ -917,7 +917,7 @@
           "params": [],
           "status": 401,
           "working": false,
-          "responseTime": 27,
+          "responseTime": 252,
           "responseData": {
             "error": "User not authenticated"
           },
@@ -932,7 +932,7 @@
           "params": [],
           "status": 404,
           "working": false,
-          "responseTime": 26,
+          "responseTime": 254,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -968,7 +968,7 @@
           "params": [],
           "status": 404,
           "working": false,
-          "responseTime": 31,
+          "responseTime": 253,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -1004,7 +1004,7 @@
           "params": [],
           "status": 404,
           "working": false,
-          "responseTime": 26,
+          "responseTime": 254,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -1540,19 +1540,19 @@
             {
               "name": "AddEntryForm",
               "path": "frontend/web-app/src/features/timeline/AddEntryForm.jsx",
-              "size": 2629,
+              "size": 2853,
               "hooks": []
             },
             {
               "name": "TimelineEntry",
               "path": "frontend/web-app/src/features/timeline/TimelineEntry.jsx",
-              "size": 5698,
+              "size": 5760,
               "hooks": []
             },
             {
               "name": "TimelineView",
               "path": "frontend/web-app/src/features/timeline/TimelineView.jsx",
-              "size": 3072,
+              "size": 2478,
               "hooks": []
             }
           ],
@@ -1594,14 +1594,15 @@
             }
           ],
           "utilities": [],
-          "size": "673.38 KB"
+          "size": "675.98 KB"
         },
         "frontend/shared": {
-          "totalFiles": 39,
+          "totalFiles": 46,
           "fileTypes": {
             "": 1,
-            ".jsx": 13,
-            ".js": 23,
+            ".jsx": 18,
+            ".js": 24,
+            ".css": 1,
             ".json": 2
           },
           "components": [
@@ -1616,9 +1617,39 @@
               ]
             },
             {
+              "name": "ContentSection",
+              "path": "frontend/shared/components/layout/ContentSection.jsx",
+              "size": 700,
+              "hooks": []
+            },
+            {
+              "name": "EmptyState",
+              "path": "frontend/shared/components/layout/EmptyState.jsx",
+              "size": 2291,
+              "hooks": []
+            },
+            {
+              "name": "FormSection",
+              "path": "frontend/shared/components/layout/FormSection.jsx",
+              "size": 905,
+              "hooks": []
+            },
+            {
+              "name": "LoadingState",
+              "path": "frontend/shared/components/layout/LoadingState.jsx",
+              "size": 1280,
+              "hooks": []
+            },
+            {
+              "name": "SectionHeader",
+              "path": "frontend/shared/components/layout/SectionHeader.jsx",
+              "size": 2061,
+              "hooks": []
+            },
+            {
               "name": "Alert",
               "path": "frontend/shared/components/ui/Alert.jsx",
-              "size": 2468,
+              "size": 2582,
               "hooks": []
             },
             {
@@ -1630,13 +1661,13 @@
             {
               "name": "Button",
               "path": "frontend/shared/components/ui/Button.jsx",
-              "size": 897,
+              "size": 1120,
               "hooks": []
             },
             {
               "name": "Card",
               "path": "frontend/shared/components/ui/Card.jsx",
-              "size": 1613,
+              "size": 1989,
               "hooks": []
             },
             {
@@ -1648,13 +1679,13 @@
             {
               "name": "FormField",
               "path": "frontend/shared/components/ui/FormField.jsx",
-              "size": 710,
+              "size": 664,
               "hooks": []
             },
             {
               "name": "Input",
               "path": "frontend/shared/components/ui/Input.jsx",
-              "size": 749,
+              "size": 964,
               "hooks": []
             },
             {
@@ -1676,7 +1707,7 @@
             {
               "name": "Select",
               "path": "frontend/shared/components/ui/Select.jsx",
-              "size": 1608,
+              "size": 1768,
               "hooks": []
             },
             {
@@ -1688,7 +1719,7 @@
             {
               "name": "Textarea",
               "path": "frontend/shared/components/ui/Textarea.jsx",
-              "size": 831,
+              "size": 884,
               "hooks": []
             }
           ],
@@ -1735,7 +1766,7 @@
             }
           ],
           "utilities": [],
-          "size": "122.07 KB"
+          "size": "144.83 KB"
         }
       },
       "backend": {
@@ -1887,18 +1918,18 @@
       "repository": "https://github.com/deebyrne26/health-platform",
       "branch": "main",
       "lastCommit": {
-        "hash": "7cb9566",
-        "message": "cleanup",
+        "hash": "bf31f49",
+        "message": "Front End UX / UI Changes",
         "author": "deebyrne26",
-        "date": "Fri Aug 1 16:41:12 2025 -0400"
+        "date": "Mon Aug 4 19:05:41 2025 -0400"
       },
       "contributors": [
         {
           "name": "deebyrne26",
-          "commits": 235
+          "commits": 236
         }
       ],
-      "totalCommits": 235
+      "totalCommits": 236
     }
   }
 }
