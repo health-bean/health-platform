@@ -111,10 +111,10 @@ const MainApp = () => {
   // Handle auth loading
   if (authLoading) {
     return (
-      <div className="max-w-md mx-auto bg-white min-h-screen flex items-center justify-center">
+      <div className="max-w-md mx-auto bg-filo-cream min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <Loader2 size={32} className="animate-spin mx-auto mb-4 text-blue-600" />
-          <p className="text-gray-600">Loading...</p>
+          <Loader2 size={32} className="animate-spin mx-auto mb-4 text-filo-teal" />
+          <p className="text-neutral-600">Loading...</p>
         </div>
       </div>
     );
@@ -130,10 +130,10 @@ const MainApp = () => {
   // Handle app data loading (simplified for clean auth)
   if (authLoading || preferencesLoading) {
     return (
-      <div className="max-w-md mx-auto bg-white min-h-screen flex items-center justify-center">
+      <div className="max-w-md mx-auto bg-filo-cream min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <Loader2 size={32} className="animate-spin mx-auto mb-4 text-blue-600" />
-          <p className="text-gray-600">Loading your health journey...</p>
+          <Loader2 size={32} className="animate-spin mx-auto mb-4 text-filo-teal" />
+          <p className="text-neutral-600">Loading your health journey...</p>
         </div>
       </div>
     );
@@ -197,10 +197,10 @@ const MainApp = () => {
   // Loading states
   if (preferencesLoading || !isReady) {
     return (
-      <div className="max-w-md mx-auto bg-white min-h-screen flex items-center justify-center">
+      <div className="max-w-md mx-auto bg-filo-cream min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <Loader2 size={32} className="animate-spin mx-auto mb-4 text-blue-600" />
-          <p className="text-gray-600">Loading your health journey...</p>
+          <Loader2 size={32} className="animate-spin mx-auto mb-4 text-filo-teal" />
+          <p className="text-neutral-600">Loading your health journey...</p>
         </div>
       </div>
     );
@@ -209,10 +209,10 @@ const MainApp = () => {
   // Error states
   if (preferencesError && !preferences) {
     return (
-      <div className="max-w-md mx-auto bg-white min-h-screen p-4">
-        <Alert variant="danger" title="Connection Error">
+      <div className="max-w-md mx-auto bg-filo-cream min-h-screen p-4">
+        <Alert variant="error" title="Connection Error">
           <p className="mb-2">Unable to load your preferences.</p>
-          <p className="text-sm text-gray-600 mb-3">{preferencesError}</p>
+          <p className="text-sm text-neutral-600 mb-3">{preferencesError}</p>
           <Button 
             variant="primary" 
             onClick={() => window.location.reload()}
@@ -237,7 +237,7 @@ const MainApp = () => {
   }
 
   return (
-    <div className="bg-white min-h-screen">
+    <div className="bg-filo-cream min-h-screen">
       {/* Demo Mode Banner */}
       {isDemoMode && (
         <div className="bg-orange-100 border-b border-orange-200 px-4 py-2">

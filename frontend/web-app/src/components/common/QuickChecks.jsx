@@ -20,23 +20,23 @@ const QuickChecks = ({ type, preferences, onQuickSelect }) => {
   const getTypeConfig = (type) => {
     const configs = {
       supplement: {
-        color: 'bg-cyan-100 text-cyan-800 hover:bg-cyan-200 border-cyan-200',
+        color: 'health-supplement border hover:bg-primary-100 transition-standard',
         label: 'Quick Supplements'
       },
       medication: {
-        color: 'bg-purple-100 text-purple-800 hover:bg-purple-200 border-purple-200',
+        color: 'health-medication border hover:bg-lavender-100 transition-standard',
         label: 'Quick Medications'
       },
       food: {
-        color: 'bg-green-100 text-green-800 hover:bg-green-200 border-green-200',
+        color: 'health-food border hover:bg-accent-100 transition-standard',
         label: 'Quick Foods'
       },
       symptom: {
-        color: 'bg-red-100 text-red-800 hover:bg-red-200 border-red-200',
+        color: 'health-symptom border hover:bg-coral-100 transition-standard',
         label: 'Quick Symptoms'
       },
       detox: {
-        color: 'bg-purple-100 text-purple-800 hover:bg-purple-200 border-purple-200',
+        color: 'health-improvement border hover:bg-sage-100 transition-standard',
         label: 'Quick Detox'
       }
     };
@@ -53,7 +53,7 @@ const QuickChecks = ({ type, preferences, onQuickSelect }) => {
     <div className="mb-6">
       {/* Header */}
       <div className="flex items-center space-x-2 mb-3">
-        <div className="w-5 h-5 bg-yellow-500 rounded-full flex items-center justify-center">
+        <div className="w-5 h-5 bg-amber-500 rounded-full flex items-center justify-center">
           <Zap className="w-3 h-3 text-white" />
         </div>
         <h4 className="text-sm font-medium text-gray-700">

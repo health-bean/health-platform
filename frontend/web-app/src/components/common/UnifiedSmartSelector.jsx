@@ -119,7 +119,6 @@ const UnifiedSmartSelector = ({
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           className="pl-10"
-          style={{ paddingLeft: '2.5rem' }}
         />
       </div>
 
@@ -146,7 +145,7 @@ const UnifiedSmartSelector = ({
                   key={item.id}
                   className={cn(
                     "flex items-center justify-between p-2 border-b last:border-b-0",
-                    selected ? "bg-primary-50" : "bg-white"
+                    selected ? "bg-primary-50" : "bg-neutral-50"
                   )}
                 >
                   <span className="font-medium truncate">{item.name}</span>
@@ -182,7 +181,7 @@ const UnifiedSmartSelector = ({
                     <IconComponent size={16} className={config.colorClass} />
                     <span className="font-medium">{item.name}</span>
                     {item.source === 'user_history' && (
-                      <span className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded">
+                      <span className="text-xs bg-primary-100 text-primary-700 px-2 py-1 rounded">
                         From your history
                       </span>
                     )}
@@ -191,7 +190,7 @@ const UnifiedSmartSelector = ({
                     variant="ghost"
                     size="sm"
                     onClick={() => handleToggleItem(item)}
-                    className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                    className="text-coral-600 hover:text-coral-700 hover:bg-coral-50"
                   >
                     <X size={16} />
                   </Button>

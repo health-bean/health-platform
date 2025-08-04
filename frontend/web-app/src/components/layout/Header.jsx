@@ -42,13 +42,13 @@ const Header = ({
   };
 
   return (
-    <header className="bg-white border-b border-gray-200 shadow-sm sticky top-0 z-40">
+    <header className="bg-neutral-50 border-b border-neutral-200 shadow-sm sticky top-0 z-40">
       <div className="px-4 py-3">
         <div className="flex items-center justify-between">
           {/* Date Selector */}
           <div className="flex items-center space-x-3 flex-1 min-w-0">
             <div className="relative">
-              <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+              <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-neutral-400" />
               <Input
                 type="date"
                 value={selectedDate}
@@ -67,7 +67,7 @@ const Header = ({
               onClick={() => setShowUserDropdown(!showUserDropdown)}
               className="flex items-center space-x-2 p-2"
             >
-              <div className="w-8 h-8 bg-primary-600 rounded-full flex items-center justify-center">
+              <div className="w-8 h-8 bg-filo-teal rounded-full flex items-center justify-center">
                 <User className="w-4 h-4 text-white" />
               </div>
               <ChevronDown className={cn(
@@ -83,7 +83,7 @@ const Header = ({
                   {/* User Info */}
                   <div className="p-4 border-b border-gray-100">
                     <div className="flex items-center space-x-3">
-                      <div className="w-10 h-10 bg-primary-600 rounded-full flex items-center justify-center">
+                      <div className="w-10 h-10 bg-filo-teal rounded-full flex items-center justify-center">
                         <User className="w-5 h-5 text-white" />
                       </div>
                       <div className="flex-1 min-w-0">

@@ -228,7 +228,7 @@ const PreferencesPage = ({ onBack }) => {
                   </div>
                   <div className="w-full bg-gray-200 rounded-full h-2">
                     <div 
-                      className="bg-primary-600 h-2 rounded-full" 
+                      className="bg-filo-teal h-2 rounded-full transition-all duration-300" 
                       style={{ width: `${currentProtocol.compliance_score * 100}%` }}
                     ></div>
                   </div>
