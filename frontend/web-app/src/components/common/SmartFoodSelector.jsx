@@ -116,12 +116,12 @@ const SmartFoodSelector = ({ selectedItems, onToggleItem, selectedProtocols = []
                       {selectedProtocols.length > 0 && selectedProtocols[0] !== 'no_protocol' && (
                         <div className="mt-1">
                           {food.compliance_status === 'allowed' ? (
-                            <span className="inline-flex items-center text-xs text-green-600">
+                            <span className="inline-flex items-center text-xs text-allowed-600">
                               <Check className="w-3 h-3 mr-1" />
                               Included
                             </span>
                           ) : food.compliance_status === 'avoid' ? (
-                            <span className="inline-flex items-center text-xs text-red-600">
+                            <span className="inline-flex items-center text-xs text-avoid-600">
                               ❌ Avoid for now
                             </span>
                           ) : food.compliance_status === 'reintroduction' ? (
