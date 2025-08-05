@@ -12,12 +12,12 @@ const Navigation = ({
   selectedProtocols
 }) => {
   return (
-    <div className="bg-neutral-100 p-4 border-b border-neutral-200">
+    <div className="bg-gradient-to-r from-primary-600 to-primary-700 p-4 border-b border-primary-800">
       {/* Protocol Display */}
       {selectedProtocols && selectedProtocols.length > 0 && (
         <div className="mb-3 text-center">
-          <p className="text-xs text-neutral-500 mb-1">Active Protocols</p>
-          <p className="text-sm font-medium text-neutral-700 truncate">
+          <p className="text-xs text-primary-100 mb-1">Active Protocols</p>
+          <p className="text-sm font-medium text-white truncate">
             {getProtocolDisplayText(selectedProtocols)}
           </p>
         </div>
