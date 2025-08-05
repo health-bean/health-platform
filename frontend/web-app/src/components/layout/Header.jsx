@@ -42,13 +42,13 @@ const Header = ({
   };
 
   return (
-    <header className="bg-neutral-50 border-b border-neutral-200 shadow-sm sticky top-0 z-40">
+    <header className="bg-gradient-to-r from-primary-600 to-primary-700 border-b border-primary-800 shadow-sm sticky top-0 z-40">
       <div className="px-4 py-3">
         <div className="flex items-center justify-between">
           {/* Date Selector */}
           <div className="flex items-center space-x-3 flex-1 min-w-0">
             <div className="relative">
-              <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-neutral-400" />
+              <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-neutral-500" />
               <Input
                 type="date"
                 value={selectedDate}
@@ -71,7 +71,7 @@ const Header = ({
                 <User className="w-4 h-4 text-white" />
               </div>
               <ChevronDown className={cn(
-                "w-4 h-4 text-disabled transition-transform duration-200",
+                "w-4 h-4 text-white transition-transform duration-200",
                 showUserDropdown && "rotate-180"
               )} />
             </Button>
