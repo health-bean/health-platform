@@ -1,79 +1,79 @@
 // Health Platform Design System - Design Tokens
 // Centralized design values for consistent UI
 
-// FILO Brand Colors - Exact hex colors specified
+// FILO Brand Colors - Warm, chronic illness-friendly palette
 export const filoColors = {
-  // Primary brand teal - #339999
+  // Primary warm sage - no blue light, gentle on eyes
   primary: {
-    50: '#f0fffe',   // Very light teal
-    100: '#ccf2f2',  // Light teal
-    200: '#99e6e6',  // Soft teal
-    300: '#66d9d9',  // Medium teal
-    400: '#339999',  // FILO brand teal (exact)
-    500: '#339999',  // Core teal (exact)
-    600: '#2d8080',  // Darker teal
-    700: '#266666',  // Deep teal
-    800: '#1f4d4d',  // Very deep teal
-    900: '#193333'   // Darkest teal
+    50: '#f7f8f6',   // Very light sage
+    100: '#e8ebe6',  // Light sage
+    200: '#d1d8cc',  // Soft sage
+    300: '#b4c4a8',  // Medium sage
+    400: '#8fa67e',  // Warm sage
+    500: '#7a9268',  // Core sage
+    600: '#6b7f5a',  // Deeper sage
+    700: '#5a6b4d',  // Deep sage
+    800: '#4a5640',  // Very deep sage
+    900: '#3a4233'   // Darkest sage
   },
   
-  // Orange for moderate/reintroduction - #993300
+  // Warm terracotta for reintroduction - earthy, not harsh
   accent: {
-    50: '#fff5f0',   // Very light orange
-    100: '#ffe6cc',  // Light orange
-    200: '#ffcc99',  // Soft orange
-    300: '#ffb366',  // Medium orange
-    400: '#cc6600',  // Lighter orange
-    500: '#993300',  // Core orange (exact)
-    600: '#993300',  // FILO orange (exact)
-    700: '#802b00',  // Deep orange
-    800: '#662200',  // Very deep orange
-    900: '#4d1a00'   // Darkest orange
+    50: '#faf7f5',   // Very light terracotta
+    100: '#f0e6e0',  // Light terracotta
+    200: '#e0ccc1',  // Soft terracotta
+    300: '#ccaa99',  // Medium terracotta
+    400: '#b8896f',  // Warm terracotta
+    500: '#a67c52',  // Core terracotta
+    600: '#8f6b47',  // Deeper terracotta
+    700: '#785a3d',  // Deep terracotta
+    800: '#614a33',  // Very deep terracotta
+    900: '#4a3929'   // Darkest terracotta
   },
   
-  // Soft cream background - gentle and chronic illness-friendly
+  // Warm cream and gray-brown neutrals - no harsh contrasts
   neutral: {
-    50: '#FFFEF9',   // Much lighter cream - 50% less yellow saturation
-    100: '#faf9f7',  // Very soft warm white
-    200: '#f5f4f2',  // Light warm cream
-    300: '#f0efed',  // Soft cream
-    400: '#ebeae8',  // Medium cream
-    500: '#d4d3d1',  // Medium neutral
-    600: '#a8a7a5',  // Dark neutral
-    700: '#7c7b79',  // Darker neutral
-    800: '#504f4d',  // Very dark neutral
-    900: '#242321'   // Darkest neutral
+    50: '#fdfcfa',   // Warm cream background
+    100: '#f8f6f3',  // Light warm cream
+    200: '#f0ede8',  // Soft warm gray
+    300: '#e5e1db',  // Medium warm gray
+    400: '#d4cfc7',  // Warm beige
+    500: '#b8b3aa',  // Medium gray-brown
+    600: '#9a9590',  // Dark gray-brown
+    700: '#7d7873',  // Deeper gray-brown
+    800: '#5f5c57',  // Very dark gray-brown
+    900: '#3d3b37'   // Darkest warm charcoal
   }
 };
 
 // FILO Protocol Colors - Exact hex colors specified
 export const extendedColors = {
-  // Green for allowed/matches protocol - #336633
+  // Soft sage for allowed foods - gentle, not bright green
   allowed: {
-    50: '#f0fff0',   // Very light green
-    100: '#ccf2cc',  // Light green
-    200: '#99e699',  // Soft green
-    300: '#66d966',  // Medium green
-    400: '#339933',  // Lighter green
-    500: '#336633',  // Core allowed green (exact)
-    600: '#336633',  // FILO allowed green (exact)
-    700: '#2d5529',  // Deep green
-    800: '#264426',  // Very deep green
-    900: '#1f331f'   // Darkest green
+    50: '#f6f8f5',   // Very light sage
+    100: '#e6ebe3',  // Light sage
+    200: '#cdd6c7',  // Soft sage
+    300: '#afc2a5',  // Medium sage
+    400: '#8fa67e',  // Warm sage
+    500: '#7a9268',  // Core sage (matches primary)
+    600: '#6b7f5a',  // Deeper sage
+    700: '#5a6b4d',  // Deep sage
+    800: '#4a5640',  // Very deep sage
+    900: '#3a4233'   // Darkest sage
   },
   
-  // Red for forbidden/avoid - #993333
+  // Warm terracotta for avoid foods - earthy red-brown, not harsh red
   avoid: {
-    50: '#fff0f0',   // Very light red
-    100: '#ffcccc',  // Light red
-    200: '#ff9999',  // Soft red
-    300: '#ff6666',  // Medium red
-    400: '#cc3333',  // Lighter red
-    500: '#993333',  // Core avoid red (exact)
-    600: '#993333',  // FILO avoid red (exact)
-    700: '#802929',  // Deep red
-    800: '#661f1f',  // Very deep red
-    900: '#4d1616'   // Darkest red
+    50: '#faf6f4',   // Very light terracotta
+    100: '#f0e3dd',  // Light terracotta
+    200: '#e0c7bb',  // Soft terracotta
+    300: '#cc9f8f',  // Medium terracotta
+    400: '#b8775f',  // Warm terracotta
+    500: '#a6634a',  // Core terracotta
+    600: '#8f5540',  // Deeper terracotta
+    700: '#784736',  // Deep terracotta
+    800: '#61392c',  // Very deep terracotta
+    900: '#4a2c22'   // Darkest terracotta
   },
   
   // Light cream for warnings - gentle and chronic illness-friendly
@@ -90,18 +90,18 @@ export const extendedColors = {
     900: '#8e7c61'   // Darkest warm beige
   },
   
-  // Blue for info - #006699
+  // Warm gray-brown for info - no blue light
   info: {
-    50: '#f0f9ff',   // Very light blue
-    100: '#ccebff',  // Light blue
-    200: '#99d6ff',  // Soft blue
-    300: '#66c2ff',  // Medium blue
-    400: '#3399cc',  // Lighter blue
-    500: '#006699',  // Core info blue (exact)
-    600: '#006699',  // FILO info blue (exact)
-    700: '#005580',  // Deep blue
-    800: '#004466',  // Very deep blue
-    900: '#00334d'   // Darkest blue
+    50: '#f9f8f6',   // Very light warm gray
+    100: '#f0ede8',  // Light warm gray
+    200: '#e3ddd5',  // Soft warm gray
+    300: '#d1c7ba',  // Medium warm gray
+    400: '#b8aa99',  // Warm brown-gray
+    500: '#a6967e',  // Core warm gray
+    600: '#8f7f6b',  // Deeper warm gray
+    700: '#786b5a',  // Deep warm gray
+    800: '#615649',  // Very deep warm gray
+    900: '#4a4238'   // Darkest warm gray
   }
 };
 
