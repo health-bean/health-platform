@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generated": "2025-08-06T15:08:32.988Z",
+    "generated": "2025-10-22T01:10:51.655Z",
     "version": "1.0.0",
     "generator": "AutomatedProfessionalDocsGenerator"
   },
@@ -17,7 +17,7 @@
     "workingAPIs": 17,
     "totalAPIs": 28,
     "totalTables": 24,
-    "totalCommits": 247,
+    "totalCommits": 248,
     "contributors": 1
   },
   "discoveredInfo": {
@@ -147,7 +147,7 @@
           ],
           "status": 500,
           "working": false,
-          "responseTime": 976,
+          "responseTime": 180,
           "responseData": {
             "error": "Failed to complete unified food search"
           },
@@ -167,7 +167,7 @@
           ],
           "status": 401,
           "working": false,
-          "responseTime": 59,
+          "responseTime": 51,
           "responseData": {
             "error": "Authentication required"
           },
@@ -182,7 +182,7 @@
           "params": [],
           "status": 404,
           "working": false,
-          "responseTime": 38,
+          "responseTime": 37,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -218,7 +218,7 @@
           "params": [],
           "status": 404,
           "working": false,
-          "responseTime": 55,
+          "responseTime": 32,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -360,16 +360,16 @@
                 "created_at": "2025-06-23T18:39:01.593Z"
               },
               {
-                "id": "83e35884-2161-4681-adf4-952bc2bd1cde",
-                "name": "Low Lectin Protocol",
-                "description": "A dietary protocol that avoids high-lectin foods while allowing lectin-free and low-lectin options. Focuses on wild-caught seafood, grass-fed meats, specific oils, and carefully selected plant foods.",
-                "category": "elimination",
+                "id": "fd2c2435-48ea-4d5d-9d04-6fe5b8ac3b0c",
+                "name": "Low Lectin",
+                "description": "A low lectin diet eliminates foods high in lectins, which some believe can cause inflammation and digestive issues.",
+                "category": "low_lectin",
                 "phases": null,
                 "is_global": true,
-                "official": true,
+                "official": false,
                 "version": "1.0",
-                "protocol_type": "rule_based",
-                "created_at": "2025-07-29T21:27:10.614Z"
+                "protocol_type": "property_based",
+                "created_at": "2025-06-23T18:39:01.593Z"
               },
               {
                 "id": "12f1d4f1-f56a-48a3-b936-41026014656b",
@@ -444,7 +444,7 @@
             ],
             "total": 9
           },
-          "responseSize": 4624
+          "responseSize": 4535
         },
         {
           "path": "/api/v1/timeline/entries",
@@ -480,7 +480,7 @@
           ],
           "status": 401,
           "working": false,
-          "responseTime": 56,
+          "responseTime": 34,
           "responseData": {
             "error": "Authentication required"
           },
@@ -500,7 +500,7 @@
           ],
           "status": 404,
           "working": false,
-          "responseTime": 36,
+          "responseTime": 35,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -541,7 +541,7 @@
           ],
           "status": 404,
           "working": false,
-          "responseTime": 40,
+          "responseTime": 39,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -577,7 +577,7 @@
           "params": [],
           "status": 401,
           "working": false,
-          "responseTime": 32,
+          "responseTime": 35,
           "responseData": {
             "error": "Authentication required"
           },
@@ -597,7 +597,7 @@
           ],
           "status": 401,
           "working": false,
-          "responseTime": 32,
+          "responseTime": 34,
           "responseData": {
             "error": "Authentication required"
           },
@@ -617,7 +617,7 @@
           ],
           "status": 401,
           "working": false,
-          "responseTime": 44,
+          "responseTime": 41,
           "responseData": {
             "error": "Authentication required"
           },
@@ -637,7 +637,7 @@
           ],
           "status": 401,
           "working": false,
-          "responseTime": 33,
+          "responseTime": 42,
           "responseData": {
             "error": "Authentication required"
           },
@@ -657,7 +657,7 @@
           ],
           "status": 401,
           "working": false,
-          "responseTime": 36,
+          "responseTime": 38,
           "responseData": {
             "error": "Authentication required"
           },
@@ -677,7 +677,7 @@
           ],
           "status": 404,
           "working": false,
-          "responseTime": 34,
+          "responseTime": 36,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -713,12 +713,12 @@
           "params": [],
           "status": 200,
           "working": true,
-          "responseTime": 38,
+          "responseTime": 49,
           "responseData": {
             "success": true,
             "message": "Database connection successful",
-            "count": "351",
-            "timestamp": "2025-08-06T15:08:32.569Z"
+            "count": "202",
+            "timestamp": "2025-10-22T01:10:51.190Z"
           },
           "responseSize": 112
         },
@@ -731,7 +731,7 @@
           "params": [],
           "status": 200,
           "working": true,
-          "responseTime": 31,
+          "responseTime": 40,
           "responseData": {
             "cache_stats": {
               "size": 0,
@@ -742,7 +742,7 @@
               "hitCount": 0
             },
             "sample_entries": [],
-            "timestamp": "2025-08-06T15:08:32.600Z"
+            "timestamp": "2025-10-22T01:10:51.230Z"
           },
           "responseSize": 157
         },
@@ -760,7 +760,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 45,
+          "responseTime": 44,
           "responseData": {
             "symptoms": [],
             "total": 0,
@@ -805,7 +805,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 34,
+          "responseTime": 37,
           "responseData": {
             "medications": [],
             "total": 0,
@@ -849,7 +849,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 38,
+          "responseTime": 36,
           "responseData": {
             "exposures": [],
             "total": 0,
@@ -866,7 +866,7 @@
           "params": [],
           "status": 404,
           "working": false,
-          "responseTime": 30,
+          "responseTime": 39,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -902,7 +902,7 @@
           "params": [],
           "status": 500,
           "working": false,
-          "responseTime": 29,
+          "responseTime": 40,
           "responseData": {
             "error": "Failed to complete get journal entries"
           },
@@ -917,7 +917,7 @@
           "params": [],
           "status": 401,
           "working": false,
-          "responseTime": 33,
+          "responseTime": 36,
           "responseData": {
             "error": "User not authenticated"
           },
@@ -968,7 +968,7 @@
           "params": [],
           "status": 404,
           "working": false,
-          "responseTime": 32,
+          "responseTime": 36,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -1004,7 +1004,7 @@
           "params": [],
           "status": 404,
           "working": false,
-          "responseTime": 26,
+          "responseTime": 36,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -1438,7 +1438,7 @@
             {
               "name": "CorrelationInsights",
               "path": "frontend/web-app/src/features/insights/CorrelationInsights.jsx",
-              "size": 14529,
+              "size": 14568,
               "hooks": [
                 "useState",
                 "useCorrelations",
@@ -1574,7 +1574,7 @@
             }
           ],
           "utilities": [],
-          "size": "663.79 KB"
+          "size": "663.82 KB"
         },
         "frontend/shared": {
           "totalFiles": 46,
@@ -1898,18 +1898,18 @@
       "repository": "https://github.com/deebyrne26/health-platform",
       "branch": "main",
       "lastCommit": {
-        "hash": "45fe22e",
-        "message": "WARM colors",
+        "hash": "984811d",
+        "message": "Fix correlation categorization logic for supplement-effect type",
         "author": "deebyrne26",
-        "date": "Wed Aug 6 11:07:04 2025 -0400"
+        "date": "Tue Oct 21 21:09:01 2025 -0400"
       },
       "contributors": [
         {
           "name": "deebyrne26",
-          "commits": 247
+          "commits": 248
         }
       ],
-      "totalCommits": 247
+      "totalCommits": 248
     }
   }
 }
