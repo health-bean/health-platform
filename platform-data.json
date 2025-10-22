@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generated": "2025-10-22T05:33:24.287Z",
+    "generated": "2025-10-22T05:40:52.596Z",
     "version": "1.0.0",
     "generator": "AutomatedProfessionalDocsGenerator"
   },
@@ -14,10 +14,10 @@
     "totalComponents": 58,
     "totalHooks": 15,
     "totalFiles": 115,
-    "workingAPIs": 17,
+    "workingAPIs": 18,
     "totalAPIs": 31,
-    "totalTables": 29,
-    "totalCommits": 261,
+    "totalTables": 28,
+    "totalCommits": 262,
     "contributors": 1
   },
   "discoveredInfo": {
@@ -52,7 +52,6 @@
         "foods",
         "the",
         "food_specialized_properties_simplified",
-        "last",
         "journal",
         "existing",
         "user_dietary_protocols",
@@ -150,13 +149,283 @@
               "value": "chicken"
             }
           ],
-          "status": 500,
-          "working": false,
-          "responseTime": 447,
+          "status": 200,
+          "working": true,
+          "responseTime": 166,
           "responseData": {
-            "error": "Failed to complete unified food search"
+            "foods": [
+              {
+                "id": "7abdb123-089e-4b48-aa89-0d123f4f9070",
+                "name": "Aged Cheddar Cheese",
+                "category": "Proteins",
+                "subcategory": "Animal Proteins",
+                "source": "database"
+              },
+              {
+                "id": "ff3774bd-7e87-4956-9ae3-f208496581e0",
+                "name": "Almonds",
+                "category": "Proteins",
+                "subcategory": "Plant Proteins",
+                "source": "database"
+              },
+              {
+                "id": "8ff3a3be-2cbe-4f2a-99d1-18177c2514d2",
+                "name": "Apples",
+                "category": "Vegetables",
+                "subcategory": "Other Fresh Vegetables",
+                "source": "database"
+              },
+              {
+                "id": "4489b7c4-bdb5-4ddf-a18c-c71838b20630",
+                "name": "Avocado",
+                "category": "Vegetables",
+                "subcategory": "Other Fresh Vegetables",
+                "source": "database"
+              },
+              {
+                "id": "ac8cfaf7-f1af-487b-bbb4-febf9692d20b",
+                "name": "Bananas",
+                "category": "Vegetables",
+                "subcategory": "Other Fresh Vegetables",
+                "source": "database"
+              },
+              {
+                "id": "503972f3-1881-4db8-b42f-07bd25ab59d8",
+                "name": "Beef",
+                "category": "Proteins",
+                "subcategory": "Animal Proteins",
+                "source": "database"
+              },
+              {
+                "id": "21b8ba6c-ec4d-420f-bee3-134ae39376d3",
+                "name": "Bell Peppers",
+                "category": "Vegetables",
+                "subcategory": "Nightshade Vegetables",
+                "source": "database"
+              },
+              {
+                "id": "52593d03-4a3d-4953-b3d4-96b69d4d2d3b",
+                "name": "Black Beans",
+                "category": "Proteins",
+                "subcategory": "Plant Proteins",
+                "source": "database"
+              },
+              {
+                "id": "7e5c204d-0e53-405f-8445-c2f912a4f6a6",
+                "name": "Blueberries",
+                "category": "Vegetables",
+                "subcategory": "Other Fresh Vegetables",
+                "source": "database"
+              },
+              {
+                "id": "80d69493-e073-4899-a988-e691c1068784",
+                "name": "Broccoli",
+                "category": "Vegetables",
+                "subcategory": "Cruciferous Vegetables",
+                "source": "database"
+              },
+              {
+                "id": "e258409b-7d11-488a-b872-c6015eab877d",
+                "name": "Canned Tuna",
+                "category": "Proteins",
+                "subcategory": "Animal Proteins",
+                "source": "database"
+              },
+              {
+                "id": "380c2e42-5cd1-492d-a686-ca0f63ba9294",
+                "name": "Carrots",
+                "category": "Vegetables",
+                "subcategory": "Root Vegetables",
+                "source": "database"
+              },
+              {
+                "id": "e99b2470-d641-4149-b0aa-7a66fe183bcd",
+                "name": "Cashews",
+                "category": "Proteins",
+                "subcategory": "Plant Proteins",
+                "source": "database"
+              },
+              {
+                "id": "fd78f96e-dde1-446f-b5c8-8f022abaec63",
+                "name": "Chicken Breast",
+                "category": "Proteins",
+                "subcategory": "Animal Proteins",
+                "source": "database"
+              },
+              {
+                "id": "ffca309a-44be-42a5-b4fd-db59c3ec1504",
+                "name": "Cucumber",
+                "category": "Vegetables",
+                "subcategory": "Other Fresh Vegetables",
+                "source": "database"
+              },
+              {
+                "id": "030b4c4e-9a0c-42ee-b321-e8fd106b8a6a",
+                "name": "Dark Chocolate",
+                "category": "Vegetables",
+                "subcategory": "Other Fresh Vegetables",
+                "source": "database"
+              },
+              {
+                "id": "2927ddd1-96ab-4e61-abd0-cb6ea8440e93",
+                "name": "Eggplant",
+                "category": "Vegetables",
+                "subcategory": "Nightshade Vegetables",
+                "source": "database"
+              },
+              {
+                "id": "dc418f56-22da-49c4-a3b3-bf11ea0a377a",
+                "name": "Eggs",
+                "category": "Proteins",
+                "subcategory": "Animal Proteins",
+                "source": "database"
+              },
+              {
+                "id": "5025831a-d1d3-4993-a4b7-45bd010b9490",
+                "name": "Garlic",
+                "category": "Vegetables",
+                "subcategory": "Other Fresh Vegetables",
+                "source": "database"
+              },
+              {
+                "id": "11ba8654-c857-406e-a3d7-e618118df1db",
+                "name": "Kale",
+                "category": "Vegetables",
+                "subcategory": "Leafy Greens",
+                "source": "database"
+              },
+              {
+                "id": "18d52bce-77fc-454d-81da-63f807d5feea",
+                "name": "Kidney Beans",
+                "category": "Proteins",
+                "subcategory": "Plant Proteins",
+                "source": "database"
+              },
+              {
+                "id": "74cc8a83-3c21-4573-b8f5-3fc8998ac1dd",
+                "name": "Milk",
+                "category": "Proteins",
+                "subcategory": "Animal Proteins",
+                "source": "database"
+              },
+              {
+                "id": "cac5f94a-4f46-4cc5-be72-654fff2957af",
+                "name": "Olive Oil",
+                "category": "Vegetables",
+                "subcategory": "Other Fresh Vegetables",
+                "source": "database"
+              },
+              {
+                "id": "93173e7b-fb03-400a-93d8-279ca6929e23",
+                "name": "Onions",
+                "category": "Vegetables",
+                "subcategory": "Other Fresh Vegetables",
+                "source": "database"
+              },
+              {
+                "id": "744f961a-38f0-4c66-90c8-0e70c7ebd1f5",
+                "name": "Peanuts",
+                "category": "Proteins",
+                "subcategory": "Plant Proteins",
+                "source": "database"
+              },
+              {
+                "id": "8426ee63-c11a-4981-941e-9efc8b19e3ec",
+                "name": "Potatoes",
+                "category": "Vegetables",
+                "subcategory": "Nightshade Vegetables",
+                "source": "database"
+              },
+              {
+                "id": "4cf7bbc1-7ede-456d-a7eb-878e3f8436e8",
+                "name": "Red Wine",
+                "category": "Vegetables",
+                "subcategory": "Other Fresh Vegetables",
+                "source": "database"
+              },
+              {
+                "id": "b5d8657e-8373-481b-a07a-09b4909d511d",
+                "name": "Salmon",
+                "category": "Proteins",
+                "subcategory": "Animal Proteins",
+                "source": "database"
+              },
+              {
+                "id": "baa660b0-efe1-4bed-83b5-74ea06a575db",
+                "name": "Spinach, raw",
+                "category": "Vegetables",
+                "subcategory": "Leafy Greens",
+                "source": "database"
+              },
+              {
+                "id": "54578ccb-e6c4-440e-9866-8af61726c72e",
+                "name": "Strawberries",
+                "category": "Vegetables",
+                "subcategory": "Other Fresh Vegetables",
+                "source": "database"
+              },
+              {
+                "id": "c77fc70a-8ae9-4df9-8384-0e597fa60975",
+                "name": "Sweet Potato",
+                "category": "Grains & Starches",
+                "subcategory": "Starchy Vegetables",
+                "source": "database"
+              },
+              {
+                "id": "eead19df-5d0e-4a0b-a269-c7f017a49127",
+                "name": "Swiss Chard",
+                "category": "Vegetables",
+                "subcategory": "Leafy Greens",
+                "source": "database"
+              },
+              {
+                "id": "5787997a-0c7e-472b-ac42-7f5ae14fad90",
+                "name": "Tomatoes",
+                "category": "Vegetables",
+                "subcategory": "Nightshade Vegetables",
+                "source": "database"
+              },
+              {
+                "id": "2298a5e3-28db-4db2-862e-e2e1e9d09d19",
+                "name": "Turkey",
+                "category": "Proteins",
+                "subcategory": "Animal Proteins",
+                "source": "database"
+              },
+              {
+                "id": "e5ba7cef-3019-49df-b6a0-896a4a76cd73",
+                "name": "Walnuts",
+                "category": "Proteins",
+                "subcategory": "Plant Proteins",
+                "source": "database"
+              },
+              {
+                "id": "ebca825f-39ee-4a64-a0d3-c8c9bc95ed2d",
+                "name": "Wheat Bread",
+                "category": "Grains & Starches",
+                "subcategory": "Refined Grains",
+                "source": "database"
+              },
+              {
+                "id": "9ffd25a1-0740-4356-bdfc-4ad82d6e3d0a",
+                "name": "White Rice",
+                "category": "Grains & Starches",
+                "subcategory": "Whole Grains",
+                "source": "database"
+              },
+              {
+                "id": "c3fe5391-5da5-4038-a72a-c285251761c2",
+                "name": "Zucchini",
+                "category": "Vegetables",
+                "subcategory": "Other Fresh Vegetables",
+                "source": "database"
+              }
+            ],
+            "total": 38,
+            "search_term": "",
+            "protocol_id": null
           },
-          "responseSize": 50
+          "responseSize": 5498
         },
         {
           "path": "/api/v1/correlations/insights",
@@ -172,7 +441,7 @@
           ],
           "status": 401,
           "working": false,
-          "responseTime": 107,
+          "responseTime": 44,
           "responseData": {
             "error": "Authentication required"
           },
@@ -187,7 +456,7 @@
           "params": [],
           "status": 404,
           "working": false,
-          "responseTime": 258,
+          "responseTime": 52,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -223,7 +492,7 @@
           "params": [],
           "status": 404,
           "working": false,
-          "responseTime": 286,
+          "responseTime": 38,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -264,7 +533,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 257,
+          "responseTime": 45,
           "responseData": {
             "protocols": [
               {
@@ -465,7 +734,7 @@
           ],
           "status": 401,
           "working": false,
-          "responseTime": 247,
+          "responseTime": 42,
           "responseData": {
             "error": "Authentication required"
           },
@@ -485,7 +754,7 @@
           ],
           "status": 401,
           "working": false,
-          "responseTime": 249,
+          "responseTime": 49,
           "responseData": {
             "error": "Authentication required"
           },
@@ -505,7 +774,7 @@
           ],
           "status": 404,
           "working": false,
-          "responseTime": 249,
+          "responseTime": 37,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -546,7 +815,7 @@
           ],
           "status": 404,
           "working": false,
-          "responseTime": 246,
+          "responseTime": 54,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -582,9 +851,9 @@
           "params": [],
           "status": 500,
           "working": false,
-          "responseTime": 255,
+          "responseTime": 46,
           "responseData": {
-            "error": "PostgreSQL connection failed: no pg_hba.conf entry for host \"172.31.10.246\", user \"healthadmin\", database \"health_platform_dev\", no encryption"
+            "error": "PostgreSQL connection failed: no pg_hba.conf entry for host \"172.31.34.166\", user \"healthadmin\", database \"health_platform_dev\", no encryption"
           },
           "responseSize": 160
         },
@@ -597,7 +866,7 @@
           "params": [],
           "status": 401,
           "working": false,
-          "responseTime": 98,
+          "responseTime": 43,
           "responseData": {
             "error": "Authentication required"
           },
@@ -617,7 +886,7 @@
           ],
           "status": 401,
           "working": false,
-          "responseTime": 254,
+          "responseTime": 39,
           "responseData": {
             "error": "Authentication required"
           },
@@ -637,7 +906,7 @@
           ],
           "status": 401,
           "working": false,
-          "responseTime": 101,
+          "responseTime": 42,
           "responseData": {
             "error": "Authentication required"
           },
@@ -657,7 +926,7 @@
           ],
           "status": 401,
           "working": false,
-          "responseTime": 242,
+          "responseTime": 41,
           "responseData": {
             "error": "Authentication required"
           },
@@ -677,7 +946,7 @@
           ],
           "status": 401,
           "working": false,
-          "responseTime": 244,
+          "responseTime": 51,
           "responseData": {
             "error": "Authentication required"
           },
@@ -697,7 +966,7 @@
           ],
           "status": 404,
           "working": false,
-          "responseTime": 245,
+          "responseTime": 40,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -731,13 +1000,16 @@
           "description": "Get test",
           "source": "backend/functions/api/index.js",
           "params": [],
-          "status": 500,
-          "working": false,
-          "responseTime": 103,
+          "status": 200,
+          "working": true,
+          "responseTime": 62,
           "responseData": {
-            "error": "Database test failed: relation \"mat_food_search\" does not exist"
+            "success": true,
+            "message": "Database connection successful",
+            "count": "38",
+            "timestamp": "2025-10-22T05:40:51.906Z"
           },
-          "responseSize": 77
+          "responseSize": 111
         },
         {
           "path": "/api/v1/foods/cache-stats",
@@ -746,22 +1018,13 @@
           "description": "Get cache-stats",
           "source": "backend/functions/api/index.js",
           "params": [],
-          "status": 200,
-          "working": true,
-          "responseTime": 246,
+          "status": 502,
+          "working": false,
+          "responseTime": 50,
           "responseData": {
-            "cache_stats": {
-              "size": 0,
-              "maxSize": 100,
-              "ttlMs": 300000,
-              "hitRate": 0,
-              "totalRequests": 0,
-              "hitCount": 0
-            },
-            "sample_entries": [],
-            "timestamp": "2025-10-22T05:33:21.726Z"
+            "message": "Internal server error"
           },
-          "responseSize": 157
+          "responseSize": 36
         },
         {
           "path": "/api/v1/symptoms/search",
@@ -777,7 +1040,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 286,
+          "responseTime": 51,
           "responseData": {
             "symptoms": [],
             "total": 0,
@@ -800,7 +1063,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 245,
+          "responseTime": 55,
           "responseData": {
             "supplements": [],
             "total": 0,
@@ -822,7 +1085,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 244,
+          "responseTime": 40,
           "responseData": {
             "medications": [],
             "total": 0,
@@ -844,7 +1107,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 100,
+          "responseTime": 42,
           "responseData": {
             "detox_types": [],
             "total": 0,
@@ -866,7 +1129,7 @@
           ],
           "status": 200,
           "working": true,
-          "responseTime": 251,
+          "responseTime": 39,
           "responseData": {
             "exposures": [],
             "total": 0,
@@ -883,7 +1146,7 @@
           "params": [],
           "status": 404,
           "working": false,
-          "responseTime": 241,
+          "responseTime": 51,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -919,7 +1182,7 @@
           "params": [],
           "status": 200,
           "working": true,
-          "responseTime": 108,
+          "responseTime": 50,
           "responseData": {
             "users": {
               "count": 3,
@@ -955,7 +1218,7 @@
           "params": [],
           "status": 404,
           "working": false,
-          "responseTime": 246,
+          "responseTime": 51,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -991,7 +1254,7 @@
           "params": [],
           "status": 500,
           "working": false,
-          "responseTime": 246,
+          "responseTime": 39,
           "responseData": {
             "error": "Failed to complete get journal entries"
           },
@@ -1006,7 +1269,7 @@
           "params": [],
           "status": 401,
           "working": false,
-          "responseTime": 245,
+          "responseTime": 56,
           "responseData": {
             "error": "User not authenticated"
           },
@@ -1021,7 +1284,7 @@
           "params": [],
           "status": 404,
           "working": false,
-          "responseTime": 99,
+          "responseTime": 49,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -1057,7 +1320,7 @@
           "params": [],
           "status": 404,
           "working": false,
-          "responseTime": 99,
+          "responseTime": 50,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -1093,7 +1356,7 @@
           "params": [],
           "status": 404,
           "working": false,
-          "responseTime": 99,
+          "responseTime": 46,
           "responseData": {
             "error": "Endpoint not found",
             "details": {
@@ -1121,11 +1384,11 @@
           "responseSize": 573
         }
       ],
-      "workingCount": 17,
+      "workingCount": 18,
       "totalCount": 31,
       "categories": {
         "Foods": {
-          "working": 1,
+          "working": 2,
           "total": 4
         },
         "AI": {
@@ -1854,7 +2117,7 @@
             }
           ],
           "utilities": [],
-          "size": "214.19 KB"
+          "size": "198.31 KB"
         },
         "backend/functions": {
           "totalFiles": 25,
@@ -1871,7 +2134,7 @@
             }
           ],
           "utilities": [],
-          "size": "214.19 KB"
+          "size": "198.31 KB"
         },
         "backend": {
           "totalFiles": 34,
@@ -1891,7 +2154,7 @@
             }
           ],
           "utilities": [],
-          "size": "245.3 KB"
+          "size": "229.42 KB"
         }
       },
       "shared": {},
@@ -1987,18 +2250,18 @@
       "repository": "https://github.com/deebyrne26/health-platform",
       "branch": "main",
       "lastCommit": {
-        "hash": "29c3726",
-        "message": "Database cleanup and curated food population",
+        "hash": "4c3ca1b",
+        "message": "Clean foods API implementation - WORKING",
         "author": "deebyrne26",
-        "date": "Wed Oct 22 01:31:35 2025 -0400"
+        "date": "Wed Oct 22 01:39:03 2025 -0400"
       },
       "contributors": [
         {
           "name": "deebyrne26",
-          "commits": 261
+          "commits": 262
         }
       ],
-      "totalCommits": 261
+      "totalCommits": 262
     }
   }
 }
