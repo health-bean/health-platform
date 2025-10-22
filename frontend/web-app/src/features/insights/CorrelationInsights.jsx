@@ -18,12 +18,18 @@ const CorrelationInsights = () => {
   } = useCorrelations(timeframeFilter);
 
   // SIMPLIFIED: Backend now handles all categorization and grouping
-  const organizeInsights = (insights) => {
-    // Backend returns pre-categorized data: {triggers: [], helpers: [], trends: []}
+  const organizeInsights = (data) => {
+    // Handle both old format (array) and new format (object with categories)
+    if (Array.isArray(data)) {
+      // Fallback for old format - shouldn't happen with new backend
+      return { triggers: [], helpers: [], patterns: [] };
+    }
+    
+    // New format: Backend returns pre-categorized data: {triggers: [], helpers: [], trends: []}
     return {
-      triggers: insights.triggers || [],
-      helpers: insights.helpers || [],
-      patterns: insights.trends || []  // Map 'trends' to 'patterns' for UI consistency
+      triggers: data.triggers || [],
+      helpers: data.helpers || [],
+      patterns: data.trends || []  // Map 'trends' to 'patterns' for UI consistency
     };
   };
 
