@@ -13,7 +13,8 @@ export const useCorrelations = (confidenceThreshold = 0.6, timeframeDays = 180) 
     
     try {
       const params = new URLSearchParams({
-        confidence_threshold: confidenceThreshold,
+        min_confidence: confidenceThreshold,
+        max_results: 10,
         timeframe_days: timeframeDays
       });
 

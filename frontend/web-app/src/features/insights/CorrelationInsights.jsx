@@ -15,7 +15,7 @@ const CorrelationInsights = () => {
     correlations,  
     loading: correlationsLoading, 
     error
-  } = useCorrelations(0.1, timeframeFilter);
+  } = useCorrelations(0.6, timeframeFilter);
 
   // Organize correlations into user-friendly categories
   const organizeInsights = (correlations) => {
