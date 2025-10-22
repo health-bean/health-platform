@@ -15,7 +15,7 @@ const CorrelationInsights = () => {
     correlations,  
     loading: correlationsLoading, 
     error
-  } = useCorrelations(0.6, timeframeFilter);
+  } = useCorrelations(timeframeFilter);
 
   // Organize correlations into user-friendly categories
   const organizeInsights = (correlations) => {
@@ -24,8 +24,6 @@ const CorrelationInsights = () => {
     const patterns = [];
 
     correlations.forEach((correlation, index) => {
-      if (correlation.confidence < 0.3) return; // Skip low confidence
-      
       // Create unique ID by combining multiple values
       const uniqueId = `${correlation.trigger}-${correlation.type}-${correlation.effect}-${index}`;
       

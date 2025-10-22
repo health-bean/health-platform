@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { apiClient } from '../services/api.js';
 
-export const useCorrelations = (confidenceThreshold = 0.6, timeframeDays = 180) => {
+export const useCorrelations = (timeframeDays = 180) => {
   const [correlations, setCorrelations] = useState([]);
   const [summary, setSummary] = useState({});
   const [loading, setLoading] = useState(false);
@@ -13,8 +13,6 @@ export const useCorrelations = (confidenceThreshold = 0.6, timeframeDays = 180) 
     
     try {
       const params = new URLSearchParams({
-        min_confidence: confidenceThreshold,
-        max_results: 10,
         timeframe_days: timeframeDays
       });
 
