@@ -1,0 +1,8 @@
+{
+  "httpMethod": "POST",
+  "path": "/api/v1/admin/migrate-data",
+  "headers": {
+    "X-Demo-Mode": "true",
+    "X-Demo-User-Id": "demo-user-123"
+  }
+}

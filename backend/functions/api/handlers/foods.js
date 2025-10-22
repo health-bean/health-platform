@@ -182,33 +182,37 @@ const buildUnifiedQuery = (searchParams, userId) => {
             };
         }
     } else {
-        // General search: Use mat_food_search directly (FAST!)
+        // General search: Use simplified_foods directly (FAST!)
+        const searchPattern = `%${searchParams.search}%`;
+        const exactMatch = searchParams.search;
+        const startsWithMatch = `${searchParams.search}%`;
+        
         const query = `
             SELECT 
-                food_id as id,
-                display_name as name,
-                category_name as category,
-                subcategory_name as subcategory,
-                preparation_state,
-                is_organic,
-                nightshade,
-                histamine,
-                oxalate,
-                lectin,
-                fodmap,
+                id,
+                name,
+                category,
+                null as subcategory,
+                null as preparation_state,
+                null as is_organic,
+                null as nightshade,
+                null as histamine,
+                null as oxalate,
+                null as lectin,
+                null as fodmap,
                 null as compliance_status,
                 null as protocol_phase,
                 null as protocol_name,
                 'database' as source
-            FROM mat_food_search
-            WHERE display_name ILIKE $1
+            FROM simplified_foods
+            WHERE name ILIKE $1
             ORDER BY 
                 CASE 
-                    WHEN display_name ILIKE $2 THEN 1
-                    WHEN display_name ILIKE $3 THEN 2
+                    WHEN name ILIKE $2 THEN 1
+                    WHEN name ILIKE $3 THEN 2
                     ELSE 3
                 END,
-                display_name ASC
+                name ASC
             LIMIT $4
         `;
         
@@ -313,7 +317,7 @@ const handleSearchFoods = async (queryParams, event) => {
     
     // Enhanced parameter parsing and validation
     const searchParams = {
-        search: queryParams.search?.trim() || '',
+        search: queryParams.search?.trim() || queryParams.query?.trim() || '',
         protocol_id: queryParams.protocol_id || null,
         limit: Math.min(parseInt(queryParams.limit) || 20, 50),
         include_properties: queryParams.include_properties !== 'false',
@@ -499,11 +503,11 @@ const handleSearchFoodsUltraFast = async (queryParams, event) => {
         // ULTRA-SIMPLE QUERY - Only essential fields
         const query = `
             SELECT 
-                food_id as id,
-                display_name as name
-            FROM mat_food_search
-            WHERE display_name ILIKE $1
-            ORDER BY display_name ASC
+                id,
+                name
+            FROM simplified_foods
+            WHERE name ILIKE $1
+            ORDER BY name ASC
             LIMIT $2
         `;
         

@@ -11,7 +11,7 @@ const { handleSearchSupplements } = require('./handlers/supplements');
 const { handleSearchMedications } = require('./handlers/medications');
 const { handleSearchDetoxTypes } = require('./handlers/detox');
 const { handleSearchExposures } = require('./handlers/exposures');
-const { handleSeedDemoData } = require('./handlers/admin');
+const { handleSeedDemoData, handleDatabaseCheck } = require('./handlers/admin');
 const { successResponse, errorResponse } = require('./utils/responses');
 const { getCurrentUser } = require('./middleware/auth');
 
@@ -76,7 +76,39 @@ exports.handler = async (event) => {
         console.log(`${method} ${path}`);
         console.log('🔍 INDEX: Processing request:', { method, path, hasQueryParams: !!queryParams });
         
-        // Only authenticate for non-OPTIONS requests
+        let response;
+        
+        // Admin migration endpoint (no auth required)
+        if (path === '/api/v1/admin/migrate-data' && method === 'POST') {
+            const { Pool } = require('pg');
+            
+            // Test PostgreSQL connection first
+            const postgresPool = new Pool({
+                host: 'health-platform-dev-db.c5njva4wrrhe.us-east-1.rds.amazonaws.com',
+                port: 5432,
+                database: 'health_platform_dev',
+                user: 'healthadmin',
+                password: 'MH67HxZFAAmVWzc6zldv0ZL6'
+            });
+
+            try {
+                const pgClient = await postgresPool.connect();
+                const result = await pgClient.query('SELECT version()');
+                pgClient.release();
+                await postgresPool.end();
+                
+                return successResponse({ 
+                    message: 'PostgreSQL connection successful', 
+                    version: result.rows[0].version,
+                    note: 'Aurora connection skipped due to authentication issues'
+                });
+            } catch (error) {
+                console.error('PostgreSQL connection failed:', error);
+                return errorResponse(`PostgreSQL connection failed: ${error.message}`, 500);
+            }
+        }
+        
+        // Only authenticate for non-OPTIONS requests and non-admin endpoints
         if (method !== 'OPTIONS') {
             // Get current user for authentication (sets event.user)
             const currentUser = await getCurrentUser(event);
@@ -87,8 +119,6 @@ exports.handler = async (event) => {
                 console.log('🔍 INDEX: No authenticated user found');
             }
         }
-        
-        let response;
         
         // User routes
         if (path === '/api/v1/users' && method === 'GET') {
@@ -191,6 +221,19 @@ exports.handler = async (event) => {
         // Admin routes (development only)
         else if (path === '/api/v1/admin/seed-demo-data' && method === 'POST') {
             response = await handleSeedDemoData(queryParams, event);
+        }
+        else if (path === '/api/v1/admin/test-db' && method === 'GET') {
+            response = await handleDatabaseCheck(event);
+        }
+        else if (path === '/api/v1/admin/populate-foods' && method === 'POST') {
+            const { populateFoods } = require('./populate-foods');
+            try {
+                await populateFoods();
+                response = successResponse({ message: 'Foods populated successfully' });
+            } catch (error) {
+                console.error('Population error:', error);
+                response = errorResponse('Failed to populate foods', 500);
+            }
         }
         // Journal routes
         else if (path === '/api/v1/journal/entries' && method === 'GET') {

@@ -35,8 +35,9 @@ async function handleGetCorrelationInsights(queryParams, event) {
     
     if (demoMode && demoUserId) {
       console.log('CORRELATIONS DEBUG: Using demo mode bypass');
-      userId = demoUserId;
-      user = { id: userId, demo: true };
+      // Convert demo user ID to a valid UUID format for database compatibility
+      userId = '550e8400-e29b-41d4-a716-446655440000'; // Fixed UUID for demo user
+      user = { id: userId, demo: true, originalDemoId: demoUserId };
     } else {
       // Use auth middleware to get current user (handles both demo and Cognito users)
       console.log('CORRELATIONS DEBUG: About to call getCurrentUser');

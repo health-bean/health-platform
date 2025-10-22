@@ -1,0 +1,11 @@
+{
+  "httpMethod": "GET",
+  "path": "/api/v1/correlations/insights",
+  "queryStringParameters": {
+    "timeframe_days": "180"
+  },
+  "headers": {
+    "X-Demo-Mode": "true",
+    "X-Demo-User-Id": "demo-user-123"
+  }
+}
