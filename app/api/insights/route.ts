@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getSessionFromCookies } from "@/lib/auth/session";
 import { analyzeInsights } from "@/lib/correlations/engine";
+import { insightsCache, getCacheKey } from "@/lib/cache/insights";
 
 // ── GET /api/insights?days=90 ───────────────────────────────────────────
 
@@ -22,7 +23,18 @@ export async function GET(request: Request) {
       );
     }
 
+    // Check cache first
+    const cacheKey = getCacheKey(session.userId, "insights", { days });
+    const cached = insightsCache.get(cacheKey);
+    if (cached) {
+      return NextResponse.json(cached);
+    }
+
+    // Generate insights
     const result = await analyzeInsights(session.userId, days);
+
+    // Cache for 5 minutes
+    insightsCache.set(cacheKey, result, 5 * 60 * 1000);
 
     return NextResponse.json(result);
   } catch (error) {

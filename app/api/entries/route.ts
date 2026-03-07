@@ -15,6 +15,7 @@ import {
 import { getSessionFromCookies } from "@/lib/auth/session";
 import { checkCompliance } from "@/lib/protocols/compliance";
 import { trackReintroductionEntry } from "@/lib/reintroductions/tracking";
+import { insightsCache } from "@/lib/cache/insights";
 
 // ── GET /api/entries ────────────────────────────────────────────────────
 // Query params: ?date=YYYY-MM-DD  ?type=food|symptom|...  ?days=7
@@ -367,6 +368,9 @@ export async function POST(request: Request) {
         entryDate
       );
     }
+
+    // Invalidate insights cache for this user
+    insightsCache.invalidatePattern(`^${session.userId}:insights:`);
 
     return NextResponse.json({ 
       entry,
