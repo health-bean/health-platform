@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { getSessionFromCookies } from "@/lib/auth/session";
 import { analyzeInsights } from "@/lib/correlations/engine";
 import { insightsCache, getCacheKey } from "@/lib/cache/insights";
+import { measureAsync } from "@/lib/monitoring/performance";
 
 // ── GET /api/insights?days=90 ───────────────────────────────────────────
 
@@ -30,8 +31,12 @@ export async function GET(request: Request) {
       return NextResponse.json(cached);
     }
 
-    // Generate insights
-    const result = await analyzeInsights(session.userId, days);
+    // Generate insights with performance monitoring
+    const result = await measureAsync(
+      "insights.analyze",
+      () => analyzeInsights(session.userId, days),
+      { userId: session.userId, days }
+    );
 
     // Cache for 5 minutes
     insightsCache.set(cacheKey, result, 5 * 60 * 1000);
