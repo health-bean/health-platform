@@ -19,18 +19,23 @@ const emptySession: SessionData = {
 };
 
 /**
- * Get the current authenticated user from Supabase Auth + profiles table.
- * Uses React's cache() to deduplicate within a single request —
- * multiple calls in the same request only hit the DB once.
+ * Get the current authenticated user.
+ *
+ * Uses getSession() which reads + verifies the JWT from cookies locally
+ * (no network round-trip to Supabase). The middleware already calls
+ * getUser() on every request to refresh the session, so by the time
+ * API routes run, the token is fresh and verified.
+ *
+ * React cache() deduplicates within a single request.
  */
 export const getSessionFromCookies = cache(
   async (): Promise<SessionData> => {
     const supabase = await createClient();
     const {
-      data: { user },
-    } = await supabase.auth.getUser();
+      data: { session },
+    } = await supabase.auth.getSession();
 
-    if (!user) return emptySession;
+    if (!session?.user) return emptySession;
 
     const [profile] = await db
       .select({
@@ -38,13 +43,13 @@ export const getSessionFromCookies = cache(
         isAdmin: profiles.isAdmin,
       })
       .from(profiles)
-      .where(eq(profiles.id, user.id))
+      .where(eq(profiles.id, session.user.id))
       .limit(1);
 
     return {
-      userId: user.id,
-      email: user.email ?? "",
-      firstName: profile?.firstName ?? user.user_metadata?.firstName ?? "",
+      userId: session.user.id,
+      email: session.user.email ?? "",
+      firstName: profile?.firstName ?? session.user.user_metadata?.firstName ?? "",
       isAdmin: profile?.isAdmin ?? false,
     };
   }
