@@ -2,13 +2,14 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Apple, Shield, Pill, Activity, FlaskConical, BookOpen } from "lucide-react";
+import { Apple, Shield, Pill, Activity, FlaskConical, BookOpen, Users } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const navItems = [
   { label: "Foods", href: "/admin/foods", icon: Apple },
   { label: "Protocols", href: "/admin/protocols", icon: Shield },
   { label: "Reference Data", href: "/admin/reference", icon: BookOpen },
+  { label: "Users", href: "/admin/users", icon: Users },
 ] as const;
 
 export function AdminSidebar() {

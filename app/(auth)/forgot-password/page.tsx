@@ -1,17 +1,14 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Input, Button, Card } from "@/components/ui";
+import { createClient } from "@/lib/supabase/client";
 
-export default function SignupPage() {
-  const router = useRouter();
-  const [firstName, setFirstName] = useState("");
+export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [betaCode, setBetaCode] = useState("");
   const [error, setError] = useState("");
+  const [sent, setSent] = useState(false);
   const [loading, setLoading] = useState(false);
 
   async function handleSubmit(e: FormEvent) {
@@ -20,20 +17,17 @@ export default function SignupPage() {
     setLoading(true);
 
     try {
-      const res = await fetch("/api/auth/signup", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ firstName, email, password, betaCode }),
+      const supabase = createClient();
+      const { error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: `${window.location.origin}/api/auth/callback?next=/reset-password`,
       });
 
-      const data = await res.json();
-
-      if (!res.ok) {
-        setError(data.error || "Something went wrong");
+      if (error) {
+        setError(error.message);
         return;
       }
 
-      router.push("/onboarding");
+      setSent(true);
     } catch {
       setError("Something went wrong. Please try again.");
     } finally {
@@ -41,28 +35,37 @@ export default function SignupPage() {
     }
   }
 
+  if (sent) {
+    return (
+      <div className="flex min-h-dvh items-center justify-center px-6 py-12">
+        <div className="w-full max-w-sm text-center">
+          <h1 className="text-2xl font-bold text-slate-900">Check your email</h1>
+          <p className="mt-2 text-sm text-slate-500">
+            We sent a password reset link to <strong>{email}</strong>. Click the
+            link in the email to reset your password.
+          </p>
+          <p className="mt-6 text-sm text-slate-500">
+            <Link href="/login" className="text-indigo-600 hover:text-indigo-700">
+              Back to login
+            </Link>
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="flex min-h-dvh items-center justify-center px-6 py-12">
       <div className="w-full max-w-sm">
         <div className="mb-8 text-center">
-          <h1 className="text-2xl font-bold text-slate-900">Join FILO</h1>
+          <h1 className="text-2xl font-bold text-slate-900">Reset password</h1>
           <p className="mt-1 text-sm text-slate-500">
-            Create your account to start tracking
+            Enter your email and we'll send you a reset link
           </p>
         </div>
 
         <Card>
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-            <Input
-              label="First Name"
-              type="text"
-              placeholder="Your first name"
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
-              required
-              autoComplete="given-name"
-            />
-
             <Input
               label="Email"
               type="email"
@@ -73,25 +76,6 @@ export default function SignupPage() {
               autoComplete="email"
             />
 
-            <Input
-              label="Password"
-              type="password"
-              placeholder="At least 8 characters"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              autoComplete="new-password"
-            />
-
-            <Input
-              label="Beta Invite Code"
-              type="text"
-              placeholder="Enter your invite code"
-              value={betaCode}
-              onChange={(e) => setBetaCode(e.target.value)}
-              required
-            />
-
             {error && (
               <p className="text-sm text-red-600" role="alert">
                 {error}
@@ -99,13 +83,13 @@ export default function SignupPage() {
             )}
 
             <Button type="submit" loading={loading} className="mt-2 w-full">
-              Create Account
+              Send Reset Link
             </Button>
           </form>
         </Card>
 
         <p className="mt-6 text-center text-sm text-slate-500">
-          Already have an account?{" "}
+          Remember your password?{" "}
           <Link href="/login" className="text-indigo-600 hover:text-indigo-700">
             Log in
           </Link>

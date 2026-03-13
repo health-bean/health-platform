@@ -77,6 +77,15 @@ export default function LoginPage() {
               </p>
             )}
 
+            <div className="text-right">
+              <Link
+                href="/forgot-password"
+                className="text-xs text-indigo-600 hover:text-indigo-700"
+              >
+                Forgot password?
+              </Link>
+            </div>
+
             <Button type="submit" loading={loading} className="mt-2 w-full">
               Log In
             </Button>
@@ -84,7 +93,10 @@ export default function LoginPage() {
         </Card>
 
         <p className="mt-6 text-center text-sm text-slate-500">
-          Contact the administrator for access.
+          Have an invite code?{" "}
+          <Link href="/signup" className="text-indigo-600 hover:text-indigo-700">
+            Create an account
+          </Link>
         </p>
       </div>
     </div>
