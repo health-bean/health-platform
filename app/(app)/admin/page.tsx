@@ -1,7 +1,5 @@
-"use client";
-
-import { AdminChatInterface } from "@/components/chat/admin-chat-interface";
+import { redirect } from "next/navigation";
 
 export default function AdminPage() {
-  return <AdminChatInterface />;
+  redirect("/admin/foods");
 }

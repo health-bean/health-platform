@@ -6,6 +6,7 @@ interface User {
   userId: string;
   email: string;
   firstName: string;
+  isAdmin: boolean;
 }
 
 interface UseSessionReturn {

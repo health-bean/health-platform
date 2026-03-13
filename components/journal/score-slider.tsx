@@ -7,6 +7,7 @@ interface ScoreSliderProps {
   value: number | null;
   onChange: (value: number) => void;
   color: string; // tailwind color class like "indigo" | "amber" | etc.
+  hideLabel?: boolean;
 }
 
 const colorMap: Record<string, { bg: string; accent: string; track: string }> = {
@@ -17,15 +18,17 @@ const colorMap: Record<string, { bg: string; accent: string; track: string }> = 
   orange: { bg: "bg-orange-50", accent: "accent-orange-500", track: "text-orange-600" },
 };
 
-export function ScoreSlider({ label, value, onChange, color }: ScoreSliderProps) {
+export function ScoreSlider({ label, value, onChange, color, hideLabel }: ScoreSliderProps) {
   const colors = colorMap[color] ?? colorMap.indigo;
   const displayValue = value ?? 5;
 
   return (
     <div className="flex flex-col gap-1.5">
       <div className="flex items-center justify-between">
-        <span className="text-sm font-medium text-slate-700">{label}</span>
-        <span className={cn("text-sm font-semibold", colors.track)}>
+        {!hideLabel && (
+          <span className="text-sm font-medium text-slate-700">{label}</span>
+        )}
+        <span className={cn("text-sm font-semibold", hideLabel && "ml-auto", colors.track)}>
           {value !== null ? `${value}/10` : "—"}
         </span>
       </div>

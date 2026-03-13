@@ -1,12 +1,9 @@
 import { NextResponse } from "next/server";
-import { getIronSession } from "iron-session";
-import { cookies } from "next/headers";
 import { z } from "zod";
-import { eq } from "drizzle-orm";
+import { createClient } from "@/lib/supabase/server";
 import { db } from "@/lib/db";
-import { users } from "@/lib/db/schema";
-import { verifyPassword } from "@/lib/auth/password";
-import { SessionData, sessionOptions } from "@/lib/auth/session";
+import { profiles } from "@/lib/db/schema";
+import { eq } from "drizzle-orm";
 
 const loginSchema = z.object({
   email: z.string().email("Invalid email address"),
@@ -27,43 +24,32 @@ export async function POST(request: Request) {
 
     const { email, password } = parsed.data;
 
-    // Find user by email
-    const [user] = await db
+    const supabase = await createClient();
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: email.toLowerCase(),
+      password,
+    });
+
+    if (error || !data.user) {
+      return NextResponse.json(
+        { error: "Invalid email or password" },
+        { status: 401 }
+      );
+    }
+
+    // Fetch profile for app-specific data
+    const [profile] = await db
       .select()
-      .from(users)
-      .where(eq(users.email, email.toLowerCase()))
+      .from(profiles)
+      .where(eq(profiles.id, data.user.id))
       .limit(1);
-
-    if (!user) {
-      return NextResponse.json(
-        { error: "Invalid email or password" },
-        { status: 401 }
-      );
-    }
-
-    // Verify password
-    const isValid = await verifyPassword(password, user.passwordHash);
-
-    if (!isValid) {
-      return NextResponse.json(
-        { error: "Invalid email or password" },
-        { status: 401 }
-      );
-    }
-
-    // Create session
-    const cookieStore = await cookies();
-    const session = await getIronSession<SessionData>(cookieStore, sessionOptions);
-    session.userId = user.id;
-    session.email = user.email;
-    session.firstName = user.firstName;
-    await session.save();
 
     return NextResponse.json({
       user: {
-        id: user.id,
-        email: user.email,
-        firstName: user.firstName,
+        id: data.user.id,
+        email: data.user.email,
+        firstName: profile?.firstName ?? "",
+        isAdmin: profile?.isAdmin ?? false,
       },
     });
   } catch (error) {

@@ -2,24 +2,29 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { MessageSquare, Calendar, LineChart, Settings, Wrench } from "lucide-react";
+import { MessageSquare, Calendar, Heart, LineChart, Settings, Wrench } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useSession } from "@/hooks/use-session";
 
 const tabs = [
-  { label: "Chat", href: "/chat", icon: MessageSquare },
-  { label: "Timeline", href: "/timeline", icon: Calendar },
-  { label: "Insights", href: "/insights", icon: LineChart },
-  { label: "Settings", href: "/settings", icon: Settings },
-  { label: "Admin", href: "/admin", icon: Wrench },
+  { label: "Chat", href: "/chat", icon: MessageSquare, adminOnly: false },
+  { label: "Timeline", href: "/timeline", icon: Calendar, adminOnly: false },
+  { label: "Reflect", href: "/reflect", icon: Heart, adminOnly: false },
+  { label: "Insights", href: "/insights", icon: LineChart, adminOnly: false },
+  { label: "Settings", href: "/settings", icon: Settings, adminOnly: false },
+  { label: "Admin", href: "/admin", icon: Wrench, adminOnly: true },
 ] as const;
 
 export function MobileNav() {
   const pathname = usePathname();
+  const { user } = useSession();
+
+  const visibleTabs = tabs.filter((tab) => !tab.adminOnly || user?.isAdmin);
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-50 border-t border-slate-200 bg-white md:hidden">
       <div className="flex items-stretch justify-around">
-        {tabs.map((tab) => {
+        {visibleTabs.map((tab) => {
           const isActive =
             pathname === tab.href || pathname.startsWith(tab.href + "/");
 

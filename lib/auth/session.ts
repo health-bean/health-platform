@@ -1,34 +1,41 @@
-import { getIronSession, SessionOptions } from "iron-session";
-import { cookies } from "next/headers";
-import { NextApiRequest, NextApiResponse } from "next";
+import { createClient } from "@/lib/supabase/server";
+import { db } from "@/lib/db";
+import { profiles } from "@/lib/db/schema";
+import { eq } from "drizzle-orm";
 
 export interface SessionData {
   userId: string;
   email: string;
   firstName: string;
-}
-
-export const sessionOptions: SessionOptions = {
-  password: process.env.SESSION_SECRET!,
-  cookieName: "health_session",
-  cookieOptions: {
-    secure: process.env.NODE_ENV === "production",
-    httpOnly: true,
-    sameSite: "lax" as const,
-  },
-};
-
-/**
- * Get session from req/res objects (API routes using pages router style)
- */
-export async function getSession(req: NextApiRequest, res: NextApiResponse) {
-  return getIronSession<SessionData>(req, res, sessionOptions);
+  isAdmin: boolean;
 }
 
 /**
- * Get session from cookies() - for use in Server Components and App Router API routes
+ * Get the current authenticated user from Supabase Auth + profiles table.
+ * Drop-in replacement for the old iron-session getSessionFromCookies().
+ * Returns a SessionData-like object (empty userId if not authenticated).
  */
-export async function getSessionFromCookies() {
-  const cookieStore = await cookies();
-  return getIronSession<SessionData>(cookieStore, sessionOptions);
+export async function getSessionFromCookies(): Promise<SessionData> {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    return { userId: "", email: "", firstName: "", isAdmin: false };
+  }
+
+  // Fetch profile for app-specific data
+  const [profile] = await db
+    .select()
+    .from(profiles)
+    .where(eq(profiles.id, user.id))
+    .limit(1);
+
+  return {
+    userId: user.id,
+    email: user.email ?? "",
+    firstName: profile?.firstName ?? user.user_metadata?.firstName ?? "",
+    isAdmin: profile?.isAdmin ?? false,
+  };
 }

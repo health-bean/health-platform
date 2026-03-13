@@ -3,11 +3,11 @@ import { eq, asc } from "drizzle-orm";
 import { db } from "@/lib/db";
 import { conversations, messages } from "@/lib/db/schema";
 import { getSessionFromCookies } from "@/lib/auth/session";
-import { anthropic } from "@/lib/ai/client";
+import { getProvider, runConversationLoop, toNeutralTools } from "@/lib/ai/client";
 import { buildAdminSystemPrompt } from "@/lib/ai/admin-system-prompt";
 import { adminTools } from "@/lib/ai/admin-tools";
 import { processAdminToolCall } from "@/lib/ai/admin-extract";
-import Anthropic from "@anthropic-ai/sdk";
+import type { AIMessage } from "@/lib/ai/providers/types";
 
 export async function POST(request: Request) {
   try {
@@ -83,11 +83,15 @@ export async function POST(request: Request) {
     // ── Build system prompt ──────────────────────────────────────────
     const systemPrompt = buildAdminSystemPrompt();
 
-    // ── Format messages for Claude ───────────────────────────────────
-    const claudeMessages: Anthropic.MessageParam[] = history.map((m) => ({
+    // ── Format messages ──────────────────────────────────────────────
+    const aiMessages: AIMessage[] = history.map((m) => ({
       role: m.role as "user" | "assistant",
       content: m.content,
     }));
+
+    // ── Get provider and neutral tools ───────────────────────────────
+    const provider = getProvider("admin-chat");
+    const neutralTools = toNeutralTools(adminTools);
 
     // ── Stream response ──────────────────────────────────────────────
     const stream = new ReadableStream({
@@ -98,92 +102,35 @@ export async function POST(request: Request) {
         };
 
         try {
-          const currentMessages = [...claudeMessages];
-          let finalText = "";
-
-          // Loop: call Claude, handle tool use, repeat until final text
-          const MAX_TOOL_ROUNDS = 10;
-          for (let round = 0; round < MAX_TOOL_ROUNDS; round++) {
-            const response = await anthropic.messages.create({
-              model: "claude-sonnet-4-20250514",
-              max_tokens: 4096,
-              system: systemPrompt,
-              tools: adminTools,
-              messages: currentMessages,
-            });
-
-            // Collect text blocks and tool_use blocks
-            const textBlocks: string[] = [];
-            const toolUseBlocks: Anthropic.ContentBlockParam[] = [];
-
-            for (const block of response.content) {
-              if (block.type === "text") {
-                textBlocks.push(block.text);
-              } else if (block.type === "tool_use") {
-                toolUseBlocks.push(block);
-              }
-            }
-
-            // If there's text, stream it to the client
-            if (textBlocks.length > 0) {
-              const text = textBlocks.join("");
-              // Send text in chunks for a streaming feel
-              const chunkSize = 50;
-              for (let i = 0; i < text.length; i += chunkSize) {
-                send({ type: "text", content: text.slice(i, i + chunkSize) });
-              }
-              finalText += text;
-            }
-
-            // If no tool use, we're done
-            if (response.stop_reason === "end_turn" || toolUseBlocks.length === 0) {
-              break;
-            }
-
-            // Process tool calls
-            // Add the assistant's full response to messages
-            currentMessages.push({
-              role: "assistant",
-              content: response.content as Anthropic.ContentBlockParam[],
-            });
-
-            // Process each tool call and build tool results
-            const toolResults: Anthropic.ToolResultBlockParam[] = [];
-
-            for (const block of toolUseBlocks) {
-              if (block.type !== "tool_use") continue;
-
-              const toolBlock = block as Anthropic.ToolUseBlock;
-              const result = await processAdminToolCall(
-                toolBlock.name,
-                toolBlock.input
-              );
-
-              // Stream result info to client
+          const { text: finalText } = await runConversationLoop({
+            provider,
+            systemPrompt,
+            messages: aiMessages,
+            tools: neutralTools,
+            maxRounds: 10,
+            maxTokens: 4096,
+            toolExecutor: async (name, input) => {
+              const result = await processAdminToolCall(name, input);
+              // Stream tool result info to client
               send({
                 type: "extracted",
                 entries: [
                   {
                     entryType: "admin",
-                    name: toolBlock.name,
+                    name,
                     details: result,
                   },
                 ],
               });
-
-              toolResults.push({
-                type: "tool_result",
-                tool_use_id: toolBlock.id,
-                content: JSON.stringify(result),
-              });
-            }
-
-            // Add tool results to messages
-            currentMessages.push({
-              role: "user",
-              content: toolResults,
-            });
-          }
+              return { result };
+            },
+            onText: (text) => {
+              const chunkSize = 50;
+              for (let i = 0; i < text.length; i += chunkSize) {
+                send({ type: "text", content: text.slice(i, i + chunkSize) });
+              }
+            },
+          });
 
           // ── Save assistant message ───────────────────────────────
           const [assistantMessage] = await db
@@ -209,7 +156,7 @@ export async function POST(request: Request) {
 
           controller.close();
         } catch (error) {
-          console.error("Admin Claude API error:", error);
+          console.error("Admin AI API error:", error);
           send({
             type: "error",
             message: "Something went wrong generating a response.",

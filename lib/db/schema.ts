@@ -159,13 +159,18 @@ export const detoxTypes = pgTable("detox_types", {
 
 // ─── App Tables ─────────────────────────────────────────────────────────
 
-export const users = pgTable("users", {
-  id: uuid("id").defaultRandom().primaryKey(),
+/**
+ * Profiles table — stores app-specific user data.
+ * The `id` column matches the Supabase Auth user UUID.
+ * Auth (email, password, sessions) is handled by Supabase Auth.
+ */
+export const profiles = pgTable("profiles", {
+  id: uuid("id").primaryKey(), // matches auth.users.id
   email: varchar("email", { length: 255 }).notNull().unique(),
-  passwordHash: varchar("password_hash", { length: 255 }).notNull(),
   firstName: varchar("first_name", { length: 100 }).notNull(),
   lastName: varchar("last_name", { length: 100 }),
   currentProtocolId: uuid("current_protocol_id").references(() => protocols.id),
+  isAdmin: boolean("is_admin").default(false),
   // Onboarding tracking
   onboardingCompleted: boolean("onboarding_completed").default(false),
   onboardingStep: varchar("onboarding_step", { length: 50 }).default("welcome"),
@@ -173,6 +178,9 @@ export const users = pgTable("users", {
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),
 });
+
+/** @deprecated Use `profiles` instead. Alias for backward compatibility during migration. */
+export const users = profiles;
 
 export const conversations = pgTable("conversations", {
   id: uuid("id").defaultRandom().primaryKey(),

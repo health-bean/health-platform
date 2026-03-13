@@ -9,12 +9,12 @@ import {
   protocolRules,
 } from "@/lib/db/schema";
 import { getSessionFromCookies } from "@/lib/auth/session";
-import { anthropic } from "@/lib/ai/client";
+import { getProvider, runConversationLoop, toNeutralTools } from "@/lib/ai/client";
 import { buildSystemPrompt } from "@/lib/ai/system-prompt";
 import { tools } from "@/lib/ai/tools";
 import { processToolCall } from "@/lib/ai/extract";
 import { buildCoachingContext } from "@/lib/coaching/context";
-import Anthropic from "@anthropic-ai/sdk";
+import type { AIMessage } from "@/lib/ai/providers/types";
 
 export async function POST(request: Request) {
   try {
@@ -157,11 +157,15 @@ export async function POST(request: Request) {
 
     const systemPrompt = buildSystemPrompt(protocolName, protocolRulesText, coachingContext);
 
-    // ── Format messages for Claude ───────────────────────────────────
-    const claudeMessages: Anthropic.MessageParam[] = history.map((m) => ({
+    // ── Format messages ──────────────────────────────────────────────
+    const aiMessages: AIMessage[] = history.map((m) => ({
       role: m.role as "user" | "assistant",
       content: m.content,
     }));
+
+    // ── Get provider and neutral tools ───────────────────────────────
+    const provider = getProvider("daily-chat");
+    const neutralTools = toNeutralTools(tools);
 
     // ── Stream response ──────────────────────────────────────────────
     const stream = new ReadableStream({
@@ -172,88 +176,26 @@ export async function POST(request: Request) {
         };
 
         try {
-          const currentMessages = [...claudeMessages];
-          const allExtractedEntries: unknown[] = [];
-          let finalText = "";
-
-          // Loop: call Claude, handle tool use, repeat until final text
-          const MAX_TOOL_ROUNDS = 5;
-          for (let round = 0; round < MAX_TOOL_ROUNDS; round++) {
-            const response = await anthropic.messages.create({
-              model: "claude-sonnet-4-20250514",
-              max_tokens: 1024,
-              system: systemPrompt,
-              tools,
-              messages: currentMessages,
-            });
-
-            // Collect text blocks and tool_use blocks
-            const textBlocks: string[] = [];
-            const toolUseBlocks: Anthropic.ContentBlockParam[] = [];
-
-            for (const block of response.content) {
-              if (block.type === "text") {
-                textBlocks.push(block.text);
-              } else if (block.type === "tool_use") {
-                toolUseBlocks.push(block);
-              }
-            }
-
-            // If there's text, stream it to the client
-            if (textBlocks.length > 0) {
-              const text = textBlocks.join("");
-              // Send text in chunks for a streaming feel
+          const { text: finalText, extractedEntries } = await runConversationLoop({
+            provider,
+            systemPrompt,
+            messages: aiMessages,
+            tools: neutralTools,
+            maxRounds: 5,
+            maxTokens: 1024,
+            toolExecutor: async (name, input) => {
+              return processToolCall(name, input, session.userId, userMessage.id);
+            },
+            onText: (text) => {
               const chunkSize = 50;
               for (let i = 0; i < text.length; i += chunkSize) {
                 send({ type: "text", content: text.slice(i, i + chunkSize) });
               }
-              finalText += text;
-            }
-
-            // If no tool use, we're done
-            if (response.stop_reason === "end_turn" || toolUseBlocks.length === 0) {
-              break;
-            }
-
-            // Process tool calls
-            // Add the assistant's full response to messages
-            currentMessages.push({
-              role: "assistant",
-              content: response.content as Anthropic.ContentBlockParam[],
-            });
-
-            // Process each tool call and build tool results
-            const toolResults: Anthropic.ToolResultBlockParam[] = [];
-
-            for (const block of toolUseBlocks) {
-              if (block.type !== "tool_use") continue;
-
-              const toolBlock = block as Anthropic.ToolUseBlock;
-              const { result, entries } = await processToolCall(
-                toolBlock.name,
-                toolBlock.input,
-                session.userId,
-                userMessage.id
-              );
-
-              if (entries && entries.length > 0) {
-                allExtractedEntries.push(...entries);
-                send({ type: "extracted", entries });
-              }
-
-              toolResults.push({
-                type: "tool_result",
-                tool_use_id: toolBlock.id,
-                content: JSON.stringify(result),
-              });
-            }
-
-            // Add tool results to messages
-            currentMessages.push({
-              role: "user",
-              content: toolResults,
-            });
-          }
+            },
+            onExtracted: (entries) => {
+              send({ type: "extracted", entries });
+            },
+          });
 
           // ── Save assistant message ───────────────────────────────
           const [assistantMessage] = await db
@@ -263,7 +205,7 @@ export async function POST(request: Request) {
               role: "assistant",
               content: finalText,
               extractedData:
-                allExtractedEntries.length > 0 ? allExtractedEntries : null,
+                extractedEntries.length > 0 ? extractedEntries : null,
             })
             .returning({ id: messages.id });
 
@@ -281,7 +223,7 @@ export async function POST(request: Request) {
 
           controller.close();
         } catch (error) {
-          console.error("Claude API error:", error);
+          console.error("AI API error:", error);
           send({
             type: "error",
             message: "Something went wrong generating a response.",

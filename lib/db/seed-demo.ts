@@ -16,7 +16,6 @@
  */
 
 import postgres from "postgres";
-import { hashPassword } from "../auth/password";
 
 const DATABASE_URL = process.env.DATABASE_URL;
 if (!DATABASE_URL) {
@@ -93,21 +92,18 @@ const MEDICATION = { name: "LDN (Low Dose Naltrexone)", freq: 0.9, hour: 22 };
 // ─── Seed Logic ─────────────────────────────────────────────────────────
 
 async function seedDemoUser() {
-  log("Creating demo user Sarah...");
-
-  const passwordHash = await hashPassword("demo123");
+  log("Creating demo user Sarah profile...");
 
   await sql`
-    INSERT INTO users (id, email, password_hash, first_name, current_protocol_id)
-    VALUES (${DEMO_USER_ID}, 'sarah@demo.com', ${passwordHash}, 'Sarah', ${AIP_PROTOCOL_ID})
+    INSERT INTO profiles (id, email, first_name, current_protocol_id)
+    VALUES (${DEMO_USER_ID}, 'sarah@demo.com', 'Sarah', ${AIP_PROTOCOL_ID})
     ON CONFLICT (id) DO UPDATE SET
       email = EXCLUDED.email,
-      password_hash = EXCLUDED.password_hash,
       first_name = EXCLUDED.first_name,
       current_protocol_id = EXCLUDED.current_protocol_id
   `;
 
-  log("User created: sarah@demo.com / demo123");
+  log("Profile created for sarah@demo.com");
 }
 
 async function clearDemoData() {

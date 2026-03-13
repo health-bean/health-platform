@@ -31,7 +31,7 @@ export default function LoginPage() {
         return;
       }
 
-      router.push("/chat");
+      router.push(data.user.isAdmin ? "/admin" : "/chat");
     } catch {
       setError("Something went wrong. Please try again.");
     } finally {
@@ -84,13 +84,7 @@ export default function LoginPage() {
         </Card>
 
         <p className="mt-6 text-center text-sm text-slate-500">
-          Don&apos;t have an account?{" "}
-          <Link
-            href="/signup"
-            className="font-medium text-indigo-600 hover:text-indigo-500"
-          >
-            Sign up
-          </Link>
+          Contact the administrator for access.
         </p>
       </div>
     </div>
