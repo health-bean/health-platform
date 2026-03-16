@@ -16,6 +16,9 @@ export async function POST(request: Request) {
     if (!session.userId) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
+    if (!session.isAdmin) {
+      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    }
 
     // ── Parse body ───────────────────────────────────────────────────
     const body = await request.json();

@@ -1,19 +1,17 @@
 /**
  * API Route: GET /api/reintroductions/notifications
- * 
+ *
  * Fetch reintroduction notifications for the current user
  */
 
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
+import { getSessionFromCookies } from "@/lib/auth/session";
 import { generateReintroductionNotifications, shouldShowNotification, getNotificationSummary } from "@/lib/notifications/reintroduction";
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
-    // TODO: Get userId from session/auth
-    // For now, using a placeholder
-    const userId = request.headers.get("x-user-id");
-    
-    if (!userId) {
+    const session = await getSessionFromCookies();
+    if (!session.userId) {
       return NextResponse.json(
         { error: "Unauthorized" },
         { status: 401 }
@@ -21,7 +19,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Generate notifications
-    const allNotifications = await generateReintroductionNotifications(userId);
+    const allNotifications = await generateReintroductionNotifications(session.userId);
 
     // TODO: Get user preferences from database
     // For now, using defaults (all enabled)

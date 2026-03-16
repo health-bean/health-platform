@@ -103,6 +103,7 @@ export async function PATCH(request: Request) {
 
     const trial = await completeReintroductionTrial(
       trialId,
+      session.userId,
       status,
       outcome,
       symptomsSummary

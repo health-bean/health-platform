@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { eq, asc } from "drizzle-orm";
+import { eq, and, asc } from "drizzle-orm";
 import { db } from "@/lib/db";
 import {
   conversations,
@@ -56,7 +56,12 @@ export async function POST(request: Request) {
       const [conv] = await db
         .select({ id: conversations.id })
         .from(conversations)
-        .where(eq(conversations.id, conversationId))
+        .where(
+          and(
+            eq(conversations.id, conversationId),
+            eq(conversations.userId, session.userId)
+          )
+        )
         .limit(1);
 
       if (!conv) {

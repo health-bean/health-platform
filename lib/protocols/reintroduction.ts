@@ -33,6 +33,7 @@ export async function startReintroductionTrial(
  */
 export async function completeReintroductionTrial(
   logId: string,
+  userId: string,
   status: "passed" | "failed" | "inconclusive",
   outcome?: string,
   symptomsSummary?: Record<string, unknown>
@@ -47,7 +48,9 @@ export async function completeReintroductionTrial(
       symptomsSummary: symptomsSummary ?? null,
       endDate: today,
     })
-    .where(eq(reintroductionLog.id, logId))
+    .where(
+      and(eq(reintroductionLog.id, logId), eq(reintroductionLog.userId, userId))
+    )
     .returning();
 
   return updated;
