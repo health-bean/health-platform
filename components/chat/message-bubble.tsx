@@ -1,6 +1,8 @@
 import type { Message } from "@/types";
 import { ExtractedCard } from "./extracted-card";
+import { Avatar } from "@/components/ui";
 import { cn } from "@/lib/utils";
+import { Leaf } from "lucide-react";
 
 interface MessageBubbleProps {
   message: Message;
@@ -41,41 +43,55 @@ export function MessageBubble({ message }: MessageBubbleProps) {
   return (
     <div
       className={cn(
-        "flex flex-col animate-fade-in-up",
-        isUser ? "items-end" : "items-start"
+        "flex gap-2.5 animate-fade-in-up",
+        isUser ? "flex-row-reverse" : "flex-row"
       )}
     >
-      <div
-        className={cn(
-          "max-w-[85%] rounded-2xl px-4 py-2.5 text-sm leading-relaxed",
-          isUser
-            ? "bg-teal-600 text-white shadow-sm"
-            : "bg-[var(--color-surface-card)] text-[var(--color-text-primary)] shadow-[var(--shadow-card)]"
+      {/* Avatar */}
+      <div className="shrink-0 mt-0.5">
+        {isUser ? (
+          <Avatar name="You" size="sm" />
+        ) : (
+          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-teal-50 text-teal-600">
+            <Leaf className="h-4 w-4" />
+          </div>
         )}
-      >
-        {message.content ? formatContent(message.content) : null}
       </div>
 
-      {/* Extracted entries */}
-      {message.extractedData && message.extractedData.length > 0 && (
-        <div className="mt-1.5 flex max-w-[85%] flex-col gap-1.5">
-          {message.extractedData.map((entry, i) => (
-            <ExtractedCard key={i} entry={entry} />
-          ))}
-        </div>
-      )}
-
-      {/* Timestamp */}
-      {message.createdAt && (
-        <span
+      {/* Message content */}
+      <div className={cn("flex flex-col", isUser ? "items-end" : "items-start")}>
+        <div
           className={cn(
-            "mt-1 text-[10px] text-[var(--color-text-muted)]",
-            isUser ? "mr-1" : "ml-1"
+            "max-w-[85%] rounded-2xl px-4 py-2.5 text-sm leading-relaxed",
+            isUser
+              ? "bg-teal-600 text-white shadow-sm rounded-tr-sm"
+              : "bg-[var(--color-surface-card)] text-[var(--color-text-primary)] shadow-[var(--shadow-card)] border border-[var(--color-border)]/20 rounded-tl-sm"
           )}
         >
-          {formatTime(message.createdAt)}
-        </span>
-      )}
+          {message.content ? formatContent(message.content) : null}
+        </div>
+
+        {/* Extracted entries */}
+        {message.extractedData && message.extractedData.length > 0 && (
+          <div className="mt-1.5 flex max-w-[85%] flex-col gap-1.5">
+            {message.extractedData.map((entry, i) => (
+              <ExtractedCard key={i} entry={entry} />
+            ))}
+          </div>
+        )}
+
+        {/* Timestamp */}
+        {message.createdAt && (
+          <span
+            className={cn(
+              "mt-1 text-[10px] text-[var(--color-text-muted)]",
+              isUser ? "mr-1" : "ml-1"
+            )}
+          >
+            {formatTime(message.createdAt)}
+          </span>
+        )}
+      </div>
     </div>
   );
 }
