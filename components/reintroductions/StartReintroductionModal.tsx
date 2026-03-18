@@ -145,17 +145,17 @@ export function StartReintroductionModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-      <div className="w-full max-w-2xl rounded-2xl border border-slate-200 bg-white shadow-xl">
+      <div className="w-full max-w-2xl rounded-2xl border border-warm-200 bg-white shadow-xl">
         {/* Header */}
-        <div className="flex items-center justify-between border-b border-slate-200 px-6 py-4">
-          <h2 className="text-xl font-semibold text-slate-900">
+        <div className="flex items-center justify-between border-b border-warm-200 px-6 py-4">
+          <h2 className="text-xl font-semibold text-warm-900">
             Start Food Reintroduction
           </h2>
           <button
             type="button"
             onClick={handleClose}
             disabled={isSubmitting}
-            className="rounded-lg p-1 text-slate-400 hover:bg-slate-100 hover:text-slate-600 disabled:cursor-not-allowed disabled:opacity-50"
+            className="rounded-lg p-1 text-warm-400 hover:bg-warm-100 hover:text-warm-600 disabled:cursor-not-allowed disabled:opacity-50"
             aria-label="Close modal"
           >
             <X className="h-5 w-5" />
@@ -189,8 +189,8 @@ export function StartReintroductionModal({
           {/* Loading State */}
           {isLoadingFoods && (
             <div className="flex items-center justify-center py-8">
-              <Loader2 className="h-8 w-8 animate-spin text-sage-600" />
-              <span className="ml-3 text-sm text-slate-600">
+              <Loader2 className="h-8 w-8 animate-spin text-teal-600" />
+              <span className="ml-3 text-sm text-warm-600">
                 Loading eliminated foods...
               </span>
             </div>
@@ -203,7 +203,7 @@ export function StartReintroductionModal({
               <div>
                 <label
                   htmlFor="food-select"
-                  className="mb-2 block text-sm font-medium text-slate-700"
+                  className="mb-2 block text-sm font-medium text-warm-700"
                 >
                   Select Food to Reintroduce <span className="text-red-500">*</span>
                 </label>
@@ -211,7 +211,7 @@ export function StartReintroductionModal({
                   id="food-select"
                   value={selectedFoodId}
                   onChange={(e) => setSelectedFoodId(e.target.value)}
-                  className="w-full rounded-xl border border-slate-300 px-4 py-2.5 text-sm focus:border-sage-500 focus:outline-none focus:ring-2 focus:ring-sage-500/20"
+                  className="w-full rounded-xl border border-warm-300 px-4 py-2.5 text-sm focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-500/20"
                   required
                   disabled={isSubmitting}
                 >
@@ -223,7 +223,7 @@ export function StartReintroductionModal({
                   ))}
                 </select>
                 {selectedFood && (
-                  <p className="mt-2 text-xs text-slate-600">
+                  <p className="mt-2 text-xs text-warm-600">
                     <span className="font-medium">Recommendation:</span>{" "}
                     {selectedFood.reason}
                   </p>
@@ -231,14 +231,14 @@ export function StartReintroductionModal({
               </div>
 
               {/* Instructions */}
-              <div className="rounded-xl border border-sage-200 bg-sage-50 p-4">
-                <h3 className="mb-3 text-sm font-semibold text-sage-900">
+              <div className="rounded-xl border border-teal-200 bg-teal-50 p-4">
+                <h3 className="mb-3 text-sm font-semibold text-teal-900">
                   Reintroduction Protocol (7 Days)
                 </h3>
-                <div className="space-y-3 text-sm text-sage-800">
+                <div className="space-y-3 text-sm text-teal-800">
                   <div>
                     <p className="font-medium">Testing Phase (Days 1-3)</p>
-                    <ul className="ml-4 mt-1 list-disc space-y-1 text-sage-700">
+                    <ul className="ml-4 mt-1 list-disc space-y-1 text-teal-700">
                       <li>Eat the selected food once daily for 3 consecutive days</li>
                       <li>Log each time you eat this food</li>
                       <li>Monitor for any symptoms</li>
@@ -246,15 +246,15 @@ export function StartReintroductionModal({
                   </div>
                   <div>
                     <p className="font-medium">Observation Phase (Days 4-7)</p>
-                    <ul className="ml-4 mt-1 list-disc space-y-1 text-sage-700">
+                    <ul className="ml-4 mt-1 list-disc space-y-1 text-teal-700">
                       <li>Avoid the food completely</li>
                       <li>Continue monitoring symptoms</li>
                       <li>Log any symptoms you experience</li>
                     </ul>
                   </div>
-                  <div className="mt-3 border-t border-sage-200 pt-3">
+                  <div className="mt-3 border-t border-teal-200 pt-3">
                     <p className="font-medium">Important Notes</p>
-                    <ul className="ml-4 mt-1 list-disc space-y-1 text-sage-700">
+                    <ul className="ml-4 mt-1 list-disc space-y-1 text-teal-700">
                       <li>
                         If you experience severe symptoms, stop immediately and mark
                         the reintroduction as failed

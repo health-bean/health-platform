@@ -30,13 +30,13 @@ export default function LandingPage() {
     <div className="flex min-h-dvh flex-col">
       {/* Hero */}
       <header className="flex flex-1 flex-col items-center justify-center px-6 py-16 text-center">
-        <h1 className="text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl">
+        <h1 className="text-4xl font-bold tracking-tight text-warm-900 sm:text-5xl">
           ChewIQ
         </h1>
-        <p className="mt-4 max-w-md text-lg text-slate-600">
+        <p className="mt-4 max-w-md text-lg text-warm-600">
           Track your health through conversation
         </p>
-        <p className="mt-2 max-w-sm text-sm text-slate-500">
+        <p className="mt-2 max-w-sm text-sm text-warm-500">
           An AI health companion that understands elimination protocols,
           logs your food and symptoms, and reveals hidden correlations.
         </p>
@@ -54,24 +54,24 @@ export default function LandingPage() {
       </header>
 
       {/* Features */}
-      <section className="border-t border-slate-200 bg-white px-6 py-16">
+      <section className="border-t border-warm-200 bg-white px-6 py-16">
         <div className="mx-auto grid max-w-3xl gap-10 sm:grid-cols-3">
           {features.map((f) => (
             <div key={f.title} className="text-center">
-              <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-sage-50 text-sage-600">
+              <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-teal-50 text-teal-600">
                 <f.icon className="h-6 w-6" />
               </div>
-              <h3 className="mt-4 text-sm font-semibold text-slate-900">
+              <h3 className="mt-4 text-sm font-semibold text-warm-900">
                 {f.title}
               </h3>
-              <p className="mt-2 text-sm text-slate-500">{f.description}</p>
+              <p className="mt-2 text-sm text-warm-500">{f.description}</p>
             </div>
           ))}
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-slate-200 px-6 py-6 text-center text-xs text-slate-400">
+      <footer className="border-t border-warm-200 px-6 py-6 text-center text-xs text-warm-400">
         ChewIQ &mdash; Built for people healing through food.
       </footer>
     </div>

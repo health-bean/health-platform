@@ -1,8 +1,8 @@
 import type { Metadata, Viewport } from "next";
-import { DM_Sans, Fraunces } from "next/font/google";
+import { Source_Sans_3, Fraunces } from "next/font/google";
 import "./globals.css";
 
-const dmSans = DM_Sans({
+const sourceSans = Source_Sans_3({
   subsets: ["latin"],
   variable: "--font-body",
   display: "swap",
@@ -32,7 +32,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${dmSans.variable} ${fraunces.variable}`}>
+    <html lang="en" className={`${sourceSans.variable} ${fraunces.variable}`}>
       <body className="font-[family-name:var(--font-body)] bg-[var(--color-surface)] text-[var(--color-text-primary)] antialiased">
         {children}
       </body>

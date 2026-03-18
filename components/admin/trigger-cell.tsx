@@ -14,9 +14,9 @@ const LEVEL_COLORS: Record<string, string> = {
   moderate: "bg-amber-100 text-amber-800",
   high: "bg-red-100 text-red-800",
   very_high: "bg-red-200 text-red-900 font-semibold",
-  unknown: "bg-slate-100 text-slate-400",
+  unknown: "bg-warm-100 text-warm-400",
   true: "bg-red-100 text-red-800",
-  false: "bg-slate-100 text-slate-400",
+  false: "bg-warm-100 text-warm-400",
 };
 
 const DISPLAY_LABELS: Record<string, string> = {
@@ -51,7 +51,7 @@ export function TriggerCell({ value, property, options, onChange }: TriggerCellP
   if (editing) {
     return (
       <div ref={ref} className="relative">
-        <div className="absolute left-1/2 top-0 z-20 -translate-x-1/2 rounded-md border border-slate-200 bg-white shadow-lg">
+        <div className="absolute left-1/2 top-0 z-20 -tranwarm-x-1/2 rounded-md border border-warm-200 bg-white shadow-lg">
           {options.map((opt) => {
             const optColor = LEVEL_COLORS[opt] ?? "";
             const optLabel = DISPLAY_LABELS[opt] ?? opt;
@@ -64,7 +64,7 @@ export function TriggerCell({ value, property, options, onChange }: TriggerCellP
                   onChange(opt);
                   setEditing(false);
                 }}
-                className={`block w-full whitespace-nowrap px-3 py-1.5 text-left text-xs transition-colors hover:bg-slate-50 ${
+                className={`block w-full whitespace-nowrap px-3 py-1.5 text-left text-xs transition-colors hover:bg-warm-50 ${
                   isSelected ? "font-semibold" : ""
                 }`}
               >
@@ -89,7 +89,7 @@ export function TriggerCell({ value, property, options, onChange }: TriggerCellP
   return (
     <button
       onClick={() => setEditing(true)}
-      className={`block w-full cursor-pointer rounded px-1.5 py-1 text-center text-xs transition-all hover:ring-2 hover:ring-sage-300 ${colorClass}`}
+      className={`block w-full cursor-pointer rounded px-1.5 py-1 text-center text-xs transition-all hover:ring-2 hover:ring-teal-300 ${colorClass}`}
       title={`${property}: ${displayValue} (click to edit)`}
     >
       {label}

@@ -55,7 +55,7 @@ export function SymptomPicker({
 
   return (
     <div>
-      <h3 className="mb-2 text-xs font-semibold uppercase tracking-wider text-slate-400">
+      <h3 className="mb-2 text-xs font-semibold uppercase tracking-wider text-warm-400">
         Symptoms
       </h3>
       <div className="flex flex-wrap gap-2">
@@ -71,7 +71,7 @@ export function SymptomPicker({
                 className={`flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-sm transition-colors ${
                   isSelected
                     ? "border-red-300 bg-red-50 text-red-700"
-                    : "border-slate-200 bg-white text-slate-700 hover:bg-slate-50"
+                    : "border-warm-200 bg-white text-warm-700 hover:bg-warm-50"
                 }`}
                 style={{ minHeight: "36px" }}
               >
@@ -84,7 +84,7 @@ export function SymptomPicker({
                   onChange={(e) =>
                     onSeverityChange(s.name, parseInt(e.target.value, 10))
                   }
-                  className="h-8 w-14 rounded-md border border-slate-200 text-center text-xs"
+                  className="h-8 w-14 rounded-md border border-warm-200 text-center text-xs"
                   aria-label={`${s.name} severity`}
                 >
                   {Array.from({ length: 10 }, (_, i) => i + 1).map((n) => (

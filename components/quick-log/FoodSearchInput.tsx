@@ -209,7 +209,7 @@ export function FoodSearchInput({
       {/* Search Input */}
       <div className="relative">
         <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-          <Search className="h-4 w-4 text-slate-400" />
+          <Search className="h-4 w-4 text-warm-400" />
         </div>
         <input
           ref={inputRef}
@@ -224,11 +224,11 @@ export function FoodSearchInput({
           }}
           placeholder={placeholder}
           autoFocus={autoFocus}
-          className="w-full rounded-lg border border-slate-200 py-2 pl-10 pr-10 text-sm focus:border-sage-500 focus:outline-none focus:ring-1 focus:ring-sage-500"
+          className="w-full rounded-lg border border-warm-200 py-2 pl-10 pr-10 text-sm focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
         />
         {loading && (
           <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
-            <Loader2 className="h-4 w-4 animate-spin text-slate-400" />
+            <Loader2 className="h-4 w-4 animate-spin text-warm-400" />
           </div>
         )}
         {query && !loading && (
@@ -240,7 +240,7 @@ export function FoodSearchInput({
               setIsOpen(false);
               inputRef.current?.focus();
             }}
-            className="absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400 hover:text-slate-600"
+            className="absolute inset-y-0 right-0 flex items-center pr-3 text-warm-400 hover:text-warm-600"
           >
             <X className="h-4 w-4" />
           </button>
@@ -259,25 +259,25 @@ export function FoodSearchInput({
       {isOpen && results.length > 0 && (
         <div
           ref={dropdownRef}
-          className="absolute z-50 mt-1 max-h-80 w-full overflow-y-auto rounded-lg border border-slate-200 bg-white shadow-lg"
+          className="absolute z-50 mt-1 max-h-80 w-full overflow-y-auto rounded-lg border border-warm-200 bg-white shadow-lg"
         >
           {results.map((food, index) => (
             <button
               key={food.id}
               type="button"
               onClick={() => handleSelect(food)}
-              className={`w-full border-b border-slate-100 px-4 py-3 text-left transition-colors last:border-b-0 ${
+              className={`w-full border-b border-warm-100 px-4 py-3 text-left transition-colors last:border-b-0 ${
                 index === selectedIndex
-                  ? "bg-sage-50"
-                  : "hover:bg-slate-50"
+                  ? "bg-teal-50"
+                  : "hover:bg-warm-50"
               }`}
             >
               <div className="flex items-start justify-between gap-2">
                 <div className="flex-1 min-w-0">
-                  <div className="font-medium text-slate-900 text-sm">
+                  <div className="font-medium text-warm-900 text-sm">
                     {food.displayName}
                   </div>
-                  <div className="text-xs text-slate-500 mt-0.5">
+                  <div className="text-xs text-warm-500 mt-0.5">
                     {food.categoryName}
                     {food.subcategoryName && ` • ${food.subcategoryName}`}
                   </div>
@@ -299,14 +299,14 @@ export function FoodSearchInput({
 
       {/* No Results Message */}
       {isOpen && !loading && query.length >= 2 && results.length === 0 && (
-        <div className="absolute z-50 mt-1 w-full rounded-lg border border-slate-200 bg-white p-4 text-center text-sm text-slate-500 shadow-lg">
+        <div className="absolute z-50 mt-1 w-full rounded-lg border border-warm-200 bg-white p-4 text-center text-sm text-warm-500 shadow-lg">
           No foods found for &quot;{query}&quot;
         </div>
       )}
 
       {/* Keyboard Hints */}
       {isOpen && results.length > 0 && (
-        <div className="mt-1 text-xs text-slate-400">
+        <div className="mt-1 text-xs text-warm-400">
           Use ↑↓ to navigate, Enter to select, Esc to close
         </div>
       )}

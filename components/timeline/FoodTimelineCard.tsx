@@ -56,7 +56,7 @@ export function FoodTimelineCard({
   const hasProperties = food?.properties && Object.keys(food.properties).length > 0;
 
   return (
-    <div className="flex flex-col rounded-xl border border-slate-200 bg-white">
+    <div className="flex flex-col rounded-xl border border-warm-200 bg-white">
       {/* Main card content */}
       <div className="flex items-start gap-3 px-4 py-3">
         {/* Icon */}
@@ -68,7 +68,7 @@ export function FoodTimelineCard({
         <div className="flex-1 min-w-0">
           {/* Header */}
           <div className="flex items-center gap-2 flex-wrap">
-            <span className="text-sm font-medium text-slate-900">
+            <span className="text-sm font-medium text-warm-900">
               {displayName}
             </span>
             <Badge variant="allowed">Food</Badge>
@@ -78,33 +78,33 @@ export function FoodTimelineCard({
           </div>
 
           {/* Details */}
-          <div className="mt-1 flex items-center gap-2 flex-wrap text-xs text-slate-600">
+          <div className="mt-1 flex items-center gap-2 flex-wrap text-xs text-warm-600">
             {portion && (
               <>
                 <span className="font-medium">{portion}</span>
-                <span className="text-slate-300">•</span>
+                <span className="text-warm-300">•</span>
               </>
             )}
             {mealType && (
               <>
                 <span>{MEAL_TYPE_LABELS[mealType] || mealType}</span>
-                <span className="text-slate-300">•</span>
+                <span className="text-warm-300">•</span>
               </>
             )}
             {food?.category && (
               <>
-                <span className="text-slate-500">{food.category}</span>
+                <span className="text-warm-500">{food.category}</span>
                 {food.subcategory && (
                   <>
-                    <span className="text-slate-300">›</span>
-                    <span className="text-slate-500">{food.subcategory}</span>
+                    <span className="text-warm-300">›</span>
+                    <span className="text-warm-500">{food.subcategory}</span>
                   </>
                 )}
-                <span className="text-slate-300">•</span>
+                <span className="text-warm-300">•</span>
               </>
             )}
             {entryTime && (
-              <span className="text-slate-400">{formatTime(entryTime)}</span>
+              <span className="text-warm-400">{formatTime(entryTime)}</span>
             )}
           </div>
 
@@ -127,7 +127,7 @@ export function FoodTimelineCard({
           {hasProperties && (
             <button
               onClick={() => setShowProperties(!showProperties)}
-              className="mt-2 text-xs font-medium text-sage-600 hover:text-sage-700"
+              className="mt-2 text-xs font-medium text-teal-600 hover:text-teal-700"
             >
               {showProperties ? "Hide" : "Show"} food properties
             </button>
@@ -137,7 +137,7 @@ export function FoodTimelineCard({
 
       {/* Expandable properties section */}
       {showProperties && hasProperties && food?.properties && (
-        <div className="border-t border-slate-200 px-4 py-3">
+        <div className="border-t border-warm-200 px-4 py-3">
           <FoodPropertyCard properties={food.properties as unknown as FoodTriggerProperties} />
         </div>
       )}

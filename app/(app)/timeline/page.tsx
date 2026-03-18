@@ -114,7 +114,7 @@ export default function TimelinePage() {
       <div className="mb-6 flex items-center justify-between">
         <button
           onClick={() => shiftDate(-1)}
-          className="flex h-10 w-10 items-center justify-center rounded-lg text-[var(--color-text-muted)] hover:bg-sage-50 hover:text-sage-600 transition-all duration-200"
+          className="flex h-10 w-10 items-center justify-center rounded-lg text-[var(--color-text-muted)] hover:bg-teal-50 hover:text-teal-600 transition-all duration-200"
           aria-label="Previous day"
         >
           <ChevronLeft className="h-5 w-5" />
@@ -131,7 +131,7 @@ export default function TimelinePage() {
             "flex h-10 w-10 items-center justify-center rounded-lg text-[var(--color-text-muted)] transition-all duration-200",
             isToday
               ? "opacity-30"
-              : "hover:bg-sage-50 hover:text-sage-600"
+              : "hover:bg-teal-50 hover:text-teal-600"
           )}
           aria-label="Next day"
         >
@@ -146,8 +146,8 @@ export default function TimelinePage() {
           className={cn(
             "flex items-center gap-2 rounded-lg px-3 py-1.5 text-xs font-medium transition-all duration-200",
             showEnergyOnly
-              ? "bg-sage-100 text-sage-700"
-              : "bg-[var(--color-surface-overlay)] text-[var(--color-text-secondary)] hover:bg-sage-50"
+              ? "bg-teal-100 text-teal-700"
+              : "bg-[var(--color-surface-overlay)] text-[var(--color-text-secondary)] hover:bg-teal-50"
           )}
         >
           <Zap className="h-3.5 w-3.5" />
@@ -162,7 +162,7 @@ export default function TimelinePage() {
         </div>
       ) : filteredEntries.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-20 text-center">
-          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-sage-50 text-sage-400 mb-3">
+          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-teal-50 text-teal-400 mb-3">
             <Zap className="h-6 w-6" />
           </div>
           <p className="text-sm text-[var(--color-text-secondary)]">
@@ -221,7 +221,7 @@ export default function TimelinePage() {
                 key={entry.id}
                 className="flex items-center gap-3 rounded-xl bg-[var(--color-surface-card)] px-4 py-3 shadow-[var(--shadow-card)] transition-shadow hover:shadow-[var(--shadow-elevated)]"
               >
-                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-sage-50 text-sage-600">
+                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-teal-50 text-teal-600">
                   <Icon className="h-4 w-4" />
                 </div>
 
@@ -253,7 +253,7 @@ export default function TimelinePage() {
       {/* Floating Action Button */}
       <button
         onClick={() => setSheetOpen(true)}
-        className="fixed bottom-24 right-4 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-coral-500 text-white shadow-[var(--shadow-float)] hover:bg-coral-600 active:scale-95 transition-all duration-200 ease-[var(--ease-out-expo)] md:bottom-8 md:right-8"
+        className="fixed bottom-24 right-4 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-teal-600 text-white shadow-[var(--shadow-float)] hover:bg-teal-700 active:scale-95 transition-all duration-200 ease-[var(--ease-out-expo)] md:bottom-8 md:right-8"
         aria-label="Quick add"
       >
         <Plus className="h-6 w-6" />

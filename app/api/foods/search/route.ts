@@ -68,17 +68,24 @@ export async function GET(request: Request) {
       const protocolCtx = await loadProtocolContext(protocolId, phaseId, foodIds);
 
       const resultsWithStatus = results.map((food) => {
-        const complianceResult = checkComplianceSync(
-          protocolCtx,
-          food.properties,
-          food.id,
-          food.category
-        );
+        // Skip compliance check for foods without trigger data (e.g. USDA-sourced)
+        let protocolStatus = null;
+        let protocolViolations: string[] = [];
+        if (food.hasTriggerData) {
+          const complianceResult = checkComplianceSync(
+            protocolCtx,
+            food.properties,
+            food.id,
+            food.category
+          );
+          protocolStatus = complianceResult.status;
+          protocolViolations = complianceResult.violations;
+        }
 
         return {
           ...food,
-          protocolStatus: complianceResult.status,
-          protocolViolations: complianceResult.violations,
+          protocolStatus,
+          protocolViolations,
           categoryName: food.category,
           subcategoryName: food.subcategory,
           triggerProperties: food.properties,

@@ -46,14 +46,14 @@ export function ChatInterface() {
   return (
     <div className="flex h-[calc(100dvh-3.5rem-5rem)] flex-col md:h-[calc(100dvh-3.5rem)]">
       {/* Mode toggle */}
-      <div className="flex items-center justify-center border-b border-slate-200 bg-white px-4 py-2">
-        <div className="inline-flex rounded-lg bg-slate-100 p-0.5">
+      <div className="flex items-center justify-center border-b border-warm-200 bg-white px-4 py-2">
+        <div className="inline-flex rounded-lg bg-warm-100 p-0.5">
           <button
             onClick={() => setMode("chat")}
             className={`flex items-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${
               mode === "chat"
-                ? "bg-white text-slate-900 shadow-sm"
-                : "text-slate-500 hover:text-slate-700"
+                ? "bg-white text-warm-900 shadow-sm"
+                : "text-warm-500 hover:text-warm-700"
             }`}
           >
             <MessageSquare className="h-3.5 w-3.5" />
@@ -63,8 +63,8 @@ export function ChatInterface() {
             onClick={() => setMode("quick-log")}
             className={`flex items-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${
               mode === "quick-log"
-                ? "bg-white text-slate-900 shadow-sm"
-                : "text-slate-500 hover:text-slate-700"
+                ? "bg-white text-warm-900 shadow-sm"
+                : "text-warm-500 hover:text-warm-700"
             }`}
           >
             <Zap className="h-3.5 w-3.5" />
@@ -95,13 +95,13 @@ export function ChatInterface() {
 
               {messages.length === 0 && !loading ? (
                 <div className="flex h-full flex-col items-center justify-center pt-20 text-center">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-sage-50 text-sage-600">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-teal-50 text-teal-600">
                     <MessageSquare className="h-6 w-6" />
                   </div>
-                  <h2 className="mt-4 text-base font-semibold text-slate-900">
+                  <h2 className="mt-4 text-base font-semibold text-warm-900">
                     Start a conversation
                   </h2>
-                  <p className="mt-1 max-w-xs text-sm text-slate-500">
+                  <p className="mt-1 max-w-xs text-sm text-warm-500">
                     Tell me what you ate, how you feel, or ask about your protocol.
                     I&apos;ll track everything for you.
                   </p>
@@ -116,7 +116,7 @@ export function ChatInterface() {
                     messages.length > 0 &&
                     messages[messages.length - 1]?.role === "assistant" &&
                     messages[messages.length - 1]?.content === "" && (
-                      <div className="flex items-center gap-2 px-3 py-2 text-sm text-slate-400">
+                      <div className="flex items-center gap-2 px-3 py-2 text-sm text-warm-400">
                         <Spinner size="sm" />
                         <span>Thinking...</span>
                       </div>
@@ -127,7 +127,7 @@ export function ChatInterface() {
           </div>
 
           {/* Input area */}
-          <div className="border-t border-slate-200 bg-white px-4 py-3">
+          <div className="border-t border-warm-200 bg-white px-4 py-3">
             <div className="mx-auto max-w-2xl">
               <MessageInput onSend={sendMessage} disabled={loading} />
             </div>

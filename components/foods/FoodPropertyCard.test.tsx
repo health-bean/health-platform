@@ -31,9 +31,9 @@ function getLevelColor(level: TriggerLevel): {
     case "unknown":
     default:
       return {
-        bg: "bg-slate-50",
-        text: "text-slate-600",
-        ring: "ring-slate-500/20",
+        bg: "bg-warm-50",
+        text: "text-warm-600",
+        ring: "ring-warm-500/20",
       };
   }
 }
@@ -156,9 +156,9 @@ describe("FoodPropertyCard Logic", () => {
 
     it("returns slate for unknown level", () => {
       expect(getLevelColor("unknown")).toEqual({
-        bg: "bg-slate-50",
-        text: "text-slate-600",
-        ring: "ring-slate-500/20",
+        bg: "bg-warm-50",
+        text: "text-warm-600",
+        ring: "ring-warm-500/20",
       });
     });
   });

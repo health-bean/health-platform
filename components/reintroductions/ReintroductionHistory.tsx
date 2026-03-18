@@ -110,7 +110,7 @@ export function ReintroductionHistory({
     const day = reintroduction.currentDay || 1;
 
     return (
-      <div className="mt-2 flex items-center gap-2 text-xs text-slate-600">
+      <div className="mt-2 flex items-center gap-2 text-xs text-warm-600">
         <Clock className="h-3.5 w-3.5" />
         <span>
           Day {day} of 7 • {phase === "testing" ? "Testing Phase" : "Observation Phase"}
@@ -138,8 +138,8 @@ export function ReintroductionHistory({
   if (loading) {
     return (
       <div className="flex items-center justify-center py-12">
-        <Loader2 className="h-8 w-8 animate-spin text-sage-600" />
-        <span className="ml-3 text-sm text-slate-600">Loading reintroductions...</span>
+        <Loader2 className="h-8 w-8 animate-spin text-teal-600" />
+        <span className="ml-3 text-sm text-warm-600">Loading reintroductions...</span>
       </div>
     );
   }
@@ -162,12 +162,12 @@ export function ReintroductionHistory({
   // Empty state
   if (reintroductions.length === 0) {
     return (
-      <div className="rounded-xl border border-slate-200 bg-slate-50 p-8 text-center">
-        <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-slate-100">
-          <Calendar className="h-6 w-6 text-slate-400" />
+      <div className="rounded-xl border border-warm-200 bg-warm-50 p-8 text-center">
+        <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-warm-100">
+          <Calendar className="h-6 w-6 text-warm-400" />
         </div>
-        <h3 className="text-base font-semibold text-slate-900">No Reintroductions Yet</h3>
-        <p className="mt-2 text-sm text-slate-600">
+        <h3 className="text-base font-semibold text-warm-900">No Reintroductions Yet</h3>
+        <p className="mt-2 text-sm text-warm-600">
           Start your first food reintroduction to see your history here.
         </p>
       </div>
@@ -190,8 +190,8 @@ export function ReintroductionHistory({
               onClick={() => setSelectedFilter(filter.value)}
               className={`rounded-lg px-3 py-1.5 text-sm font-medium transition-colors ${
                 selectedFilter === filter.value
-                  ? "bg-sage-600 text-white"
-                  : "bg-slate-100 text-slate-700 hover:bg-slate-200"
+                  ? "bg-teal-600 text-white"
+                  : "bg-warm-100 text-warm-700 hover:bg-warm-200"
               }`}
             >
               {filter.label} ({count})
@@ -202,8 +202,8 @@ export function ReintroductionHistory({
 
       {/* Reintroduction Cards */}
       {filteredReintroductions.length === 0 ? (
-        <div className="rounded-xl border border-slate-200 bg-slate-50 p-6 text-center">
-          <p className="text-sm text-slate-600">
+        <div className="rounded-xl border border-warm-200 bg-warm-50 p-6 text-center">
+          <p className="text-sm text-warm-600">
             No reintroductions found with status: {selectedFilter}
           </p>
         </div>
@@ -213,18 +213,18 @@ export function ReintroductionHistory({
             <button
               key={reintroduction.id}
               onClick={() => handleCardClick(reintroduction)}
-              className="group rounded-xl border border-slate-200 bg-white p-4 text-left transition-all hover:border-sage-300 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-sage-500 focus:ring-offset-2"
+              className="group rounded-xl border border-warm-200 bg-white p-4 text-left transition-all hover:border-teal-300 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
             >
               {/* Food Name & Status */}
               <div className="flex items-start justify-between gap-2">
-                <h3 className="text-base font-semibold text-slate-900 group-hover:text-sage-600">
+                <h3 className="text-base font-semibold text-warm-900 group-hover:text-teal-600">
                   {reintroduction.foodName}
                 </h3>
                 {getStatusBadge(reintroduction.status)}
               </div>
 
               {/* Dates */}
-              <div className="mt-3 space-y-1.5 text-xs text-slate-600">
+              <div className="mt-3 space-y-1.5 text-xs text-warm-600">
                 <div className="flex items-center gap-2">
                   <Calendar className="h-3.5 w-3.5" />
                   <span>Started: {formatDate(reintroduction.startDate)}</span>
@@ -242,13 +242,13 @@ export function ReintroductionHistory({
 
               {/* Outcome Summary (for completed reintroductions) */}
               {reintroduction.status !== "active" && reintroduction.outcome && (
-                <p className="mt-3 line-clamp-2 text-xs text-slate-600">
+                <p className="mt-3 line-clamp-2 text-xs text-warm-600">
                   {reintroduction.outcome}
                 </p>
               )}
 
               {/* Click hint */}
-              <div className="mt-3 text-xs text-sage-600 opacity-0 transition-opacity group-hover:opacity-100">
+              <div className="mt-3 text-xs text-teal-600 opacity-0 transition-opacity group-hover:opacity-100">
                 Click to view details →
               </div>
             </button>

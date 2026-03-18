@@ -49,13 +49,13 @@ export function QuickAddSheet({ open, onClose }: QuickAddSheetProps) {
       <div className="relative z-10 flex w-full max-w-lg flex-col rounded-t-2xl bg-white shadow-xl" style={{ maxHeight: "85dvh" }}>
         {/* Handle + close */}
         <div className="flex items-center justify-between px-4 pt-3 pb-1">
-          <div className="mx-auto h-1 w-10 rounded-full bg-slate-300" />
+          <div className="mx-auto h-1 w-10 rounded-full bg-warm-300" />
         </div>
         <div className="flex items-center justify-between px-4 pb-2">
-          <h2 className="text-sm font-semibold text-slate-900">Quick Add</h2>
+          <h2 className="text-sm font-semibold text-warm-900">Quick Add</h2>
           <button
             onClick={onClose}
-            className="flex h-8 w-8 items-center justify-center rounded-lg text-slate-400 hover:bg-slate-100"
+            className="flex h-8 w-8 items-center justify-center rounded-lg text-warm-400 hover:bg-warm-100"
             aria-label="Close"
           >
             <X className="h-4 w-4" />

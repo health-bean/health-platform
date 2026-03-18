@@ -59,7 +59,7 @@ export function InlineFoodSearchWarning() {
       
       <button
         onClick={() => setShowWarning(!showWarning)}
-        className="rounded-lg bg-sage-600 px-4 py-2 text-white hover:bg-sage-700"
+        className="rounded-lg bg-teal-600 px-4 py-2 text-white hover:bg-teal-700"
       >
         {showWarning ? "Hide Warning" : "Show Warning"}
       </button>
@@ -124,7 +124,7 @@ export function ModalFoodWarning() {
       
       <button
         onClick={() => setIsOpen(true)}
-        className="rounded-lg bg-sage-600 px-4 py-2 text-white hover:bg-sage-700"
+        className="rounded-lg bg-teal-600 px-4 py-2 text-white hover:bg-teal-700"
       >
         Log Almonds
       </button>
@@ -259,14 +259,14 @@ export function ChatInterfaceWarningExample() {
     <div className="space-y-4 p-4">
       <h2 className="text-lg font-semibold">Example 4: Chat Interface</h2>
       
-      <div className="space-y-3 rounded-lg border border-slate-200 bg-slate-50 p-4">
+      <div className="space-y-3 rounded-lg border border-warm-200 bg-warm-50 p-4">
         {messages.map((msg, idx) => (
           <div
             key={idx}
             className={`rounded-lg p-3 ${
               msg.role === "user"
-                ? "bg-sage-100 text-sage-900"
-                : "bg-white text-slate-800"
+                ? "bg-teal-100 text-teal-900"
+                : "bg-white text-warm-800"
             }`}
           >
             <p className="text-sm font-medium">
@@ -364,15 +364,15 @@ export function QuickAddWarningExample() {
       <h2 className="text-lg font-semibold">Example 5: Quick-Add Integration</h2>
       
       <div className="space-y-2">
-        <p className="text-sm text-slate-600">Select a food to log:</p>
+        <p className="text-sm text-warm-600">Select a food to log:</p>
         {foods.map((food) => (
           <button
             key={food.id}
             onClick={() => handleFoodSelect(food)}
-            className="w-full rounded-lg border border-slate-200 bg-white p-3 text-left hover:bg-slate-50"
+            className="w-full rounded-lg border border-warm-200 bg-white p-3 text-left hover:bg-warm-50"
           >
             <p className="font-medium">{food.displayName}</p>
-            <p className="text-xs text-slate-500">{food.categoryName}</p>
+            <p className="text-xs text-warm-500">{food.categoryName}</p>
             {food.protocolStatus === "avoid" && (
               <span className="mt-1 inline-block rounded bg-red-100 px-2 py-0.5 text-xs text-red-700">
                 Not allowed on protocol

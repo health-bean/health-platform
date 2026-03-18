@@ -55,9 +55,9 @@ export function MessageInput({ onSend, disabled = false }: MessageInputProps) {
         disabled={disabled}
         rows={1}
         className={cn(
-          "flex-1 resize-none rounded-xl border border-slate-200 bg-white px-4 py-2.5",
-          "text-sm text-slate-900 placeholder:text-slate-400",
-          "focus:border-sage-500 focus:outline-none focus:ring-2 focus:ring-sage-500 focus:ring-offset-1",
+          "flex-1 resize-none rounded-xl border border-warm-200 bg-white px-4 py-2.5",
+          "text-sm text-warm-900 placeholder:text-warm-400",
+          "focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-1",
           "disabled:cursor-not-allowed disabled:opacity-50",
           "min-h-[44px] max-h-[96px]"
         )}
@@ -68,9 +68,9 @@ export function MessageInput({ onSend, disabled = false }: MessageInputProps) {
         disabled={disabled || !value.trim()}
         className={cn(
           "flex h-11 w-11 shrink-0 items-center justify-center rounded-xl",
-          "bg-sage-600 text-white",
+          "bg-teal-600 text-white",
           "transition-colors duration-150",
-          "hover:bg-sage-700 active:bg-sage-800",
+          "hover:bg-teal-700 active:bg-teal-800",
           "disabled:opacity-50 disabled:pointer-events-none"
         )}
         aria-label="Send message"

@@ -6,15 +6,15 @@ import { Spinner } from "./spinner";
 
 const variantClasses = {
   primary:
-    "bg-sage-600 text-white hover:bg-sage-700 active:bg-sage-800 focus-visible:ring-sage-500 shadow-sm hover:shadow-md",
+    "bg-teal-600 text-white hover:bg-teal-700 active:bg-teal-800 focus-visible:ring-teal-500 shadow-sm hover:shadow-md",
   secondary:
-    "bg-sage-50 text-sage-700 hover:bg-sage-100 active:bg-sage-200 focus-visible:ring-sage-400",
-  accent:
-    "bg-coral-500 text-white hover:bg-coral-600 active:bg-coral-700 focus-visible:ring-coral-400 shadow-sm hover:shadow-md",
+    "bg-teal-50 text-teal-700 hover:bg-teal-100 active:bg-teal-200 focus-visible:ring-teal-400",
+  outline:
+    "border border-teal-300 text-teal-700 bg-transparent hover:bg-teal-50 active:bg-teal-100 focus-visible:ring-teal-400",
   danger:
     "bg-red-600 text-white hover:bg-red-700 active:bg-red-800 focus-visible:ring-red-500",
   ghost:
-    "bg-transparent text-[var(--color-text-secondary)] hover:bg-sage-50 active:bg-sage-100 focus-visible:ring-sage-400",
+    "bg-transparent text-[var(--color-text-secondary)] hover:bg-teal-50 active:bg-teal-100 focus-visible:ring-teal-400",
 } as const;
 
 const sizeClasses = {

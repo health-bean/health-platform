@@ -37,13 +37,11 @@ export function MobileNav() {
                 "transition-all duration-200 ease-[var(--ease-out-expo)]",
                 "active:scale-95",
                 isActive
-                  ? "text-sage-600"
-                  : "text-[var(--color-text-muted)] hover:text-sage-500"
+                  ? "text-teal-600"
+                  : "text-[var(--color-text-muted)] hover:text-teal-500"
               )}
             >
-              <tab.icon
-                className={cn("h-5 w-5", isActive && "drop-shadow-sm")}
-              />
+              <tab.icon className="h-5 w-5" />
               <span className="text-[10px] font-medium">{tab.label}</span>
             </Link>
           );

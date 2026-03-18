@@ -17,6 +17,13 @@ function filterByType(entries: CorrelationEntry[], type: string): CorrelationEnt
   return entries.filter((e) => e.entryType === type);
 }
 
+/** Filter food entries including off-protocol meals as food-like signals */
+function filterFoodLike(entries: CorrelationEntry[]): CorrelationEntry[] {
+  return entries.filter(
+    (e) => e.entryType === "food" || e.entryType === "off_protocol"
+  );
+}
+
 // ─── 1. Food → Symptom ─────────────────────────────────────────────────
 
 const TIME_WINDOWS = [
@@ -29,7 +36,7 @@ export function analyzeFoodSymptom(
   entries: CorrelationEntry[],
   options: AnalyzerOptions
 ): RawCorrelation[] {
-  const foods = filterByType(entries, "food");
+  const foods = filterFoodLike(entries);
   const symptoms = filterByType(entries, "symptom");
   if (foods.length === 0 || symptoms.length === 0) return [];
 
@@ -411,7 +418,7 @@ export function analyzeMealTiming(
   entries: CorrelationEntry[],
   options: AnalyzerOptions
 ): RawCorrelation[] {
-  const foods = filterByType(entries, "food");
+  const foods = filterFoodLike(entries);
   const symptoms = filterByType(entries, "symptom");
   if (foods.length === 0 || symptoms.length === 0) return [];
 

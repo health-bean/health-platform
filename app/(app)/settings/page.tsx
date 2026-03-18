@@ -155,21 +155,21 @@ export default function SettingsPage() {
 
   return (
     <div className="mx-auto max-w-2xl px-4 py-6">
-      <h1 className="mb-6 text-lg font-semibold text-slate-900">Settings</h1>
+      <h1 className="mb-6 text-lg font-semibold text-warm-900">Settings</h1>
 
       {/* Protocol section */}
       <Card header="Protocol" className="mb-4">
         {loadingProtocols ? (
           <div className="flex items-center gap-2 py-2">
             <Spinner size="sm" />
-            <span className="text-sm text-slate-500">Loading protocols...</span>
+            <span className="text-sm text-warm-500">Loading protocols...</span>
           </div>
         ) : (
           <div className="flex flex-col gap-4">
             <div className="flex flex-col gap-1.5">
               <label
                 htmlFor="protocol-select"
-                className="text-sm font-medium text-slate-700"
+                className="text-sm font-medium text-warm-700"
               >
                 Active protocol
               </label>
@@ -180,7 +180,7 @@ export default function SettingsPage() {
                   setSelectedProtocolId(e.target.value);
                   setSaved(false);
                 }}
-                className="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-900 min-h-[44px] focus:border-sage-500 focus:outline-none focus:ring-2 focus:ring-sage-500 focus:ring-offset-1"
+                className="w-full rounded-xl border border-warm-200 bg-white px-4 py-2.5 text-sm text-warm-900 min-h-[44px] focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-1"
               >
                 <option value="">No protocol selected</option>
                 {protocols.map((p) => (
@@ -192,20 +192,20 @@ export default function SettingsPage() {
             </div>
 
             {selectedProtocol && (
-              <p className="text-sm text-slate-500">
+              <p className="text-sm text-warm-500">
                 {selectedProtocol.description}
               </p>
             )}
 
             {/* Phase display */}
             {phase && (
-              <div className="rounded-lg border border-sage-100 bg-sage-50 px-4 py-3">
+              <div className="rounded-lg border border-teal-100 bg-teal-50 px-4 py-3">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-semibold text-sage-900">
+                    <p className="text-sm font-semibold text-teal-900">
                       {phase.name}
                     </p>
-                    <p className="text-xs text-sage-600">
+                    <p className="text-xs text-teal-600">
                       Phase {phase.phaseOrder} of {phase.totalPhases}
                       {phase.durationWeeks && (
                         <> &middot; Day {phase.dayNumber} of {phase.durationWeeks * 7}</>
@@ -229,9 +229,9 @@ export default function SettingsPage() {
                 </div>
                 {/* Progress bar */}
                 {phase.durationWeeks && (
-                  <div className="mt-2 h-1.5 w-full rounded-full bg-sage-200">
+                  <div className="mt-2 h-1.5 w-full rounded-full bg-teal-200">
                     <div
-                      className="h-1.5 rounded-full bg-sage-600 transition-all"
+                      className="h-1.5 rounded-full bg-teal-600 transition-all"
                       style={{
                         width: `${Math.min(
                           100,
@@ -268,20 +268,20 @@ export default function SettingsPage() {
         {user ? (
           <div className="flex flex-col gap-3">
             <div>
-              <p className="text-xs text-slate-500">Name</p>
-              <p className="text-sm font-medium text-slate-900">
+              <p className="text-xs text-warm-500">Name</p>
+              <p className="text-sm font-medium text-warm-900">
                 {user.firstName}
               </p>
             </div>
             <div>
-              <p className="text-xs text-slate-500">Email</p>
-              <p className="text-sm font-medium text-slate-900">
+              <p className="text-xs text-warm-500">Email</p>
+              <p className="text-sm font-medium text-warm-900">
                 {user.email}
               </p>
             </div>
           </div>
         ) : (
-          <p className="text-sm text-slate-500">Not signed in</p>
+          <p className="text-sm text-warm-500">Not signed in</p>
         )}
       </Card>
 

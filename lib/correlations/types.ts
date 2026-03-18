@@ -8,7 +8,8 @@ export type AnalyzableEntryType =
   | "medication"
   | "exposure"
   | "detox"
-  | "exercise";
+  | "exercise"
+  | "off_protocol";
 
 /** The 8 correlation types supported by the current schema */
 export type CorrelationType =

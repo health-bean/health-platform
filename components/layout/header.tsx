@@ -28,11 +28,11 @@ export function Header() {
     <header className="sticky top-0 z-40 border-b border-[var(--color-border-light)] bg-[var(--color-surface-card)]/95 backdrop-blur-md">
       <div className="flex h-14 items-center justify-between px-4">
         {/* Logo */}
-        <Link href="/chat" className="flex items-center gap-1.5 group">
-          <span className="font-[family-name:var(--font-display)] text-xl font-bold tracking-tight text-sage-700 group-hover:text-sage-800 transition-colors">
+        <Link href="/chat" className="flex items-center gap-0.5 group">
+          <span className="font-[family-name:var(--font-display)] text-xl font-bold tracking-tight text-teal-800 group-hover:text-teal-900 transition-colors">
             Chew
           </span>
-          <span className="font-[family-name:var(--font-display)] text-xl font-bold tracking-tight text-coral-500 group-hover:text-coral-600 transition-colors">
+          <span className="font-[family-name:var(--font-display)] text-xl font-bold italic tracking-tight text-teal-500 group-hover:text-teal-600 transition-colors">
             IQ
           </span>
         </Link>
@@ -50,8 +50,8 @@ export function Header() {
                   className={cn(
                     "px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200",
                     isActive
-                      ? "bg-sage-50 text-sage-700"
-                      : "text-[var(--color-text-muted)] hover:text-[var(--color-text-primary)] hover:bg-sage-50/50"
+                      ? "bg-teal-50 text-teal-700"
+                      : "text-[var(--color-text-muted)] hover:text-[var(--color-text-primary)] hover:bg-teal-50/50"
                   )}
                 >
                   {item.label}
@@ -64,8 +64,8 @@ export function Header() {
                 className={cn(
                   "px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200",
                   pathname.startsWith("/admin")
-                    ? "bg-sage-50 text-sage-700"
-                    : "text-[var(--color-text-muted)] hover:text-[var(--color-text-primary)] hover:bg-sage-50/50"
+                    ? "bg-teal-50 text-teal-700"
+                    : "text-[var(--color-text-muted)] hover:text-[var(--color-text-primary)] hover:bg-teal-50/50"
                 )}
               >
                 Admin
@@ -85,7 +85,7 @@ export function Header() {
                 onClick={handleLogout}
                 className={cn(
                   "flex h-9 w-9 items-center justify-center rounded-lg",
-                  "text-[var(--color-text-muted)] hover:bg-sage-50 hover:text-sage-600",
+                  "text-[var(--color-text-muted)] hover:bg-teal-50 hover:text-teal-600",
                   "transition-all duration-200"
                 )}
                 aria-label="Log out"

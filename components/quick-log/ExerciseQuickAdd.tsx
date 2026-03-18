@@ -196,14 +196,14 @@ export function ExerciseQuickAdd({ onSuccess, onCancel }: ExerciseQuickAddProps)
     <form onSubmit={handleSubmit} className="space-y-4">
       {/* Exercise Type */}
       <div>
-        <label htmlFor="exerciseType" className="mb-1.5 block text-sm font-medium text-slate-700">
+        <label htmlFor="exerciseType" className="mb-1.5 block text-sm font-medium text-warm-700">
           Exercise Type <span className="text-red-500">*</span>
         </label>
         <select
           id="exerciseType"
           value={formData.exerciseType}
           onChange={(e) => handleChange("exerciseType", e.target.value)}
-          className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm focus:border-sage-500 focus:outline-none focus:ring-1 focus:ring-sage-500"
+          className="w-full rounded-lg border border-warm-200 px-3 py-2 text-sm focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
         >
           {EXERCISE_TYPES.map((type) => (
             <option key={type.value} value={type.value}>
@@ -215,7 +215,7 @@ export function ExerciseQuickAdd({ onSuccess, onCancel }: ExerciseQuickAddProps)
 
       {/* Duration */}
       <div>
-        <label htmlFor="duration" className="mb-1.5 block text-sm font-medium text-slate-700">
+        <label htmlFor="duration" className="mb-1.5 block text-sm font-medium text-warm-700">
           Duration (minutes) <span className="text-red-500">*</span>
         </label>
         <input
@@ -228,7 +228,7 @@ export function ExerciseQuickAdd({ onSuccess, onCancel }: ExerciseQuickAddProps)
           className={`w-full rounded-lg border px-3 py-2 text-sm focus:outline-none focus:ring-1 ${
             errors.durationMinutes
               ? "border-red-300 focus:border-red-500 focus:ring-red-500"
-              : "border-slate-200 focus:border-sage-500 focus:ring-sage-500"
+              : "border-warm-200 focus:border-teal-500 focus:ring-teal-500"
           }`}
         />
         {errors.durationMinutes && (
@@ -238,7 +238,7 @@ export function ExerciseQuickAdd({ onSuccess, onCancel }: ExerciseQuickAddProps)
 
       {/* Intensity Level */}
       <div>
-        <label className="mb-2 block text-sm font-medium text-slate-700">
+        <label className="mb-2 block text-sm font-medium text-warm-700">
           Intensity <span className="text-red-500">*</span>
         </label>
         <div className="space-y-2">
@@ -247,8 +247,8 @@ export function ExerciseQuickAdd({ onSuccess, onCancel }: ExerciseQuickAddProps)
               key={level.value}
               className={`flex cursor-pointer items-start gap-3 rounded-lg border p-3 transition-colors ${
                 formData.intensityLevel === level.value
-                  ? "border-sage-300 bg-sage-50"
-                  : "border-slate-200 bg-white hover:bg-slate-50"
+                  ? "border-teal-300 bg-teal-50"
+                  : "border-warm-200 bg-white hover:bg-warm-50"
               }`}
             >
               <input
@@ -257,11 +257,11 @@ export function ExerciseQuickAdd({ onSuccess, onCancel }: ExerciseQuickAddProps)
                 value={level.value}
                 checked={formData.intensityLevel === level.value}
                 onChange={(e) => handleChange("intensityLevel", e.target.value)}
-                className="mt-0.5 h-4 w-4 text-sage-600 focus:ring-sage-500"
+                className="mt-0.5 h-4 w-4 text-teal-600 focus:ring-teal-500"
               />
               <div className="flex-1">
-                <div className="text-sm font-medium text-slate-900">{level.label}</div>
-                <div className="text-xs text-slate-500">{level.description}</div>
+                <div className="text-sm font-medium text-warm-900">{level.label}</div>
+                <div className="text-xs text-warm-500">{level.description}</div>
               </div>
             </label>
           ))}
@@ -270,7 +270,7 @@ export function ExerciseQuickAdd({ onSuccess, onCancel }: ExerciseQuickAddProps)
 
       {/* Energy Before (Optional) */}
       <div>
-        <label htmlFor="energyBefore" className="mb-1.5 block text-sm font-medium text-slate-700">
+        <label htmlFor="energyBefore" className="mb-1.5 block text-sm font-medium text-warm-700">
           Energy Before (1-10, optional)
         </label>
         <input
@@ -284,7 +284,7 @@ export function ExerciseQuickAdd({ onSuccess, onCancel }: ExerciseQuickAddProps)
           className={`w-full rounded-lg border px-3 py-2 text-sm focus:outline-none focus:ring-1 ${
             errors.energyBefore
               ? "border-red-300 focus:border-red-500 focus:ring-red-500"
-              : "border-slate-200 focus:border-sage-500 focus:ring-sage-500"
+              : "border-warm-200 focus:border-teal-500 focus:ring-teal-500"
           }`}
         />
         {errors.energyBefore && (
@@ -294,7 +294,7 @@ export function ExerciseQuickAdd({ onSuccess, onCancel }: ExerciseQuickAddProps)
 
       {/* Energy After (Optional) */}
       <div>
-        <label htmlFor="energyAfter" className="mb-1.5 block text-sm font-medium text-slate-700">
+        <label htmlFor="energyAfter" className="mb-1.5 block text-sm font-medium text-warm-700">
           Energy After (1-10, optional)
         </label>
         <input
@@ -308,7 +308,7 @@ export function ExerciseQuickAdd({ onSuccess, onCancel }: ExerciseQuickAddProps)
           className={`w-full rounded-lg border px-3 py-2 text-sm focus:outline-none focus:ring-1 ${
             errors.energyAfter
               ? "border-red-300 focus:border-red-500 focus:ring-red-500"
-              : "border-slate-200 focus:border-sage-500 focus:ring-sage-500"
+              : "border-warm-200 focus:border-teal-500 focus:ring-teal-500"
           }`}
         />
         {errors.energyAfter && (
@@ -318,7 +318,7 @@ export function ExerciseQuickAdd({ onSuccess, onCancel }: ExerciseQuickAddProps)
 
       {/* Notes (Optional) */}
       <div>
-        <label htmlFor="notes" className="mb-1.5 block text-sm font-medium text-slate-700">
+        <label htmlFor="notes" className="mb-1.5 block text-sm font-medium text-warm-700">
           Notes (optional)
         </label>
         <textarea
@@ -327,7 +327,7 @@ export function ExerciseQuickAdd({ onSuccess, onCancel }: ExerciseQuickAddProps)
           onChange={(e) => handleChange("notes", e.target.value)}
           placeholder="How did you feel? Any observations..."
           rows={3}
-          className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm focus:border-sage-500 focus:outline-none focus:ring-1 focus:ring-sage-500"
+          className="w-full rounded-lg border border-warm-200 px-3 py-2 text-sm focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
         />
       </div>
 

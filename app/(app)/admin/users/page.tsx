@@ -61,7 +61,7 @@ export default function AdminUsersPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
-        <Loader2 className="h-6 w-6 animate-spin text-slate-400" />
+        <Loader2 className="h-6 w-6 animate-spin text-warm-400" />
       </div>
     );
   }
@@ -70,32 +70,32 @@ export default function AdminUsersPage() {
     <div>
       <div className="mb-6 flex items-center justify-between">
         <div>
-          <h1 className="text-xl font-semibold text-slate-900">Users</h1>
-          <p className="text-sm text-slate-500">
+          <h1 className="text-xl font-semibold text-warm-900">Users</h1>
+          <p className="text-sm text-warm-500">
             {users.length} registered {users.length === 1 ? "user" : "users"}
           </p>
         </div>
       </div>
 
-      <div className="overflow-hidden rounded-lg border border-slate-200">
+      <div className="overflow-hidden rounded-lg border border-warm-200">
         <table className="w-full text-left text-sm">
-          <thead className="border-b border-slate-200 bg-slate-50">
+          <thead className="border-b border-warm-200 bg-warm-50">
             <tr>
-              <th className="px-4 py-3 font-medium text-slate-600">Name</th>
-              <th className="px-4 py-3 font-medium text-slate-600">Email</th>
-              <th className="px-4 py-3 font-medium text-slate-600">Status</th>
-              <th className="px-4 py-3 font-medium text-slate-600">Role</th>
-              <th className="px-4 py-3 font-medium text-slate-600">Joined</th>
-              <th className="px-4 py-3 font-medium text-slate-600">Actions</th>
+              <th className="px-4 py-3 font-medium text-warm-600">Name</th>
+              <th className="px-4 py-3 font-medium text-warm-600">Email</th>
+              <th className="px-4 py-3 font-medium text-warm-600">Status</th>
+              <th className="px-4 py-3 font-medium text-warm-600">Role</th>
+              <th className="px-4 py-3 font-medium text-warm-600">Joined</th>
+              <th className="px-4 py-3 font-medium text-warm-600">Actions</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-100">
+          <tbody className="divide-y divide-warm-100">
             {users.map((user) => (
-              <tr key={user.id} className="hover:bg-slate-50">
-                <td className="px-4 py-3 font-medium text-slate-900">
+              <tr key={user.id} className="hover:bg-warm-50">
+                <td className="px-4 py-3 font-medium text-warm-900">
                   {user.firstName}
                 </td>
-                <td className="px-4 py-3 text-slate-600">{user.email}</td>
+                <td className="px-4 py-3 text-warm-600">{user.email}</td>
                 <td className="px-4 py-3">
                   <span
                     className={cn(
@@ -113,8 +113,8 @@ export default function AdminUsersPage() {
                     className={cn(
                       "inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-medium",
                       user.isAdmin
-                        ? "bg-sage-50 text-sage-700"
-                        : "bg-slate-100 text-slate-600"
+                        ? "bg-teal-50 text-teal-700"
+                        : "bg-warm-100 text-warm-600"
                     )}
                   >
                     {user.isAdmin ? (
@@ -128,7 +128,7 @@ export default function AdminUsersPage() {
                     )}
                   </span>
                 </td>
-                <td className="px-4 py-3 text-slate-500">
+                <td className="px-4 py-3 text-warm-500">
                   {new Date(user.createdAt).toLocaleDateString()}
                 </td>
                 <td className="px-4 py-3">
@@ -139,7 +139,7 @@ export default function AdminUsersPage() {
                       "inline-flex items-center gap-1 rounded-md px-2.5 py-1.5 text-xs font-medium transition-colors",
                       user.isAdmin
                         ? "text-red-600 hover:bg-red-50"
-                        : "text-sage-600 hover:bg-sage-50",
+                        : "text-teal-600 hover:bg-teal-50",
                       updating === user.id && "opacity-50"
                     )}
                   >

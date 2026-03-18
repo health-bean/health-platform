@@ -164,7 +164,7 @@ export function QuickLogPanel() {
     <div className="flex flex-1 flex-col overflow-y-auto">
       <div className="mx-auto w-full max-w-2xl px-4 py-4">
         {/* Tabs */}
-        <div className="mb-4 flex gap-2 border-b border-slate-200">
+        <div className="mb-4 flex gap-2 border-b border-warm-200">
           {tabs.map((tab) => {
             const Icon = tab.icon;
             const isActive = activeTab === tab.id;
@@ -174,8 +174,8 @@ export function QuickLogPanel() {
                 onClick={() => setActiveTab(tab.id)}
                 className={`flex items-center gap-2 border-b-2 px-4 py-2 text-sm font-medium transition-colors ${
                   isActive
-                    ? "border-sage-600 text-sage-600"
-                    : "border-transparent text-slate-500 hover:text-slate-700"
+                    ? "border-teal-600 text-teal-600"
+                    : "border-transparent text-warm-500 hover:text-warm-700"
                 }`}
               >
                 <Icon className="h-4 w-4" />
@@ -187,14 +187,14 @@ export function QuickLogPanel() {
 
         {/* Selected items summary */}
         {items.length > 0 && (
-          <div className="mb-4 rounded-xl border border-sage-200 bg-sage-50 p-3">
+          <div className="mb-4 rounded-xl border border-teal-200 bg-teal-50 p-3">
             <div className="mb-2 flex items-center justify-between">
-              <span className="text-sm font-medium text-sage-800">
+              <span className="text-sm font-medium text-teal-800">
                 {items.length} {items.length === 1 ? "item" : "items"} selected
               </span>
               <button
                 onClick={clear}
-                className="text-xs text-sage-600 hover:text-sage-800"
+                className="text-xs text-teal-600 hover:text-teal-800"
               >
                 Clear all
               </button>
@@ -203,7 +203,7 @@ export function QuickLogPanel() {
               {items.map((item) => (
                 <span
                   key={item.id}
-                  className="inline-flex items-center gap-1 rounded-full bg-white px-2.5 py-1 text-xs font-medium text-slate-700 shadow-sm"
+                  className="inline-flex items-center gap-1 rounded-full bg-white px-2.5 py-1 text-xs font-medium text-warm-700 shadow-sm"
                 >
                   {item.name}
                   {item.severity && (
@@ -211,7 +211,7 @@ export function QuickLogPanel() {
                   )}
                   <button
                     onClick={() => removeItem(item.id)}
-                    className="ml-0.5 text-slate-400 hover:text-slate-600"
+                    className="ml-0.5 text-warm-400 hover:text-warm-600"
                     aria-label={`Remove ${item.name}`}
                   >
                     <X className="h-3 w-3" />
@@ -236,7 +236,7 @@ export function QuickLogPanel() {
             <>
               {/* Food Search */}
               <div>
-                <h3 className="mb-2 text-xs font-semibold uppercase tracking-wider text-slate-400">
+                <h3 className="mb-2 text-xs font-semibold uppercase tracking-wider text-warm-400">
                   Search Foods
                 </h3>
                 <FoodSearchInput
@@ -249,7 +249,7 @@ export function QuickLogPanel() {
                 {searchQuery.length >= 2 && (
                   <button
                     onClick={() => setShowCustomFoodForm(true)}
-                    className="mt-2 text-sm text-sage-600 hover:text-sage-800"
+                    className="mt-2 text-sm text-teal-600 hover:text-teal-800"
                   >
                     Can&apos;t find your food? Create a custom food
                   </button>
@@ -259,7 +259,7 @@ export function QuickLogPanel() {
               {/* Selected Food Property Card */}
               {selectedFood && !showComplianceWarning && (
                 <div>
-                  <h3 className="mb-2 text-xs font-semibold uppercase tracking-wider text-slate-400">
+                  <h3 className="mb-2 text-xs font-semibold uppercase tracking-wider text-warm-400">
                     Food Properties
                   </h3>
                   <FoodPropertyCard properties={selectedFood.triggerProperties} />
@@ -322,7 +322,7 @@ export function QuickLogPanel() {
 
       {/* Submit bar - only for food/symptom tabs */}
       {items.length > 0 && activeTab !== "exercise" && (
-        <div className="sticky bottom-0 border-t border-slate-200 bg-white px-4 py-3">
+        <div className="sticky bottom-0 border-t border-warm-200 bg-white px-4 py-3">
           <div className="mx-auto max-w-2xl">
             <Button
               onClick={handleSubmit}

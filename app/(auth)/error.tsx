@@ -16,22 +16,22 @@ export default function AuthError({
 
   return (
     <div className="flex min-h-dvh flex-col items-center justify-center gap-4 px-6 text-center">
-      <h2 className="text-xl font-semibold text-slate-900">
+      <h2 className="text-xl font-semibold text-warm-900">
         Something went wrong
       </h2>
-      <p className="max-w-md text-sm text-slate-500">
+      <p className="max-w-md text-sm text-warm-500">
         We hit an unexpected error. Please try again.
       </p>
       <div className="flex gap-3">
         <button
           onClick={reset}
-          className="rounded-xl bg-slate-100 px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-200"
+          className="rounded-xl bg-warm-100 px-4 py-2.5 text-sm font-medium text-warm-700 hover:bg-warm-200"
         >
           Try again
         </button>
         <Link
           href="/login"
-          className="rounded-xl bg-sage-600 px-4 py-2.5 text-sm font-medium text-white hover:bg-sage-700"
+          className="rounded-xl bg-teal-600 px-4 py-2.5 text-sm font-medium text-white hover:bg-teal-700"
         >
           Back to login
         </Link>

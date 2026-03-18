@@ -1,5 +1,5 @@
 /**
- * Seed script for health-platform domain data.
+ * Seed script for ChewIQ domain data.
  *
  * Run:  npx tsx lib/db/seed.ts
  *   or: npm run db:seed

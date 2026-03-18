@@ -113,7 +113,7 @@ export function FoodPropertyCardExamples() {
  *   return (
  *     <div className="border rounded-lg p-4">
  *       <h3>{food.displayName}</h3>
- *       <p className="text-sm text-slate-600">{food.categoryName}</p>
+ *       <p className="text-sm text-warm-600">{food.categoryName}</p>
  *       <FoodPropertyCard 
  *         properties={food.triggerProperties} 
  *         className="mt-3"

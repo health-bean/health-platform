@@ -26,13 +26,13 @@ export default function CustomFoodFormExample() {
 
   return (
     <div className="mx-auto max-w-2xl p-6">
-      <h1 className="mb-6 text-2xl font-bold text-slate-900">
+      <h1 className="mb-6 text-2xl font-bold text-warm-900">
         Custom Food Form Examples
       </h1>
 
       {/* Example 1: Standalone Form */}
       <section className="mb-8">
-        <h2 className="mb-4 text-lg font-semibold text-slate-800">
+        <h2 className="mb-4 text-lg font-semibold text-warm-800">
           Example 1: Standalone Form
         </h2>
         <CustomFoodForm
@@ -45,7 +45,7 @@ export default function CustomFoodFormExample() {
 
       {/* Example 2: Form with Cancel Button */}
       <section className="mb-8">
-        <h2 className="mb-4 text-lg font-semibold text-slate-800">
+        <h2 className="mb-4 text-lg font-semibold text-warm-800">
           Example 2: Form with Cancel Button
         </h2>
         {!showForm ? (
@@ -62,14 +62,14 @@ export default function CustomFoodFormExample() {
 
       {/* Example 3: Modal Usage (Conceptual) */}
       <section className="mb-8">
-        <h2 className="mb-4 text-lg font-semibold text-slate-800">
+        <h2 className="mb-4 text-lg font-semibold text-warm-800">
           Example 3: Modal Usage (Conceptual)
         </h2>
-        <div className="rounded-lg border border-slate-200 bg-slate-50 p-4">
-          <p className="mb-2 text-sm text-slate-700">
+        <div className="rounded-lg border border-warm-200 bg-warm-50 p-4">
+          <p className="mb-2 text-sm text-warm-700">
             To use CustomFoodForm in a modal:
           </p>
-          <pre className="overflow-x-auto rounded bg-slate-800 p-3 text-xs text-slate-100">
+          <pre className="overflow-x-auto rounded bg-warm-800 p-3 text-xs text-warm-100">
             {`<Modal isOpen={isOpen} onClose={handleClose}>
   <CustomFoodForm
     onSuccess={(food) => {
@@ -86,14 +86,14 @@ export default function CustomFoodFormExample() {
 
       {/* Example 4: Integration with Food Search */}
       <section>
-        <h2 className="mb-4 text-lg font-semibold text-slate-800">
+        <h2 className="mb-4 text-lg font-semibold text-warm-800">
           Example 4: Integration with Food Search
         </h2>
-        <div className="rounded-lg border border-slate-200 bg-slate-50 p-4">
-          <p className="mb-2 text-sm text-slate-700">
+        <div className="rounded-lg border border-warm-200 bg-warm-50 p-4">
+          <p className="mb-2 text-sm text-warm-700">
             When no search results are found, offer custom food creation:
           </p>
-          <pre className="overflow-x-auto rounded bg-slate-800 p-3 text-xs text-slate-100">
+          <pre className="overflow-x-auto rounded bg-warm-800 p-3 text-xs text-warm-100">
             {`// In your food search component
 if (searchResults.length === 0) {
   return (

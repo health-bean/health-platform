@@ -46,10 +46,10 @@ export function AdminChatInterface() {
             <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-amber-50 text-amber-600">
               <ShieldAlert className="h-6 w-6" />
             </div>
-            <h2 className="mt-4 text-base font-semibold text-slate-900">
+            <h2 className="mt-4 text-base font-semibold text-warm-900">
               Data Admin
             </h2>
-            <p className="mt-1 max-w-xs text-sm text-slate-500">
+            <p className="mt-1 max-w-xs text-sm text-warm-500">
               Manage foods, trigger properties, protocols, and reference data.
               Ask me to search, add, update, or delete domain data.
             </p>
@@ -64,7 +64,7 @@ export function AdminChatInterface() {
               messages.length > 0 &&
               messages[messages.length - 1]?.role === "assistant" &&
               messages[messages.length - 1]?.content === "" && (
-                <div className="flex items-center gap-2 px-3 py-2 text-sm text-slate-400">
+                <div className="flex items-center gap-2 px-3 py-2 text-sm text-warm-400">
                   <Spinner size="sm" />
                   <span>Thinking...</span>
                 </div>
@@ -74,7 +74,7 @@ export function AdminChatInterface() {
       </div>
 
       {/* Input area */}
-      <div className="border-t border-slate-200 bg-white px-4 py-3">
+      <div className="border-t border-warm-200 bg-white px-4 py-3">
         <div className="mx-auto max-w-2xl">
           <MessageInput onSend={sendMessage} disabled={loading} />
         </div>

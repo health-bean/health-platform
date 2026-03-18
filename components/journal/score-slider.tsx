@@ -6,12 +6,12 @@ interface ScoreSliderProps {
   label: string;
   value: number | null;
   onChange: (value: number) => void;
-  color: string; // tailwind color name: "sage" | "amber" | "green" | "red" | "orange"
+  color: string; // tailwind color name: "teal" | "amber" | "green" | "red" | "orange"
   hideLabel?: boolean;
 }
 
 const colorMap: Record<string, { bg: string; accent: string; track: string }> = {
-  sage: { bg: "bg-sage-50", accent: "accent-sage-600", track: "text-sage-600" },
+  teal: { bg: "bg-teal-50", accent: "accent-teal-600", track: "text-teal-600" },
   amber: { bg: "bg-amber-50", accent: "accent-amber-500", track: "text-amber-600" },
   green: { bg: "bg-green-50", accent: "accent-green-600", track: "text-green-600" },
   red: { bg: "bg-red-50", accent: "accent-red-500", track: "text-red-600" },
@@ -19,7 +19,7 @@ const colorMap: Record<string, { bg: string; accent: string; track: string }> = 
 };
 
 export function ScoreSlider({ label, value, onChange, color, hideLabel }: ScoreSliderProps) {
-  const colors = colorMap[color] ?? colorMap.sage;
+  const colors = colorMap[color] ?? colorMap.teal;
   const displayValue = value ?? 5;
 
   return (

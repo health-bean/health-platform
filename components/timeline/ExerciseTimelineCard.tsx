@@ -100,9 +100,9 @@ export function ExerciseTimelineCard({
       : null;
 
   return (
-    <div className="flex items-start gap-3 rounded-xl border border-slate-200 bg-white px-4 py-3">
+    <div className="flex items-start gap-3 rounded-xl border border-warm-200 bg-white px-4 py-3">
       {/* Icon */}
-      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-sage-50 text-sage-600">
+      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-teal-50 text-teal-600">
         <Icon className="h-4 w-4" />
       </div>
 
@@ -110,16 +110,16 @@ export function ExerciseTimelineCard({
       <div className="flex-1 min-w-0">
         {/* Header */}
         <div className="flex items-center gap-2 flex-wrap">
-          <span className="text-sm font-medium text-slate-900">
+          <span className="text-sm font-medium text-warm-900">
             {exerciseLabel}
           </span>
           <Badge variant="info">Exercise</Badge>
         </div>
 
         {/* Duration and Intensity */}
-        <div className="mt-1 flex items-center gap-2 flex-wrap text-xs text-slate-600">
+        <div className="mt-1 flex items-center gap-2 flex-wrap text-xs text-warm-600">
           <span className="font-medium">{durationMinutes} min</span>
-          <span className="text-slate-300">•</span>
+          <span className="text-warm-300">•</span>
           <span
             className={`inline-flex items-center rounded-full px-2 py-0.5 font-medium ${intensityConfig.bgColor} ${intensityConfig.color}`}
           >
@@ -127,8 +127,8 @@ export function ExerciseTimelineCard({
           </span>
           {entryTime && (
             <>
-              <span className="text-slate-300">•</span>
-              <span className="text-slate-400">{formatTime(entryTime)}</span>
+              <span className="text-warm-300">•</span>
+              <span className="text-warm-400">{formatTime(entryTime)}</span>
             </>
           )}
         </div>
@@ -139,14 +139,14 @@ export function ExerciseTimelineCard({
             <Zap className="h-3.5 w-3.5 text-amber-500" />
             <div className="flex items-center gap-1.5">
               {energyBefore != null && (
-                <span className="font-medium text-slate-700">
+                <span className="font-medium text-warm-700">
                   {energyBefore}/10
                 </span>
               )}
               {energyBefore != null && energyAfter != null && (
                 <>
-                  <ArrowRight className="h-3 w-3 text-slate-400" />
-                  <span className="font-medium text-slate-700">
+                  <ArrowRight className="h-3 w-3 text-warm-400" />
+                  <span className="font-medium text-warm-700">
                     {energyAfter}/10
                   </span>
                   {energyChange !== null && (
@@ -156,7 +156,7 @@ export function ExerciseTimelineCard({
                           ? "text-green-600"
                           : energyChange < 0
                           ? "text-red-600"
-                          : "text-slate-500"
+                          : "text-warm-500"
                       }`}
                     >
                       ({energyChange > 0 ? "+" : ""}
@@ -166,7 +166,7 @@ export function ExerciseTimelineCard({
                 </>
               )}
               {energyBefore == null && energyAfter != null && (
-                <span className="font-medium text-slate-700">
+                <span className="font-medium text-warm-700">
                   After: {energyAfter}/10
                 </span>
               )}
@@ -176,7 +176,7 @@ export function ExerciseTimelineCard({
 
         {/* Notes */}
         {notes && (
-          <p className="mt-2 text-xs text-slate-500 line-clamp-2">{notes}</p>
+          <p className="mt-2 text-xs text-warm-500 line-clamp-2">{notes}</p>
         )}
       </div>
     </div>

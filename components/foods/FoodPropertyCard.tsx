@@ -79,9 +79,9 @@ function getLevelColor(level: TriggerLevel): {
     case "unknown":
     default:
       return {
-        bg: "bg-slate-50",
-        text: "text-slate-600",
-        ring: "ring-slate-500/20",
+        bg: "bg-warm-50",
+        text: "text-warm-600",
+        ring: "ring-warm-500/20",
       };
   }
 }
@@ -142,8 +142,8 @@ function Tooltip({
         {children}
       </div>
       {isVisible && (
-        <div className="absolute bottom-full left-1/2 z-50 mb-2 w-64 -translate-x-1/2 rounded-lg border border-slate-200 bg-white p-3 text-xs text-slate-700 shadow-lg">
-          <div className="absolute -bottom-1 left-1/2 h-2 w-2 -translate-x-1/2 rotate-45 border-b border-r border-slate-200 bg-white" />
+        <div className="absolute bottom-full left-1/2 z-50 mb-2 w-64 -tranwarm-x-1/2 rounded-lg border border-warm-200 bg-white p-3 text-xs text-warm-700 shadow-lg">
+          <div className="absolute -bottom-1 left-1/2 h-2 w-2 -tranwarm-x-1/2 rotate-45 border-b border-r border-warm-200 bg-white" />
           {content}
         </div>
       )}
@@ -234,9 +234,9 @@ export function FoodPropertyCard({
   if (propertyList.length === 0) {
     return (
       <div
-        className={`rounded-lg border border-slate-200 bg-slate-50 p-4 text-center ${className}`}
+        className={`rounded-lg border border-warm-200 bg-warm-50 p-4 text-center ${className}`}
       >
-        <p className="text-sm text-slate-500">
+        <p className="text-sm text-warm-500">
           No trigger property information available for this food.
         </p>
       </div>
@@ -245,9 +245,9 @@ export function FoodPropertyCard({
 
   return (
     <div
-      className={`rounded-lg border border-slate-200 bg-white p-4 ${className}`}
+      className={`rounded-lg border border-warm-200 bg-white p-4 ${className}`}
     >
-      <h3 className="mb-3 text-sm font-semibold text-slate-900">
+      <h3 className="mb-3 text-sm font-semibold text-warm-900">
         Trigger Properties
       </h3>
       <div className="flex flex-wrap gap-2">
@@ -255,7 +255,7 @@ export function FoodPropertyCard({
           <PropertyBadge key={index} property={property} />
         ))}
       </div>
-      <p className="mt-3 text-xs text-slate-500">
+      <p className="mt-3 text-xs text-warm-500">
         Hover over properties for more information
       </p>
     </div>

@@ -109,8 +109,8 @@ export default function AdminFoodsPage() {
   return (
     <div>
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-slate-900">Foods & Trigger Properties</h1>
-        <p className="text-sm text-slate-500">
+        <h1 className="text-2xl font-bold text-warm-900">Foods & Trigger Properties</h1>
+        <p className="text-sm text-warm-500">
           {foods.length} foods &middot; Click any cell to edit
         </p>
       </div>
@@ -118,21 +118,21 @@ export default function AdminFoodsPage() {
       {/* Filters */}
       <div className="mb-4 flex items-center gap-3">
         <div className="relative flex-1 max-w-sm">
-          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+          <Search className="absolute left-3 top-1/2 h-4 w-4 -tranwarm-y-1/2 text-warm-400" />
           <input
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search foods..."
-            className="w-full rounded-md border border-slate-200 py-2 pl-9 pr-3 text-sm outline-none focus:border-sage-400 focus:ring-1 focus:ring-sage-400"
+            className="w-full rounded-md border border-warm-200 py-2 pl-9 pr-3 text-sm outline-none focus:border-teal-400 focus:ring-1 focus:ring-teal-400"
           />
         </div>
         <div className="relative">
-          <Filter className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+          <Filter className="absolute left-3 top-1/2 h-4 w-4 -tranwarm-y-1/2 text-warm-400" />
           <select
             value={categoryFilter}
             onChange={(e) => setCategoryFilter(e.target.value)}
-            className="appearance-none rounded-md border border-slate-200 py-2 pl-9 pr-8 text-sm outline-none focus:border-sage-400 focus:ring-1 focus:ring-sage-400"
+            className="appearance-none rounded-md border border-warm-200 py-2 pl-9 pr-8 text-sm outline-none focus:border-teal-400 focus:ring-1 focus:ring-teal-400"
           >
             <option value="">All Categories</option>
             {categories.map((c) => (
@@ -147,23 +147,23 @@ export default function AdminFoodsPage() {
       {/* Table */}
       {loading ? (
         <div className="flex items-center justify-center py-20">
-          <Loader2 className="h-6 w-6 animate-spin text-slate-400" />
+          <Loader2 className="h-6 w-6 animate-spin text-warm-400" />
         </div>
       ) : (
-        <div className="overflow-x-auto rounded-lg border border-slate-200">
+        <div className="overflow-x-auto rounded-lg border border-warm-200">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-slate-200 bg-slate-50">
-                <th className="sticky left-0 z-10 bg-slate-50 px-3 py-2 text-left font-medium text-slate-700">
+              <tr className="border-b border-warm-200 bg-warm-50">
+                <th className="sticky left-0 z-10 bg-warm-50 px-3 py-2 text-left font-medium text-warm-700">
                   Food
                 </th>
-                <th className="px-2 py-2 text-left font-medium text-slate-500">
+                <th className="px-2 py-2 text-left font-medium text-warm-500">
                   Category
                 </th>
                 {TRIGGER_COLUMNS.map((col) => (
                   <th
                     key={col.key}
-                    className="px-1.5 py-2 text-center font-medium text-slate-500"
+                    className="px-1.5 py-2 text-center font-medium text-warm-500"
                     title={col.key}
                   >
                     {col.label}
@@ -175,12 +175,12 @@ export default function AdminFoodsPage() {
               {foods.map((food, i) => (
                 <tr
                   key={food.id}
-                  className={i % 2 === 0 ? "bg-white" : "bg-slate-25"}
+                  className={i % 2 === 0 ? "bg-white" : "bg-warm-25"}
                 >
-                  <td className="sticky left-0 z-10 bg-inherit whitespace-nowrap px-3 py-1.5 font-medium text-slate-900">
+                  <td className="sticky left-0 z-10 bg-inherit whitespace-nowrap px-3 py-1.5 font-medium text-warm-900">
                     {food.displayName}
                   </td>
-                  <td className="whitespace-nowrap px-2 py-1.5 text-slate-500">
+                  <td className="whitespace-nowrap px-2 py-1.5 text-warm-500">
                     {food.subcategoryName}
                   </td>
                   {TRIGGER_COLUMNS.map((col) => (

@@ -42,16 +42,16 @@ export default function LoginPage() {
   return (
     <div className="relative flex min-h-dvh items-center justify-center px-6 py-12 overflow-hidden">
       {/* Subtle gradient backdrop */}
-      <div className="absolute inset-0 bg-gradient-to-br from-sage-50/80 via-[var(--color-surface)] to-coral-50/30" />
+      <div className="absolute inset-0 bg-gradient-to-br from-teal-50/80 via-[var(--color-surface)] to-warm-100" />
 
       <div className="relative w-full max-w-sm animate-fade-in-up">
         {/* Brand */}
         <div className="mb-10 text-center">
           <div className="mb-4">
-            <span className="font-[family-name:var(--font-display)] text-4xl font-bold tracking-tight text-sage-700">
+            <span className="font-[family-name:var(--font-display)] text-4xl font-bold tracking-tight text-teal-700">
               Chew
             </span>
-            <span className="font-[family-name:var(--font-display)] text-4xl font-bold tracking-tight text-coral-500">
+            <span className="font-[family-name:var(--font-display)] text-4xl font-bold italic tracking-tight text-teal-500">
               IQ
             </span>
           </div>
@@ -94,7 +94,7 @@ export default function LoginPage() {
             <div className="text-right">
               <Link
                 href="/forgot-password"
-                className="text-xs text-sage-600 hover:text-sage-700 transition-colors"
+                className="text-xs text-teal-600 hover:text-teal-700 transition-colors"
               >
                 Forgot password?
               </Link>
@@ -110,7 +110,7 @@ export default function LoginPage() {
           Have an invite code?{" "}
           <Link
             href="/signup"
-            className="text-sage-600 hover:text-sage-700 font-medium transition-colors"
+            className="text-teal-600 hover:text-teal-700 font-medium transition-colors"
           >
             Create an account
           </Link>

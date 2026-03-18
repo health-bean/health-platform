@@ -39,13 +39,13 @@ export default function ForgotPasswordPage() {
     return (
       <div className="flex min-h-dvh items-center justify-center px-6 py-12">
         <div className="w-full max-w-sm text-center">
-          <h1 className="text-2xl font-bold text-slate-900">Check your email</h1>
-          <p className="mt-2 text-sm text-slate-500">
+          <h1 className="text-2xl font-bold text-warm-900">Check your email</h1>
+          <p className="mt-2 text-sm text-warm-500">
             We sent a password reset link to <strong>{email}</strong>. Click the
             link in the email to reset your password.
           </p>
-          <p className="mt-6 text-sm text-slate-500">
-            <Link href="/login" className="text-sage-600 hover:text-sage-700">
+          <p className="mt-6 text-sm text-warm-500">
+            <Link href="/login" className="text-teal-600 hover:text-teal-700">
               Back to login
             </Link>
           </p>
@@ -58,8 +58,8 @@ export default function ForgotPasswordPage() {
     <div className="flex min-h-dvh items-center justify-center px-6 py-12">
       <div className="w-full max-w-sm">
         <div className="mb-8 text-center">
-          <h1 className="text-2xl font-bold text-slate-900">Reset password</h1>
-          <p className="mt-1 text-sm text-slate-500">
+          <h1 className="text-2xl font-bold text-warm-900">Reset password</h1>
+          <p className="mt-1 text-sm text-warm-500">
             Enter your email and we'll send you a reset link
           </p>
         </div>
@@ -88,9 +88,9 @@ export default function ForgotPasswordPage() {
           </form>
         </Card>
 
-        <p className="mt-6 text-center text-sm text-slate-500">
+        <p className="mt-6 text-center text-sm text-warm-500">
           Remember your password?{" "}
-          <Link href="/login" className="text-sage-600 hover:text-sage-700">
+          <Link href="/login" className="text-teal-600 hover:text-teal-700">
             Log in
           </Link>
         </p>

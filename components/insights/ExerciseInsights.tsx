@@ -67,10 +67,10 @@ function ExerciseInsightCard({ data }: { data: ExerciseInsightData }) {
         <div className="min-w-0 flex-1">
           <div className="flex items-start justify-between gap-2">
             <div>
-              <p className="text-sm font-medium text-slate-900">
+              <p className="text-sm font-medium text-warm-900">
                 {exerciseType.charAt(0).toUpperCase() + exerciseType.slice(1).replace(/_/g, " ")}
               </p>
-              <p className="text-xs text-slate-500 capitalize">{intensity} intensity</p>
+              <p className="text-xs text-warm-500 capitalize">{intensity} intensity</p>
             </div>
             <div className="text-right">
               <p
@@ -81,13 +81,13 @@ function ExerciseInsightCard({ data }: { data: ExerciseInsightData }) {
                 {avgEnergyChange > 0 ? "+" : ""}
                 {avgEnergyChange.toFixed(1)} points
               </p>
-              <p className="text-xs text-slate-400">avg energy change</p>
+              <p className="text-xs text-warm-400">avg energy change</p>
             </div>
           </div>
 
           {/* Energy Impact Bar */}
           <div className="mt-3">
-            <div className="h-2 w-full rounded-full bg-slate-100">
+            <div className="h-2 w-full rounded-full bg-warm-100">
               <div
                 className={`h-2 rounded-full ${
                   isPositive ? "bg-emerald-500" : "bg-red-500"
@@ -102,12 +102,12 @@ function ExerciseInsightCard({ data }: { data: ExerciseInsightData }) {
               {isPositive ? "Energy Boost" : "Energy Drain"}
             </Badge>
             <Badge variant="moderation">{confidence}% confidence</Badge>
-            <span className="text-xs text-slate-400">
+            <span className="text-xs text-warm-400">
               {sampleSize} occurrence{sampleSize !== 1 ? "s" : ""}
             </span>
           </div>
 
-          <p className="mt-2 text-xs text-slate-600">
+          <p className="mt-2 text-xs text-warm-600">
             {isPositive
               ? `This exercise consistently increases your energy levels.`
               : `This exercise tends to decrease your energy levels.`}
@@ -120,14 +120,14 @@ function ExerciseInsightCard({ data }: { data: ExerciseInsightData }) {
 
 function EmptyState() {
   return (
-    <div className="flex flex-col items-center justify-center rounded-xl border border-slate-200 bg-slate-50 py-12 text-center">
-      <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-sage-50 text-sage-600">
+    <div className="flex flex-col items-center justify-center rounded-xl border border-warm-200 bg-warm-50 py-12 text-center">
+      <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-teal-50 text-teal-600">
         <Activity className="h-6 w-6" />
       </div>
-      <h3 className="mt-4 text-sm font-semibold text-slate-900">
+      <h3 className="mt-4 text-sm font-semibold text-warm-900">
         Not enough exercise data yet
       </h3>
-      <p className="mt-1 max-w-xs text-xs text-slate-500">
+      <p className="mt-1 max-w-xs text-xs text-warm-500">
         Log at least 5 exercises to see energy patterns and correlations.
       </p>
     </div>
@@ -148,7 +148,7 @@ export function ExerciseInsights({ insights }: ExerciseInsightsProps) {
     <div>
       <div className="mb-3 flex items-center gap-2">
         <Zap className="h-4 w-4 text-amber-500" />
-        <h2 className="text-sm font-semibold uppercase tracking-wide text-slate-400">
+        <h2 className="text-sm font-semibold uppercase tracking-wide text-warm-400">
           Exercise & Energy
         </h2>
       </div>

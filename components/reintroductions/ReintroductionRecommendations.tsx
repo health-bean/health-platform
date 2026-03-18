@@ -65,7 +65,7 @@ export function ReintroductionRecommendations({
       );
     } else {
       return (
-        <span className="inline-flex items-center rounded-full bg-slate-100 px-2 py-0.5 text-xs font-medium text-slate-800">
+        <span className="inline-flex items-center rounded-full bg-warm-100 px-2 py-0.5 text-xs font-medium text-warm-800">
           Low Priority
         </span>
       );
@@ -75,8 +75,8 @@ export function ReintroductionRecommendations({
   if (loading) {
     return (
       <div className="flex items-center justify-center py-12">
-        <Loader2 className="h-8 w-8 animate-spin text-sage-600" />
-        <span className="ml-3 text-sm text-slate-600">Loading recommendations...</span>
+        <Loader2 className="h-8 w-8 animate-spin text-teal-600" />
+        <span className="ml-3 text-sm text-warm-600">Loading recommendations...</span>
       </div>
     );
   }
@@ -97,12 +97,12 @@ export function ReintroductionRecommendations({
 
   if (foods.length === 0) {
     return (
-      <div className="rounded-xl border border-slate-200 bg-slate-50 p-8 text-center">
-        <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-slate-100">
-          <TrendingUp className="h-6 w-6 text-slate-400" />
+      <div className="rounded-xl border border-warm-200 bg-warm-50 p-8 text-center">
+        <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-warm-100">
+          <TrendingUp className="h-6 w-6 text-warm-400" />
         </div>
-        <h3 className="text-base font-semibold text-slate-900">No Foods Ready</h3>
-        <p className="mt-2 text-sm text-slate-600">
+        <h3 className="text-base font-semibold text-warm-900">No Foods Ready</h3>
+        <p className="mt-2 text-sm text-warm-600">
           No eliminated foods are ready for reintroduction yet. Keep tracking your symptoms and we&apos;ll recommend foods when you&apos;re ready.
         </p>
       </div>
@@ -129,22 +129,22 @@ export function ReintroductionRecommendations({
         {foods.map((food) => (
           <div
             key={food.id}
-            className="rounded-xl border border-slate-200 bg-white p-5 transition-all hover:border-sage-300 hover:shadow-md"
+            className="rounded-xl border border-warm-200 bg-white p-5 transition-all hover:border-teal-300 hover:shadow-md"
           >
             {/* Header */}
             <div className="flex items-start justify-between gap-3">
               <div className="flex-1">
-                <h3 className="text-base font-semibold text-slate-900">
+                <h3 className="text-base font-semibold text-warm-900">
                   {food.displayName}
                 </h3>
-                <p className="mt-1 text-sm text-slate-600">{food.category}</p>
+                <p className="mt-1 text-sm text-warm-600">{food.category}</p>
               </div>
               {getPriorityBadge(food.priority)}
             </div>
 
             {/* Reason */}
-            <div className="mt-4 rounded-lg bg-slate-50 p-3">
-              <p className="text-sm text-slate-700">{food.reason}</p>
+            <div className="mt-4 rounded-lg bg-warm-50 p-3">
+              <p className="text-sm text-warm-700">{food.reason}</p>
             </div>
 
             {/* Action */}

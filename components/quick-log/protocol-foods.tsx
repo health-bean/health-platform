@@ -71,13 +71,13 @@ export function ProtocolFoods({
 
   return (
     <div>
-      <h3 className="mb-2 text-xs font-semibold uppercase tracking-wider text-slate-400">
+      <h3 className="mb-2 text-xs font-semibold uppercase tracking-wider text-warm-400">
         Protocol Foods
       </h3>
       <div className="flex flex-col gap-3">
         {Object.entries(byCategory).map(([category, catFoods]) => (
           <div key={category}>
-            <p className="mb-1.5 text-xs font-medium text-slate-500">
+            <p className="mb-1.5 text-xs font-medium text-warm-500">
               {category}
             </p>
             <div className="flex flex-nowrap gap-2 overflow-x-auto pb-1 -mx-1 px-1">
@@ -92,7 +92,7 @@ export function ProtocolFoods({
                     className={`flex shrink-0 items-center gap-1.5 rounded-full border px-3 py-1.5 text-sm transition-colors ${
                       isSelected
                         ? "border-green-300 bg-green-50 text-green-700"
-                        : "border-slate-200 bg-white text-slate-700 hover:bg-slate-50"
+                        : "border-warm-200 bg-white text-warm-700 hover:bg-warm-50"
                     }`}
                     style={{ minHeight: "36px" }}
                   >

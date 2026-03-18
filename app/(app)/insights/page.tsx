@@ -22,7 +22,7 @@ function InsightCard({ insight }: { insight: Insight }) {
             isHelper
               ? "bg-emerald-50 text-emerald-600"
               : isPattern
-                ? "bg-sage-50 text-sage-600"
+                ? "bg-teal-50 text-teal-600"
                 : "bg-amber-50 text-amber-600"
           }`}
         >
@@ -38,9 +38,9 @@ function InsightCard({ insight }: { insight: Insight }) {
         </div>
 
         <div className="min-w-0 flex-1">
-          <p className="text-sm font-medium text-slate-900">
+          <p className="text-sm font-medium text-warm-900">
             {insight.trigger}{" "}
-            <span className="text-slate-500">
+            <span className="text-warm-500">
               {isHelper ? "helps with" : "correlates with"}
             </span>{" "}
             {insight.effect}
@@ -59,24 +59,24 @@ function InsightCard({ insight }: { insight: Insight }) {
               {insight.percentage}% confidence
             </Badge>
 
-            <span className="text-xs text-slate-400">
+            <span className="text-xs text-warm-400">
               {insight.occurrences} occurrence
               {insight.occurrences !== 1 ? "s" : ""}
             </span>
 
             {insight.foodCount && (
-              <span className="text-xs text-slate-400">
+              <span className="text-xs text-warm-400">
                 {insight.foodCount} foods
               </span>
             )}
           </div>
 
           {insight.description && (
-            <p className="mt-2 text-xs text-slate-500">{insight.description}</p>
+            <p className="mt-2 text-xs text-warm-500">{insight.description}</p>
           )}
 
           {insight.recommendation && (
-            <p className="mt-1 text-xs font-medium text-slate-600">
+            <p className="mt-1 text-xs font-medium text-warm-600">
               {insight.recommendation}
             </p>
           )}
@@ -86,7 +86,7 @@ function InsightCard({ insight }: { insight: Insight }) {
               {insight.contributingFoods.map((food) => (
                 <span
                   key={food}
-                  className="inline-block rounded-md bg-slate-100 px-1.5 py-0.5 text-xs text-slate-600"
+                  className="inline-block rounded-md bg-warm-100 px-1.5 py-0.5 text-xs text-warm-600"
                 >
                   {food}
                 </span>
@@ -110,7 +110,7 @@ function InsightSection({
 
   return (
     <div>
-      <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-400">
+      <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-warm-400">
         {title}
       </h2>
       <div className="flex flex-col gap-3">
@@ -202,7 +202,7 @@ export default function InsightsPage() {
 
   return (
     <div className="mx-auto max-w-2xl px-4 py-6">
-      <h1 className="mb-6 text-lg font-semibold text-slate-900">Insights</h1>
+      <h1 className="mb-6 text-lg font-semibold text-warm-900">Insights</h1>
 
       {error && (
         <div className="mb-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
@@ -212,13 +212,13 @@ export default function InsightsPage() {
 
       {totalInsights === 0 ? (
         <div className="flex flex-col items-center justify-center py-20 text-center">
-          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-sage-50 text-sage-600">
+          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-teal-50 text-teal-600">
             <LineChart className="h-6 w-6" />
           </div>
-          <h2 className="mt-4 text-base font-semibold text-slate-900">
+          <h2 className="mt-4 text-base font-semibold text-warm-900">
             Not enough data yet
           </h2>
-          <p className="mt-1 max-w-xs text-sm text-slate-500">
+          <p className="mt-1 max-w-xs text-sm text-warm-500">
             Log more entries to see insights. ChewIQ identifies patterns between
             what you eat and how you feel over time.
           </p>
@@ -229,12 +229,12 @@ export default function InsightsPage() {
           {activeReintroduction && (
             <div>
               <div className="mb-3 flex items-center justify-between">
-                <h2 className="text-sm font-semibold uppercase tracking-wide text-slate-400">
+                <h2 className="text-sm font-semibold uppercase tracking-wide text-warm-400">
                   Active Reintroduction
                 </h2>
                 <button
                   onClick={() => router.push("/reintroductions")}
-                  className="text-xs text-sage-600 hover:text-sage-700"
+                  className="text-xs text-teal-600 hover:text-teal-700"
                 >
                   View All →
                 </button>
@@ -250,14 +250,14 @@ export default function InsightsPage() {
           {!activeReintroduction && protocolId && totalInsights > 0 && (
             <Card>
               <div className="flex items-start gap-4">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-sage-50">
-                  <Plus className="h-5 w-5 text-sage-600" />
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-teal-50">
+                  <Plus className="h-5 w-5 text-teal-600" />
                 </div>
                 <div className="flex-1">
-                  <h3 className="text-sm font-semibold text-slate-900">
+                  <h3 className="text-sm font-semibold text-warm-900">
                     Ready to Reintroduce Foods?
                   </h3>
-                  <p className="mt-1 text-sm text-slate-600">
+                  <p className="mt-1 text-sm text-warm-600">
                     Start testing eliminated foods to see if you can safely add them back to your diet.
                   </p>
                   <div className="mt-3 flex gap-2">

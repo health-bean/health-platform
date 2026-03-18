@@ -25,7 +25,7 @@ export function StartReintroductionModalExample() {
       <h2 className="text-lg font-semibold">StartReintroductionModal Example</h2>
       
       <div className="space-y-2">
-        <p className="text-sm text-slate-600">
+        <p className="text-sm text-warm-600">
           Click the button below to open the reintroduction modal.
         </p>
         
@@ -44,11 +44,11 @@ export function StartReintroductionModalExample() {
         protocolId={userProtocolId}
       />
 
-      <div className="mt-6 rounded-lg border border-slate-200 bg-slate-50 p-4">
-        <h3 className="mb-2 text-sm font-semibold text-slate-900">
+      <div className="mt-6 rounded-lg border border-warm-200 bg-warm-50 p-4">
+        <h3 className="mb-2 text-sm font-semibold text-warm-900">
           Component Features
         </h3>
-        <ul className="space-y-1 text-sm text-slate-600">
+        <ul className="space-y-1 text-sm text-warm-600">
           <li>• Fetches eliminated foods from the recommendations API</li>
           <li>• Displays food selection dropdown with category information</li>
           <li>• Shows detailed 7-day reintroduction protocol instructions</li>
@@ -85,7 +85,7 @@ export function ReintroductionsPageExample() {
   return (
     <div className="container mx-auto max-w-4xl p-6">
       <div className="mb-6 flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-slate-900">
+        <h1 className="text-2xl font-bold text-warm-900">
           Food Reintroductions
         </h1>
         <Button
@@ -99,8 +99,8 @@ export function ReintroductionsPageExample() {
       {/* Reintroductions list would go here */}
       <div className="space-y-4">
         {reintroductions.length === 0 ? (
-          <div className="rounded-lg border border-slate-200 bg-slate-50 p-8 text-center">
-            <p className="text-sm text-slate-600">
+          <div className="rounded-lg border border-warm-200 bg-warm-50 p-8 text-center">
+            <p className="text-sm text-warm-600">
               No reintroductions yet. Start your first one!
             </p>
           </div>

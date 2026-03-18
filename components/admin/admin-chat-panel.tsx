@@ -87,7 +87,7 @@ export function AdminChatPanel() {
       {/* Messages */}
       <div ref={scrollRef} className="flex-1 overflow-auto px-4 py-2 space-y-2">
         {messages.length === 0 && (
-          <p className="py-4 text-center text-xs text-slate-400">
+          <p className="py-4 text-center text-xs text-warm-400">
             Ask me to update data in bulk, check properties, or answer questions about the database.
           </p>
         )}
@@ -97,8 +97,8 @@ export function AdminChatPanel() {
             className={cn(
               "max-w-[85%] rounded-lg px-3 py-2 text-sm",
               msg.role === "user"
-                ? "ml-auto bg-sage-600 text-white"
-                : "bg-slate-100 text-slate-800"
+                ? "ml-auto bg-teal-600 text-white"
+                : "bg-warm-100 text-warm-800"
             )}
           >
             {msg.content || (loading && i === messages.length - 1 ? "..." : "")}
@@ -107,7 +107,7 @@ export function AdminChatPanel() {
       </div>
 
       {/* Input */}
-      <div className="border-t border-slate-100 px-4 py-2">
+      <div className="border-t border-warm-100 px-4 py-2">
         <div className="flex items-center gap-2">
           <input
             type="text"
@@ -115,13 +115,13 @@ export function AdminChatPanel() {
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && sendMessage()}
             placeholder="e.g. Set all nuts to lectin: high"
-            className="flex-1 rounded-md border border-slate-200 px-3 py-2 text-sm outline-none focus:border-sage-400 focus:ring-1 focus:ring-sage-400"
+            className="flex-1 rounded-md border border-warm-200 px-3 py-2 text-sm outline-none focus:border-teal-400 focus:ring-1 focus:ring-teal-400"
             disabled={loading}
           />
           <button
             onClick={sendMessage}
             disabled={loading || !input.trim()}
-            className="rounded-md bg-sage-600 p-2 text-white transition-colors hover:bg-sage-700 disabled:opacity-50"
+            className="rounded-md bg-teal-600 p-2 text-white transition-colors hover:bg-teal-700 disabled:opacity-50"
           >
             {loading ? (
               <Loader2 className="h-4 w-4 animate-spin" />

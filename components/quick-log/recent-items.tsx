@@ -48,7 +48,7 @@ export function RecentItems({ onSelect, selectedNames }: RecentItemsProps) {
 
   return (
     <div>
-      <h3 className="mb-2 text-xs font-semibold uppercase tracking-wider text-slate-400">
+      <h3 className="mb-2 text-xs font-semibold uppercase tracking-wider text-warm-400">
         Recent (7 days)
       </h3>
       <div className="flex flex-wrap gap-2">
@@ -62,14 +62,14 @@ export function RecentItems({ onSelect, selectedNames }: RecentItemsProps) {
               onClick={() => onSelect(item.entryType, item.name)}
               className={`flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-sm transition-colors ${
                 isSelected
-                  ? "border-sage-300 bg-sage-50 text-sage-700"
-                  : "border-slate-200 bg-white text-slate-700 hover:bg-slate-50"
+                  ? "border-teal-300 bg-teal-50 text-teal-700"
+                  : "border-warm-200 bg-white text-warm-700 hover:bg-warm-50"
               }`}
               style={{ minHeight: "36px" }}
             >
               <Icon className="h-3.5 w-3.5" />
               <span>{item.name}</span>
-              <span className="text-xs text-slate-400">{item.count}x</span>
+              <span className="text-xs text-warm-400">{item.count}x</span>
             </button>
           );
         })}

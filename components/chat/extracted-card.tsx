@@ -16,7 +16,7 @@ const typeConfig: Record<
   medication: { label: "Medication", variant: "moderation", bg: "bg-purple-50 border-purple-200" },
   exposure: { label: "Exposure", variant: "moderation", bg: "bg-amber-50 border-amber-200" },
   detox: { label: "Detox", variant: "default", bg: "bg-teal-50 border-teal-200" },
-  exercise: { label: "Exercise", variant: "info", bg: "bg-sage-50 border-sage-200" },
+  exercise: { label: "Exercise", variant: "info", bg: "bg-teal-50 border-teal-200" },
   energy: { label: "Energy", variant: "default", bg: "bg-yellow-50 border-yellow-200" },
   off_protocol: { label: "Off-Protocol", variant: "moderation", bg: "bg-orange-50 border-orange-200" },
 };
@@ -39,10 +39,10 @@ export function ExtractedCard({ entry }: ExtractedCardProps) {
       >
         <div className="flex items-center gap-2">
           <Badge variant={config.variant}>{config.label}</Badge>
-          <span className="text-sm font-medium text-slate-800">{entry.name}</span>
+          <span className="text-sm font-medium text-warm-800">{entry.name}</span>
         </div>
         
-        <div className="flex items-center gap-3 text-xs text-slate-600">
+        <div className="flex items-center gap-3 text-xs text-warm-600">
           {duration && (
             <span className="flex items-center gap-1">
               <span className="font-medium">Duration:</span> {duration} min
@@ -75,9 +75,9 @@ export function ExtractedCard({ entry }: ExtractedCardProps) {
         )}
       >
         <Badge variant={config.variant}>{config.label}</Badge>
-        <span className="text-sm font-medium text-slate-800">{entry.name}</span>
+        <span className="text-sm font-medium text-warm-800">{entry.name}</span>
         {energyLevel !== undefined && (
-          <span className="ml-auto text-sm font-semibold text-slate-700">
+          <span className="ml-auto text-sm font-semibold text-warm-700">
             {energyLevel}/10
           </span>
         )}
@@ -95,17 +95,17 @@ export function ExtractedCard({ entry }: ExtractedCardProps) {
     >
       <Badge variant={config.variant}>{config.label}</Badge>
 
-      <span className="text-sm font-medium text-slate-800">{entry.name}</span>
+      <span className="text-sm font-medium text-warm-800">{entry.name}</span>
 
       {entry.severity != null && (
-        <span className="ml-auto text-xs text-slate-500">
+        <span className="ml-auto text-xs text-warm-500">
           {entry.severity}/10
         </span>
       )}
 
       {entry.details &&
         Object.entries(entry.details).map(([key, val]) => (
-          <span key={key} className="text-xs text-slate-500">
+          <span key={key} className="text-xs text-warm-500">
             {String(val)}
           </span>
         ))}

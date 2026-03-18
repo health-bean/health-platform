@@ -155,8 +155,8 @@ export default function ReintroductionsPage() {
     return (
       <div className="flex min-h-screen items-center justify-center">
         <div className="text-center">
-          <div className="mx-auto h-8 w-8 animate-spin rounded-full border-4 border-sage-600 border-t-transparent" />
-          <p className="mt-4 text-sm text-slate-600">Loading...</p>
+          <div className="mx-auto h-8 w-8 animate-spin rounded-full border-4 border-teal-600 border-t-transparent" />
+          <p className="mt-4 text-sm text-warm-600">Loading...</p>
         </div>
       </div>
     );
@@ -169,7 +169,7 @@ export default function ReintroductionsPage() {
         {viewMode !== "overview" && (
           <button
             onClick={handleBackToOverview}
-            className="mb-4 flex items-center gap-2 text-sm text-slate-600 hover:text-slate-900"
+            className="mb-4 flex items-center gap-2 text-sm text-warm-600 hover:text-warm-900"
           >
             <ArrowLeft className="h-4 w-4" />
             Back to Overview
@@ -177,12 +177,12 @@ export default function ReintroductionsPage() {
         )}
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-slate-900">
+            <h1 className="text-3xl font-bold text-warm-900">
               {viewMode === "overview" && "Reintroductions"}
               {viewMode === "detail" && "Reintroduction Details"}
               {viewMode === "recommendations" && "Recommended Foods"}
             </h1>
-            <p className="mt-2 text-sm text-slate-600">
+            <p className="mt-2 text-sm text-warm-600">
               {viewMode === "overview" && "Track your food reintroduction trials"}
               {viewMode === "detail" && "View detailed results and analysis"}
               {viewMode === "recommendations" && "Foods ready for reintroduction"}
@@ -213,7 +213,7 @@ export default function ReintroductionsPage() {
           {/* Active Reintroduction */}
           {activeReintroduction && (
             <div>
-              <h2 className="mb-4 text-lg font-semibold text-slate-900">Active Reintroduction</h2>
+              <h2 className="mb-4 text-lg font-semibold text-warm-900">Active Reintroduction</h2>
               <ReintroductionCard
                 reintroduction={activeReintroduction}
                 onStop={handleStopReintroduction}
@@ -224,7 +224,7 @@ export default function ReintroductionsPage() {
 
           {/* History */}
           <div>
-            <h2 className="mb-4 text-lg font-semibold text-slate-900">History</h2>
+            <h2 className="mb-4 text-lg font-semibold text-warm-900">History</h2>
             <ReintroductionHistory onViewDetails={handleViewDetails} />
           </div>
         </div>

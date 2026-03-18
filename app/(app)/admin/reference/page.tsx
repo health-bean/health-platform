@@ -46,22 +46,22 @@ export default function AdminReferencePage() {
   return (
     <div>
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-slate-900">Reference Data</h1>
-        <p className="text-sm text-slate-500">
+        <h1 className="text-2xl font-bold text-warm-900">Reference Data</h1>
+        <p className="text-sm text-warm-500">
           Symptoms, supplements, medications, and detox types
         </p>
       </div>
 
       {/* Tabs */}
-      <div className="mb-4 flex gap-1 rounded-lg bg-slate-100 p-1">
+      <div className="mb-4 flex gap-1 rounded-lg bg-warm-100 p-1">
         {TABS.map((tab) => (
           <button
             key={tab.key}
             onClick={() => setActiveTab(tab.key)}
             className={`flex-1 rounded-md px-3 py-2 text-sm font-medium transition-colors ${
               activeTab === tab.key
-                ? "bg-white text-slate-900 shadow-sm"
-                : "text-slate-500 hover:text-slate-700"
+                ? "bg-white text-warm-900 shadow-sm"
+                : "text-warm-500 hover:text-warm-700"
             }`}
           >
             {tab.label}
@@ -71,7 +71,7 @@ export default function AdminReferencePage() {
 
       {loading ? (
         <div className="flex items-center justify-center py-20">
-          <Loader2 className="h-6 w-6 animate-spin text-slate-400" />
+          <Loader2 className="h-6 w-6 animate-spin text-warm-400" />
         </div>
       ) : (
         <div className="space-y-6">
@@ -79,10 +79,10 @@ export default function AdminReferencePage() {
             .sort(([a], [b]) => a.localeCompare(b))
             .map(([category, categoryItems]) => (
               <div key={category}>
-                <h3 className="mb-2 text-sm font-semibold text-slate-500 uppercase tracking-wide">
+                <h3 className="mb-2 text-sm font-semibold text-warm-500 uppercase tracking-wide">
                   {category}
                 </h3>
-                <div className="rounded-lg border border-slate-200 bg-white">
+                <div className="rounded-lg border border-warm-200 bg-white">
                   <table className="w-full text-sm">
                     <tbody>
                       {categoryItems.map((item, i) => (
@@ -90,18 +90,18 @@ export default function AdminReferencePage() {
                           key={item.id}
                           className={
                             i < categoryItems.length - 1
-                              ? "border-b border-slate-100"
+                              ? "border-b border-warm-100"
                               : ""
                           }
                         >
-                          <td className="px-4 py-2.5 font-medium text-slate-900">
+                          <td className="px-4 py-2.5 font-medium text-warm-900">
                             {item.name}
                           </td>
-                          <td className="px-4 py-2.5 text-slate-500">
+                          <td className="px-4 py-2.5 text-warm-500">
                             {item.description || "—"}
                           </td>
                           {item.commonDosage !== undefined && (
-                            <td className="px-4 py-2.5 text-slate-500">
+                            <td className="px-4 py-2.5 text-warm-500">
                               {item.commonDosage || "—"}
                             </td>
                           )}

@@ -1,4 +1,4 @@
-export type EntryType = "food" | "symptom" | "supplement" | "medication" | "exposure" | "detox" | "exercise" | "energy";
+export type EntryType = "food" | "symptom" | "supplement" | "medication" | "exposure" | "detox" | "exercise" | "energy" | "off_protocol";
 
 export type ProtocolStatus = "allowed" | "avoid" | "moderation" | "reintroduction" | "unknown";
 

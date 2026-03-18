@@ -35,7 +35,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
             "disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-[var(--color-surface-overlay)]",
             error
               ? "border-red-300 focus:border-red-500 focus:ring-red-500"
-              : "border-[var(--color-border)] focus:border-sage-500 focus:ring-sage-500",
+              : "border-[var(--color-border)] focus:border-teal-500 focus:ring-teal-500",
             className
           )}
           aria-invalid={error ? true : undefined}
