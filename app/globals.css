@@ -8,6 +8,9 @@
  * Force light mode — no dark mode support yet.
  */
 
+/* Disable Tailwind's automatic dark mode */
+@variant dark (&:is(.dark-mode-disabled *));
+
 :root {
   color-scheme: light;
 }
