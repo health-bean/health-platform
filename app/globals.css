@@ -5,7 +5,16 @@
  *
  * Teal + Warm Neutrals. One brand color, warm everything else.
  * Zero inline styles. Everything through tokens.
+ * Force light mode — no dark mode support yet.
  */
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  background-color: oklch(0.98 0.006 80);
+}
 
 @theme {
   /* ── Brand: Teal (hue 195°) ──────────────────────────────────── */

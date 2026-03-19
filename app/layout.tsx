@@ -32,7 +32,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${sourceSans.variable} ${fraunces.variable}`}>
+    <html lang="en" className={`${sourceSans.variable} ${fraunces.variable}`} style={{ colorScheme: "light" }}>
       <body className="font-[family-name:var(--font-body)] bg-[var(--color-surface)] text-[var(--color-text-primary)] antialiased">
         {children}
       </body>
