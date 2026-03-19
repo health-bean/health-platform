@@ -8,7 +8,7 @@ import { useSession } from "@/hooks/use-session";
 
 const tabs = [
   { label: "Chat", href: "/chat", icon: MessageSquare, adminOnly: false },
-  { label: "Timeline", href: "/timeline", icon: Calendar, adminOnly: false },
+  { label: "Log", href: "/timeline", icon: Calendar, adminOnly: false },
   { label: "Reflect", href: "/reflect", icon: Heart, adminOnly: false },
   { label: "Insights", href: "/insights", icon: LineChart, adminOnly: false },
   { label: "Settings", href: "/settings", icon: Settings, adminOnly: false },

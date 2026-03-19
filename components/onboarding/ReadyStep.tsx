@@ -1,11 +1,14 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Sparkles, MessageSquare } from "lucide-react";
+import { Sparkles, MessageSquare, Calendar } from "lucide-react";
 import { Button } from "@/components/ui";
+import { cn } from "@/lib/utils";
 
 interface ReadyStepProps {
   protocolId?: string;
+  homeTab?: "chat" | "log";
+  onHomeTabChange: (tab: "chat" | "log") => void;
   onBack: () => void;
 }
 
@@ -15,7 +18,7 @@ const EXAMPLE_PROMPTS = [
   { emoji: "\u{1F48A}", text: "I took magnesium and vitamin D this morning" },
 ];
 
-export function ReadyStep({ protocolId, onBack }: ReadyStepProps) {
+export function ReadyStep({ protocolId, homeTab = "log", onHomeTabChange, onBack }: ReadyStepProps) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
@@ -27,12 +30,13 @@ export function ReadyStep({ protocolId, onBack }: ReadyStepProps) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           protocolId: protocolId || null,
+          homeTab,
           loadSampleData: false,
         }),
       });
-      router.push("/timeline");
+      router.push(homeTab === "chat" ? "/chat" : "/timeline");
     } catch {
-      router.push("/timeline");
+      router.push(homeTab === "chat" ? "/chat" : "/timeline");
     }
   }
 
@@ -68,8 +72,45 @@ export function ReadyStep({ protocolId, onBack }: ReadyStepProps) {
         </div>
       </div>
 
+      {/* Home tab preference */}
+      <div className="w-full mb-6">
+        <p className="text-sm font-medium text-[var(--color-text-primary)] mb-3">
+          Where would you like to start each day?
+        </p>
+        <div className="flex gap-3">
+          <button
+            onClick={() => onHomeTabChange("chat")}
+            className={cn(
+              "flex-1 rounded-xl p-4 text-center",
+              "bg-[var(--color-surface-card)] border transition-all duration-200",
+              homeTab === "chat"
+                ? "border-teal-500 bg-teal-50 shadow-[var(--shadow-card)]"
+                : "border-[var(--color-border)] hover:border-teal-300"
+            )}
+          >
+            <MessageSquare className="h-6 w-6 mx-auto mb-2 text-teal-600" />
+            <div className="text-sm font-semibold text-[var(--color-text-primary)]">Chat</div>
+            <div className="text-xs text-[var(--color-text-muted)] mt-1">I prefer to describe things in conversation</div>
+          </button>
+          <button
+            onClick={() => onHomeTabChange("log")}
+            className={cn(
+              "flex-1 rounded-xl p-4 text-center",
+              "bg-[var(--color-surface-card)] border transition-all duration-200",
+              homeTab === "log"
+                ? "border-teal-500 bg-teal-50 shadow-[var(--shadow-card)]"
+                : "border-[var(--color-border)] hover:border-teal-300"
+            )}
+          >
+            <Calendar className="h-6 w-6 mx-auto mb-2 text-teal-600" />
+            <div className="text-sm font-semibold text-[var(--color-text-primary)]">Log</div>
+            <div className="text-xs text-[var(--color-text-muted)] mt-1">I prefer to tap and select from lists</div>
+          </button>
+        </div>
+      </div>
+
       <Button onClick={handleComplete} loading={loading} size="lg" className="w-full">
-        Start Chatting
+        Let&apos;s Go
       </Button>
 
       <button
