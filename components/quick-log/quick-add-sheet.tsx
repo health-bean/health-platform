@@ -46,7 +46,7 @@ export function QuickAddSheet({ open, onClose }: QuickAddSheetProps) {
       />
 
       {/* Sheet */}
-      <div className="relative z-10 flex w-full max-w-lg flex-col rounded-t-2xl bg-[var(--color-surface-card)] shadow-xl" style={{ maxHeight: "85dvh" }}>
+      <div className="relative z-10 flex w-full max-w-lg flex-col rounded-t-2xl bg-[var(--color-surface-card)] shadow-xl max-h-[85dvh]">
         {/* Handle + close */}
         <div className="flex items-center justify-between px-4 pt-3 pb-1">
           <div className="mx-auto h-1 w-10 rounded-full bg-warm-300" />

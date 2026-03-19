@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Plus, ArrowLeft } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button, Spinner } from "@/components/ui";
 import { ReintroductionCard } from "@/components/reintroductions/ReintroductionCard";
 import { ReintroductionHistory } from "@/components/reintroductions/ReintroductionHistory";
 import { ReintroductionDetail } from "@/components/reintroductions/ReintroductionDetail";
@@ -153,17 +153,14 @@ export default function ReintroductionsPage() {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center">
-        <div className="text-center">
-          <div className="mx-auto h-8 w-8 animate-spin rounded-full border-4 border-teal-600 border-t-transparent" />
-          <p className="mt-4 text-sm text-warm-600">Loading...</p>
-        </div>
+      <div className="flex items-center justify-center py-20">
+        <Spinner />
       </div>
     );
   }
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+    <div className="mx-auto max-w-2xl px-4 py-6">
       {/* Header */}
       <div className="mb-8">
         {viewMode !== "overview" && (

@@ -2,14 +2,11 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useChat } from "@/hooks/use-chat";
-import { useJournal } from "@/hooks/use-journal";
 import { MessageBubble } from "./message-bubble";
 import { MessageInput } from "./message-input";
-import { JournalCheckIn } from "@/components/journal/journal-check-in";
 import { QuickLogPanel } from "@/components/quick-log/quick-log-panel";
 import { Spinner, Tabs, EmptyState } from "@/components/ui";
 import { MessageSquare, Zap } from "lucide-react";
-import type { JournalScores } from "@/types";
 
 type ChatMode = "chat" | "quick-log";
 
@@ -20,8 +17,6 @@ const MODE_TABS = [
 
 export function ChatInterface() {
   const { messages, loading, sendMessage, loadHistory } = useChat();
-  const { hasEntryToday, loading: journalLoading, saveScores } = useJournal();
-  const [dismissed, setDismissed] = useState(false);
   const [mode, setMode] = useState<ChatMode>("chat");
   const scrollRef = useRef<HTMLDivElement>(null);
   const hasLoaded = useRef(false);
@@ -41,12 +36,6 @@ export function ChatInterface() {
       el.scrollTop = el.scrollHeight;
     }
   }, [messages]);
-
-  const showJournalCard = !journalLoading && !hasEntryToday && !dismissed && mode === "chat";
-
-  async function handleJournalSave(scores: JournalScores) {
-    await saveScores(scores);
-  }
 
   return (
     <div className="flex h-[calc(100dvh-3.5rem-5rem)] flex-col md:h-[calc(100dvh-3.5rem)]">
@@ -69,16 +58,6 @@ export function ChatInterface() {
             className="flex-1 overflow-y-auto px-4 py-4"
           >
             <div className="mx-auto max-w-2xl">
-              {/* Journal check-in card */}
-              {showJournalCard && (
-                <div className="mb-4">
-                  <JournalCheckIn
-                    onSave={handleJournalSave}
-                    onDismiss={() => setDismissed(true)}
-                  />
-                </div>
-              )}
-
               {messages.length === 0 && !loading ? (
                 <div className="pt-20">
                   <EmptyState

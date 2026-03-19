@@ -330,15 +330,9 @@ export default function SettingsPage() {
           </div>
 
           {subscription?.tier === "free" ? (
-            <Button
-              variant="primary"
-              size="sm"
-              onClick={() => {
-                // TODO: open checkout with price selection
-              }}
-            >
-              Upgrade
-            </Button>
+            <p className="text-xs text-[var(--color-text-muted)]">
+              Upgrade options coming soon.
+            </p>
           ) : (
             <Button
               variant="outline"

@@ -30,9 +30,9 @@ export function ReadyStep({ protocolId, onBack }: ReadyStepProps) {
           loadSampleData: false,
         }),
       });
-      router.push("/chat");
+      router.push("/timeline");
     } catch {
-      router.push("/chat");
+      router.push("/timeline");
     }
   }
 
