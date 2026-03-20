@@ -5,11 +5,14 @@ import { db } from "@/lib/db";
 import { subscriptions } from "@/lib/db/schema";
 import { log } from "@/lib/logger";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: "2026-02-25.clover",
-});
-
-const WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET!;
+function getStripe() {
+  if (!process.env.STRIPE_SECRET_KEY) {
+    throw new Error("STRIPE_SECRET_KEY is not configured");
+  }
+  return new Stripe(process.env.STRIPE_SECRET_KEY, {
+    apiVersion: "2026-02-25.clover",
+  });
+}
 
 /**
  * Map Stripe price IDs to subscription tiers.
@@ -48,7 +51,8 @@ export async function POST(request: Request) {
 
     let event: Stripe.Event;
     try {
-      event = stripe.webhooks.constructEvent(body, sig, WEBHOOK_SECRET);
+      const stripe = getStripe();
+      event = stripe.webhooks.constructEvent(body, sig, process.env.STRIPE_WEBHOOK_SECRET!);
     } catch (err) {
       log.warn("Stripe webhook signature verification failed", {
         error: err as Error,
@@ -65,7 +69,7 @@ export async function POST(request: Request) {
         const userId = session.metadata?.userId;
         if (!userId || !session.subscription) break;
 
-        const stripeSub = await stripe.subscriptions.retrieve(
+        const stripeSub = await getStripe().subscriptions.retrieve(
           session.subscription as string
         );
         const priceId = stripeSub.items.data[0]?.price.id;

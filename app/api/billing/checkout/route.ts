@@ -7,9 +7,14 @@ import { subscriptions } from "@/lib/db/schema";
 import { getSessionFromCookies } from "@/lib/auth/session";
 import { log } from "@/lib/logger";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: "2026-02-25.clover",
-});
+function getStripe() {
+  if (!process.env.STRIPE_SECRET_KEY) {
+    throw new Error("STRIPE_SECRET_KEY is not configured");
+  }
+  return new Stripe(process.env.STRIPE_SECRET_KEY, {
+    apiVersion: "2026-02-25.clover",
+  });
+}
 
 const checkoutSchema = z.object({
   priceId: z.string().min(1),
@@ -45,7 +50,7 @@ export async function POST(request: Request) {
 
     // Create Stripe customer if needed
     if (!customerId) {
-      const customer = await stripe.customers.create({
+      const customer = await getStripe().customers.create({
         email: session.email,
         metadata: { userId: session.userId },
       });
@@ -54,7 +59,7 @@ export async function POST(request: Request) {
 
     const origin = request.headers.get("origin") || "https://chewiq.app";
 
-    const checkoutSession = await stripe.checkout.sessions.create({
+    const checkoutSession = await getStripe().checkout.sessions.create({
       customer: customerId,
       mode: "subscription",
       line_items: [{ price: parsed.data.priceId, quantity: 1 }],

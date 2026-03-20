@@ -6,9 +6,14 @@ import { subscriptions } from "@/lib/db/schema";
 import { getSessionFromCookies } from "@/lib/auth/session";
 import { log } from "@/lib/logger";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: "2026-02-25.clover",
-});
+function getStripe() {
+  if (!process.env.STRIPE_SECRET_KEY) {
+    throw new Error("STRIPE_SECRET_KEY is not configured");
+  }
+  return new Stripe(process.env.STRIPE_SECRET_KEY, {
+    apiVersion: "2026-02-25.clover",
+  });
+}
 
 /**
  * POST /api/billing/portal — create a Stripe Customer Portal session
@@ -36,7 +41,7 @@ export async function POST(request: Request) {
 
     const origin = request.headers.get("origin") || "https://chewiq.app";
 
-    const portalSession = await stripe.billingPortal.sessions.create({
+    const portalSession = await getStripe().billingPortal.sessions.create({
       customer: sub.stripeCustomerId,
       return_url: `${origin}/settings`,
     });
