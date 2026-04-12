@@ -27,7 +27,7 @@ interface RawJournal {
 
 interface ProtocolContext {
   protocolId: string;
-  checkCompliance: (foodId: string | null, properties: FoodProperty[]) => { status: 'allowed' | 'avoid' | 'moderation'; violations: string[] };
+  checkCompliance: (foodId: string | null, properties: FoodProperty[]) => { status: string; violations: string[] };
 }
 
 export function isFlareDay(symptoms: SymptomEntry[]): boolean {
@@ -69,7 +69,7 @@ export function buildDayComposite(
         let protocolStatus: FoodEntry['protocolStatus'] = null;
         if (protocolContext && entry.entryType === 'food') {
           const result = protocolContext.checkCompliance(entry.foodId, props);
-          protocolStatus = result.status;
+          protocolStatus = result.status as FoodEntry['protocolStatus'];
           if (result.status === 'avoid') violationCount++;
           if (result.status === 'allowed') compliantCount++;
           totalProtocolFoods++;

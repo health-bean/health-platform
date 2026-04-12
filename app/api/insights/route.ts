@@ -1,11 +1,8 @@
 import { NextResponse } from "next/server";
 import { getSessionFromCookies } from "@/lib/auth/session";
-import { analyzeInsights } from "@/lib/correlations/engine";
+import { runInsightsEngine } from "@/lib/insights/engine";
 import { cacheGet, cacheSet, getCacheKey } from "@/lib/cache/insights";
-import { measureAsync } from "@/lib/monitoring/performance";
 import { log } from "@/lib/logger";
-
-// ── GET /api/insights?days=90 ───────────────────────────────────────────
 
 export async function GET(request: Request) {
   try {
@@ -25,21 +22,13 @@ export async function GET(request: Request) {
       );
     }
 
-    // Check cache first (Redis if configured, else in-memory)
-    const cacheKey = getCacheKey(session.userId, "insights", { days });
+    const cacheKey = getCacheKey(session.userId, "insights-v2", { days });
     const cached = await cacheGet(cacheKey);
     if (cached) {
       return NextResponse.json(cached);
     }
 
-    // Generate insights with performance monitoring
-    const result = await measureAsync(
-      "insights.analyze",
-      () => analyzeInsights(session.userId, days),
-      { userId: session.userId, days }
-    );
-
-    // Cache for 5 minutes
+    const result = await runInsightsEngine(session.userId, days);
     await cacheSet(cacheKey, result, 300);
 
     return NextResponse.json(result);

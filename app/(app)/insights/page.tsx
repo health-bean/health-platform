@@ -1,301 +1,84 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
-import { LineChart, TrendingUp, AlertTriangle, Heart, Zap, Plus } from "lucide-react";
-import { Card, Badge, Spinner, Button, EmptyState } from "@/components/ui";
-import { cn } from "@/lib/utils";
-import { ExerciseInsights } from "@/components/insights/ExerciseInsights";
-import { ReintroductionCard } from "@/components/reintroductions/ReintroductionCard";
-import { StartReintroductionModal } from "@/components/reintroductions/StartReintroductionModal";
-import type { Insight, InsightResult, ReintroductionTrial } from "@/types";
-import { useRouter } from "next/navigation";
+import { useState, useEffect, useCallback } from 'react';
+import { DayView } from '@/components/insights/DayView';
+import { AllPatterns } from '@/components/insights/AllPatterns';
+import { Spinner } from '@/components/ui';
+import type { DayComposite, InsightsOutput, InsightAlert } from '@/lib/insights/types';
 
-function InsightCard({ insight }: { insight: Insight }) {
-  const isPattern = insight.type === "food-property-pattern";
-  const isHelper =
-    insight.type === "supplement-effect" || insight.type === "sleep-supplement";
-
-  return (
-    <Card>
-      <div className="flex items-start gap-3">
-        <div
-          className={cn(
-            "flex h-9 w-9 shrink-0 items-center justify-center rounded-lg",
-            isHelper
-              ? "bg-emerald-50 text-emerald-600"
-              : isPattern
-                ? "bg-teal-50 text-teal-600"
-                : "bg-amber-50 text-amber-600"
-          )}
-        >
-          {isHelper ? (
-            <Heart className="h-4 w-4" />
-          ) : isPattern ? (
-            <Zap className="h-4 w-4" />
-          ) : insight.confidence >= 0.7 ? (
-            <TrendingUp className="h-4 w-4" />
-          ) : (
-            <AlertTriangle className="h-4 w-4" />
-          )}
-        </div>
-
-        <div className="min-w-0 flex-1">
-          <p className="text-sm font-medium text-warm-900">
-            {insight.trigger}{" "}
-            <span className="text-warm-500">
-              {isHelper ? "helps with" : "correlates with"}
-            </span>{" "}
-            {insight.effect}
-          </p>
-
-          <div className="mt-1.5 flex flex-wrap items-center gap-2">
-            <Badge
-              variant={
-                isHelper
-                  ? "allowed"
-                  : insight.confidence >= 0.7
-                    ? "avoid"
-                    : "moderation"
-              }
-            >
-              {insight.percentage}% confidence
-            </Badge>
-
-            <span className="text-xs text-warm-400">
-              {insight.occurrences} occurrence
-              {insight.occurrences !== 1 ? "s" : ""}
-            </span>
-
-            {insight.foodCount && (
-              <span className="text-xs text-warm-400">
-                {insight.foodCount} foods
-              </span>
-            )}
-          </div>
-
-          {insight.description && (
-            <p className="mt-2 text-xs text-warm-500">{insight.description}</p>
-          )}
-
-          {insight.recommendation && (
-            <p className="mt-1 text-xs font-medium text-warm-600">
-              {insight.recommendation}
-            </p>
-          )}
-
-          {insight.contributingFoods && insight.contributingFoods.length > 0 && (
-            <div className="mt-2 flex flex-wrap gap-1">
-              {insight.contributingFoods.map((food) => (
-                <span
-                  key={food}
-                  className="inline-block rounded-md bg-warm-100 px-1.5 py-0.5 text-xs text-warm-600"
-                >
-                  {food}
-                </span>
-              ))}
-            </div>
-          )}
-        </div>
-      </div>
-    </Card>
-  );
-}
-
-function InsightSection({
-  title,
-  insights,
-}: {
-  title: string;
-  insights: Insight[];
-}) {
-  if (insights.length === 0) return null;
-
-  return (
-    <div>
-      <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-warm-400">
-        {title}
-      </h2>
-      <div className="flex flex-col gap-3">
-        {insights.map((insight) => (
-          <InsightCard key={insight.id} insight={insight} />
-        ))}
-      </div>
-    </div>
-  );
-}
+type View = 'day' | 'patterns';
 
 export default function InsightsPage() {
-  const router = useRouter();
-  const [result, setResult] = useState<InsightResult | null>(null);
+  const [view, setView] = useState<View>('day');
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-  const [activeReintroduction, setActiveReintroduction] = useState<ReintroductionTrial | null>(null);
-  const [protocolId, setProtocolId] = useState<string | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [composite, setComposite] = useState<DayComposite | null>(null);
+  const [patterns, setPatterns] = useState<InsightsOutput | null>(null);
+  const [alerts, setAlerts] = useState<InsightAlert[]>([]);
+
+  const today = new Date().toISOString().split('T')[0];
 
   useEffect(() => {
-    async function fetchData() {
+    async function load() {
+      setLoading(true);
       try {
-        const [insightsRes, userRes, reintroRes] = await Promise.all([
-          fetch("/api/insights?days=90"),
-          fetch("/api/users/me"),
-          fetch("/api/reintroductions"),
+        const [dayRes, alertsRes, patternsRes] = await Promise.all([
+          fetch(`/api/insights/day?date=${today}`),
+          fetch('/api/insights/alerts'),
+          fetch('/api/insights/patterns?days=90'),
         ]);
 
-        if (insightsRes.ok) {
-          const data: InsightResult = await insightsRes.json();
-          setResult(data);
-        } else {
-          setError("Failed to load insights");
+        if (dayRes.ok) {
+          const data = await dayRes.json();
+          if (data) setComposite(data);
         }
-
-        if (userRes.ok) {
-          const userData = await userRes.json();
-          setProtocolId(userData.user?.currentProtocolId || null);
-        }
-
-        if (reintroRes.ok) {
-          const reintroData = await reintroRes.json();
-          const active = reintroData.reintroductions?.find(
-            (r: ReintroductionTrial) => r.status === "active"
-          );
-          setActiveReintroduction(active || null);
-        }
-      } catch {
-        setError("Failed to load data");
+        if (alertsRes.ok) setAlerts(await alertsRes.json());
+        if (patternsRes.ok) setPatterns(await patternsRes.json());
       } finally {
         setLoading(false);
       }
     }
+    load();
+  }, [today]);
 
-    fetchData();
+  const handleDismissAlert = useCallback(async (id: string) => {
+    setAlerts(prev => prev.filter(a => a.id !== id));
+    await fetch(`/api/insights/alerts/${id}`, { method: 'PATCH' });
   }, []);
+
+  const consistency = patterns?.dataStatus
+    ? `${patterns.dataStatus.daysTracked} of last ${patterns.dataStatus.daysAnalyzed} days`
+    : '';
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center py-20">
+      <div className="flex items-center justify-center min-h-[60vh]">
         <Spinner />
       </div>
     );
   }
 
-  const totalInsights = result
-    ? result.triggers.length + result.helpers.length + result.trends.length
-    : 0;
-
-  // Separate exercise insights from other insights
-  const exerciseInsights = result
-    ? [...result.triggers, ...result.helpers, ...result.trends].filter(
-        (insight) => insight.type === "exercise-energy"
-      )
-    : [];
-
-  const otherTriggers = result
-    ? result.triggers.filter((insight) => insight.type !== "exercise-energy")
-    : [];
-
-  const otherHelpers = result
-    ? result.helpers.filter((insight) => insight.type !== "exercise-energy")
-    : [];
-
-  const otherTrends = result
-    ? result.trends.filter((insight) => insight.type !== "exercise-energy")
-    : [];
-
   return (
-    <div className="mx-auto max-w-2xl px-4 py-6">
-      <h1 className="mb-6 text-lg font-semibold text-warm-900">Insights</h1>
+    <div className="max-w-lg mx-auto px-4 pb-24">
+      <div className="flex items-center justify-between py-4">
+        <h1 className="font-display text-2xl text-warm-900">Insights</h1>
+        {view === 'day' && patterns && (patterns.triggers.length > 0 || patterns.helpers.length > 0) && (
+          <button onClick={() => setView('patterns')} className="text-sm text-teal-600 font-medium">
+            View all patterns →
+          </button>
+        )}
+      </div>
 
-      {error && (
-        <div className="mb-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
-          {error}
-        </div>
-      )}
-
-      {totalInsights === 0 ? (
-        <EmptyState
-          icon={<LineChart className="h-6 w-6" />}
-          title="Not enough data yet"
-          description="Insights appear after 7+ days of tracking. Keep logging to unlock patterns."
-          className="py-20"
+      {view === 'day' ? (
+        <DayView
+          initialDate={today}
+          initialComposite={composite}
+          alerts={alerts}
+          loggingConsistency={consistency}
+          onDismissAlert={handleDismissAlert}
         />
-      ) : (
-        <div className="flex flex-col gap-6">
-          {/* Active Reintroduction */}
-          {activeReintroduction && (
-            <div>
-              <div className="mb-3 flex items-center justify-between">
-                <h2 className="text-sm font-semibold uppercase tracking-wide text-warm-400">
-                  Active Reintroduction
-                </h2>
-                <button
-                  onClick={() => router.push("/reintroductions")}
-                  className="text-xs text-teal-600 hover:text-teal-700"
-                >
-                  View All →
-                </button>
-              </div>
-              <ReintroductionCard
-                reintroduction={activeReintroduction}
-                onViewDetails={() => router.push("/reintroductions")}
-              />
-            </div>
-          )}
-
-          {/* Start Reintroduction CTA */}
-          {!activeReintroduction && protocolId && totalInsights > 0 && (
-            <Card>
-              <div className="flex items-start gap-4">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-teal-50">
-                  <Plus className="h-5 w-5 text-teal-600" />
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-sm font-semibold text-warm-900">
-                    Ready to Reintroduce Foods?
-                  </h3>
-                  <p className="mt-1 text-sm text-warm-600">
-                    Start testing eliminated foods to see if you can safely add them back to your diet.
-                  </p>
-                  <div className="mt-3 flex gap-2">
-                    <Button
-                      size="sm"
-                      onClick={() => setIsModalOpen(true)}
-                    >
-                      Start Reintroduction
-                    </Button>
-                    <Button
-                      size="sm"
-                      onClick={() => router.push("/reintroductions")}
-                    >
-                      View Recommendations
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            </Card>
-          )}
-
-          {exerciseInsights.length > 0 && (
-            <ExerciseInsights insights={exerciseInsights} />
-          )}
-          <InsightSection title="Patterns" insights={otherTrends} />
-          <InsightSection title="Triggers" insights={otherTriggers} />
-          <InsightSection title="What Helps" insights={otherHelpers} />
-        </div>
-      )}
-
-      {/* Start Reintroduction Modal */}
-      {protocolId && (
-        <StartReintroductionModal
-          isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
-          onSuccess={() => {
-            setIsModalOpen(false);
-            router.push("/reintroductions");
-          }}
-          protocolId={protocolId}
-        />
-      )}
+      ) : patterns ? (
+        <AllPatterns output={patterns} onBack={() => setView('day')} />
+      ) : null}
     </div>
   );
 }

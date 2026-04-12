@@ -6,7 +6,7 @@ export interface FoodEntry {
   properties: FoodProperty[];
   mealType: string | null;
   time: string | null;
-  protocolStatus: 'allowed' | 'avoid' | 'moderation' | null;
+  protocolStatus: 'allowed' | 'avoid' | 'moderation' | 'reintroduction' | 'unknown' | null;
 }
 
 export interface FoodProperty {
