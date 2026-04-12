@@ -195,3 +195,10 @@ export function bucketScore(score: number | null): 'poor' | 'moderate' | 'good' 
   if (score <= 6) return 'moderate';
   return 'good';
 }
+
+export function bucketNegativeScore(score: number | null): 'low' | 'moderate' | 'high' | null {
+  if (score === null) return null;
+  if (score <= 4) return 'low';
+  if (score <= 6) return 'moderate';
+  return 'high';
+}
