@@ -3,7 +3,7 @@ import {
   dayComposites, timelineEntries, journalEntries,
   foodTriggerProperties, profiles,
 } from '@/lib/db/schema';
-import { eq, and, gte, lte, inArray } from 'drizzle-orm';
+import { eq, and, gte, lte, inArray, sql, notInArray } from 'drizzle-orm';
 import { buildDayComposite } from './day-composite';
 import { loadProtocolContext, checkComplianceSync } from '@/lib/protocols/compliance';
 import type { DayComposite, FoodProperty } from './types';
@@ -179,6 +179,50 @@ async function loadFoodProperties(foodIds: string[]): Promise<Map<string, FoodPr
     map.set(row.foodId, entries);
   }
   return map;
+}
+
+export async function backfillComposites(userId: string, startDate: string, endDate: string): Promise<number> {
+  // Find all dates that have entries or journal data but no composite yet
+  const existingDates = await db.select({ date: dayComposites.date })
+    .from(dayComposites)
+    .where(and(
+      eq(dayComposites.userId, userId),
+      gte(dayComposites.date, startDate),
+      lte(dayComposites.date, endDate),
+    ));
+
+  const existingSet = new Set(existingDates.map(r => r.date));
+
+  // Get all dates with timeline entries
+  const entryDates = await db.selectDistinct({ date: timelineEntries.entryDate })
+    .from(timelineEntries)
+    .where(and(
+      eq(timelineEntries.userId, userId),
+      gte(timelineEntries.entryDate, startDate),
+      lte(timelineEntries.entryDate, endDate),
+    ));
+
+  // Get all dates with journal entries
+  const journalDates = await db.selectDistinct({ date: journalEntries.entryDate })
+    .from(journalEntries)
+    .where(and(
+      eq(journalEntries.userId, userId),
+      gte(journalEntries.entryDate, startDate),
+      lte(journalEntries.entryDate, endDate),
+    ));
+
+  const allDates = new Set([
+    ...entryDates.map(r => r.date),
+    ...journalDates.map(r => r.date),
+  ]);
+
+  const missingDates = [...allDates].filter(d => !existingSet.has(d)).sort();
+
+  for (const date of missingDates) {
+    await computeAndStoreDayComposite(userId, date);
+  }
+
+  return missingDates.length;
 }
 
 function rowToComposite(row: typeof dayComposites.$inferSelect): DayComposite {

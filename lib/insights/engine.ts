@@ -1,4 +1,4 @@
-import { getCompositesForRange, computeAndStoreDayComposite } from './day-composite-db';
+import { getCompositesForRange, computeAndStoreDayComposite, backfillComposites } from './day-composite-db';
 import { analyzeSingleFactors } from './single-factor';
 import { analyzeMultiFactors } from './n-factor';
 import { computeProgress } from './progress';
@@ -15,6 +15,10 @@ export async function runInsightsEngine(userId: string, days: number = 90): Prom
   startDate.setDate(startDate.getDate() - days);
   const start = startDate.toISOString().split('T')[0];
 
+  // Backfill any days that have entries but no composite yet
+  await backfillComposites(userId, start, today);
+
+  // Ensure today's composite is fresh
   await computeAndStoreDayComposite(userId, today);
 
   const composites = await getCompositesForRange(userId, start, today);
