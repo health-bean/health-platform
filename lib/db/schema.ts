@@ -12,6 +12,7 @@ import {
   serial,
   uniqueIndex,
   index,
+  numeric,
 } from "drizzle-orm/pg-core";
 
 // ─── Domain Data Tables (seeded from existing DB) ───────────────────────
@@ -507,3 +508,76 @@ export const userFoodReactions = pgTable(
     uniqueIndex("user_food_reactions_user_food_idx").on(table.userId, table.foodName),
   ]
 );
+
+// ─── Insights v2 Tables ────────────────────────────────────────────────
+
+export const dayComposites = pgTable(
+  "day_composites",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    userId: uuid("user_id")
+      .notNull()
+      .references(() => profiles.id, { onDelete: "cascade" }),
+    date: date("date").notNull(),
+    foodCount: integer("food_count").notNull().default(0),
+    symptomCount: integer("symptom_count").notNull().default(0),
+    supplementCount: integer("supplement_count").notNull().default(0),
+    medicationCount: integer("medication_count").notNull().default(0),
+    exposureCount: integer("exposure_count").notNull().default(0),
+    exerciseCount: integer("exercise_count").notNull().default(0),
+    sleepScore: integer("sleep_score"),
+    energyScore: integer("energy_score"),
+    moodScore: integer("mood_score"),
+    stressScore: integer("stress_score"),
+    painScore: integer("pain_score"),
+    protocolId: uuid("protocol_id").references(() => protocols.id),
+    compliancePct: numeric("compliance_pct", { precision: 5, scale: 2 }),
+    violationCount: integer("violation_count").notNull().default(0),
+    foods: jsonb("foods").notNull().default([]),
+    symptoms: jsonb("symptoms").notNull().default([]),
+    supplements: jsonb("supplements").notNull().default([]),
+    medications: jsonb("medications").notNull().default([]),
+    exposures: jsonb("exposures").notNull().default([]),
+    exercises: jsonb("exercises").notNull().default([]),
+    entryCount: integer("entry_count").notNull().default(0),
+    hasJournal: boolean("has_journal").notNull().default(false),
+    isFlareDay: boolean("is_flare_day").notNull().default(false),
+    hasLateMeal: boolean("has_late_meal").notNull().default(false),
+    createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
+  },
+  (table) => [
+    uniqueIndex("day_composites_user_date_idx").on(table.userId, table.date),
+  ]
+);
+
+export const insightSnapshots = pgTable("insight_snapshots", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  userId: uuid("user_id")
+    .notNull()
+    .references(() => profiles.id, { onDelete: "cascade" }),
+  computedAt: timestamp("computed_at", { withTimezone: true }).defaultNow().notNull(),
+  daysAnalyzed: integer("days_analyzed").notNull(),
+  triggers: jsonb("triggers").notNull().default([]),
+  helpers: jsonb("helpers").notNull().default([]),
+  patterns: jsonb("patterns").notNull().default([]),
+  progress: jsonb("progress").notNull().default([]),
+  singleCount: integer("single_count").notNull().default(0),
+  twoFactorCount: integer("two_factor_count").notNull().default(0),
+  threeFactorCount: integer("three_factor_count").notNull().default(0),
+});
+
+export const insightAlerts = pgTable("insight_alerts", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  userId: uuid("user_id")
+    .notNull()
+    .references(() => profiles.id, { onDelete: "cascade" }),
+  alertType: text("alert_type").notNull(),
+  insightKey: text("insight_key").notNull(),
+  title: text("title").notNull(),
+  body: text("body").notNull(),
+  detail: jsonb("detail").notNull().default({}),
+  dismissed: boolean("dismissed").notNull().default(false),
+  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+  dismissedAt: timestamp("dismissed_at", { withTimezone: true }),
+});
