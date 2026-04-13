@@ -1,4 +1,4 @@
-# ChewIQ
+# Pico Health
 
 ## Stack
 Next.js 16 (App Router), React 19, Tailwind 4, Supabase (auth + DB), Drizzle ORM, Capacitor (iOS/Android), Stripe billing, Anthropic SDK, Zod validation, Upstash Redis (rate limiting)
@@ -12,7 +12,7 @@ Next.js 16 (App Router), React 19, Tailwind 4, Supabase (auth + DB), Drizzle ORM
 - `npm run db:generate` — generate Drizzle migrations
 
 ## Deploy
-- Production: chewiq.app (Vercel, auto-deploys from main)
+- Production: picohealth.app (Vercel, auto-deploys from main)
 - Database: Supabase (hosted)
 - Rate limiting: Upstash Redis
 
@@ -21,7 +21,7 @@ Next.js 16 (App Router), React 19, Tailwind 4, Supabase (auth + DB), Drizzle ORM
 - Tab structure: Chat, Log, Reflect, Insights, Settings
 - All API routes use `getSessionFromCookies()` for auth
 - Supabase auth with middleware-level `getUser()` verification
-- RLS enabled on all 25 tables
+- RLS enabled on all 25+ tables
 
 ## Design System — "Botanical Clinical"
 - Teal (hue 195) + warm neutrals (hue 80)
@@ -34,5 +34,8 @@ Next.js 16 (App Router), React 19, Tailwind 4, Supabase (auth + DB), Drizzle ORM
 - API auth: `getSessionFromCookies()` in every route handler
 - Validation: Zod schemas for all request bodies
 - Database: Drizzle ORM, never raw SQL in route handlers
-- Mobile: Capacitor wraps chewiq.app for native builds
+- Mobile: Capacitor wraps picohealth.app for native builds
 - Beta invite code: Filo#2026!
+
+## TODO
+- Consider updating login/landing page headline to: "Stop guessing. Start knowing."

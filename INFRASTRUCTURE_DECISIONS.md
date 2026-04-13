@@ -1,4 +1,4 @@
-# ChewIQ Infrastructure & Architecture Decisions
+# Pico Health Infrastructure & Architecture Decisions
 
 ## Date: March 7, 2026 — updated 2026-04-11
 
@@ -8,12 +8,12 @@
 
 ### Current Stack (production, 2026-04-11)
 - **Frontend**: Next.js 16.1.6 (App Router, Turbopack), React 19
-- **Hosting**: Vercel (chewiq.app)
+- **Hosting**: Vercel (picohealth.app)
 - **Database**: Supabase Postgres (migrated, 25 tables, RLS enabled)
 - **Authentication**: Supabase Auth + SSR, middleware-level `getUser()` verification
 - **Rate limiting**: Upstash Redis (not "optional add later" — shipped)
 - **Billing**: Stripe (checkout, portal, webhook, tiered subscriptions)
-- **Mobile**: Capacitor v8.2 wrapping chewiq.app (iOS + Android shells)
+- **Mobile**: Capacitor v8.2 wrapping picohealth.app (iOS + Android shells)
 - **Cost**: ~$45/month (Vercel Pro + Supabase Pro)
 
 ### Future Stack (Phase 2+)
@@ -261,7 +261,7 @@ Supabase PostgreSQL
 - Real-time correlation engine (`lib/correlations/`) — logic done, needs richer wiring to `/api/insights`
 - Stripe billing (checkout, portal, webhook, subscription tiers)
 - CSV data export (`GET /api/export`)
-- Capacitor iOS + Android shells pointing at chewiq.app
+- Capacitor iOS + Android shells pointing at picohealth.app
 - Design system ("Botanical Clinical"): 14 UI components, Fraunces + Source Sans 3
 - Supabase Auth + middleware JWT verification
 - Upstash Redis rate limiting on AI + admin routes
@@ -315,7 +315,7 @@ The current implementation is **production-ready** for Vercel + Supabase:
 - [x] Push code to GitHub
 - [x] Connect Vercel to repository
 - [x] Set environment variables
-- [x] Deploy to production (chewiq.app)
+- [x] Deploy to production (picohealth.app)
 - [x] Run database migrations on production
 
 ### Phase 2: Migrate to Supabase — ✅ DONE

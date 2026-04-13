@@ -2,7 +2,7 @@
 
 ## Overview
 
-The exercise-energy correlation analyzer has been successfully integrated into the ChewIQ correlation engine. This document verifies that all requirements from Task 2.5 have been met.
+The exercise-energy correlation analyzer has been successfully integrated into the Pico Health correlation engine. This document verifies that all requirements from Task 2.5 have been met.
 
 ## Integration Points
 

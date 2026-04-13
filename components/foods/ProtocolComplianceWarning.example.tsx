@@ -270,7 +270,7 @@ export function ChatInterfaceWarningExample() {
             }`}
           >
             <p className="text-sm font-medium">
-              {msg.role === "user" ? "You" : "ChewIQ"}
+              {msg.role === "user" ? "You" : "Pico Health"}
             </p>
             <p className="mt-1 text-sm">{msg.content}</p>
           </div>

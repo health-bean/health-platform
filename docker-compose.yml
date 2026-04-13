@@ -3,7 +3,7 @@ services:
     image: postgres:16-alpine
     restart: unless-stopped
     environment:
-      POSTGRES_DB: chewiq
+      POSTGRES_DB: pico_health
       POSTGRES_USER: hp_user
       POSTGRES_PASSWORD: hp_local_dev
     ports:

@@ -1,5 +1,5 @@
 /**
- * Seed script for ChewIQ domain data.
+ * Seed script for Pico Health domain data.
  *
  * Run:  npx tsx lib/db/seed.ts
  *   or: npm run db:seed

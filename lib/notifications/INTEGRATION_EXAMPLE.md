@@ -1,6 +1,6 @@
 # Reintroduction Notifications - Integration Example
 
-This document shows how to integrate the notification system into the ChewIQ application.
+This document shows how to integrate the notification system into the Pico Health application.
 
 ## Step 1: Add Notifications to Dashboard
 

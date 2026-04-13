@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">ChewIQ</string>
-    <string name="title_activity_main">ChewIQ</string>
-    <string name="package_name">com.chewiq.app</string>
-    <string name="custom_url_scheme">com.chewiq.app</string>
+    <string name="app_name">Pico Health</string>
+    <string name="title_activity_main">Pico Health</string>
+    <string name="package_name">com.picohealth.app</string>
+    <string name="custom_url_scheme">com.picohealth.app</string>
 </resources>

@@ -1,5 +1,5 @@
 /**
- * Structured logger for ChewIQ.
+ * Structured logger for Pico Health.
  *
  * Outputs JSON in production (machine-parseable for Vercel logs / Datadog / etc.)
  * and human-readable format in development.

@@ -39,7 +39,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const origin = request.headers.get("origin") || "https://chewiq.app";
+    const origin = request.headers.get("origin") || "https://picohealth.app";
 
     const portalSession = await getStripe().billingPortal.sessions.create({
       customer: sub.stripeCustomerId,

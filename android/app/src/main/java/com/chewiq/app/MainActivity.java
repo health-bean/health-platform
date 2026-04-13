@@ -1,4 +1,4 @@
-package com.chewiq.app;
+package com.picohealth.app;
 
 import com.getcapacitor.BridgeActivity;
 

@@ -45,7 +45,7 @@ export default function SignupPage() {
     <div className="flex min-h-dvh items-center justify-center px-6 py-12">
       <div className="w-full max-w-sm">
         <div className="mb-8 text-center">
-          <h1 className="text-2xl font-bold text-warm-900">Join ChewIQ</h1>
+          <h1 className="text-2xl font-bold text-warm-900">Join Pico Health</h1>
           <p className="mt-1 text-sm text-warm-500">
             Create your account to start tracking
           </p>
@@ -93,7 +93,7 @@ export default function SignupPage() {
                 required
               />
               <p className="mt-1.5 text-xs text-[var(--color-text-muted)]">
-                Enter the invite code you received from your practitioner or from ChewIQ.
+                Enter the invite code you received from your practitioner or from Pico Health.
               </p>
             </div>
 

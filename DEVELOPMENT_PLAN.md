@@ -1,11 +1,11 @@
-# ChewIQ Health: Comprehensive Development Plan
+# Pico Health Health: Comprehensive Development Plan
 
 > **Status: Stale snapshot from 2026-03-16. Updated 2026-04-11.**
-> Most Phase 1 items shipped. Phase 2–4 mostly untouched. See authoritative status in Notion "Feature Status & Roadmap" and in `.claude/projects/-Users-health-bean-Coding-chewiq/memory/project_status_march2026.md`.
+> Most Phase 1 items shipped. Phase 2–4 mostly untouched. See authoritative status in Notion "Feature Status & Roadmap" and in `.claude/projects/-Users-health-bean-Coding-picohealth/memory/project_status_march2026.md`.
 > Strikethroughs below (~~text~~) indicate work completed since this plan was written.
 
 ## Vision
-ChewIQ is the **Protocol Management & Healing Platform** for chronic illness — intelligent protocol guidance, comprehensive health tracking, AI-powered correlation insights, and practitioner collaboration. (Not "a holistic tracker" — that framing is out of date.)
+Pico Health is the **Protocol Management & Healing Platform** for chronic illness — intelligent protocol guidance, comprehensive health tracking, AI-powered correlation insights, and practitioner collaboration. (Not "a holistic tracker" — that framing is out of date.)
 
 ---
 
@@ -50,7 +50,7 @@ ChewIQ is the **Protocol Management & Healing Platform** for chronic illness —
 3. ~~**No Onboarding**~~ — ✅ DONE. 3-step flow (Welcome → Protocol → Ready).
 4. ~~**No Data Export**~~ — ✅ DONE. `GET /api/export?type=all&from=&to=` with CSV, joins custom foods.
 5. ~~**No Food Search**~~ — ✅ DONE. Local curated + USDA cache-through + custom foods.
-6. ~~**Limited Mobile Experience**~~ — Swapped PWA path for **Capacitor native wrapper** (iOS + Android v8.2, points at chewiq.app). PWA/offline is no longer on the roadmap.
+6. ~~**Limited Mobile Experience**~~ — Swapped PWA path for **Capacitor native wrapper** (iOS + Android v8.2, points at picohealth.app). PWA/offline is no longer on the roadmap.
 
 #### UX Issues
 7. **No Visual Insights** - Just text lists (hard to spot trends)
@@ -154,7 +154,7 @@ All of Phase 1 (1.1 through 1.4) shipped between March 16 and March 19, 2026. Ke
 
 **Tasks**:
 - [ ] Create onboarding flow (multi-step)
-  - Step 1: Welcome + explain ChewIQ
+  - Step 1: Welcome + explain Pico Health
   - Step 2: Select protocol (or skip)
   - Step 3: Set goals (optional)
   - Step 4: Quick tutorial (how to log, where to find insights)
@@ -282,7 +282,7 @@ All of Phase 1 (1.1 through 1.4) shipped between March 16 and March 19, 2026. Ke
 
 ### Phase 3: Mobile & Offline — ⚠️ STRATEGY CHANGED
 
-Original plan was PWA-based. Actual direction is **Capacitor native wrapper** (iOS + Android, v8.2, points at chewiq.app). PWA/service-worker work has been dropped from roadmap. Offline support is not currently planned.
+Original plan was PWA-based. Actual direction is **Capacitor native wrapper** (iOS + Android, v8.2, points at picohealth.app). PWA/service-worker work has been dropped from roadmap. Offline support is not currently planned.
 
 #### ~~3.1 Progressive Web App (PWA)~~ ❌ DROPPED (Capacitor native instead)
 **Priority**: HIGH | **Effort**: 3 days
@@ -480,8 +480,8 @@ Original plan was PWA-based. Actual direction is **Capacitor native wrapper** (i
 
 1. **Target user**: Who is the primary user? (e.g., people with histamine intolerance, AIP followers, general chronic illness)
 2. **Business model**: Free? Subscription? One-time purchase?
-3. **Competitive advantage**: What makes ChewIQ better than MySymptoms, Cara, or other health trackers?
-4. **Distribution**: How will users find ChewIQ? (SEO, social media, healthcare provider referrals)
+3. **Competitive advantage**: What makes Pico Health better than MySymptoms, Cara, or other health trackers?
+4. **Distribution**: How will users find Pico Health? (SEO, social media, healthcare provider referrals)
 5. **Validation**: Have you talked to potential users? What do they need most?
 
 ---

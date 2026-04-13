@@ -3,14 +3,14 @@ import type { CapacitorConfig } from "@capacitor/cli";
 const devMode = process.env.CAPACITOR_DEV === "true";
 
 const config: CapacitorConfig = {
-  appId: "com.chewiq.app",
-  appName: "ChewIQ",
+  appId: "com.picohealth.app",
+  appName: "Pico Health",
   webDir: "out",
   server: devMode
     ? { url: "http://localhost:3000", cleartext: true }
-    : { url: "https://chewiq.app", cleartext: false },
+    : { url: "https://picohealth.app", cleartext: false },
   ios: {
-    scheme: "ChewIQ",
+    scheme: "PicoHealth",
     contentInset: "automatic",
   },
   android: {

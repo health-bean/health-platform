@@ -129,7 +129,7 @@ export async function GET(request: Request) {
     }
 
     const csv = parts.join("\n");
-    const filename = `chewiq-export-${type}-${new Date().toISOString().split("T")[0]}.csv`;
+    const filename = `pico-health-export-${type}-${new Date().toISOString().split("T")[0]}.csv`;
 
     return new Response(csv, {
       headers: {

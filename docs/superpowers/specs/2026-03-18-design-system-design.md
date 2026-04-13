@@ -1,11 +1,11 @@
-# ChewIQ Design System — "Botanical Clinical"
+# Pico Health Design System — "Botanical Clinical"
 
 **Date:** 2026-03-18
 **Status:** Approved
 
 ## Overview
 
-Complete design system for ChewIQ, a chronic illness protocol management app. Target audience: people with chronic illness (brain fog, fatigue) and functional medicine practitioners. The system must be warm, trustworthy, readable, and polished.
+Complete design system for Pico Health, a chronic illness protocol management app. Target audience: people with chronic illness (brain fog, fatigue) and functional medicine practitioners. The system must be warm, trustworthy, readable, and polished.
 
 **Zero inline styles. Everything through the design system.**
 

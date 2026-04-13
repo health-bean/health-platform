@@ -57,7 +57,7 @@ export async function POST(request: Request) {
       customerId = customer.id;
     }
 
-    const origin = request.headers.get("origin") || "https://chewiq.app";
+    const origin = request.headers.get("origin") || "https://picohealth.app";
 
     const checkoutSession = await getStripe().checkout.sessions.create({
       customer: customerId,

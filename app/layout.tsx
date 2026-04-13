@@ -15,7 +15,7 @@ const fraunces = Fraunces({
 });
 
 export const metadata: Metadata = {
-  title: "ChewIQ",
+  title: "Pico Health",
   description: "Your intelligent protocol coach for chronic illness recovery",
 };
 
