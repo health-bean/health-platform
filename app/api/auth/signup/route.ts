@@ -11,7 +11,6 @@ const signupSchema = z.object({
   firstName: z.string().min(1, "First name is required"),
   email: z.string().email("Invalid email address"),
   password: z.string().min(8, "Password must be at least 8 characters"),
-  betaCode: z.string().min(1, "Invite code is required"),
 });
 
 export async function POST(request: Request) {
@@ -38,16 +37,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const { firstName, email, password, betaCode } = parsed.data;
-
-    // Validate beta invite code
-    const validCode = process.env.BETA_INVITE_CODE;
-    if (!validCode || betaCode !== validCode) {
-      return NextResponse.json(
-        { error: "Invalid invite code" },
-        { status: 403 }
-      );
-    }
+    const { firstName, email, password } = parsed.data;
 
     // Create auth user via admin client (server-side)
     const admin = createAdminClient();

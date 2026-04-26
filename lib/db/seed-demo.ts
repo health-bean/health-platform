@@ -1,7 +1,7 @@
 /**
  * Demo data seed for testing the correlation engine.
  *
- * Creates a user "Sarah" with 90 days of realistic timeline + journal data
+ * Creates a user "Sarah" with 365 days of realistic timeline + journal data
  * that produces known correlations:
  *
  *  - Food property pattern: high oxalate foods → headaches (spinach, almonds)
@@ -25,7 +25,7 @@ if (!DATABASE_URL) {
 
 const sql = postgres(DATABASE_URL, { max: 1 });
 
-const DEMO_USER_ID = "dd000000-0000-0000-0000-000000000001";
+let DEMO_USER_ID = "dd000000-0000-0000-0000-000000000001";
 const AIP_PROTOCOL_ID = "a80be547-6db1-4722-a5a4-60930143a2d9";
 
 function log(msg: string) {
@@ -96,14 +96,14 @@ async function seedDemoUser() {
 
   await sql`
     INSERT INTO profiles (id, email, first_name, current_protocol_id)
-    VALUES (${DEMO_USER_ID}, 'sarah@demo.com', 'Sarah', ${AIP_PROTOCOL_ID})
+    VALUES (${DEMO_USER_ID}, 'demo@picohealth.app', 'Sarah', ${AIP_PROTOCOL_ID})
     ON CONFLICT (id) DO UPDATE SET
       email = EXCLUDED.email,
       first_name = EXCLUDED.first_name,
       current_protocol_id = EXCLUDED.current_protocol_id
   `;
 
-  log("Profile created for sarah@demo.com");
+  log("Profile created for demo@picohealth.app");
 }
 
 async function clearDemoData() {
@@ -115,10 +115,10 @@ async function clearDemoData() {
 
 async function seedTimelineAndJournal() {
   const now = new Date();
-  const days = 90;
+  const days = 365;
 
-  // Magnesium start date: 45 days ago (so we have before/after data)
-  const magStartDay = 45;
+  // Magnesium start date: 180 days ago (so we have before/after data)
+  const magStartDay = 180;
 
   const timelineRows: {
     userId: string;
@@ -395,11 +395,54 @@ async function seedTimelineAndJournal() {
 // ─── Main ───────────────────────────────────────────────────────────────
 
 async function main() {
+  const { createClient } = await import("@supabase/supabase-js");
+
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!supabaseUrl || !serviceRoleKey) {
+    console.error("NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY required");
+    process.exit(1);
+  }
+
+  const admin = createClient(supabaseUrl, serviceRoleKey);
+
   try {
+    // Create or find Supabase auth user
+    log("Creating Supabase auth user...");
+    const { data, error } = await admin.auth.admin.createUser({
+      email: "demo@picohealth.app",
+      password: "demo1234",
+      email_confirm: true,
+      user_metadata: { firstName: "Sarah" },
+    });
+
+    if (error) {
+      if (error.message?.includes("already been registered")) {
+        log("Auth user already exists, looking up ID...");
+        const { data: users } = await admin.auth.admin.listUsers();
+        const existing = users?.users?.find((u: { email?: string }) => u.email === "demo@picohealth.app");
+        if (!existing) throw new Error("Could not find existing demo user");
+        DEMO_USER_ID = existing.id;
+        log(`Found existing user: ${DEMO_USER_ID}`);
+      } else {
+        throw error;
+      }
+    } else {
+      DEMO_USER_ID = data.user.id;
+      log(`Auth user created: ${DEMO_USER_ID}`);
+    }
+
     await seedDemoUser();
     await clearDemoData();
     await seedTimelineAndJournal();
-    log("Done! Login as sarah@demo.com / demo123");
+
+    // Mark onboarding complete
+    await sql`
+      UPDATE profiles SET onboarding_completed = true
+      WHERE id = ${DEMO_USER_ID}
+    `;
+
+    log("Done! Login as demo@picohealth.app / demo1234");
   } catch (err) {
     console.error("[seed-demo] Error:", err);
     process.exit(1);
@@ -408,98 +451,4 @@ async function main() {
   }
 }
 
-// ─── Export for Onboarding ─────────────────────────────────────────────
-
-/**
- * Generate sample data for a user during onboarding.
- * Creates 30 days of realistic timeline + journal data.
- */
-export async function generateSampleData(userId: string) {
-  const { db } = await import("@/lib/db");
-  const { timelineEntries, journalEntries } = await import("@/lib/db/schema");
-  const { eq } = await import("drizzle-orm");
-
-  // Clear existing data
-  await db.delete(journalEntries).where(eq(journalEntries.userId, userId));
-  await db.delete(timelineEntries).where(eq(timelineEntries.userId, userId));
-
-  const now = new Date();
-  const days = 30;
-
-  for (let dayOffset = days; dayOffset >= 0; dayOffset--) {
-    const date = new Date(now);
-    date.setDate(date.getDate() - dayOffset);
-    const dateStr = fmtDate(date);
-
-    // Journal entry
-    await db.insert(journalEntries).values({
-      userId,
-      entryDate: dateStr,
-      sleepScore: rand(5, 8),
-      energyScore: rand(4, 8),
-      moodScore: rand(4, 8),
-      stressScore: rand(2, 7),
-      isSample: true,
-    });
-
-    // Safe foods (2-4 per day)
-    const numFoods = rand(2, 4);
-    const todayFoods = [...SAFE_FOODS].sort(() => Math.random() - 0.5).slice(0, numFoods);
-    for (const food of todayFoods) {
-      const hour = pick([7, 8, 12, 13, 18, 19]);
-      await db.insert(timelineEntries).values({
-        userId,
-        entryType: "food",
-        name: food,
-        entryDate: dateStr,
-        entryTime: fmtTime(hour, rand(0, 45)),
-        isSample: true,
-      });
-    }
-
-    // Occasional trigger foods
-    if (Math.random() < 0.3) {
-      const triggerFood = pick(Object.keys(TRIGGER_FOODS));
-      const config = TRIGGER_FOODS[triggerFood as keyof typeof TRIGGER_FOODS];
-      const hour = rand(config.mealHour[0], config.mealHour[1]);
-      await db.insert(timelineEntries).values({
-        userId,
-        entryType: "food",
-        name: triggerFood,
-        entryDate: dateStr,
-        entryTime: fmtTime(hour, rand(0, 45)),
-        isSample: true,
-      });
-
-      // Correlated symptom
-      if (Math.random() < 0.5) {
-        await db.insert(timelineEntries).values({
-          userId,
-          entryType: "symptom",
-          name: pick(["Headache", "Joint Pain", "Brain Fog", "Bloating"]),
-          severity: rand(3, 7),
-          entryDate: dateStr,
-          entryTime: fmtTime(hour + rand(2, 6), rand(0, 59)),
-          isSample: true,
-        });
-      }
-    }
-
-    // Supplements (1-2 per day)
-    if (Math.random() < 0.7) {
-      const supp = pick(SUPPLEMENTS);
-      await db.insert(timelineEntries).values({
-        userId,
-        entryType: "supplement",
-        name: supp.name,
-        entryDate: dateStr,
-        entryTime: fmtTime(supp.hour, rand(0, 30)),
-        isSample: true,
-      });
-    }
-  }
-}
-
-if (require.main === module) {
-  main();
-}
+main();

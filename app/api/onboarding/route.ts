@@ -48,7 +48,7 @@ export async function POST(request: Request) {
     }
 
     const body = await request.json();
-    const { protocolId, loadSampleData } = body;
+    const { protocolId } = body;
 
     // Update user onboarding status
     await db
@@ -58,13 +58,6 @@ export async function POST(request: Request) {
         ...(protocolId && { currentProtocolId: protocolId }),
       })
       .where(eq(profiles.id, session.userId));
-
-    // Load sample data if requested
-    if (loadSampleData) {
-      // Import and run sample data generator
-      const { generateSampleData } = await import("@/lib/db/seed-demo");
-      await generateSampleData(session.userId);
-    }
 
     return NextResponse.json({
       success: true,
